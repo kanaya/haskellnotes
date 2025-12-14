@@ -5,28 +5,67 @@
   h(1em)
   x}
 
-#let constant(x) = x
+// Parameter.
 #let parameter(x) = x
+#let longparameter(x) = math.serif(x)
+#let first = longparameter("first")
+#let otherwise = longparameter("otherwise")
 
-#let keyword(x) = math.mono(x)
-
-#let typeparameter(x) = math.bold(x)
-
-#let longfunction(x) = x
+// Function.
+#let longfunction(x) = math.serif(x)
+#let id = longfunction("id")
 #let read = longfunction("read")
 
+// Type parameter.
+#let typeparameter(x) = math.bold(x)
+
+// Type name.
+#let typename(x) = math.bold(x)
+#let Int = typename("Int")
+#let Double = typename("Double")
+#let Bool = typename("Bool")
+
+// Type class.
+#let typeclass(x) = math.frak(x)
+#let Num = typeclass("Num")
+
+// Action.
 #let action(x) = math.sans(x)
 #let main = action("main")
 #let print = action("print")
 #let getLine = action("getLine")
 
+// Operator.
 #let lambda = math.backslash
 #let lambdaarrow = math.arrow.r.bar
 #let anonymousparameter = math.lozenge
 
+// Binary operator.
+#let compose = math.bullet.op
+#let apply = math.class("binary", math.section)
+#let map = math.star.op
+#let fmap = math.ast.op
+#let amap = math.ast.op.o
+#let bind = math.class("binary", math.suit.heart.stroked)
+#let leteq = math.equiv
+
+// Keyword.
+#let keyword(x) = math.mono(x)
+#let kwif = keyword("if")
+#let kwthen = keyword("then")
+#let kwelse = keyword("else")
+#let kwin = keyword("in")
+#let kwlet = keyword("let")
+#let kwwhere = keyword("where")
+
+// Container.
 #let list(x) = {
   let xx = x
   $xx_"s"$
+}
+#let listlist(x) = {
+  let xx = x
+  $xx_"ss"$
 }
 #let maybe(x) = {
   let xx = x
@@ -41,28 +80,18 @@
   $xx^dagger$
 }
 
-#let typename(x) = math.bold(x)
-#let Int = typename("Int")
-#let Double = typename("Double")
-#let Bool = typename("Bool")
-
-#let typeclass(x) = math.frak(x)
-#let Num = typeclass("Num")
-
+// Constructor.
 #let constructor(x) = math.serif(x)
 #let True = constructor("True")
 #let False = constructor("False")
+#let Just = constructor("Just")
 
-#let compose = math.bullet.op
-#let apply = math.class("binary", math.section)
+// Constructor with one argument.
+#let constructor1(x, y) = {
+  let xx = x
+  let yy = y
+  $xx_yy$
+}
 
-#let map = math.star.op
-#let fmap = math.ast.op
-#let amap = math.ast.op.o
-#let bind = math.class("binary", math.suit.heart.stroked)
 
-#let leteq = math.equiv
 
-#let kwlet = keyword("let")
-#let kwin = keyword("in")
-#let kwwhere = keyword("where")
