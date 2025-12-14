@@ -116,11 +116,10 @@ $ y = f_6 haskell.compose f_5 haskell.compose f_4 haskell.compose f_3 haskell.co
 
 $ x = 1 $<binding>
 
-#haskell.block[Haskellでは
+#haskell.block[Haskellでは次のように書く．
 #sourcecode[```haskell
 x = 1
-```]
-と書く．]
+```]] 
 
 変数という呼び名に反して，変数の値は一度代入したら変えられない．そこで変数に値を代入するとは呼ばずに，変数に値を#keyword[束縛]するという． @binding の右辺のように数式にハードコードされた値を#keyword[リテラル]と呼ぶ．
 
@@ -130,11 +129,10 @@ x = 1
 
 数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x::haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．
 
-#haskell.block[Haskellでは $x::haskell.Int$ を
+#haskell.block[Haskellでは $x::haskell.Int$ を次のように書く．
 #sourcecode[```Haskell
 x :: Int
-```]
-と書く．]
+```]]
 
 本書では変数名を原則1文字として，イタリック体で表し $w,x,y,z$ のような $n$ 以降のアルファベットを使う．
 
@@ -156,31 +154,28 @@ $ x :: haskell.Int = 1 $
 $ f x = x+1 $
 ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．
 
-#haskell.block[Haskell では $f x = x+1$ を
+#haskell.block[Haskell では $f x = x+1$ を次のように書く．
 #sourcecode[```haskell
 f x = x + 1
-```]
-と書く．]
+```]]
 
 本書では関数名を原則1文字として，イタリック体で表し，$f,g,h$ のようにアルファベットの $f$ 以降の文字を使う．ただし有名な関数についてはローマン体で表し，文字数も2文字以上とする．たとえば $sin$ などの三角関数や指数関数がそれにあたる．
 
 変数 $x$ に関数 $f$ を#keyword[適用]する場合は次のように書く．ここでも引数を括弧でくるまない．
 $ z = f x $
 
-#haskell.block[Haskell では $z = f x$ を
+#haskell.block[Haskell では $z = f x$ を次のように書く．
 #sourcecode[```haskell
 z = f x
-```]
-と書く．]
+```]]
 
 関数 $f$ が引数をふたつ取る場合は，次のように書く．
 $ z = f x y $
 
-#haskell.block[Haskell では $z = f x y$ を
+#haskell.block[Haskell では $z = f x y$ を次のように書く．
 #sourcecode[```haskell
 z = f x y
-```]
-と書く．]
+```]]
 
 なお $f x y$ は $(f x)y$ と解釈される．前半の $(f x)$ は1引数の関数とみなせる．2引数関数を連続した1引数関数の適用とみなす考え方を，関数の#keyword[カリー化]と呼ぶ．
 
@@ -203,11 +198,10 @@ $ z = g(f x)$
 $ k = g haskell.compose f $
 関数の連続適用 $g(f x)$ と合成関数の適用 $(g haskell.compose f)x$ は同じ結果を返す．
 
-#haskell.block[Haskell では $k = g haskell.compose f$ を
+#haskell.block[Haskell では $k = g haskell.compose f$ を次のように書く．
 #sourcecode[```haskell
 k = g . f
-```]
-と書く．]
+```]]
 
 関数合成演算子 $.$ は以下のように#keyword[左結合]する．
 $ k &= h haskell.compose g haskell.compose f \
@@ -217,11 +211,10 @@ $ k &= h haskell.compose g haskell.compose f \
 $ z &= h haskell.compose (g haskell.compose f) x \
     &= h haskell.apply g haskell.compose f x $
 
-#haskell.block[Haskell では $z = h haskell.apply g haskell.compose f x$ を
+#haskell.block[Haskell では $z = h haskell.apply g haskell.compose f x$ を次のように書く．
 #sourcecode[```haskell
 z = h $ (g . f) x
-```]
-と書く．]
+```]]
 
 == IOサバイバルキット1
 
@@ -239,14 +232,13 @@ $<square>
 $ haskell.main = haskell.print haskell.compose f haskell.compose haskell.read haskell.bind haskell.getLine $<first-main>
 ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は「#keyword[モナド]」の章で述べる．
 
-#haskell.block[Haskell では @square と@first-main をまとめて
+#haskell.block[Haskell では @square と@first-main をまとめて次のように書く．
 #sourcecode[```haskell
 f :: Double -> Double
 f x = x * x
 
 main = print . f . read =<< getLine
-```]
-と書く．]
+```]]
 
 = 条件分岐と再帰呼び出し
 
@@ -256,11 +248,10 @@ main = print . f . read =<< getLine
 $ f = haskell.lambda x haskell.lambdaarrow x + 1 $
 ラムダ記号は一般的には $lambda$ が用いられるが，本書ではすべてのギリシア文字を予約しておきたいので，Haskellの記法に倣って $haskell.lambda$ を用いる．
 
-#haskell.block[Haskell では $f = haskell.lambda x haskell.lambdaarrow x + 1$ を
+#haskell.block[Haskell では $f = haskell.lambda x haskell.lambdaarrow x + 1$ を次のように書く．
 #sourcecode[```haskell
 f = \x -> x + 1
-```]
-と書く．]
+```]]
 
 ラムダ式は入れ子に出来る．引数をふたつとり，その引数同士を足すラムダ式は次のように書ける．
 $ haskell.lambda x haskell.lambdaarrow (haskell.lambda y haskell.lambdaarrow x + y) $<lambda-nested>
@@ -276,11 +267,10 @@ $
     &= haskell.lambda x haskell.lambdaarrow x + 1
 $
 
-#haskell.block[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (haskell.anonymousparameter + 1)$ をHaskellでは
+#haskell.block[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (haskell.anonymousparameter + 1)$ をHaskellでは次のように書く．
 #sourcecode[```haskell
 f = (+1)
-```]
-と書く．]
+```]]
 
 無名変数が2回以上登場した場合は，その都度新しいパラメタを生成する．たとえば次のとおりである．
 $
@@ -289,22 +279,20 @@ $
     &= haskell.lambda x y haskell.lambdaarrow x + y
 $
 
-#haskell.block[Haskellでは $f = (haskell.anonymousparameter + haskell.anonymousparameter)$ を
+#haskell.block[Haskellでは $f = (haskell.anonymousparameter + haskell.anonymousparameter)$ を次のように書く．
 #sourcecode[```haskell
 f = (+)
-```]
-と書く．]
+```]]
 
 == ローカル変数
 
 関数内で#keyword[ローカル変数]を使いたい場合は以下のように行う．
 $ z = haskell.kwlet y haskell.leteq 1 haskell.kwin x + y $<let-in>
 
-#haskell.block[Haskellでは $z = haskell.kwlet y haskell.leteq 1 haskell.kwin x + y$ を
+#haskell.block[Haskellでは $z = haskell.kwlet y haskell.leteq 1 haskell.kwin x + y$ を次のように書く．
 #sourcecode[```haskell
 z = let y = 1 in x + y
-```]
-と書く．]
+```]]
 
 ローカル変数はラムダ式のシンタックスシュガーである．@let-in は次の式と等価である．
 $ z = (haskell.lambda y haskell.lambdaarrow x + y) 1 $<let-in-alternative>
@@ -312,11 +300,10 @@ $ z = (haskell.lambda y haskell.lambdaarrow x + y) 1 $<let-in-alternative>
 ローカル変数の定義は次のように後置できる．
 $ z = x + y haskell.kwwhere y haskell.leteq 1 $<where>
 
-#haskell.block[Haskellでは $z = x + y haskell.kwwhere y haskell.leteq 1$ を
+#haskell.block[Haskellでは $z = x + y haskell.kwwhere y haskell.leteq 1$ を次のように書く．
 #sourcecode[```haskell
 z = x + y where y = 1
-```]
-と書く．]
+```]]
 
 == クロージャ
 

@@ -1,5 +1,5 @@
 #let block(x) = { 
-  set text(gray)
+  // set text(gray)
   set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), size: 10pt)
   $penta.filled$
   h(1em)
