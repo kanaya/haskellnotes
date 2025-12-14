@@ -144,6 +144,11 @@ $ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $
 
 $ y = f_6 haskell.compose f_5 haskell.compose f_4 haskell.compose f_3 haskell.compose f_2 haskell.compose f_1(x) $
 
+
+
+
+= REWRITE
+
 = 変数・関数・型
 
 == 変数
