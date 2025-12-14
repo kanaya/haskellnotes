@@ -286,26 +286,17 @@ main = print . f . read =<< getLine
 == ラムダ
 
 関数とは，変数名に束縛された#keyword[ラムダ式]である．引数をひとつとり，その引数に $1$ を足して返す関数 $f$ はラムダ式を用いて次のように書ける．
-$ f = haskell.lambda x haskell.lambdaarrow x + 1 $
-ラムダ記号は一般的には $lambda$ が用いられるが，本書ではすべてのギリシア文字を予約しておきたいので，Haskellの記法に倣って $haskell.lambda$ を用いる．
-
-#haskell.block[Haskell では $f = haskell.lambda x haskell.lambdaarrow x + 1$ を次のように書く．
-#sourcecode[```haskell
-f = \x -> x + 1
-```]]
-
+$ f = backslash x |-> x + 1 $
 ラムダ式は入れ子に出来る．引数をふたつとり，その引数同士を足すラムダ式は次のように書ける．
-$ haskell.lambda x haskell.lambdaarrow (haskell.lambda y haskell.lambdaarrow x + y) $<lambda-nested>
-ラムダ式中の $haskell.lambdaarrow$ は右結合するので，@lambda-nested は次のようにも書ける．
-$ haskell.lambda x haskell.lambdaarrow haskell.lambda y haskell.lambdaarrow x + y $<lambda-nested-alternative>
-より簡潔に@lambda-nested-alternative を
-$ haskell.lambda x y haskell.lambdaarrow x + y $<lambda-nested-alternative-simplified>
+$ backslash x |-> (backslash y |-> x + y) $<lambda-nested>
+より簡潔に@lambda-nested を
+$ backslash x y |-> x + y $<lambda-nested-alternative>
 と書いても良い．
 
 本書では無名変数 $haskell.anonymousparameter$ を用いた以下の書き方も用いる．
 $
   f &= (haskell.anonymousparameter + 1)\
-    &= haskell.lambda x haskell.lambdaarrow x + 1
+    &= backslash x |-> x + 1
 $
 
 #haskell.block[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (haskell.anonymousparameter + 1)$ をHaskellでは次のように書く．
@@ -316,8 +307,8 @@ f = (+1)
 無名変数が2回以上登場した場合は，その都度新しいパラメタを生成する．たとえば次のとおりである．
 $
   f &= haskell.anonymousparameter + haskell.anonymousparameter\
-    &= haskell.lambda x haskell.lambdaarrow haskell.lambda y haskell.lambdaarrow x + y\
-    &= haskell.lambda x y haskell.lambdaarrow x + y
+    &= backslash x |-> backslash y |-> x + y\
+    &= backslash x y |-> x + y
 $
 
 #haskell.block[Haskellでは $f = (haskell.anonymousparameter + haskell.anonymousparameter)$ を次のように書く．
@@ -336,7 +327,7 @@ z = let y = 1 in x + y
 ```]]
 
 ローカル変数はラムダ式のシンタックスシュガーである．@let-in は次の式と等価である．
-$ z = (haskell.lambda y haskell.lambdaarrow x + y) 1 $<let-in-alternative>
+$ z = (backslash y |-> x + y) 1 $<let-in-alternative>
 
 ローカル変数の定義は次のように後置できる．
 $ z = x + y haskell.kwwhere y haskell.leteq 1 $<where>
@@ -349,7 +340,7 @@ z = x + y where y = 1
 == クロージャ
 
 ラムダ式を返す関数は，ラムダ式内部に値を閉じ込めることができる．たとえば
-$ f n = haskell.lambda x haskell.lambdaarrow n + x $<closure>
+$ f n = backslash x |-> n + x $<closure>
 のように関数を定義して良い．関数 $f$ に引数 $n$ を与えると，新たな1引数関数が得られる．例を挙げる．
 $ n &= 3\
   g &= f n $<closure-example>

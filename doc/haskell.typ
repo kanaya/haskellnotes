@@ -35,10 +35,9 @@
 #let print = action("print")
 #let getLine = action("getLine")
 
-// Operator.
-#let lambda = math.backslash
-#let lambdaarrow = math.arrow.r.bar
-#let anonymousparameter = math.lozenge
+// Anonymous parameter.
+#let anonymousparameter = math.lozenge.stroked.medium
+#let anonymoustypeparameter = math.lozenge.filled.medium
 
 // Binary operator.
 #let compose = math.bullet.op
