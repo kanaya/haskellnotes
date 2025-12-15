@@ -25,8 +25,14 @@
 }
 #show heading: heading_font
 
+#let strong_font(body) = {
+  set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), weight: "bold")
+  body
+}
+#show strong: strong_font
+
 #let highlight_font(body) = {
-  set text(font: ("Helvetica", "Toppan Bunkyu Gothic"))
+  set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), weight: "bold")
   body
 }
 #show highlight: highlight_font
@@ -46,25 +52,28 @@
 #table(
   columns: (auto, auto, auto),
   inset: 10pt,
-  align: horizon,
+  align: center,
   table.header([*種類*], [*字体・表記法*], [*例*]),
-  [定数], [ローマン], $haskell.otherwise$,
   [変数・関数], [イタリック（1文字）], $x, f$,
-  [有名な変数・関数], [ローマン・大文字], $haskell.first, haskell.id$,
+  [有名な変数・関数・定数], [ローマン・大文字], $haskell.first, haskell.id, haskell.otherwise$,
   [リスト変数], [変数名にsをつける], $haskell.list(x)$,
   [Maybe変数], [変数名に $?$ をつける], $haskell.maybe(x)$,
   [一般のコンテナ変数], [変数名に $*$ をつける], $haskell.ctxt(x)$,
   // [コンテナに入れる関数], [関数名に $dagger$ をつける], $haskell.monadic(f)$,
-  [定数値コンストラクタ], [ローマン・大文字], $haskell.True$,
-  [値コンストラクタ], [ローマン・大文字], $haskell.constructor1(haskell.Just, x)$,
-  [有名な定数値コンストラクタ], [数学記号], $emptyset$,
-  [有名な値コンストラクタ], [特別なカッコで包む], $[x], chevron.l x chevron.r$,
-  [アクション], [ギリシア文字（1文字）], $alpha$,
-  [有名なアクション], [サンセリフ], $haskell.main$,
-  [型], [ボールドイタリック（1文字）], $haskell.typename(a)$,
-  [有名な型], [ボールド・大文字], $haskell.Int$,
+  [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
+  [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
+  [有名な定数値コンストラクタ], [数学記号], $emptyset, emptyset.rev$,
+  [有名な値コンストラクタ], [特別なカッコで包む], $[x], haskell.pure(y)$,
+  [アクション], [ギリシア文字（1文字）], $alpha, mu$,
+  [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
+  [型（引数なし）], [ボールドイタリック（1文字）], $haskell.typename(a)$,
+  [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(f, a)$,
+  [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
+  [有名な型（引数あり）], [特別なカッコで包む], $[haskell.typename(a)], [haskell.Int]$,
   [型クラス], [フラクチュール], $haskell.Num$,
   [キーワード], [固定幅], $haskell.kwlet$,
+  [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
+  [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
   [集合（数学）], [ブラックボード], $ZZ$,
   [関手（数学）], [筆記体], $scr(F)$
 )
@@ -293,25 +302,25 @@ $ backslash x |-> (backslash y |-> x + y) $<lambda-nested>
 $ backslash x y |-> x + y $<lambda-nested-alternative>
 と書いても良い．
 
-本書では無名変数 $haskell.anonymousparameter$ を用いた以下の書き方も用いる．
+本書では無名変数 $lozenge.stroked.medium$ を用いた以下の書き方も用いる．
 $
-  f &= (haskell.anonymousparameter + 1)\
+  f &= (lozenge.stroked.medium + 1)\
     &= backslash x |-> x + 1
 $
 
-#haskell.block[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (haskell.anonymousparameter + 1)$ をHaskellでは次のように書く．
+#haskell.block[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (lozenge.stroked.medium + 1)$ をHaskellでは次のように書く．
 #sourcecode[```haskell
 f = (+1)
 ```]]
 
 無名変数が2回以上登場した場合は，その都度新しいパラメタを生成する．たとえば次のとおりである．
 $
-  f &= haskell.anonymousparameter + haskell.anonymousparameter\
+  f &= lozenge.stroked.medium + lozenge.stroked.medium\
     &= backslash x |-> backslash y |-> x + y\
     &= backslash x y |-> x + y
 $
 
-#haskell.block[Haskellでは $f = (haskell.anonymousparameter + haskell.anonymousparameter)$ を次のように書く．
+#haskell.block[Haskellでは $f = (lozenge.stroked.medium + lozenge.stroked.medium)$ を次のように書く．
 #sourcecode[```haskell
 f = (+)
 ```]]

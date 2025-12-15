@@ -35,10 +35,6 @@
 #let print = action("print")
 #let getLine = action("getLine")
 
-// Anonymous parameter.
-#let anonymousparameter = math.lozenge.stroked.medium
-#let anonymoustypeparameter = math.lozenge.filled.medium
-
 // Binary operator.
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.section)
@@ -81,9 +77,9 @@
 
 // Constructor.
 #let constructor(x) = math.serif(x)
+#let Nothing = constructor("Nothing")
 #let True = constructor("True")
 #let False = constructor("False")
-#let Just = constructor("Just")
 
 // Constructor with one argument.
 #let constructor1(x, y) = {
@@ -91,6 +87,17 @@
   let yy = y
   $xx_yy$
 }
+#let Just(x) = constructor1("Just", x)
+#let pure(x) = {
+  let xx = x
+  $chevron.l xx chevron.r$
+}
 
+// Type constructor with one argument.
+#let typename1(x, y) = {
+  let xx = typename(x)
+  let yy = typename(y)
+  $xx_yy$
+}
 
 
