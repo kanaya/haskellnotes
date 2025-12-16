@@ -38,9 +38,10 @@
 // Binary operator.
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.section)
-#let map = math.star.op
-#let fmap = math.ast.op
-#let amap = math.ast.op.o
+#let map = math.ast
+#let fmap = math.ast.op.o
+#let amap = math.ast.square
+#let mapM = math.class("binary", math.ast.triple)
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let leteq = math.equiv
 
@@ -70,10 +71,7 @@
   let xx = x
   $xx_*$
 }
-#let monadic(x) = {
-  let xx = x
-  $xx^dagger$
-}
+#let monadic(x) = x
 
 // Constructor.
 #let constructor(x) = math.serif(x)

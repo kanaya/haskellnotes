@@ -423,3 +423,9 @@ Double bind. $ haskell.ctxt(z) = haskell.monadic(g) haskell.bind haskell.monadic
 #sourcecode[```haskell
 zm = g =<< f =<< xm
 ```]
+
+Contextual map. $ haskell.action("printEach") = haskell.action("print") haskell.mapM haskell.list(x) $
+
+#sourcecode[```haskell
+printEach = print `mapM` xs
+```]
