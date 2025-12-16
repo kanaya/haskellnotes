@@ -37,7 +37,7 @@
 
 // Binary operator.
 #let compose = math.bullet.op
-#let apply = math.class("binary", math.section)
+#let apply = math.class("binary", math.dollar)
 #let map = math.ast
 #let fmap = math.ast.op.o
 #let amap = math.ast.square
@@ -88,7 +88,7 @@
 #let Just(x) = constructor1("Just", x)
 #let pure(x) = {
   let xx = x
-  $chevron.l xx chevron.r$
+  $shell.l xx shell.r$
 }
 
 // Type constructor with one argument.

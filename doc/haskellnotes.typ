@@ -151,7 +151,7 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 
 $ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $
 
-$ y = f_6 haskell.compose f_5 haskell.compose f_4 haskell.compose f_3 haskell.compose f_2 haskell.compose f_1(x) $
+$ y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x) $
 
 = REWRITE
 
@@ -242,23 +242,23 @@ $ z = g(f x)$
 とするところであるが，事前に関数 $f$ と関数 $g$ を#keyword[合成]しておきたいことがある．
 
 関数の合成は次のように書く．
-$ k = g haskell.compose f $
-関数の連続適用 $g(f x)$ と合成関数の適用 $(g haskell.compose f)x$ は同じ結果を返す．
+$ k = g compose f $
+関数の連続適用 $g(f x)$ と合成関数の適用 $(g compose f)x$ は同じ結果を返す．
 
-#haskell.block[Haskell では $k = g haskell.compose f$ を次のように書く．
+#haskell.block[Haskell では $k = g compose f$ を次のように書く．
 #sourcecode[```haskell
 k = g . f
 ```]]
 
 関数合成演算子 $.$ は以下のように#keyword[左結合]する．
-$ k &= h haskell.compose g haskell.compose f \
-    &= (h haskell.compose g) haskell.compose f $
+$ k &= h compose g compose f \
+    &= (h compose g) compose f $
 
 関数適用のための特別な演算子 $haskell.apply$ があると便利である．演算子 $haskell.apply$ は関数合成演算子よりも優先順位が低い．例を挙げる．
-$ z &= h haskell.compose (g haskell.compose f) x \
-    &= h haskell.apply g haskell.compose f x $
+$ z &= h compose (g compose f) x \
+    &= h haskell.apply g compose f x $
 
-#haskell.block[Haskell では $z = h haskell.apply g haskell.compose f x$ を次のように書く．
+#haskell.block[Haskell では $z = h haskell.apply g compose f x$ を次のように書く．
 #sourcecode[```haskell
 z = h $ (g . f) x
 ```]]
@@ -276,7 +276,7 @@ $
 $<square>
 
 ユーザからの入力に関数 $f$ を適用してユーザへ出力するプログラムをHaskellで書くと次のようになる．
-$ haskell.main = haskell.print haskell.compose f haskell.compose haskell.read haskell.bind haskell.getLine $<first-main>
+$ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
 ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は「#keyword[モナド]」の章で述べる．
 
 #haskell.block[Haskell では @square と@first-main をまとめて次のように書く．
@@ -429,3 +429,87 @@ Contextual map. $ haskell.action("printEach") = haskell.action("print") haskell.
 #sourcecode[```haskell
 printEach = print `mapM` xs
 ```]
+
+= Test Part 2
+
+== Lambda
+
+$ (backslash x |-> x + 1) y $
+
+#sourcecode[```haskell
+(\x -> x + 1) y
+```]
+
+== Operators
+
+Scalar:
+$ z &= f x $
+
+#sourcecode[```haskell
+z = f x
+```]
+
+List:
+$ z_"s" = f * x_"s" $
+
+#sourcecode[```haskell
+zs = f `map` xs
+```]
+
+Maybe:
+$ z_"m" = f ast.o x_"m" $
+
+#sourcecode[```haskell
+zm = f <$> xm
+```]
+
+Any functor:
+$ z_* = f ast.o x_* $
+
+#sourcecode[```haskell
+z = f <$> x
+```]
+
+Applicative version:
+$ z_* = shell.l f shell.r ast.square x_* $
+
+#sourcecode[```haskell
+z = f <*> x
+```]
+
+Composition.
+$ h = g compose f $
+
+#sourcecode[```haskell
+h = f . g
+```]
+
+Scalar to contextual:
+$ z_* = tilde(f) x $
+
+#sourcecode[```haskell
+z = f x
+```]
+
+Monadic composition.
+$ tilde(h) = tilde(g) class("binary", suit.heart.stroked) tilde(f) $
+
+#sourcecode[```haskell
+h = g =<< f
+```]
+
+== Types
+
+Scaler type.
+$ x colon.double bold("Int") $
+
+Function type.
+$ f colon.double bold(a) -> bold(b) $
+
+Functor type.
+$ x_"s" &colon.double [bold("Int")]\
+  x_*   &colon.double frak("Monad") supset bold(m), frak("Eq") supset bold(a) => bold(m)_bold(a)\
+  f     &colon.double (bold(r) -> lozenge.filled.medium)_bold(q) $
+  
+型引数は添字として表現することにした．
+
