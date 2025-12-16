@@ -67,15 +67,16 @@
   [アクション], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
   [型（引数なし）], [ボールドイタリック（1文字）], $haskell.typename(a)$,
-  [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(f, a)$,
+  [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
   [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
   [有名な型（引数あり）], [特別なカッコで包む], $[haskell.typename(a)], [haskell.Int]$,
   [型クラス], [フラクチュール], $haskell.Num$,
   [キーワード], [固定幅], $haskell.kwlet$,
   [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
   [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
-  [集合（数学）], [ブラックボード], $ZZ$,
-  [関手（数学）], [筆記体], $scr(F)$
+  [集合（数学）], [ブラックボード（1文字）], $ZZ$,
+  [関手（数学）], [スクリプト（1文字）], $scr(F)$,
+  [圏（数学）], [カリグラフィ（1文字）], $cal(C)$
 )
 
 = Haskellについて
@@ -370,61 +371,87 @@ Haskellには2種類の整数型がある．ひとつは#keyword[固定長整数
 
 = Test Part
 
-Function application. $ z = f x $
+== Function application
+$ z = f x $
 
 #sourcecode[```haskell
 z = f x
 ```]
 
-List map. $ haskell.list(z) = f haskell.map haskell.list(x) $
+== List map
+$ haskell.list(z) = f * haskell.list(x) $
 
+#sourcecode[```Haskell
+zs = map f xs
+```]
+or
 #sourcecode[```Haskell
 zs = f `map` xs
 ```]
 
-Functor map. $ haskell.ctxt(z) = f haskell.fmap haskell.ctxt(x) $
+== Maybe map
+$ haskell.maybe(z) = f haskell.fmap haskell.maybe(x) $
+
+#sourcecode[```haskell
+zm =  fmap f xm
+```]
+or
+#sourcecode[```haskell
+zm =  f <$> xm
+```]
+
+== Functor map
+$ haskell.ctxt(z) = f haskell.fmap haskell.ctxt(x) $
 
 #sourcecode[```haskell
 zm = f <$> xm
 ```]
 
-Applicative map. $ haskell.ctxt(z) = haskell.ctxt(f) haskell.amap haskell.ctxt(x) $
+== Applicative map
+$ haskell.ctxt(z) = haskell.ctxt(f) haskell.amap haskell.ctxt(x) $
 
 #sourcecode[```Haskell
 zm = fm <*> xm
 ```]
 
-Apllicative map 2. $ haskell.ctxt(z) = haskell.ctxt(g) haskell.amap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
+== Apllicative map 2
+$ haskell.ctxt(z) = haskell.ctxt(g) haskell.amap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
 
 #sourcecode[```haskell
 zm = gm <*> xm <*> ym
 ```]
 
-Applicative map 2 (another version). $ haskell.ctxt(z) = g haskell.fmap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
+Or,
+
+$ haskell.ctxt(z) = g haskell.fmap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
 
 #sourcecode[```haskell
 zm = g <$> xm <*> ym
 ```]
 
-Monadic function application. $ haskell.ctxt(z) = haskell.monadic(f) x $
+== Monadic function application
+$ haskell.ctxt(z) = haskell.monadic(f) x $
 
 #sourcecode[```Haskell
 zm = f x
 ```]
 
-Bind. $ haskell.ctxt(z) = haskell.monadic(f) haskell.bind haskell.ctxt(x) $
+== Bind
+$ haskell.ctxt(z) = haskell.monadic(f) haskell.bind haskell.ctxt(x) $
 
 #sourcecode[```Haskell
 zm = f =<< xm
 ```]
 
-Double bind. $ haskell.ctxt(z) = haskell.monadic(g) haskell.bind haskell.monadic(f) haskell.bind haskell.ctxt(x) $
+== Double bind
+$ haskell.ctxt(z) = haskell.monadic(g) haskell.bind haskell.monadic(f) haskell.bind haskell.ctxt(x) $
 
 #sourcecode[```haskell
 zm = g =<< f =<< xm
 ```]
 
-Contextual map. $ haskell.action("printEach") = haskell.action("print") haskell.mapM haskell.list(x) $
+== Contextual map
+$ haskell.action("printEach") = haskell.action("print") haskell.mapM haskell.list(x) $
 
 #sourcecode[```haskell
 printEach = print `mapM` xs
