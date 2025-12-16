@@ -153,9 +153,6 @@ $ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $
 
 $ y = f_6 haskell.compose f_5 haskell.compose f_4 haskell.compose f_3 haskell.compose f_2 haskell.compose f_1(x) $
 
-
-
-
 = REWRITE
 
 = 変数・関数・型
@@ -177,9 +174,9 @@ x = 1
 
 #haskell.block[Haskellでは $haskell.Int$ および $haskell.Double$ をそれぞれ `Int` および `Double` と書く．]
 
-数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x::haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．
+数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x colon.double haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．
 
-#haskell.block[Haskellでは $x::haskell.Int$ を次のように書く．
+#haskell.block[Haskellでは $x colon.double haskell.Int$ を次のように書く．
 #sourcecode[```Haskell
 x :: Int
 ```]]
@@ -192,11 +189,11 @@ x :: Int
 
 #tk
 
-$ x :: haskell.Int $
+$ x colon.double haskell.Int $
 
 $ x = 1 $
 
-$ x :: haskell.Int = 1 $
+$ x colon.double haskell.Int = 1 $
 
 == 関数
 
@@ -274,7 +271,7 @@ z = h $ (g . f) x
 
 引数 $x$ の2乗を求める関数 $f$ は次のように定義できる．
 $
-  &f :: haskell.Double -> haskell.Double\
+  &f colon.double haskell.Double -> haskell.Double\
   &f x = x times x
 $<square>
 
