@@ -211,27 +211,15 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 
 == 変数
 
-変数 $x$ に値 $1$ を代入するには次のようにする．
+変数 $x$ に値 $1$ を代入するには次のようにする．#footnote[Haskellでは `x = 1` と書く．]
 
 $ x = 1 $<binding>
 
-#haskell.block[Haskellでは次のように書く．
-#sourcecode[```haskell
-x = 1
-```]] 
-
 変数という呼び名に反して，変数の値は一度代入したら変えられない．そこで変数に値を代入するとは呼ばずに，変数に値を#keyword[束縛]するという． @binding の右辺のように数式にハードコードされた値を#keyword[リテラル]と呼ぶ．
 
-リテラルや変数には#keyword[型]がある．型は数学者の#keyword[集合]と似た意味で，整数全体の集合 $ZZ$ に相当する#keyword[整数型]や，実数全体の集合 $RR$ に相当する#keyword[浮動小数点型]がある．整数と整数型，実数と浮動小数点型は異なるため，整数型を $haskell.Int$ で，浮動小数点型を $haskell.Double$ で表すことにする．
+リテラルや変数には#keyword[型]がある．型は数学者の#keyword[集合]と似た意味で，整数全体の集合 $ZZ$ に相当する#keyword[整数型]や，実数全体の集合 $RR$ に相当する#keyword[浮動小数点型]がある．整数と整数型，実数と浮動小数点型は異なるため，整数型を $haskell.Int$ で，浮動小数点型を $haskell.Double$ で表すことにする．#footnote[Haskellでは `Int` および `Double` と書く．]
 
-#haskell.block[Haskellでは $haskell.Int$ および $haskell.Double$ をそれぞれ `Int` および `Double` と書く．]
-
-数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x colon.double haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．
-
-#haskell.block[Haskellでは $x colon.double haskell.Int$ を次のように書く．
-#sourcecode[```Haskell
-x :: Int
-```]]
+数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x colon.double haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．#footnote[Haskellでは $x colon.double haskell.Int$ を `x :: Int` と書く．]
 
 本書では変数名を原則1文字として，イタリック体で表し $w,x,y,z$ のような $n$ 以降のアルファベットを使う．
 
@@ -250,31 +238,16 @@ $ x colon.double haskell.Int = 1 $
 == 関数
 
 整数 $x$ に $1$ を足す#keyword[関数] $f$ は次のように定義できる．
-$ f x = x+1 $
-ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．
-
-#haskell.block[Haskell では $f x = x+1$ を次のように書く．
-#sourcecode[```haskell
-f x = x + 1
-```]]
+$ f x = x + 1 $
+ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．#footnote[Haskellでは `f x = x + 1` と書く．]
 
 本書では関数名を原則1文字として，イタリック体で表し，$f,g,h$ のようにアルファベットの $f$ 以降の文字を使う．ただし有名な関数についてはローマン体で表し，文字数も2文字以上とする．たとえば $sin$ などの三角関数や指数関数がそれにあたる．
 
-変数 $x$ に関数 $f$ を#keyword[適用]する場合は次のように書く．ここでも引数を括弧でくるまない．
+変数 $x$ に関数 $f$ を#keyword[適用]する場合は次のように書く．ここでも引数を括弧でくるまない．#footnote[Haskellでは `z = f x` と書く．]
 $ z = f x $
 
-#haskell.block[Haskell では $z = f x$ を次のように書く．
-#sourcecode[```haskell
-z = f x
-```]]
-
-関数 $f$ が引数をふたつ取る場合は，次のように書く．
+関数 $f$ が引数をふたつ取る場合は，次のように書く．#footnote[Haskellでは `z = f x y` と書く．]
 $ z = f x y $
-
-#haskell.block[Haskell では $z = f x y$ を次のように書く．
-#sourcecode[```haskell
-z = f x y
-```]]
 
 なお $f x y$ は $(f x)y$ と解釈される．前半の $(f x)$ は1引数の関数とみなせる．2引数関数を連続した1引数関数の適用とみなす考え方を，関数の#keyword[カリー化]と呼ぶ．
 
@@ -426,9 +399,9 @@ Haskellには2種類の整数型がある．ひとつは#keyword[固定長整数
 $ x colon.double haskell.Int $
 
 #haskell.block[Haskellでは次のように書く．
-#sourcecode[```haskell
+```haskell
 x :: Int
-```]]
+```]
 
 /*
 
