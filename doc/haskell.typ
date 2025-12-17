@@ -5,6 +5,10 @@
   h(1em)
   x}
 
+// Constant.
+
+#let constantstring(x) = { "\"" + x + "\"" }
+
 // Parameter.
 #let parameter(x) = x
 #let longparameter(x) = math.serif(x)
@@ -27,6 +31,7 @@
 #let Char = typename("Char")
 #let Double = typename("Double")
 #let Int = typename("Int")
+#let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 
 // Type class.
@@ -58,6 +63,7 @@
 #let kwlet = keyword("let")
 #let kwof = keyword("of")
 #let kwthen = keyword("then")
+#let kwtype = keyword("type")
 #let kwwhere = keyword("where")
 
 // Container.

@@ -492,8 +492,15 @@ $ haskell.list(x) = [x^2 | x in [1,2...100], haskell.even x] $
 
 関数 $haskell.even$ は引数が偶数の場合にだけ $haskell.True$ を返す関数である．この例では数列 $[1,2...100]$ のうち偶数だけを2乗したリストを作っている．
 
-
 == 文字列
+
+文字型のリストを文字列型と呼び $haskell.String$ で表す．$haskell.String$ 型は次のように予約語 $haskell.kwtype$ を用いて，#keyword[型シノニム]すなわち型の別名として次のように定義される．
+$ haskell.kwtype haskell.String = [haskell.Char] $
+
+文字列型のリテラルは次のように書く．#footnote[Haskell では `xs = "Hello, World!"` と書く．]
+$ s = haskell.constantstring("Hello, World!") $
+
+リストに対するすべての演算は文字列にも適用可能である．
 
 == マップと畳み込み
 
@@ -523,34 +530,9 @@ $ haskell.list(x) = [x^2 | x in [1,2...100], haskell.even x] $
 /* 
 
 
-\section{内包表記}
-
-リストの構成には#keyword[内包表記}が使える．例を挙げる．#footnote[Haskell では次のように書く．
-\begin{footcode}
-      xs = [x^2 | x <- [1, 2..100], x>50]
-\end{footcode}}
-\begin{equation}
-\mathList{x}=\mathMakeListComplehention{x^2}{x\mathIn\mathMakeList{1,2\dots100},\mathEven x}
-\end{equation}
-関数$\mathEven$は引数が偶数の場合にだけ$\mathTrue$を返す関数である．この例では数列$\mathMakeList{1,2\dots100}$のうち偶数だけを2乗したリストを作っている．
-
-\tobewritten{内包表記のlet文．}
-
 \section{文字列}
 
-文字型のリストを文字列型と呼び$\mathTypeString$で表す．$\mathTypeString$型は次のように予約語$\mathKeyword{type}$を用いて，#keyword[型シノニム}すなわち型の別名として次のように定義される．
-\begin{equation}
-\mathTypeSynonim{\mathTypeString}{\mathTypeList{\mathTypeChar}}
-\end{equation}
 
-文字列型のリテラルは次のように書く．#footnote[Haskell では `xs = "Hello, World!"| と書く．}
-\begin{equation}
-\mathString{x}=\mathLiteralString{Hello, World!}
-\end{equation}
-
-\tobewritten{Stringに関する有名な関数．}
-
-リストに対するすべての演算は文字列にも適用可能である．
 
 \section{マップと畳み込み}
 
