@@ -418,15 +418,21 @@ Haskellには2種類の整数型がある．ひとつは#keyword[固定長整数
 
 #haskell.block[Haskellではブール型を `Bool` と書く．]
 
+#keyword[文字型]を $haskell.Char$ と書く．
+
+#haskell.block[HaskellではUnicode文字型を `Char` と書く．]
+
+変数 $x$ の型が $haskell.Int$のとき，以下のように#keyword[型注釈]を書く．
+$ x colon.double haskell.Int $
+
+#haskell.block[Haskellでは次のように書く．
+#sourcecode[```haskell
+x :: Int
+```]]
+
 /*
 
-
-文字型を$\mathTypeChar$と書く．\footnote{\haskell ではUnicode文字型を \verb|Char| と書く．}
-
-変数$x$の型が$\mathTypeInt$のとき，以下のように\keyword{型注釈}を書く．\footnote{\haskell では \verb|x :: Int| と書く．}
-\begin{equation}
-x\mathTypeIs\mathTypeInt
-\end{equation}
+\footnote{\haskell では \verb|x :: Int| と書く．}
 
 \tobewritten{一部前倒し}
 

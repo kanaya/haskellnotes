@@ -24,6 +24,7 @@
 #let Int = typename("Int")
 #let Double = typename("Double")
 #let Bool = typename("Bool")
+#let Char = typename("Char")
 
 // Type class.
 #let typeclass(x) = math.frak(x)
