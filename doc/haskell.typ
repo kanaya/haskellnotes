@@ -13,6 +13,8 @@
 
 // Function.
 #let longfunction(x) = math.serif(x)
+#let even = longfunction("even")
+#let fib = longfunction("fib")
 #let id = longfunction("id")
 #let read = longfunction("read")
 
