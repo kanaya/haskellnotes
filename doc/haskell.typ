@@ -20,7 +20,9 @@
 #let even = longfunction("even")
 #let fib = longfunction("fib")
 #let id = longfunction("id")
+#let lines = longfunction("lines")
 #let read = longfunction("read")
+#let words = longfunction("words")
 
 // Type parameter.
 #let typeparameter(x) = math.bold(x)
@@ -42,6 +44,7 @@
 #let action(x) = math.sans(x)
 #let main = action("main")
 #let print = action("print")
+#let getContents = action("getContents")
 #let getLine = action("getLine")
 
 // Binary operator.
