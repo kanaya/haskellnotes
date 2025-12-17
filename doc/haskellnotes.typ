@@ -513,6 +513,8 @@ $ haskell.list(z) = [f x | x in haskell.list(x)] $
 リスト $haskell.list(x)$ の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskellでは `z = foldl 0 (+) xs` と書く．]
 $ z = union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) haskell.list(x) $
 
+Haskellでは $sum = union_0^(lozenge.stroked.medium+lozenge.stroked.medium)$ として関数 $sum$ が定義されている．#footnote[Haskellでは $sum$ 関数を `sum` と書く．]
+
 
 == IOサバイバルキット2
 
@@ -539,13 +541,6 @@ $ z = union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) haskell.list(x
 
 /* 
 
-\begin{equation}
-\end{equation}
-Haskell では
-\begin{equation}
-\mathSum=\mathFold{0}{(\mathAnonymousParameter+\mathAnonymousParameter)}
-\end{equation}
-として関数$\mathSum$が定義されている．#footnote[Haskell では関数$\mathSum$を `sum| と書く．}
 
 リスト$\mathList{x}$が$\mathList{x}=[x_0,x_1,\dots,x_n]$のとき，一般に
 \begin{equation}
