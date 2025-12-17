@@ -22,6 +22,7 @@
 #let id = longfunction("id")
 #let lines = longfunction("lines")
 #let read = longfunction("read")
+#let readDouble = longfunction("readDouble")
 #let words = longfunction("words")
 
 // Type parameter.
@@ -43,9 +44,10 @@
 // Action.
 #let action(x) = math.sans(x)
 #let main = action("main")
-#let print = action("print")
 #let getContents = action("getContents")
 #let getLine = action("getLine")
+#let print = action("print")
+#let printEach = action("printEach")
 
 // Binary operator.
 #let anonymousoperator = math.class("binary",math.square.stroked)

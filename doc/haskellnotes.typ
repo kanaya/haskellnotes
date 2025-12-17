@@ -543,6 +543,37 @@ $ &norm colon.double [haskell.Double] -> haskell.Double\
 
 入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．
 
+各文字列を数に変換するには次の関数 $haskell.readDouble colon.double haskell.String -> haskell.Double$ を用いる．#footnote[Haskellでは次のように書く．
+```
+      readDouble :: String -> Double
+      readDouble = read
+```]
+$ &haskell.readDouble colon.double haskell.String -> haskell.Double\
+  &haskell.readDouble = haskell.read $
+関数 $haskell.readDouble$ は標準関数 $haskell.read$ に型注釈を付けたものである．
+
+入力ファイルの各行に書かれたベクトルを対象に関数 $norm$ を適用して，結果を書き出すには次のように書く．#footnote[Haskell では次のように書く．
+```haskell
+      main = print 
+        . (norm <$>) 
+        . ((readDouble <$>) <$>) 
+        . (words <$>) 
+        . lines 
+        =<< getContents
+```]
+$ haskell.main
+  = haskell.print
+    compose (norm haskell.map)
+    compose ((haskell.readDouble haskell.map) haskell.map)
+    compose (haskell.words haskell.map)
+    compose haskell.lines
+    haskell.bind haskell.getContents $
+
+アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach xs = mapM print xs` と書く．]
+$ haskell.printEach haskell.list(x) = haskell.print haskell.mapM haskell.list(x) $
+
+演算子 $haskell.mapM$ はアクション版のマップ演算子である．
+
 
 = 関手とモナド
 
@@ -566,41 +597,6 @@ $ &norm colon.double [haskell.Double] -> haskell.Double\
 == モナド
 
 /* 
-
-各文字列を数に変換するには次の関数$\mathReadDouble\mathTypeIs\mathTypeFunction{\mathTypeString}{\mathTypeDouble}$を用いる．#footnote[Haskell では次のように書く．
-\begin{footcode}
-      readDouble :: String -> Double
-      readDouble = read
-\end{footcode}}
-\begin{align}
-  \mathReadDouble&\mathTypeIs\mathTypeFunction{\mathTypeString}{\mathTypeDouble}\\
-  \mathReadDouble&=\mathRead
-\end{align}
-関数$\mathReadDouble$は標準関数$\mathRead$に型注釈を付けたものである．
-
-入力ファイルの各行に書かれたベクトルを対象に関数$\mathNorm$を適用して，結果を書き出すには次のように書く．#footnote[Haskell では次のように書く．
-\begin{footcode}
-      main = print 
-        . (norm <$>) 
-        . ((readDouble <$>) <$>) 
-        . (words <$>) 
-        . lines 
-        =<< getContents
-\end{footcode}}
-\begin{multline}
-\mathMain=\mathPrint
-\mathCompose(\mathNorm\mathMap)
-\mathCompose((\mathReadDouble\mathMap)\mathMap)\\
-\mathCompose(\mathWords\mathMap)
-\mathCompose\mathLines
-\mathBind\mathGetContents
-\end{multline}
-
-アクション$\mathPrint$に代えて次の$\mathPrintEach$を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach xs = print `mapM` xs| と書く．}
-\begin{equation}
-\mathPrintEach\mathList{x}=\mathPrint\mathMapM\mathList{x}
-\end{equation}
-演算子$\mathMapM$はアクション版のマップ演算子である．
 
 \chapter{関手とモナド}
 
