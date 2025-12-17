@@ -504,6 +504,13 @@ $ s = haskell.constantstring("Hello, World!") $
 
 == マップと畳み込み
 
+リスト $haskell.list(x)$ の各要素に関数 $f$ を適用して，その結果をリスト $haskell.list(z)$ に格納するためには次のように#keyword[マップ演算子] $*$ を用いる．#footnote[Haskell では `zs = f <$> xs` と書く．]
+$ haskell.list(z) = f * haskell.list(x) $<map>
+
+@map は次の式と同じである．#footnote[Haskell では `zs = [f x | x <- xs]` と書く．]
+$ haskell.list(z) = [f x | x in haskell.list(x)] $
+
+
 == IOサバイバルキット2
 
 = 関手とモナド
@@ -529,22 +536,6 @@ $ s = haskell.constantstring("Hello, World!") $
 
 /* 
 
-
-\section{文字列}
-
-
-
-\section{マップと畳み込み}
-
-リスト$\mathList{x}$の各要素に関数$f$を適用して，その結果をリスト$\mathList{z}$に格納するためには次のように#keyword[マップ演算子}$\mathMap$を用いる．#footnote[Haskell では `zs = f `map` xs| と書く．}
-\begin{equation}
-\mathList{z}=f\mathMap\mathList{x}
-\label{eq:map}
-\end{equation}
-式\eqref{eq:map}は次の式と同じである．#footnote[Haskell では \verb/zs = [f x | x <- xs]/ と書く．}
-\begin{equation}
-\mathList{z}=\mathMakeListComplehention{fx}{x\mathIn\mathList{x}}
-\end{equation}
 
 リスト$\mathList{x}$の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskell では `z = foldl 0 (+) xs| と書く．}
 \begin{equation}
