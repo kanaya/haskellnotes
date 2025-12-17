@@ -270,7 +270,7 @@ $ z = g(f x)$
 $ k = g compose f $
 関数の連続適用 $g(f x)$ と合成関数の適用 $(g compose f)x$ は同じ結果を返す．#footnote[Haskell では $k = g compose f$ を `k = g . f` と書く．]
 
-関数合成演算子 $.$ は以下のように#keyword[左結合]する．
+関数合成演算子 $compose$ は以下のように#keyword[左結合]する．
 $ k &= h compose g compose f \
     &= (h compose g) compose f $
 
