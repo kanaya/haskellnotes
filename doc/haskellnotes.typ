@@ -418,7 +418,804 @@ Haskellには2種類の整数型がある．ひとつは#keyword[固定長整数
 
 #haskell.block[Haskellではブール型を `Bool` と書く．]
 
+/*
 
+
+文字型を$\mathTypeChar$と書く．\footnote{\haskell ではUnicode文字型を \verb|Char| と書く．}
+
+変数$x$の型が$\mathTypeInt$のとき，以下のように\keyword{型注釈}を書く．\footnote{\haskell では \verb|x :: Int| と書く．}
+\begin{equation}
+x\mathTypeIs\mathTypeInt
+\end{equation}
+
+\tobewritten{一部前倒し}
+
+1引数関数の型は次のように注釈できる．\footnote{\haskell では \verb|f :: Int -> Int| と書く．}
+\begin{equation}
+f\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeInt}
+\end{equation}
+ここで関数$f$は整数型の引数をひとつとり，整数型の値を返す．\footnote{正確には$\rightarrow$は型コンストラクタである．}
+
+2引数関数の方は次のように注釈できる．\footnote{\haskell では \verb|f :: Int -> Int -> Int| と書く．}
+\begin{equation}
+f\mathTypeIs\mathTypeFunctionII{\mathTypeInt}{\mathTypeInt}{\mathTypeInt}
+\end{equation}
+ここで関数$f$は整数型の引数をふたつとり，整数型の値を返す．型$\mathTypeFunctionII{\mathTypeInt}{\mathTypeInt}{\mathTypeInt}$は$\mathTypeFunction{\mathTypeInt}{\left(\mathTypeFunction{\mathTypeInt}{\mathTypeInt}\right)}$と解釈される．
+
+$(\mathTypeFunction{\mathTypeInt}{\mathTypeInt})$型の関数を受け取り，$(\mathTypeFunction{\mathTypeInt}{\mathTypeInt})$型の関数を返す関数は次の型を持つ．\footnote{\haskell では以下のように書く．
+\begin{footcode}
+      f :: (Int -> Int) -> (Int -> Int)
+\end{footcode}}
+\begin{equation}
+f\mathTypeIs\mathTypeFunction{\left(\mathTypeFunction{\mathTypeInt}{\mathTypeInt}\right)}
+  {\left(\mathTypeFunction{\mathTypeInt}{\mathTypeInt}\right)}
+\end{equation}
+なお後半の括弧は省略可能なので
+\begin{equation}
+f\mathTypeIs\mathTypeFunction{\left(\mathTypeFunction{\mathTypeInt}{\mathTypeInt}\right)}
+  {\mathTypeFunction{\mathTypeInt}{\mathTypeInt}}
+\end{equation}
+と書いても良い．
+
+\haskell ではすべての変数，関数に型があり，型はコンパイル時に決定されていなければならない．ただし，式から\keyword{型推論}が行える場合は型注釈を省略できる．
+
+\section{条件}
+
+\tobewritten{旧文章を確認する．}
+
+\keyword{条件分岐}は次のように書く．\footnote{\haskell では \verb|z = if x>0 then x else -x| と書く．}
+\begin{equation}
+z=\mathIf{x>0}{x}{-x}
+\end{equation}
+
+\tobewritten{パターンマッチを独立させる}
+
+% https://haskell-tech.nkhn37.net/haskell-function-pattern-match/
+
+条件分岐の代わりに以下のような\keyword{パターンマッチ}も使える．\footnote{\haskell では以下のように書くのが一般的である．
+\begin{footcode}
+      f = case x of 1 -> 1
+                    _ -> 0
+\end{footcode}}
+\begin{equation}
+f=\mathCase{x}{1}{1}{\mathAny}{0}
+\end{equation}
+この場合$x\mathCompareEq1$ならば$f$は$1$を，そうでなければ$f$は$0$を返す．ここに$\mathAny$はすべてのパターンに一致する記号である．パターンマッチは上から順に行われる．
+
+\tobewritten{Boolの説明．}
+
+関数定義にもパターンマッチを使える．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      f 1 = 1
+      f _ = 0
+\end{footcode}}
+\begin{equation}
+\mathPatternMatch{f1}{1}{f\mathAny}{0}
+\end{equation}
+
+関数定義には次のように\keyword{ガード}と呼ばれる条件を付与することができる．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      f x | x > 0     = x
+          | otherwise = -x
+\end{footcode}}
+\begin{equation}
+\mathPatternMatchConditional{fx}{x>0}{x}{\mathOtherwise}{-x}
+\end{equation}
+ここに$\mathOtherwise$は$\mathTrue$の別名である．
+
+\tobewritten{ガードは上から順にマッチされる．}
+
+\section{関数の再帰呼び出し}
+
+関数は再帰的に呼び出せる．$n\ge0$を前提とすると，$n$番目のフィボナッチ数を計算する関数$\mathFib$を次のように定義できる．\footnote{\haskell では次のように書く．ただし\haskell には符号なし整数型がないために \verb|n| が正であることを別に担保する必要がある．またこのコードは無駄な再帰呼び出しを行っており実用的ではない．
+\begin{footcode}
+      fib 0 = 0
+      fib 1 = 1
+      fib n = fib (n-1) + fib (n-2)
+\end{footcode}}
+\begin{equation}
+\left\{
+\begin{aligned}
+\mathFib 0&=0\\
+\mathFib 1&=1\\
+\mathFib n&=\mathFib(n-1)+\mathFib(n-2)
+\end{aligned}
+\right.
+\end{equation}
+
+\tobewritten{プログラムの本質}
+
+\section{タプル}
+
+\tobewritten{タブルを後回しに．}
+
+複数の変数をまとめてひとつの\keyword{タプル}にすることができる．例を挙げる．\footnote{\haskell では \verb|z = (x, y)| と書く．}
+\begin{equation}
+z=(x,y)
+\end{equation}
+
+タプルの型は，要素の型をタプルにしたものである．例えば$\mathTypeInt$が2個からなるタプルの型は次のようになる．\footnote{In \haskell, \verb|z :: (Int, Int)|.}
+\begin{equation}
+z\mathTypeIs(\mathTypeInt,\mathTypeInt)
+\end{equation}
+
+\tobewritten{タプルの受け取り}
+
+要素を含まないタプルを\keyword{ユニット}と呼ぶ．ユニットは次のように書く．\footnote{\haskell では \verb|z = ()| と書く．}
+\begin{equation}
+z=()
+\end{equation}
+
+ユニットの型は\keyword{ユニット型}で，型注釈を次のように書く．\footnote{\haskell では \verb|z :: ()| と書く．}
+\begin{equation}
+z\mathTypeIs()
+\end{equation}
+
+\chapter{リスト}
+
+\section{リスト}
+
+任意の型について，その型の要素を並べた列を\keyword{リスト}と呼ぶ．
+
+ある変数がリストであるとき，その変数がリストであることを忘れないように$\mathList{x}$と小さく$\mathrm{s}$を付けることにする．
+
+\keyword{空リスト}は次のように定義する．\footnote{\haskell では \verb|xs = []| と書く．}
+\begin{equation}
+\mathList{x}=\mathEmptyList
+\end{equation}
+任意のリストは次のように\keyword{リスト構築演算子}$:$を用いて構成する．
+\begin{equation}
+\mathList{x}=x_0:x_1:x_2:\dots:\mathEmptyList
+\end{equation}
+
+リストの型はその構成要素の型をブラケットで包んで表現する．\footnote{\haskell では \verb|xs :: [Int]| と書く．}
+\begin{equation}
+\mathList{x}\mathTypeIs\mathTypeList{\mathTypeInt}
+\end{equation}
+
+リストは次のように構成することもできる．\footnote{\haskell では \verb|xs = [1, 2..100]| と書く．}
+\begin{equation}
+\mathList{x}=\mathMakeList{1,2,\dots,100}
+\end{equation}
+なお次のような\keyword{無限リスト}を構成しても良い．\footnote{\haskell では \verb|xs = [1, 2..]| と書く．}
+\begin{equation}
+\mathList{x}=\mathMakeList{1,2,\dots}
+\end{equation}
+
+リストとリストをつなぐ場合は\keyword{リスト結合演算子}$\mathListConcat$を用いる．\footnote{\haskell では \verb|zs = xs ++ ys| と書く．}
+\begin{equation}
+\mathList{z}=\mathList{x}\mathListConcat\mathList{y}
+\end{equation}
+
+関数はリストを受け取ることができる．次の書き方では，関数$f$は整数リストの最初の要素$x$と残りの要素$\mathList{x}$を別々に受け取り，先頭要素だけを返す．
+\begin{gather}
+f\mathTypeIs\mathTypeFunction{\mathTypeList{\mathTypeInt}}{\mathTypeInt}\\
+f(x:\mathList{x})=x\incomplete
+\label{eq:list-head}
+\end{gather}
+ただし，引数のリストが空リストである可能性を考慮して，式\eqref{eq:list-head}は次のように書き直すべきである．
+\begin{equation}
+  \left\{
+  \begin{aligned}
+    f\mathEmptyList&=0\\
+    f(x:\mathList{x})&=x
+  \end{aligned}
+  \right.
+\end{equation}
+$f\mathEmptyList$が$0$を返すのは不自然だが，関数$f$の戻り型を整数型としているためこれは仕方がない．エラーを考慮する場合は\ref{sec:maybe}節で述べるMaybeを使う必要がある．
+
+% 先頭から2個の要素を受け取り，それらの和を返す場合は次のように書く．
+% \begin{gather}
+%   f\mathTypeIs\mathTypeFunction{\mathTypeList{\mathTypeInt}}{\mathTypeInt}\\
+%   \begin{aligned}
+%     f[]&=0
+%     f(x:y:\mathList{y})&=x+y
+%   \end{aligned}
+% \end{gather}
+
+\tobewritten{headは非推奨}
+
+\tobewritten{リスト先頭2要素の和}
+
+リストのリストは次のように構成できる．
+\begin{equation}
+\mathListList{z}=[[1,2],[3,4]]
+\end{equation}
+
+\tobewritten{線形リストであることとvectorの話し．}
+
+\section{内包表記}
+
+リストの構成には\keyword{内包表記}が使える．例を挙げる．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      xs = [x^2 | x <- [1, 2..100], x>50]
+\end{footcode}}
+\begin{equation}
+\mathList{x}=\mathMakeListComplehention{x^2}{x\mathIn\mathMakeList{1,2\dots100},\mathEven x}
+\end{equation}
+関数$\mathEven$は引数が偶数の場合にだけ$\mathTrue$を返す関数である．この例では数列$\mathMakeList{1,2\dots100}$のうち偶数だけを2乗したリストを作っている．
+
+\tobewritten{内包表記のlet文．}
+
+\section{文字列}
+
+文字型のリストを文字列型と呼び$\mathTypeString$で表す．$\mathTypeString$型は次のように予約語$\mathKeyword{type}$を用いて，\keyword{型シノニム}すなわち型の別名として次のように定義される．
+\begin{equation}
+\mathTypeSynonim{\mathTypeString}{\mathTypeList{\mathTypeChar}}
+\end{equation}
+
+文字列型のリテラルは次のように書く．\footnote{\haskell では \verb|xs = "Hello, World!"| と書く．}
+\begin{equation}
+\mathString{x}=\mathLiteralString{Hello, World!}
+\end{equation}
+
+\tobewritten{Stringに関する有名な関数．}
+
+リストに対するすべての演算は文字列にも適用可能である．
+
+\section{マップと畳み込み}
+
+リスト$\mathList{x}$の各要素に関数$f$を適用して，その結果をリスト$\mathList{z}$に格納するためには次のように\keyword{マップ演算子}$\mathMap$を用いる．\footnote{\haskell では \verb|zs = f `map` xs| と書く．}
+\begin{equation}
+\mathList{z}=f\mathMap\mathList{x}
+\label{eq:map}
+\end{equation}
+式\eqref{eq:map}は次の式と同じである．\footnote{\haskell では \verb/zs = [f x | x <- xs]/ と書く．}
+\begin{equation}
+\mathList{z}=\mathMakeListComplehention{fx}{x\mathIn\mathList{x}}
+\end{equation}
+
+リスト$\mathList{x}$の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．\footnote{\haskell では \verb|z = foldl 0 (+) xs| と書く．}
+\begin{equation}
+z=\mathFold{0}{(\mathAnonymousParameter+\mathAnonymousParameter)}\mathList{x}
+\end{equation}
+\haskell では
+\begin{equation}
+\mathSum=\mathFold{0}{(\mathAnonymousParameter+\mathAnonymousParameter)}
+\end{equation}
+として関数$\mathSum$が定義されている．\footnote{\haskell では関数$\mathSum$を \verb|sum| と書く．}
+
+リスト$\mathList{x}$が$\mathList{x}=[x_0,x_1,\dots,x_n]$のとき，一般に
+\begin{equation}
+\mathFold{a}{\mathAnonymousParameter\mathAnonymousOperator\mathAnonymousParameter}{\mathList{x}}
+=a\mathAnonymousOperator x_0\mathAnonymousOperator x_1\dots x_{n-1}\mathAnonymousOperator x_n
+\end{equation}
+である．ここに$\mathAnonymousOperator$は任意の二項演算子である．
+
+畳み込み演算子には次の右結合バージョンが存在する．\footnote{\haskell では \verb|foldr| を用いる．}
+\begin{equation}
+\mathFoldRight{a}{\mathAnonymousParameter\mathAnonymousOperator\mathAnonymousParameter}{\mathList{x}}
+=a\mathAnonymousOperator\left(x_0\dots\left(x_{n-2}\mathAnonymousOperator\left(x_{n-1}\mathAnonymousOperator x_n\right)\right)\right)
+\end{equation}
+
+\section{IOサバイバルキット2}
+
+1行ごとに3次元ベクトルが並べられた，以下の入力ファイルがあるとする．
+\begin{sourcecode}{input.txt}
+\begin{verbatim}
+1.0 2.0 3.0
+4.5 5.5 6.5
+\end{verbatim}
+\end{sourcecode}
+このようなファイル形式は計算機科学者にとって見慣れたものである．
+
+各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数$\mathNorm$を次のように定義する．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      norm :: [Double] -> Double
+      norm [] = 0.0
+      norm xs = sqrt (sum [x * x | x <- xs])
+\end{footcode}}
+\begin{gather}
+  \mathNorm\mathTypeIs\mathTypeFunction{\mathTypeList{\mathTypeDouble}}{\mathTypeDouble}\\
+  \left\{
+  \begin{aligned}
+    \mathNorm\mathEmptyList&=0.0\\
+    \mathNorm\mathList{x}&=\mathSqrt\left(\mathSum\mathMakeListComplehention{x*x}{x\mathIn\mathList{x}}\right)
+  \end{aligned}
+  \right.
+\end{gather}
+
+入力ファイル全体を受け取るにはアクション$\textsl{getContents}$を用いる．入力ファイルを1行毎のリストにするには関数$\textrm{lines}$を用いる．各行を空白で区切ってリストに格納するには関数$\mathWords$を用いる．
+
+各文字列を数に変換するには次の関数$\mathReadDouble\mathTypeIs\mathTypeFunction{\mathTypeString}{\mathTypeDouble}$を用いる．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      readDouble :: String -> Double
+      readDouble = read
+\end{footcode}}
+\begin{align}
+  \mathReadDouble&\mathTypeIs\mathTypeFunction{\mathTypeString}{\mathTypeDouble}\\
+  \mathReadDouble&=\mathRead
+\end{align}
+関数$\mathReadDouble$は標準関数$\mathRead$に型注釈を付けたものである．
+
+入力ファイルの各行に書かれたベクトルを対象に関数$\mathNorm$を適用して，結果を書き出すには次のように書く．\footnote{\haskell では次のように書く．
+\begin{footcode}
+      main = print 
+        . (norm <$>) 
+        . ((readDouble <$>) <$>) 
+        . (words <$>) 
+        . lines 
+        =<< getContents
+\end{footcode}}
+\begin{multline}
+\mathMain=\mathPrint
+\mathCompose(\mathNorm\mathMap)
+\mathCompose((\mathReadDouble\mathMap)\mathMap)\\
+\mathCompose(\mathWords\mathMap)
+\mathCompose\mathLines
+\mathBind\mathGetContents
+\end{multline}
+
+アクション$\mathPrint$に代えて次の$\mathPrintEach$を用いると，入力と出力を同じ形式にできる．\footnote{\haskell では \verb|printEach xs = print `mapM` xs| と書く．}
+\begin{equation}
+\mathPrintEach\mathList{x}=\mathPrint\mathMapM\mathList{x}
+\end{equation}
+演算子$\mathMapM$はアクション版のマップ演算子である．
+
+\chapter{関手とモナド}
+
+\section{Maybe}
+\label{sec:maybe}
+
+計算は失敗する可能性がある．たとえば
+\begin{equation}
+z=y/x
+\end{equation}
+のときに$x\mathCompareEq0$であったとしたら，この計算は失敗する．プログラムが計算を失敗した場合，たいていのプログラマは大域ジャンプを試みる．しかし大域ジャンプは変数の書き換えを行うことであるから，別の方法が望まれる．\haskell では失敗する可能性がある場合にはMaybeという機構が使える．
+
+いま関数$f$が引数$x$と$y$を取り，$x\neq0$であるならば$y/x$を返すとする．もし$x\mathCompareEq0$であれば失敗を意味する$\mathNothing$（ナッシング）を返すとする．すると関数$f$の定義は次のようになる．
+\begin{equation}
+fxy=\mathIf{x\neq0}{y/x}{\mathNothing}\incomplete
+\end{equation}
+残念ながら上式は不完全である．なぜならば$x\neq0$のときの戻り値は数であるのに対して，$x\mathCompareEq0$のときの戻り値は数ではないからである．そこで
+\begin{equation}
+\mathMonadic{f}xy=\mathIf{x\neq0}{\mathMakeJust{y/x}}{\mathNothing}
+\end{equation}
+とする．ここに$\mathMakeJust{y/x}$は数$y/x$から作られる，Maybeで包まれた数である．\footnote{\haskell では \verb|f x y = if x /= 0 then Just y/x else Nothing| と書く．}
+% ~fの理由．
+
+整数型$\mathTypeInt$をMaybeで包む場合は$\mathTypeMaybe{\mathTypeInt}$と書く．Maybeで包まれた型を持つ変数は$\mathMaybe{x}$のように小さく$?$をつける．例を挙げる．\footnote{\haskell では \verb|xm :: Maybe Int| と書く．}
+\begin{equation}
+\mathMaybe{x}\mathTypeIs\mathTypeMaybe{\mathTypeInt}
+\end{equation}
+
+Maybeで包まれた型を持つ変数は，値を持つか$\mathNothing$（ナッシング）であるかのいずれかである．値をもつ場合は
+\begin{equation}
+\mathMaybe{x}=\mathMakeJust{1}
+\end{equation}
+のように書く．\footnote{\haskell では \verb|xm = Just 1| と書く．}
+
+Maybe変数が値を持たない場合は
+\begin{equation}
+\mathMaybe{x}=\mathNothing
+\end{equation}
+と書く．\footnote{\haskell では \verb|xm = Nothing| と書く．}
+
+一度Maybeになった変数を非Maybeに戻すことは出来ない．
+
+\section{Maybeに対する計算}
+
+Maybe変数に，非Maybe変数を受け取る関数を適用することは出来ない．そこで特別な演算子$\mathFMap$を用いて，次のように計算する．\footnote{\haskell では \verb|zm = (+1) <$> xm| と書く．}
+\begin{equation}
+\mathMaybe{z}=f\mathFMap\mathMaybe{x}
+\end{equation}
+ここに関数$f$は1引数関数で，演算子$\mathFMap$は
+\begin{align}
+\mathMakeJust{fx}&=f\mathFMap\mathMakeJust{x}\\
+\mathNothing&=f\mathFMap\mathNothing
+\end{align}
+と定義される．
+
+\tobewritten{Bindもここへ．}
+
+Returning \emph{List}.
+\begin{equation}
+	.
+\end{equation}
+Returning \emph{Maybe}:\footnote{In \haskell, \verb|f :: Int -> Maybe Int| and \verb|f x = Just x|.}
+\begin{gather}
+f\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
+fx=\mathMakeJust{x}
+\end{gather}
+% Applicative.
+Returning \emph{monad}:
+\begin{gather}
+f\mathTypeIs
+  \mathTypeFunction{\mathTypeInt}{\mathFunctorTypeGeneral{\mathClassGeneral{m}}{\mathTypeA}}\\
+fx=\mathMakeReturn{x}
+\end{gather}
+
+
+Returning monadic value:\footnote{In \haskell, \verb|f :: Monad m => a -> m a|.}
+\begin{equation}
+f\mathTypeIs
+  \mathTypeClass{\mathClassMonad}
+    {\mathClassGeneral{m}}
+    {\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathClassGeneral{m}}{\mathTypeA}}}
+\end{equation}
+
+Monadic function binding:\footnote{In \haskell, \verb|zm = xm >>= f1 >>= f2|.}
+\begin{equation}
+\mathPure{z}=\mathPure{x}\mathBindRight f_1\mathBindRight f_2
+\end{equation}
+where
+\begin{align}
+f_1&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
+f_2&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}.
+\end{align}
+
+Function binding of monadic function and non-monadic function:\footnote{In \haskell,
+\begin{footcode}
+zm = xm >>= f >>= g'
+  where g' w = pure (g w)
+\end{footcode}}
+\begin{equation}
+\mathPure{z}=\mathPure{x}\mathBindRight f\mathBindRight g'
+\mathWhere{g'w=\mathMakePure{gw}}
+\end{equation}
+or
+\begin{equation}
+  \mathPure{z}=\mathPure{x}\mathBindRight(f\mathComposeMonadRight g')
+  \mathWhere{g'w=\mathMakePure{gw}}
+\end{equation}
+where
+\begin{align}
+f&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
+g&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeInt}.
+\end{align}
+Another solution is:
+\begin{equation}
+\mathPure{z}=(\mathLiftM{g}\mathCompose f)\mathBind\mathPure{x}
+\end{equation}
+where $\mathLiftM{g}$ means \verb|liftM g| in \haskell.\footnote{In \haskell, \verb|zm = (liftM g . f) xm|.}
+
+\section{Maybeの中のリスト}
+
+リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
+\begin{equation}
+\mathMaybe{x}=\mathMakeJust{[1,2,\dots,100]}
+\end{equation}
+のとき，リストの各要素に関数$f\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeInt}$を適用するには次のように書く．\footnote{\haskell では \verb|zm = (f <$>) <$> xm| と書く．最初の \verb|<$>| はリストの各要素に関数$f$を適用する演算子，2番目の \verb|<$>| はMaybeの中のリストの各要素に関数$f$を適用する演算子である．}
+\begin{equation}
+\mathMaybe{z}=(f\mathMap)\mathFMap\mathMaybe{x}
+\end{equation}
+
+\section{型パラメタと型クラス}
+
+型をパラメタとして扱うことができる．任意の型を$\mathTypeA$と，ボールド体小文字で書く．ある型$\mathTypeA$の引数を取り，同じ型を返す関数の型は次のように書ける．\footnote{\haskell では \verb|f :: a -> a| と書く．}
+\begin{equation}
+f\mathTypeIs\mathTypeFunctionAA
+\end{equation}
+
+\keyword{型パラメタ}には制約をつけることができる．型の集合を\keyword{型クラス}と呼び，フラクチュール体で書く．たとえば数を表す型クラスは$\mathClassNum$である．型パラメタ$\mathTypeA$が型クラス$\mathClassNum$に属するとき，上述の関数$f$の型注釈は次のようになる．\footnote{\haskell では \verb|f :: Num a => a -> a| と書く．}
+\begin{equation}
+f\mathTypeIs
+  \mathTypeClass{\mathClassNum}
+    {\mathTypeA}
+    {\mathTypeFunctionAA}
+\end{equation}
+ここに$\mathClassNum$型クラスには，整数型$\mathTypeInt$，浮動小数点型$\mathTypeDouble$が含まれる一方，論理型$\mathTypeBool$は含まれない．% ほか...
+
+\tobewritten{型の条件}
+
+型クラスは型に制約を与える．
+
+\tobewritten{\texttt{Num a => x :: a} ならば\texttt{x}が持つべき演算子．}
+
+\tobewritten{型クラスの例．}
+
+\section{関手}
+
+型$\mathTypeA$のリストの変数は
+\begin{equation}
+\mathList{x}\mathTypeIs\mathTypeList{\mathTypeA}
+\end{equation}
+という型注釈を持つ．これは
+\begin{equation}
+\mathList{x}\mathTypeIs\mathFunctorTypeGeneral{[]}{\mathTypeA}
+\end{equation}
+のシンタックスシュガーである．\footnote{\haskell では \verb|xs :: [] a| と書く．}
+
+型$\mathTypeA$のMaybeの変数は
+\begin{equation}
+\mathMaybe{x}\mathTypeIs\mathTypeMaybe{\mathTypeA}
+\end{equation}
+という型注釈を持つ．
+
+普段遣いの関数
+\begin{equation}
+f\mathTypeIs\mathTypeFunctionAA
+\end{equation}
+をリスト変数$\mathList{x}$に適用する場合は
+\begin{equation}
+\mathList{z}=f\mathMap\mathList{x}
+\end{equation}
+とする．同じく関数$f$をMaybe変数$\mathMaybe{x}$に適用する場合は
+\begin{equation}
+\mathMaybe{z}=f\mathFMap\mathMaybe{x}
+\end{equation}
+とする．
+
+リストもMaybeも元の型$\mathTypeA$から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは\keyword{関手}という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを$\mathClassFunctor$で表す．関手型クラスの$\mathTypeA$型の変数を次のように型注釈する．\footnote{\haskell では \verb|xm :: Functor f => f a| と書く．}
+\begin{equation}
+\mathPure{x}\mathTypeIs
+  \mathTypeClass{\mathClassFunctor}
+    {\mathClassF}
+    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}
+\end{equation}
+
+型クラス$\mathClassFunctor$に属する型は$\mathFMap$演算子を必ず持つ．演算子$\mathFMap$は次の形を持つ．\footnote{\haskell では \verb|zm = f <$> xm| と書く．}
+\begin{equation}
+\mathPure{z}=f\mathFMap\mathPure{x}
+\end{equation}
+演算子$\mathFMap$の型は次のとおりである．
+\begin{equation}
+\mathAnonymousParameter\mathFMap\mathAnonymousParameter
+  \mathTypeIs
+    \mathTypeClass{\mathClassFunctor}{\mathClassGeneral{f}}{%
+    \mathTypeFunctionII{\left(\mathTypeFunctionAB\right)}
+    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}
+    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeB}}%
+    }
+\end{equation}
+
+もし変数$\mathPure{x}$の型がリストであれば
+\begin{equation}
+\mathFMap=\mathMap
+\end{equation}
+であると解釈する．
+
+\section{関手としての関数}
+
+\tobewritten{移動する．}
+
+\begin{equation}
+f\mathTypeIs\mathTypeFunction{\mathTypeGeneral{q}}{\mathTypeGeneral{r}}
+\end{equation}
+
+Function as a functor:\footnote{In \haskell, \verb|f :: ((->) r) q|.}
+\begin{equation}
+f\mathTypeIs\left(\mathTypeFunction{\mathAnonymousTypeParameter}{\mathTypeGeneral{r}}\right)\mathTypeGeneral{q}
+=\mathFunctorTypeGeneral{\left(\mathTypeFunction{\mathAnonymousTypeParameter}{\mathTypeGeneral{r}}\right)}
+  {\mathTypeGeneral{q}}
+\end{equation}
+
+Thus,
+\begin{equation}
+f_2\mathCompose f_1\equiv f_2\mathFMap f_1
+\end{equation}
+
+\begin{align}
+\mathId\mathCompose f&=\mathId f=f\\
+(h\mathCompose g)\mathCompose f&=((h\mathCompose)\mathCompose(g\mathCompose))f\\
+&=h\mathCompose(g\mathCompose f)
+\end{align}
+
+\chapter{アプリカティブ関手}
+
+\section{アプリカティブ関手}
+
+演算子$\mathFMap$は関手型クラスの型の値に1引数関数を適用することを可能にした．一方で2引数関数を適用するのは若干面倒である．いま関数$f$が2引数をとるとし，関手型クラスの型の変数$\mathPure{x}$と$\mathPure{y}$があるとする．関数$f$に変数$\mathPure{x}$を部分適用して関数$f'$すなわち
+\begin{equation}
+f'=f\mathFMap\mathPure{x}
+\end{equation}
+を作ると，定義によって関数$f'$は関手型クラスの型の変数になる．そこで，関手型クラスの型の関数を関手型クラスの型の変数に適用する新しい演算子が必要になる．このような演算子を\keyword{アプリカティブマップ演算子}と呼び$\mathApplicativeMap$で表す．アプリカティブマップ演算子を用いると
+\begin{align}
+\mathPure{z}&=f'\mathApplicativeMap\mathPure{y}\\
+&=f\mathFMap\mathPure{x}\mathApplicativeMap\mathPure{y}
+\label{eq:fmap-and-amap}
+\end{align}
+と書ける．
+
+任意の変数または関数を関手型クラスの型に入れる\keyword{ピュア演算子}があり，次のように書く．\footnote{\haskell では \verb|zm = pure x| と書く．}
+\begin{equation}
+\mathPure{z}=\mathMakePure{x}
+\end{equation}
+なおピュア演算子の名称は「純粋(pure)」であるが，意味合いはむしろ「不純(impure)」のほうが近い．
+
+ピュア演算子を用いると，式\eqref{eq:fmap-and-amap}は
+\begin{equation}
+\mathPure{z}=\mathMakePure{f}\mathApplicativeMap\mathPure{x}\mathApplicativeMap\mathPure{y}
+\label{eq:applicative-style}
+\end{equation}
+と書ける．\footnote{\haskell では \verb|zm = (pure f) <*> xm <*> ym| と書く．}
+
+式\eqref{eq:applicative-style}はかつて
+\begin{equation}
+\mathPure{z}=\mathApplicativeFuncCall{f\,\mathPure{x}\,\mathPure{y}}
+\end{equation}
+のように書くことも提案されたが，普及はしなかった．\footnote{現在の\haskell では \verb|zm = liftA2 f xm ym| と書くことで代用されている．元の提案は \verb/zm = [|f xm ym|]/ であった．}
+
+ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを\keyword{アプリカティブ関手}と呼び$\mathClassApplicative$で表す．
+
+いま関数$f\mathTypeIs\mathTypeFunctionAB$に対して，新たな関数$\mathPure{f}$ただし
+\begin{equation}
+\mathPure{f}=\mathMakePure{f}
+\end{equation}
+を作ったとすると，関数$\mathPure{f}$は
+\begin{equation}
+  \mathPure{f}\mathTypeIs
+  \mathTypeClass{\mathClassApplicative}
+    {\mathClassF}
+    {\mathFunctorTypeGeneral{\mathClassF}}
+    {\mathTypeFunctionAB}
+\end{equation}
+という型を持つ．アプリカティブマップ演算子は変数
+\begin{equation}
+\mathPure{x}\mathTypeIs\mathTypeClass{\mathClassApplicative}{\mathClassF}{\mathFunctorTypeGeneral{\mathClassF}}{\mathTypeA}
+\end{equation}
+に対して，関数$\mathPure{f}$を
+\begin{equation}
+\mathPure{z}=\mathPure{f}\mathApplicativeMap\mathPure{x}
+\end{equation}
+のように作用させる．変数$\mathPure{z}$の型は
+\begin{equation}
+  \mathPure{z}\mathTypeIs\mathTypeClass{\mathClassApplicative}{\mathClassF}{\mathFunctorTypeGeneral{\mathClassF}}{\mathTypeB}
+\end{equation}
+である．
+
+
+
+\section{モナド}
+
+
+\section{種}
+
+\begin{equation}
+\mathTypeFunction{\mathAnyKind}{\mathAnyKind}
+\end{equation}
+
+\section{Data}
+
+Data:\footnote{In \haskell,
+\begin{footcode}
+data Suit = Spade | Heart | Club | Diamond
+\end{footcode}}
+\begin{equation}
+\mathData{\mathTypeGeneral{Suit}}
+  {\mathConstructor{Spade}\mathOr\mathConstructor{Heart}\mathOr\mathConstructor{Club}\mathOr\mathConstructor{Diamond}}
+\end{equation}
+
+Data with parameters:\footnote{In \haskell,
+\begin{footcode}
+data V2 = V2 { x :: Int, y :: Int}
+\end{footcode}
+or \verb|data V2 = V2 Int Int|.}
+\begin{equation}
+\mathData{\mathTypeGeneral{V^2}}
+  {\mathConstructor{V^2}\left\{x\mathTypeIs\mathTypeInt,y\mathTypeIs\mathTypeInt\right\}}
+\end{equation}
+
+\section{型クラスとインスタンス}
+
+\section{IOモナド}
+
+IO example:\footnote{In \haskell, \verb|main = getLine >>= print >> return 0|.}
+\begin{equation}
+\mathMain=\mathGetLine\mathBindRight\mathPrint\mathNext\mathMakeReturn{0}
+\end{equation}
+
+\section{Do構文}
+
+Do notation:\footnote{In \haskell, \verb|z = do {x' <- x; y' <- y; f x'; g y'}|.}
+\begin{equation}
+\mathPure{z}=\mathDo{x'\leftarrow\mathPure{x};y'\leftarrow\mathPure{y};fx';gy'}
+\end{equation}
+
+\dbend
+
+\section{モノイド}
+
+任意の関数$f$に対して
+\begin{equation}
+\mathId f=f
+\end{equation}
+なる関数$\mathId$があり，かつ任意の関数$f,g,h$に対して
+\begin{equation}
+(h\mathCompose g)\mathCompose f=h\mathCompose(g\mathCompose f)
+\end{equation}
+が成り立つとする．このとき関数は\keyword{モノイド}であるという．
+
+\tobewritten{一般のモノイド．}
+
+\section{モノイド則}
+型$\mathTypeA$の変数$x,y,z\mathTypeIs\mathTypeA$について，特別な変数$\mathIdentity\mathTypeIs\mathTypeA$および二項演算子$\mathAnyBinaryOperator$ただし$x\mathAnyBinaryOperator y\mathTypeIs\mathTypeA$があり，
+\begin{align}
+\mathIdentity\mathAnyBinaryOperator x&=x\dots\text{（単位元の存在）}\\
+(x\mathAnyBinaryOperator y)\mathAnyBinaryOperator z&=x\mathAnyBinaryOperator(y\mathAnyBinaryOperator z)\dots\text{（結合律）}
+\end{align}
+であるとき，組み合わせ$(\mathTypeA,\mathAnyBinaryOperator,\mathIdentity)$をモノイドと呼ぶ．
+
+組み合わせ$(\mathTypeInt,+,0)$や$(\mathTypeInt,\times,1)$はモノイドである．
+
+同じ型から同じ型への1引数関数を改めて$\mathTypeFunctionAA$で表し，特別な変数$\mathIdentity$を関数$\mathId$，二項演算子を$\mathCompose$とすると以下の関係が成り立つ．
+\begin{align}
+\mathId\mathCompose f&=f\dots\text{（単位元の存在）}\\
+(h\mathCompose g)\mathCompose f&=h\mathCompose(g\mathCompose f)\dots\text{（結合律）}
+\end{align}
+そこで組み合わせ$(\mathTypeFunctionAA,\mathCompose,\mathId)$はモノイドであると言える．
+
+\section{関手則}
+
+関手のマップ演算子$\mathFMap$は以下の\keyword{関手則}に従う．
+\begin{align}
+\mathId\mathFMap\mathPure{x}&=\mathId\mathPure{x}\\
+(g\mathCompose f)\mathFMap\mathPure{x}&=((g\mathFMap)\mathCompose(f\mathFMap))\mathPure{x}\\
+&=g\mathFMap(f\mathFMap\mathPure{x})
+\end{align}
+
+関手則は\keyword{関手（数学）}に由来する．
+
+\keyword{圏}$\mathCategory{C}$の\keyword{対象}を$\mathObject{X}$とする．圏$\mathCategory{D}$の対象は関手（数学）$\mathFunctor{F}$によって対象$\mathObject{X}$と関係づけられる．圏$\mathCategory{C}$における\keyword{射}$f:\mathObject{X}\rightarrow\mathObject{Y}$が$\mathFunctor{F}f:\mathFunctor{F}\mathObject{X}\rightarrow\mathFunctor{F}\mathObject{Y}$に対応し，次の関係を満たす．
+\begin{itemize}
+\item $\mathObject{X}\in\mathCategory{C}$に対して$\mathFunctor{F}\mathId_{\mathObject{X}}=\mathId_{\mathFunctor{F}\mathObject{X}}$
+\item $f:\mathObject{X}\rightarrow\mathObject{Y}$および$g:\mathObject{Y}\rightarrow\mathObject{Z}$に対して$\mathFunctor{F}(g\mathCompose f)=(\mathFunctor{F}g)\mathCompose(\mathFunctor{F}f)$
+\end{itemize}
+
+いま
+\begin{align}
+\mathId_{\mathObject{X}},\mathId_{\mathFunctor{F}\mathObject{X}}&\rightarrow\mathId\\
+f\mathFMap&\rightarrow\mathFunctor{F}f
+\end{align}
+と対応付けると，関手（数学）が満たす法則と関手則は一致する．
+
+\section{アプリカティブ関手則}
+
+アプリカティブ関手のマップ演算子$\mathApplicativeMap$は以下の規則に従う．
+\begin{align}
+\mathMakePure{\mathId}\mathApplicativeMap\mathPure{x}&=\mathPure{x}\\
+\mathMakePure{f}\mathApplicativeMap\mathMakePure{x}&=\mathMakePure{fx}\\
+\mathPure{f}\mathApplicativeMap\mathMakePure{x}&=\mathMakePure{\mathAnonymousParameter\mathApply x}\mathApplicativeMap\mathPure{f}\\
+\mathMakePure{\mathAnonymousParameter\mathCompose\mathAnonymousParameter}\mathApplicativeMap\mathPure{h}\mathApplicativeMap\mathPure{g}\mathApplicativeMap\mathPure{f}
+&=\mathPure{h}\mathApplicativeMap(\mathPure{g}\mathApplicativeMap\mathPure{f})
+\end{align}
+
+\section{モナド則}
+
+モナドのマップ演算子$\mathBind$は以下の規則に従う．
+\begin{align}
+\mathMonadic{f}\mathBind\mathMakeReturn{x}&=\mathMonadic{f}x\\
+\mathMakeReturn{\mathAnonymousParameter}\mathBind\mathPure{x}&=\mathPure{x}\\
+(\mathMonadic{g}\mathBind\mathMonadic{f})\mathBind\mathPure{x}&=\mathMonadic{g}\mathBind(\mathMonadic{f}\mathBind\mathPure{x})
+\end{align}
+% つまり，組み合わせ$(\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathTypeGeneral{m}}{\mathTypeA}},\mathMakePure{\mathAnonymousParameter},\mathBind)$はモノイドである． -- bindの両辺の型が一致しないのでモノイドではない．
+
+次の\keyword{クライスリスター}すなわち
+\begin{equation}
+\mathKleisliStar{f}=(\mathMonadic{f}\mathBind\mathAnonymousParameter)
+\end{equation}
+を用いると，モナド則は次のように書き換えられる．
+\begin{align}
+\left(\mathKleisliStar{f}\right)\mathMakePure{x}&=\mathMonadic{f}x\\
+\mathKleisliStar{\left(\mathMakePure{\mathAnonymousParameter}\right)}\mathPure{x}&=\mathPure{x}\\
+\mathKleisliStar{\left(\mathKleisliStar{g}\mathMonadic{f}\right)}\mathPure{x}&=\mathKleisliStar{g}\left(\mathKleisliStar{f}\mathPure{x}\right)
+\end{align}
+
+% \begin{tikzpicture}[nodes = {text depth = 1ex, text height = 2ex}]
+%   \graph{ tex -> dvi -> ps -> pdf,
+%   bib -> bbl,
+%   bbl -> dvi};
+% \end{tikzpicture}
+
+\section{クラスの定義}
+
+アプリカティブ関手は関手の拡張である．
+
+% class Functor f => Applicative f where
+% pure :: a -> f a
+% (<*>) :: f (a -> b) -> f a -> f b
+
+\begin{gather}
+  \mathClass{\mathClassFunctor}{\mathClassF}{\mathClassApplicative}{\mathClassF}\\
+  \begin{aligned}
+    \mathMakePure{\mathAnonymousParameter}
+    &\mathTypeIs\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}\\
+    \mathAnonymousParameter\mathApplicativeMap\mathAnonymousParameter
+    &\mathTypeIs\mathTypeFunctionII{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeFunctionAB}}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeB}}
+  \end{aligned}
+\end{gather}
+
+*/
 
 = Test Part
 
