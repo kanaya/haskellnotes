@@ -48,11 +48,13 @@
 
 // Keyword.
 #let keyword(x) = math.mono(x)
-#let kwif = keyword("if")
-#let kwthen = keyword("then")
+#let kwcase = keyword("case")
 #let kwelse = keyword("else")
+#let kwif = keyword("if")
 #let kwin = keyword("in")
 #let kwlet = keyword("let")
+#let kwof = keyword("of")
+#let kwthen = keyword("then")
 #let kwwhere = keyword("where")
 
 // Container.
