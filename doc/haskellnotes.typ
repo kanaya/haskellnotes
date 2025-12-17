@@ -504,11 +504,14 @@ $ s = haskell.constantstring("Hello, World!") $
 
 == マップと畳み込み
 
-リスト $haskell.list(x)$ の各要素に関数 $f$ を適用して，その結果をリスト $haskell.list(z)$ に格納するためには次のように#keyword[マップ演算子] $*$ を用いる．#footnote[Haskell では `zs = f <$> xs` と書く．]
+リスト $haskell.list(x)$ の各要素に関数 $f$ を適用して，その結果をリスト $haskell.list(z)$ に格納するためには次のように#keyword[マップ演算子] $*$ を用いる．#footnote[Haskellでは `zs = f <$> xs` と書く．]
 $ haskell.list(z) = f * haskell.list(x) $<map>
 
 @map は次の式と同じである．#footnote[Haskell では `zs = [f x | x <- xs]` と書く．]
 $ haskell.list(z) = [f x | x in haskell.list(x)] $
+
+リスト $haskell.list(x)$ の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskellでは `z = foldl 0 (+) xs` と書く．]
+$ z = union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) haskell.list(x) $
 
 
 == IOサバイバルキット2
@@ -536,10 +539,7 @@ $ haskell.list(z) = [f x | x in haskell.list(x)] $
 
 /* 
 
-
-リスト$\mathList{x}$の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskell では `z = foldl 0 (+) xs| と書く．}
 \begin{equation}
-z=\mathFold{0}{(\mathAnonymousParameter+\mathAnonymousParameter)}\mathList{x}
 \end{equation}
 Haskell では
 \begin{equation}
