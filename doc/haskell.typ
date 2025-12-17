@@ -7,7 +7,7 @@
 
 // Constant.
 
-#let constantstring(x) = { "\"" + x + "\"" }
+#let constantstring(x) = { "\"" + math.mono(x) + "\"" }
 
 // Parameter.
 #let parameter(x) = x
