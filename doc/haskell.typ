@@ -21,8 +21,10 @@
 #let fib = longfunction("fib")
 #let id = longfunction("id")
 #let lines = longfunction("lines")
+#let norm = longfunction("norm")
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
+#let sqrt = longfunction("sqrt")
 #let words = longfunction("words")
 
 // Type parameter.

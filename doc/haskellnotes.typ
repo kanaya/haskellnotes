@@ -531,15 +531,15 @@ $ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.
 ```]
 このようなファイル形式は計算機科学者にとって見慣れたものである．
 
-各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数 $norm$ を次のように定義する．#footnote[Haskell では次のように書く．
+各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数 $haskell.norm$ を次のように定義する．#footnote[Haskell では次のように書く．
 ```haskell
-      norm :: [Double] -> Double
+      norm :: [haskell.Double] -> haskell.Double
       norm [] = 0.0
       norm xs = sqrt (sum [x * x | x <- xs])
 ```]
-$ &norm colon.double [haskell.Double] -> haskell.Double\
- &norm emptyset = 0.0\
- &norm haskell.list(x) = sqrt (sum [x * x | x in haskell.list(x)]) $
+$ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
+ &haskell.norm emptyset = 0.0\
+ &haskell.norm haskell.list(x) = haskell.sqrt (sum [x * x | x in haskell.list(x)]) $
 
 入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．
 
