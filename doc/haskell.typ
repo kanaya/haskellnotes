@@ -21,10 +21,11 @@
 
 // Type name.
 #let typename(x) = math.bold(x)
-#let Int = typename("Int")
-#let Double = typename("Double")
 #let Bool = typename("Bool")
 #let Char = typename("Char")
+#let Double = typename("Double")
+#let Int = typename("Int")
+#let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 
 // Type class.
 #let typeclass(x) = math.frak(x)
