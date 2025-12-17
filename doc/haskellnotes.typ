@@ -295,7 +295,7 @@ $<square>
 $ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
 ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は「#keyword[モナド]」の章で述べる．
 
-#haskell.block[Haskell では @square と@first-main をまとめて次のように書く．
+#haskell.block[Haskell では@square と@first-main をまとめて次のように書く．
 #sourcecode[```haskell
 f :: Double -> Double
 f x = x * x
@@ -477,7 +477,7 @@ $ &f colon.double [haskell.Int] -> haskell.Int\
   &f emptyset = 0\
   &f (x : haskell.list(x)) = x $
 
-$f emptyset$ が $0$ を返すのは不自然だが，関数$f$の戻り型を整数型としているためこれは仕方がない．エラーを考慮する場合は @maybe で述べるMaybeを使う必要がある．
+$f emptyset$ が $0$ を返すのは不自然だが，関数$f$の戻り型を整数型としているためこれは仕方がない．エラーを考慮する場合は@maybe で述べるMaybeを使う必要がある．
 
 == 内包表記
 
