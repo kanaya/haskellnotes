@@ -45,6 +45,7 @@
 #let getLine = action("getLine")
 
 // Binary operator.
+#let anonymousoperator = math.class("binary",math.square.stroked)
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.dollar)
 #let map = math.ast
