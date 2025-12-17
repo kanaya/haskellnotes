@@ -468,7 +468,7 @@ $ haskell.list(x) = [1, 2...] $
 リストとリストをつなぐ場合は#keyword[リスト結合演算子] $smash$ を用いる．#footnote[Haskellでは `zs = xs ++ ys` と書く．]
 $ haskell.list(z) = haskell.list(x) smash haskell.list(y) $
 
-関数はリストを受け取ることができる．次の書き方では，関数 $f$ は整数リストの最初の要素 $x$ と残りの要素 $haskell.list(x)$ を別々に受け取り，先頭要素だけを返す．
+関数はリストを受け取ることができる．次の書き方では，関数 $f$ は整数リストの最初の要素 $x$ と残りの要素 $haskell.list(x)$ を別々に受け取り，先頭要素だけを返す．#footnote[この関数 $f$ の実装はHaskellの `head` 関数と同じである．Haskellでは `head` 関数の使用は非推奨となっており，代わりに `headMaybe` 関数が推奨されている．]
 $ &f colon.double [haskell.Int] -> haskell.Int\
   &f (x : haskell.list(x)) = x $<list-head>
 
