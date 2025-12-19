@@ -56,9 +56,9 @@
   table.header([*種類*], [*字体・表記法*], [*例*]),
   [変数・関数], [イタリック（1文字）], $x, f$,
   [有名な変数・関数・定数], [ローマン・大文字], $haskell.first, haskell.id, haskell.otherwise$,
-  [リスト変数], [変数名にsをつける], $haskell.list(x)$,
-  [Maybe変数], [変数名に $?$ をつける], $haskell.maybe(x)$,
-  [一般のコンテナ変数], [変数名に $*$ をつける], $haskell.ctxt(x)$,
+  [リスト変数], [変数名にsをつける], $haskell.xs$,
+  [Maybe変数], [変数名に $?$ をつける], $haskell.xm$,
+  [一般のコンテナ変数], [変数名に $*$ をつける], $haskell.xc$,
   // [コンテナに入れる関数], [関数名に $dagger$ をつける], $haskell.monadic(f)$,
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
@@ -66,10 +66,10 @@
   [有名な値コンストラクタ], [特別なカッコで包む], $[x], haskell.pure(y)$,
   [アクション], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
-  [型（引数なし）], [ボールドイタリック（1文字）], $haskell.typename(a)$,
+  [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
   [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
   [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
-  [有名な型（引数あり）], [特別なカッコで包む], $[haskell.typename(a)], [haskell.Int]$,
+  [有名な型（引数あり）], [特別なカッコで包む], $[haskell.a], [haskell.Int]$,
   [型クラス], [フラクチュール], $haskell.Num$,
   [キーワード], [固定幅], $haskell.kwlet$,
   [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
@@ -448,39 +448,39 @@ $ z colon.double haskell.Unit $
 
 任意の型について，その型の要素を並べた列を#keyword[リスト]と呼ぶ．
 
-ある変数がリストであるとき，その変数がリストであることを忘れないように $haskell.list(x)$ と小さく $"s"$ を付けることにする．
+ある変数がリストであるとき，その変数がリストであることを忘れないように $haskell.xs$ と小さく $"s"$ を付けることにする．
 
 #keyword[空リスト]は次のように定義する．#footnote[Haskellでは `xs = []` と書く．]
-$ haskell.list(x) = emptyset $
+$ haskell.xs = emptyset $
 
 任意のリストは次のように#keyword[リスト構築演算子] $:$ を用いて構成する．
-$ haskell.list(x) = x_0:x_1:x_2:...:emptyset $
+$ haskell.xs = x_0:x_1:x_2:...:emptyset $
 
 リストの型はその構成要素の型をブラケットで包んで表現する．#footnote[Haskell では `xs :: [Int]` と書く．]
-$ haskell.list(x) colon.double [haskell.Int] $
+$ haskell.xs colon.double [haskell.Int] $
 
 リストは次のように構成することもできる．#footnote[Haskellでは `xs = [1, 2..100]` と書く．ピリオドの数に注意しよう．]
-$ haskell.list(x) = [1, 2...100] $
+$ haskell.xs = [1, 2...100] $
 
 なお次のような#keyword[無限リスト]を構成しても良い．#footnote[Haskellでは `xs = [1, 2..]` と書く．]
-$ haskell.list(x) = [1, 2...] $
+$ haskell.xs = [1, 2...] $
 
 リストとリストをつなぐ場合は#keyword[リスト結合演算子] $smash$ を用いる．#footnote[Haskellでは `zs = xs ++ ys` と書く．]
-$ haskell.list(z) = haskell.list(x) smash haskell.list(y) $
+$ haskell.zs = haskell.xs smash haskell.ys $
 
-関数はリストを受け取ることができる．次の書き方では，関数 $f$ は整数リストの最初の要素 $x$ と残りの要素 $haskell.list(x)$ を別々に受け取り，先頭要素だけを返す．#footnote[この関数 $f$ の実装はHaskellの `head` 関数と同じである．Haskellでは `head` 関数の使用は非推奨となっており，代わりに `headMaybe` 関数が推奨されている．]
+関数はリストを受け取ることができる．次の書き方では，関数 $f$ は整数リストの最初の要素 $x$ と残りの要素 $haskell.xs$ を別々に受け取り，先頭要素だけを返す．#footnote[この関数 $f$ の実装はHaskellの `head` 関数と同じである．Haskellでは `head` 関数の使用は非推奨となっており，代わりに `headMaybe` 関数が推奨されている．]
 $ &f colon.double [haskell.Int] -> haskell.Int\
-  &f (x : haskell.list(x)) = x $<list-head>
+  &f (x : haskell.xs) = x $<list-head>
 
 ただし，引数のリストが空リストである可能性を考慮して，@list-head は次のように書き直すべきである．
 $ &f colon.double [haskell.Int] -> haskell.Int\
   &f emptyset = 0\
-  &f (x : haskell.list(x)) = x $
+  &f (x : haskell.xs) = x $
 
 $f emptyset$ が $0$ を返すのは不自然だが，関数$f$の戻り型を整数型としているためこれは仕方がない．エラーを考慮する場合は@maybe で述べるMaybeを使う必要がある．
 
 リストのリストは次のように構成できる．#footnote[Haskellでは `xss = [[1,2],[3,4]]` と書く．]
-$ haskell.listlist(x) = [[1,2],[3,4]] $
+$ haskell.xss = [[1,2],[3,4]] $
 
 == 内包表記
 
@@ -488,7 +488,7 @@ $ haskell.listlist(x) = [[1,2],[3,4]] $
 ```haskell
       xs = [x^2 | x <- [1, 2..100], x > 50]
 ```]
-$ haskell.list(x) = [x^2 | x in [1,2...100], haskell.even x] $
+$ haskell.xs = [x^2 | x in [1,2...100], haskell.even x] $
 
 関数 $haskell.even$ は引数が偶数の場合にだけ $haskell.True$ を返す関数である．この例では数列 $[1,2...100]$ のうち偶数だけを2乗したリストを作っている．
 
@@ -504,22 +504,22 @@ $ s = haskell.constantstring("Hello, World!") $
 
 == マップと畳み込み
 
-リスト $haskell.list(x)$ の各要素に関数 $f$ を適用して，その結果をリスト $haskell.list(z)$ に格納するためには次のように#keyword[マップ演算子] $*$ を用いる．#footnote[Haskellでは `zs = f <$> xs` と書く．]
-$ haskell.list(z) = f * haskell.list(x) $<map>
+リスト $haskell.xs$ の各要素に関数 $f$ を適用して，その結果をリスト $haskell.zs$ に格納するためには次のように#keyword[マップ演算子] $*$ を用いる．#footnote[Haskellでは `zs = f <$> xs` と書く．]
+$ haskell.zs = f * haskell.xs $<map>
 
 @map は次の式と同じである．#footnote[Haskell では `zs = [f x | x <- xs]` と書く．]
-$ haskell.list(z) = [f x | x in haskell.list(x)] $
+$ haskell.zs = [f x | x in haskell.xs] $
 
-リスト $haskell.list(x)$ の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskellでは `z = foldl 0 (+) xs` と書く．]
-$ z &= union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) haskell.list(x)\
+リスト $haskell.xs$ の各要素を先頭から順番に二項演算子を適用して，その結果を得るには畳み込み演算子を用いる．たとえば整数リストの和は次のように書ける．#footnote[Haskellでは `z = foldl 0 (+) xs` と書く．]
+$ z &= union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) haskell.xs\
 &= a + x_0 + x_1 + ... + x_n $
 
 Haskellでは $sum = union_0^(lozenge.stroked.medium+lozenge.stroked.medium)$ として関数 $sum$ が定義されている．#footnote[Haskellでは $sum$ 関数を `sum` と書く．]
 
-リスト $haskell.list(x)$ が $haskell.list(x)=[x_0,x_1,...,x_n]$ のとき，一般に $union_a^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) haskell.list(x) = a haskell.anonymousoperator x_0 haskell.anonymousoperator x_1 haskell.anonymousoperator ... haskell.anonymousoperator x_n$ が成り立つ．ここに $haskell.anonymousoperator$ は任意の二項演算子である．
+リスト $haskell.xs$ が $haskell.xs=[x_0,x_1,...,x_n]$ のとき，一般に $union_a^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) haskell.xs = a haskell.anonymousoperator x_0 haskell.anonymousoperator x_1 haskell.anonymousoperator ... haskell.anonymousoperator x_n$ が成り立つ．ここに $haskell.anonymousoperator$ は任意の二項演算子である．
 
 畳み込み演算子には次の右結合バージョンが存在する．#footnote[Haskellでは `foldr` を用いる．]
-$ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) haskell.list(x)\
+$ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) haskell.xs\
 &= a haskell.anonymousoperator (x_0 haskell.anonymousoperator (x_1 haskell.anonymousoperator ... haskell.anonymousoperator (x_(n-2) haskell.anonymousoperator (x_(n-1) haskell.anonymousoperator x_n))...)) $
 
 == IOサバイバルキット2
@@ -539,7 +539,7 @@ $ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.
 ```]
 $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
  &haskell.norm emptyset = 0.0\
- &haskell.norm haskell.list(x) = haskell.sqrt (sum [x * x | x in haskell.list(x)]) $
+ &haskell.norm haskell.xs = haskell.sqrt (sum [x * x | x in haskell.xs]) $
 
 入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．
 
@@ -570,7 +570,7 @@ $ haskell.main
     haskell.bind haskell.getContents $
 
 アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach xs = mapM print xs` と書く．]
-$ haskell.printEach haskell.list(x) = haskell.print haskell.mapM haskell.list(x) $
+$ haskell.printEach haskell.xs = haskell.print haskell.mapM haskell.xs $
 
 演算子 $haskell.mapM$ はアクション版のマップ演算子である．
 
@@ -590,19 +590,19 @@ $ f x y = haskell.kwif x != 0 haskell.kwthen y / x haskell.kwelse haskell.Nothin
 $ f x y = haskell.kwif x != 0 haskell.kwthen haskell.Just((frac(y, x, style: "horizontal"))) haskell.kwelse haskell.Nothing $
 とする．ここに $haskell.Just((frac(y, x, style: "horizontal")))$ は数 $frac(y, x, style: "skewed")$ から作られる，Maybeで包まれた数である．#footnote[Haskell では `f x y = if x /= 0 then Just y / x else Nothing` と書く．]
 
-整数型 $haskell.Int$ をMaybeで包む場合は $haskell.MaybeType(haskell.Int)$ と書く．Maybeで包まれた型を持つ変数は $haskell.maybe(x)$ のように小さく $?$ をつける．例を挙げる．#footnote[Haskellでは `xm :: Maybe Int` と書く．]
-$ haskell.maybe(x) colon.double haskell.MaybeType(haskell.Int) $
+整数型 $haskell.Int$ をMaybeで包む場合は $haskell.MaybeType(haskell.Int)$ と書く．Maybeで包まれた型を持つ変数は $haskell.xm$ のように小さく $?$ をつける．例を挙げる．#footnote[Haskellでは `xm :: Maybe Int` と書く．]
+$ haskell.xm colon.double haskell.MaybeType(haskell.Int) $
 
-Maybeで包まれた型を持つ変数は，値を持つか $haskell.Nothing$ （ナッシング）であるかのいずれかである．値をもつ場合は $haskell.maybe(x) = haskell.Just(1)$ のように書く．#footnote[Haskellでは `xm = Just 1` と書く．]
+Maybeで包まれた型を持つ変数は，値を持つか $haskell.Nothing$ （ナッシング）であるかのいずれかである．値をもつ場合は $haskell.xm = haskell.Just(1)$ のように書く．#footnote[Haskellでは `xm = Just 1` と書く．]
 
-Maybe変数が値を持たない場合は $haskell.maybe(x) = haskell.Nothing$ のように書く．#footnote[Haskellでは `xm = Nothing` と書く．]
+Maybe変数が値を持たない場合は $haskell.xm = haskell.Nothing$ のように書く．#footnote[Haskellでは `xm = Nothing` と書く．]
 
 一度Maybeになった変数を非Maybeに戻すことは出来ない．
 
 == Maybeに対する計算
 
 Maybe変数に，非Maybe変数を受け取る関数を適用することは出来ない．そこで特別な演算子 $haskell.fmap$ を用いて，次のように計算する．#footnote[Haskellでは `zm = (+1) <$> xm` と書く．]
-$ haskell.maybe(z) = f haskell.fmap haskell.maybe(x) $
+$ haskell.zm = f haskell.fmap haskell.xm $
 
 ここに関数$f$は1引数関数で，演算子 $haskell.fmap$ は次のように定義される．
 $ haskell.Just((f x)) &= f haskell.fmap haskell.Just(x) \
@@ -612,16 +612,16 @@ haskell.Nothing &= f haskell.fmap haskell.Nothing $
 
 リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
 
-$haskell.maybe(x) = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
-$ haskell.maybe(z) = (f haskell.map) haskell.fmap haskell.maybe(x) $
+$haskell.xm = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
+$ haskell.zm = (f haskell.map) haskell.fmap haskell.xm $
 
 == 型パラメタと型クラス
 
-型をパラメタとして扱うことができる．任意の型を $haskell.typename(a)$ と，ボールド体小文字で書く．ある型 $haskell.typename(a)$の引数を取り，同じ型を返す関数の型は次のように書ける．#footnote[Haskellでは `f :: a -> a` と書く．]
-$ f colon.double haskell.typename(a) -> haskell.typename(a) $
+型をパラメタとして扱うことができる．任意の型を $haskell.a$ と，ボールド体小文字で書く．ある型 $haskell.a$の引数を取り，同じ型を返す関数の型は次のように書ける．#footnote[Haskellでは `f :: a -> a` と書く．]
+$ f colon.double haskell.a -> haskell.a $
 
-#keyword[型パラメタ]には制約をつけることができる．型の集合を#keyword[型クラス]と呼び，フラクチュール体で書く．たとえば数を表す型クラスは $haskell.Num$ である．型パラメタ $haskell.typename(a)$ が型クラス $haskell.Num$ に属するとき，上述の関数 $f$ の型注釈は次のようになる．#footnote[Haskellでは `f :: Num a => a -> a` と書く．]
-$ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) -> haskell.typename(a) $
+#keyword[型パラメタ]には制約をつけることができる．型の集合を#keyword[型クラス]と呼び，フラクチュール体で書く．たとえば数を表す型クラスは $haskell.Num$ である．型パラメタ $haskell.a$ が型クラス $haskell.Num$ に属するとき，上述の関数 $f$ の型注釈は次のようになる．#footnote[Haskellでは `f :: Num a => a -> a` と書く．]
+$ f colon.double haskell.Num supset haskell.a ==> haskell.a -> haskell.a $
 
 ここに $haskell.Num$ 型クラスには，整数型 $haskell.Int$，浮動小数点型 $haskell.Double$ が含まれる一方，論理型 $haskell.Bool$ は含まれない．
 
@@ -629,10 +629,45 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 == 関手
 
-型 $haskell.typename(a)$ のリストの変数は $haskell.list(x) colon.double [haskell.typename(a)]$ という型注釈を持つ．これは $haskell.list(x) colon.double haskell.typeconstructor1([], haskell.typename(a))$ のシンタックスシュガーである．#footnote[Haskellでは `xs :: [] a` と書く．]
+型 $haskell.a$ のリストの変数は $haskell.xs colon.double [haskell.a]$ という型注釈を持つ．これは $haskell.xs colon.double haskell.typeconstructor1([], haskell.a)$ のシンタックスシュガーである．#footnote[Haskellでは `xs :: [] a` と書く．]
 
+型 $haskell.a$ のMaybeの変数は $haskell.xm colon.double haskell.MaybeType(haskell.a)$ という型注釈を持つ．
+
+普段遣いの関数 $f colon.double haskell.a -> haskell.a$ をリスト変数 $haskell.xs colon.double [haskell.a]$ に適用する場合は次のように書く．#footnote[Haskellでは `zs = f `map` xs` と書く．]
+$ haskell.zs = f haskell.map haskell.xs $
+
+同じく関数 $f colon.double haskell.a -> haskell.a$ をMaybe変数 $haskell.xm colon.double haskell.MaybeType(haskell.a)$ に適用する場合は次のように書く．
+$ haskell.zm = f haskell.fmap haskell.xm $
+
+リストもMaybeも元の型 $haskell.a$ から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手]という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを $haskell.Functor$ で表す．関手型クラスの $haskell.a$ 型の変数を次のように型注釈する．#footnote[Haskellでは `xm :: Functor f => f a` と書く．]
+$ haskell.xc colon.double haskell.Functor supset haskell.f ==> haskell.typeconstructor1(haskell.f, haskell.a) $
+
+型クラス $haskell.Functor$ に属する型は $haskell.fmap$ 演算子を必ず持つ．演算子 $haskell.fmap$ は次の形を持つ．#footnote[Haskellでは `zm = f <$> xm` と書く．]
+$ haskell.zc = f haskell.fmap haskell.xc $
+
+演算子 $haskell.fmap$ の型は次のとおりである．
+$ lozenge.stroked.medium haskell.fmap lozenge.stroked.medium
+  colon.double haskell.Functor supset haskell.f
+  ==> (haskell.a -> haskell.b)
+  -> haskell.fa
+  -> haskell.fb $
+
+もし変数 $haskell.xc$ の型がリストであれば $haskell.fmap = haskell.map$ であると解釈する．
 
 == 関手としての関数
+
+$ f colon.double haskell.r -> haskell.q $
+
+```haskell
+f :: ((->) r) q
+```
+
+$ f colon.double (haskell.r -> lozenge.filled.medium)_haskell.q $
+
+$ f_2 compose f_1 = f_2 haskell.fmap f_1 $
+
+$ haskell.id compose f &= id compose f = f \
+  (h compose g) compose f &= h compose (g compose f) $
 
 = アプリカティブ関手
 
@@ -642,86 +677,6 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 /* 
 
-% ほか...
-
-
-\section{関手}
-
-
-型$\mathTypeA$のMaybeの変数は
-\begin{equation}
-\mathMaybe{x}\mathTypeIs\mathTypeMaybe{\mathTypeA}
-\end{equation}
-という型注釈を持つ．
-
-普段遣いの関数
-\begin{equation}
-f\mathTypeIs\mathTypeFunctionAA
-\end{equation}
-をリスト変数$\mathList{x}$に適用する場合は
-\begin{equation}
-\mathList{z}=f\mathMap\mathList{x}
-\end{equation}
-とする．同じく関数$f$をMaybe変数$\mathMaybe{x}$に適用する場合は
-\begin{equation}
-\mathMaybe{z}=f\mathFMap\mathMaybe{x}
-\end{equation}
-とする．
-
-リストもMaybeも元の型$\mathTypeA$から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手}という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを$\mathClassFunctor$で表す．関手型クラスの$\mathTypeA$型の変数を次のように型注釈する．#footnote[Haskell では `xm :: Functor f => f a| と書く．}
-\begin{equation}
-\mathPure{x}\mathTypeIs
-  \mathTypeClass{\mathClassFunctor}
-    {\mathClassF}
-    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}
-\end{equation}
-
-型クラス$\mathClassFunctor$に属する型は$\mathFMap$演算子を必ず持つ．演算子$\mathFMap$は次の形を持つ．#footnote[Haskell では `zm = f <$> xm| と書く．}
-\begin{equation}
-\mathPure{z}=f\mathFMap\mathPure{x}
-\end{equation}
-演算子$\mathFMap$の型は次のとおりである．
-\begin{equation}
-\mathAnonymousParameter\mathFMap\mathAnonymousParameter
-  \mathTypeIs
-    \mathTypeClass{\mathClassFunctor}{\mathClassGeneral{f}}{%
-    \mathTypeFunctionII{\left(\mathTypeFunctionAB\right)}
-    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}
-    {\mathFunctorTypeGeneral{\mathClassF}{\mathTypeB}}%
-    }
-\end{equation}
-
-もし変数$\mathPure{x}$の型がリストであれば
-\begin{equation}
-\mathFMap=\mathMap
-\end{equation}
-であると解釈する．
-
-\section{関手としての関数}
-
-\tobewritten{移動する．}
-
-\begin{equation}
-f\mathTypeIs\mathTypeFunction{\mathTypeGeneral{q}}{\mathTypeGeneral{r}}
-\end{equation}
-
-Function as a functor:#footnote[In Haskell, `f :: ((->) r) q|.}
-\begin{equation}
-f\mathTypeIs\left(\mathTypeFunction{\mathAnonymousTypeParameter}{\mathTypeGeneral{r}}\right)\mathTypeGeneral{q}
-=\mathFunctorTypeGeneral{\left(\mathTypeFunction{\mathAnonymousTypeParameter}{\mathTypeGeneral{r}}\right)}
-  {\mathTypeGeneral{q}}
-\end{equation}
-
-Thus,
-\begin{equation}
-f_2\mathCompose f_1\equiv f_2\mathFMap f_1
-\end{equation}
-
-\begin{align}
-\mathId\mathCompose f&=\mathId f=f\\
-(h\mathCompose g)\mathCompose f&=((h\mathCompose)\mathCompose(g\mathCompose))f\\
-&=h\mathCompose(g\mathCompose f)
-\end{align}
 
 \chapter{アプリカティブ関手}
 
@@ -961,7 +916,7 @@ z = f x
 ```]
 
 == List map
-$ haskell.list(z) = f * haskell.list(x) $
+$ haskell.zs = f * haskell.xs $
 
 #sourcecode[```Haskell
 zs = map f xs
@@ -972,7 +927,7 @@ zs = f `map` xs
 ```]
 
 == Maybe map
-$ haskell.maybe(z) = f haskell.fmap haskell.maybe(x) $
+$ haskell.zm = f haskell.fmap haskell.xm $
 
 #sourcecode[```haskell
 zm =  fmap f xm
@@ -983,21 +938,21 @@ zm =  f <$> xm
 ```]
 
 == Functor map
-$ haskell.ctxt(z) = f haskell.fmap haskell.ctxt(x) $
+$ haskell.zc = f haskell.fmap haskell.xc $
 
 #sourcecode[```haskell
 zm = f <$> xm
 ```]
 
 == Applicative map
-$ haskell.ctxt(z) = haskell.ctxt(f) haskell.amap haskell.ctxt(x) $
+$ haskell.zc = haskell.ctxt(f) haskell.amap haskell.xc $
 
 #sourcecode[```Haskell
 zm = fm <*> xm
 ```]
 
 == Apllicative map 2
-$ haskell.ctxt(z) = haskell.ctxt(g) haskell.amap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
+$ haskell.zc = haskell.ctxt(g) haskell.amap haskell.xc haskell.amap haskell.yc $
 
 #sourcecode[```haskell
 zm = gm <*> xm <*> ym
@@ -1005,35 +960,35 @@ zm = gm <*> xm <*> ym
 
 Or,
 
-$ haskell.ctxt(z) = g haskell.fmap haskell.ctxt(x) haskell.amap haskell.ctxt(y) $
+$ haskell.zc = g haskell.fmap haskell.xc haskell.amap haskell.yc $
 
 #sourcecode[```haskell
 zm = g <$> xm <*> ym
 ```]
 
 == Monadic function application
-$ haskell.ctxt(z) = haskell.monadic(f) x $
+$ haskell.zc = haskell.monadic(f) x $
 
 #sourcecode[```Haskell
 zm = f x
 ```]
 
 == Bind
-$ haskell.ctxt(z) = haskell.monadic(f) haskell.bind haskell.ctxt(x) $
+$ haskell.zc = haskell.monadic(f) haskell.bind haskell.xc $
 
 #sourcecode[```Haskell
 zm = f =<< xm
 ```]
 
 == Double bind
-$ haskell.ctxt(z) = haskell.monadic(g) haskell.bind haskell.monadic(f) haskell.bind haskell.ctxt(x) $
+$ haskell.zc = haskell.monadic(g) haskell.bind haskell.monadic(f) haskell.bind haskell.xc $
 
 #sourcecode[```haskell
 zm = g =<< f =<< xm
 ```]
 
 == Contextual map
-$ haskell.action("printEach") = haskell.action("print") haskell.mapM haskell.list(x) $
+$ haskell.action("printEach") = haskell.action("print") haskell.mapM haskell.xs $
 
 #sourcecode[```haskell
 printEach = print `mapM` xs

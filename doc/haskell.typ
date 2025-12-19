@@ -54,6 +54,7 @@
 
 // Type class.
 #let typeclass(x) = math.frak(x)
+#let Functor = typeclass("Functor")
 #let Num = typeclass("Num")
 
 // Action.
@@ -131,4 +132,46 @@
   $xx_yy$
 }
 
+// Shortcut.
 
+#let a = $typename(a)$
+#let b = $typename(b)$
+#let c = $typename(c)$
+#let d = $typename(d)$
+#let e = $typename(e)$
+#let f = $typename(f)$
+#let g = $typename(g)$
+#let h = $typename(h)$
+#let i = $typename(i)$
+#let j = $typename(j)$
+#let k = $typename(k)$
+#let l = $typename(l)$
+#let m = $typename(m)$
+#let n = $typename(n)$
+#let o = $typename(o)$
+#let p = $typename(p)$
+#let q = $typename(q)$
+#let r = $typename(r)$
+#let s = $typename(s)$
+#let t = $typename(t)$
+#let u = $typename(u)$
+#let v = $typename(v)$
+#let w = $typename(w)$
+#let x = $typename(x)$
+#let y = $typename(y)$
+#let z = $typename(z)$
+
+#let fa = $typeconstructor1(typename(f), typename(a))$
+#let fb = $typeconstructor1(typename(f), typename(b))$
+#let fc = $typeconstructor1(typename(f), typename(c))$
+
+#let xs = $list(x)$
+#let xss = $listlist(x)$
+#let ys = $list(y)$
+#let zs = $list(z)$
+#let xm = $maybe(x)$
+#let ym = $maybe(y)$
+#let zm = $maybe(z)$
+#let xc = $ctxt(x)$
+#let yc = $ctxt(y)$
+#let zc = $ctxt(z)$
