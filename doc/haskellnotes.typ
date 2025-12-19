@@ -615,8 +615,15 @@ haskell.Nothing &= f haskell.fmap haskell.Nothing $
 $haskell.maybe(x) = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
 $ haskell.maybe(z) = (f haskell.map) haskell.fmap haskell.maybe(x) $
 
-
 == 型パラメタと型クラス
+
+型をパラメタとして扱うことができる．任意の型を $haskell.typename(a)$ と，ボールド体小文字で書く．ある型 $haskell.typename(a)$の引数を取り，同じ型を返す関数の型は次のように書ける．#footnote[Haskellでは `f :: a -> a` と書く．]
+$ f colon.double haskell.typename(a) -> haskell.typename(a) $
+
+#keyword[型パラメタ]には制約をつけることができる．型の集合を#keyword[型クラス]と呼び，フラクチュール体で書く．たとえば数を表す型クラスは $haskell.Num$ である．型パラメタ $haskell.typename(a)$ が型クラス $haskell.Num$ に属するとき，上述の関数 $f$ の型注釈は次のようになる．#footnote[Haskellでは `f :: Num a => a -> a` と書く．]
+$ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) -> haskell.typename(a) $
+
+ここに $haskell.Num$ 型クラスには，整数型 $haskell.Int$，浮動小数点型 $haskell.Double$ が含まれる一方，論理型 $haskell.Bool$ は含まれない．
 
 == 関手
 
@@ -630,22 +637,7 @@ $ haskell.maybe(z) = (f haskell.map) haskell.fmap haskell.maybe(x) $
 
 /* 
 
-
-\section{型パラメタと型クラス}
-
-型をパラメタとして扱うことができる．任意の型を$\mathTypeA$と，ボールド体小文字で書く．ある型$\mathTypeA$の引数を取り，同じ型を返す関数の型は次のように書ける．#footnote[Haskell では `f :: a -> a| と書く．}
-\begin{equation}
-f\mathTypeIs\mathTypeFunctionAA
-\end{equation}
-
-#keyword[型パラメタ}には制約をつけることができる．型の集合を#keyword[型クラス}と呼び，フラクチュール体で書く．たとえば数を表す型クラスは$\mathClassNum$である．型パラメタ$\mathTypeA$が型クラス$\mathClassNum$に属するとき，上述の関数$f$の型注釈は次のようになる．#footnote[Haskell では `f :: Num a => a -> a| と書く．}
-\begin{equation}
-f\mathTypeIs
-  \mathTypeClass{\mathClassNum}
-    {\mathTypeA}
-    {\mathTypeFunctionAA}
-\end{equation}
-ここに$\mathClassNum$型クラスには，整数型$\mathTypeInt$，浮動小数点型$\mathTypeDouble$が含まれる一方，論理型$\mathTypeBool$は含まれない．% ほか...
+% ほか...
 
 \tobewritten{型の条件}
 
