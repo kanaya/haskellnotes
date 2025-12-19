@@ -593,9 +593,28 @@ $ f x y = haskell.kwif x != 0 haskell.kwthen haskell.Just((frac(y, x, style: "ho
 整数型 $haskell.Int$ をMaybeで包む場合は $haskell.MaybeType(haskell.Int)$ と書く．Maybeで包まれた型を持つ変数は $haskell.maybe(x)$ のように小さく $?$ をつける．例を挙げる．#footnote[Haskellでは `xm :: Maybe Int` と書く．]
 $ haskell.maybe(x) colon.double haskell.MaybeType(haskell.Int) $
 
+Maybeで包まれた型を持つ変数は，値を持つか $haskell.Nothing$ （ナッシング）であるかのいずれかである．値をもつ場合は $haskell.maybe(x) = haskell.Just(1)$ のように書く．#footnote[Haskellでは `xm = Just 1` と書く．]
+
+Maybe変数が値を持たない場合は $haskell.maybe(x) = haskell.Nothing$ のように書く．#footnote[Haskellでは `xm = Nothing` と書く．]
+
+一度Maybeになった変数を非Maybeに戻すことは出来ない．
+
 == Maybeに対する計算
 
+Maybe変数に，非Maybe変数を受け取る関数を適用することは出来ない．そこで特別な演算子 $haskell.fmap$ を用いて，次のように計算する．#footnote[Haskellでは `zm = (+1) <$> xm` と書く．]
+$ haskell.maybe(z) = f haskell.fmap haskell.maybe(x) $
+
+ここに関数$f$は1引数関数で，演算子 $haskell.fmap$ は次のように定義される．
+$ haskell.Just((f x)) &= f haskell.fmap haskell.Just(x) \
+haskell.Nothing &= f haskell.fmap haskell.Nothing $
+
 == Maybeの中のリスト
+
+リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
+
+$haskell.maybe(x) = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
+$ haskell.maybe(z) = (f haskell.map) haskell.fmap haskell.maybe(x) $
+
 
 == 型パラメタと型クラス
 
@@ -611,108 +630,6 @@ $ haskell.maybe(x) colon.double haskell.MaybeType(haskell.Int) $
 
 /* 
 
-\chapter{関手とモナド}
-
-Maybeで包まれた型を持つ変数は，値を持つか$\mathNothing$（ナッシング）であるかのいずれかである．値をもつ場合は
-\begin{equation}
-\mathMaybe{x}=\mathMakeJust{1}
-\end{equation}
-のように書く．#footnote[Haskell では `xm = Just 1| と書く．}
-
-Maybe変数が値を持たない場合は
-\begin{equation}
-\mathMaybe{x}=\mathNothing
-\end{equation}
-と書く．#footnote[Haskell では `xm = Nothing| と書く．}
-
-一度Maybeになった変数を非Maybeに戻すことは出来ない．
-
-\section{Maybeに対する計算}
-
-Maybe変数に，非Maybe変数を受け取る関数を適用することは出来ない．そこで特別な演算子$\mathFMap$を用いて，次のように計算する．#footnote[Haskell では `zm = (+1) <$> xm| と書く．}
-\begin{equation}
-\mathMaybe{z}=f\mathFMap\mathMaybe{x}
-\end{equation}
-ここに関数$f$は1引数関数で，演算子$\mathFMap$は
-\begin{align}
-\mathMakeJust{fx}&=f\mathFMap\mathMakeJust{x}\\
-\mathNothing&=f\mathFMap\mathNothing
-\end{align}
-と定義される．
-
-\tobewritten{Bindもここへ．}
-
-Returning \emph{List}.
-\begin{equation}
-	.
-\end{equation}
-Returning \emph{Maybe}:#footnote[In Haskell, `f :: Int -> Maybe Int| and `f x = Just x|.}
-\begin{gather}
-f\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
-fx=\mathMakeJust{x}
-\end{gather}
-% Applicative.
-Returning \emph{monad}:
-\begin{gather}
-f\mathTypeIs
-  \mathTypeFunction{\mathTypeInt}{\mathFunctorTypeGeneral{\mathClassGeneral{m}}{\mathTypeA}}\\
-fx=\mathMakeReturn{x}
-\end{gather}
-
-
-Returning monadic value:#footnote[In Haskell, `f :: Monad m => a -> m a|.}
-\begin{equation}
-f\mathTypeIs
-  \mathTypeClass{\mathClassMonad}
-    {\mathClassGeneral{m}}
-    {\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathClassGeneral{m}}{\mathTypeA}}}
-\end{equation}
-
-Monadic function binding:#footnote[In Haskell, `zm = xm >>= f1 >>= f2|.}
-\begin{equation}
-\mathPure{z}=\mathPure{x}\mathBindRight f_1\mathBindRight f_2
-\end{equation}
-where
-\begin{align}
-f_1&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
-f_2&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}.
-\end{align}
-
-Function binding of monadic function and non-monadic function:#footnote[In Haskell,
-\begin{footcode}
-zm = xm >>= f >>= g'
-  where g' w = pure (g w)
-\end{footcode}}
-\begin{equation}
-\mathPure{z}=\mathPure{x}\mathBindRight f\mathBindRight g'
-\mathWhere{g'w=\mathMakePure{gw}}
-\end{equation}
-or
-\begin{equation}
-  \mathPure{z}=\mathPure{x}\mathBindRight(f\mathComposeMonadRight g')
-  \mathWhere{g'w=\mathMakePure{gw}}
-\end{equation}
-where
-\begin{align}
-f&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeMaybe{\mathTypeInt}}\\
-g&\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeInt}.
-\end{align}
-Another solution is:
-\begin{equation}
-\mathPure{z}=(\mathLiftM{g}\mathCompose f)\mathBind\mathPure{x}
-\end{equation}
-where $\mathLiftM{g}$ means `liftM g| in Haskell.#footnote[In Haskell, `zm = (liftM g . f) xm|.}
-
-\section{Maybeの中のリスト}
-
-リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
-\begin{equation}
-\mathMaybe{x}=\mathMakeJust{[1,2,\dots,100]}
-\end{equation}
-のとき，リストの各要素に関数$f\mathTypeIs\mathTypeFunction{\mathTypeInt}{\mathTypeInt}$を適用するには次のように書く．#footnote[Haskell では `zm = (f <$>) <$> xm| と書く．最初の `<$>| はリストの各要素に関数$f$を適用する演算子，2番目の `<$>| はMaybeの中のリストの各要素に関数$f$を適用する演算子である．}
-\begin{equation}
-\mathMaybe{z}=(f\mathMap)\mathFMap\mathMaybe{x}
-\end{equation}
 
 \section{型パラメタと型クラス}
 
