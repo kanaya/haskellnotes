@@ -625,6 +625,8 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 ここに $haskell.Num$ 型クラスには，整数型 $haskell.Int$，浮動小数点型 $haskell.Double$ が含まれる一方，論理型 $haskell.Bool$ は含まれない．
 
+型クラスは型に制約を与える．
+
 == 関手
 
 == 関手としての関数
@@ -639,13 +641,6 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 % ほか...
 
-\tobewritten{型の条件}
-
-型クラスは型に制約を与える．
-
-\tobewritten{\texttt{Num a => x :: a} ならば\texttt{x}が持つべき演算子．}
-
-\tobewritten{型クラスの例．}
 
 \section{関手}
 
