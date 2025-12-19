@@ -585,11 +585,13 @@ $ z = y / x $
 のときに $x = 0$ であったとしたら，この計算は失敗する．プログラムが計算を失敗した場合，たいていのプログラマは大域ジャンプを試みる．しかし大域ジャンプは変数の書き換えを行うことであるから，別の方法が望まれる．Haskellでは失敗する可能性がある場合にはMaybeという機構が使える．
 
 いま関数 $f$ が引数 $x$ と $y$ を取り，$x != 0$ であるならば $frac(y, x, style: "skewed")$ を返すとする．もし $x!=0$ であれば失敗を意味する $haskell.Nothing$ （ナッシング）を返すとする．すると関数 $f$ の定義は次のようになる．
-$ f x y = haskell.kwif x != 0 haskell.kwthen y / x haskell.kwelse haskell.Nothing $
+$ f x y = haskell.kwif x != 0 haskell.kwthen y / x haskell.kwelse haskell.Nothing ... "不完全な定義" $
 残念ながら上式は不完全である．なぜならば $x != 0$ のときの戻り値は数であるのに対して， $x != 0$ のときの戻り値は数ではないからである．そこで
-$ haskell.ctxt(x) = haskell.kwif x != 0 haskell.kwthen haskell.Just(frac(y, x, style: "skewed")) haskell.kwelse haskell.Nothing $
-とする．ここに $haskell.Just(frac(y, x, style: "skewed"))$ は数 $frac(y, x, style: "skewed")$ から作られる，Maybeで包まれた数である．#footnote[Haskell では `f x y = if x /= 0 then Just y / x else Nothing` と書く．]
+$ f x y = haskell.kwif x != 0 haskell.kwthen haskell.Just((frac(y, x, style: "horizontal"))) haskell.kwelse haskell.Nothing $
+とする．ここに $haskell.Just((frac(y, x, style: "horizontal")))$ は数 $frac(y, x, style: "skewed")$ から作られる，Maybeで包まれた数である．#footnote[Haskell では `f x y = if x /= 0 then Just y / x else Nothing` と書く．]
 
+整数型 $haskell.Int$ をMaybeで包む場合は $haskell.MaybeType(haskell.Int)$ と書く．Maybeで包まれた型を持つ変数は $haskell.maybe(x)$ のように小さく $?$ をつける．例を挙げる．#footnote[Haskellでは `xm :: Maybe Int` と書く．]
+$ haskell.maybe(x) colon.double haskell.MaybeType(haskell.Int) $
 
 == Maybeに対する計算
 
@@ -610,16 +612,6 @@ $ haskell.ctxt(x) = haskell.kwif x != 0 haskell.kwthen haskell.Just(frac(y, x, s
 /* 
 
 \chapter{関手とモナド}
-
-\section{Maybe}
-\label{sec:maybe}
-
-% ~fの理由．
-
-整数型$\mathTypeInt$をMaybeで包む場合は$\mathTypeMaybe{\mathTypeInt}$と書く．Maybeで包まれた型を持つ変数は$\mathMaybe{x}$のように小さく$?$をつける．例を挙げる．#footnote[Haskell では `xm :: Maybe Int| と書く．}
-\begin{equation}
-\mathMaybe{x}\mathTypeIs\mathTypeMaybe{\mathTypeInt}
-\end{equation}
 
 Maybeで包まれた型を持つ変数は，値を持つか$\mathNothing$（ナッシング）であるかのいずれかである．値をもつ場合は
 \begin{equation}

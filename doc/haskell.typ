@@ -39,6 +39,19 @@
 #let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 
+// Type constructor.
+#let typeconstructor(x) = math.bold(x)
+
+#let Maybe = typeconstructor("Maybe")
+
+#let typeconstructor1(x, y) = {
+  let xx = x
+  let yy = y
+  $xx_yy$
+}
+
+#let MaybeType(x) = typeconstructor1(Maybe, x)
+
 // Type class.
 #let typeclass(x) = math.frak(x)
 #let Num = typeclass("Num")
