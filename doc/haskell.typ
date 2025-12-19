@@ -93,13 +93,13 @@
 }
 #let monadic(x) = x
 
-// Constructor.
+// Value constructor.
 #let constructor(x) = math.serif(x)
 #let Nothing = constructor("Nothing")
 #let True = constructor("True")
 #let False = constructor("False")
 
-// Constructor with one argument.
+// Value constructor with one argument.
 #let constructor1(x, y) = {
   let xx = x
   let yy = y
