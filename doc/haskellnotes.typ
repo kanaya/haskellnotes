@@ -629,6 +629,9 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 == 関手
 
+型 $haskell.typename(a)$ のリストの変数は $haskell.list(x) colon.double [haskell.typename(a)]$ という型注釈を持つ．これは $haskell.list(x) colon.double haskell.typeconstructor1([], haskell.typename(a))$ のシンタックスシュガーである．#footnote[Haskellでは `xs :: [] a` と書く．]
+
+
 == 関手としての関数
 
 = アプリカティブ関手
@@ -644,15 +647,6 @@ $ f colon.double haskell.Num supset haskell.typename(a) ==> haskell.typename(a) 
 
 \section{関手}
 
-型$\mathTypeA$のリストの変数は
-\begin{equation}
-\mathList{x}\mathTypeIs\mathTypeList{\mathTypeA}
-\end{equation}
-という型注釈を持つ．これは
-\begin{equation}
-\mathList{x}\mathTypeIs\mathFunctorTypeGeneral{[]}{\mathTypeA}
-\end{equation}
-のシンタックスシュガーである．#footnote[Haskell では `xs :: [] a| と書く．}
 
 型$\mathTypeA$のMaybeの変数は
 \begin{equation}
