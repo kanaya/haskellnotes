@@ -658,11 +658,13 @@ $ lozenge.stroked.medium haskell.fmap lozenge.stroked.medium
 
 $ f colon.double haskell.r -> haskell.q $
 
+$ f colon.double (haskell.r -> lozenge.filled.medium)_haskell.q $
+
+$ f colon.double ((->) haskell.r lozenge.filled.medium)_haskell.q $
+
 ```haskell
 f :: ((->) r) q
 ```
-
-$ f colon.double (haskell.r -> lozenge.filled.medium)_haskell.q $
 
 $ f_2 compose f_1 = f_2 haskell.fmap f_1 $
 
