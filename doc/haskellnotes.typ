@@ -512,6 +512,9 @@ $ g colon.double underbrace(haskell.Int, x) -> underbrace(overbrace(haskell.Int,
 
 Haskellには#keyword[タプル]という型がある．タプルとは，複数の変数を組み合わせたもので，例えば変数 $x$ と $y$ をひとまとめにした $paren.l.flat x, y paren.r.flat$ はタプルである．変数 $x$, $y$ の型は同じでも良いし，異なっても良い．#footnote[Haskellでは $paren.l.flat x, y paren.r.flat$ を `(x, y)` と書く．]
 
+いまタプルを引数に取る関数 $f paren.l.flat x, y paren.r.flat = x + y$ があったとしよう．Haskellにはタプルをとる関数をカリー化する関数 $haskell.curry$ があり，$(haskell.curry f) x y$ は $x + y$ になる．
+
+逆に，カリー化された関数 $f' x y = x + y$ に関しては $(haskell.uncurry f')paren.l.flat x, y paren.r.flat$ のように#keyword[アンカリー化]することで，タプルに適用することができる．
 
 == 多相型と型クラス
 
@@ -558,27 +561,6 @@ Haskellには#keyword[タプル]という型がある．タプルとは，複数
 /*
 
 
-いまタプルを引数に取る関数
-\begin{equation}
-  \hxFunc{f}\hPairWith{\hxVar{x}}{\hxVar{y}}
-  =\hxVar{x}+\hxVar{y}
-\end{equation}
-があったとしよう．Haskellにはタプルをとる関数をカリー化する関数 $\hCurry$ があり，
-\begin{equation}
-  (\hCurry\hxFunc{f})\hxVar{x}\hxVar{y}
-\end{equation}
-は $\hxVar{x}+\hxVar{y}$ になる．
-
-逆に，カリー化された関数
-\begin{equation}
-  \hxFunc{f'}\hxVar{x}\hxVar{y}
-  =\hxVar{x}+\hxVar{y}
-\end{equation}
-に関しては
-\begin{equation}
-  (\hUncurry\hxFunc{f'})\hPairWith{\hxVar{x}}{\hxVar{y}}
-\end{equation}
-のように#keyword[アンカリー化}することで，タプルに適用することができる．
 
 \separator
 
