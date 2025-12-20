@@ -692,7 +692,6 @@ $ haskell.zc = shell.l f shell.r haskell.amap haskell.xc haskell.amap haskell.yc
 @applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
 $ haskell.zc = [| f haskell.xc haskell.yc |] ... "採用されなかった文法" $
 
-
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
 
 いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $haskell.fc$ ただし $haskell.fc = shell.l f shell.r $ を作ったとすると，関数 $haskell.fc$ は次の型を持つ．
@@ -713,11 +712,15 @@ $ haskell.fc colon.double haskell.Applicative supset haskell.f
 
 == Do構文
 
+#tk
+
 #sourcecode[```haskell
 z = do { x' <- x; y' <- y; f x'; g y' }
 ```]
 
 == モノイド則
+
+#tk
 
 $(ZZ, +, 0)$ はモノイドである．
 
@@ -728,10 +731,14 @@ $(ZZ, +, 0)$ はモノイドである．
 
 == 関手則
 
+#tk
+
 $ haskell.id haskell.fmap haskell.xc &= haskell.id haskell.xc \
   (g compose f) haskell.fmap haskell.xc &= ((g haskell.fmap) compose (f haskell.fmap)) haskell.xc $
 
 == アプリカティブ関手則
+
+#tk
 
 $ shell.l haskell.id shell.r haskell.amap haskell.xc &= haskell.xc \
   shell.l f shell.r haskell.amap shell.l x shell.r 
@@ -742,18 +749,18 @@ $ shell.l haskell.id shell.r haskell.amap haskell.xc &= haskell.xc \
 
 == モナド則
 
+#tk
+
 $ tilde(f) haskell.bind shell.l.stroked x shell.r.stroked &= tilde(f) x \
   shell.l.stroked lozenge.stroked.medium shell.r.stroked haskell.bind haskell.xc
   &= haskell.xc \
   tilde(g) haskell.bind tilde(f) haskell.bind haskell.xc
   &= tilde(g) haskell.bind(tilde(f) haskell.bind haskell.xc) $
 
-#keyword[クライスリスター]
-
-$f^star.stroked = (tilde(f) haskell.bind lozenge.stroked.medium)$ を用いると，モナド則は次のように書き直せる．
+関数 $tilde(f)$ に作用する#keyword[クライスリスター]演算子 $star.stroked$ を $f^star.stroked = (tilde(f) haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
 $ f^star.stroked shell.l x shell.r &= tilde(f) x \
-  shell.l lozenge.stroked.medium shell.r^star.stroked shell.l x shell.r &= haskell.xc \
-  (g^star.stroked tilde(f))^star.stroked shell.l x shell.r &= g^star.stroked (f^star.stroked shell.l x shell.r) $
+  shell.l lozenge.stroked.medium shell.r^star.stroked haskell.xc &= haskell.xc \
+  (g^star.stroked tilde(f))^star.stroked haskell.xc &= g^star.stroked (f^star.stroked haskell.xc) $
 
 == クラスの定義
 
