@@ -63,13 +63,13 @@
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
   [有名な定数値コンストラクタ], [数学記号], $emptyset, emptyset.rev$,
-  [有名な値コンストラクタ], [特別なカッコで包む], $[x], haskell.pure(y)$,
+  [有名な値コンストラクタ], [特別な括弧で包む], $[x], haskell.pure(y)$,
   [アクション], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
   [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
   [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
   [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
-  [有名な型（引数あり）], [特別なカッコで包む], $[haskell.a], [haskell.Int]$,
+  [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
   [型クラス], [フラクチュール], $haskell.Num$,
   [キーワード], [固定幅], $haskell.kwlet$,
   [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
@@ -215,7 +215,7 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
   f_5 &= "uniq"_c\
   f_6 &= "sort"_(n,r) $
 
-そして $x$ から $y$ を得るために $y = f_6(f_5(f_4(f_3(f_2(f_1(x))))))$ という計算を行った．カッコが多すぎるので，この式を$y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x)$ と書き直そう．ここに演算子 $compose$ は「#keyword[関数合成演算子]」だ．
+そして $x$ から $y$ を得るために $y = f_6(f_5(f_4(f_3(f_2(f_1(x))))))$ という計算を行った．括弧が多すぎるので，この式を$y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x)$ と書き直そう．ここに演算子 $compose$ は「#keyword[関数合成演算子]」だ．
 
 関数合成演算子を使うと，プログラム $f$ を $f = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1$ と定義することも出来る．これが何を意味しているかと言うと，プログラムを小さな部分プログラムに分解したということだ．
 
@@ -349,6 +349,24 @@ Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない
 二項演算子のうちよく使われるものは和 $(+)$，積 $(times)$，論理和 $(or)$，論理積 $(and)$，同値 $(equiv)$，大なり$(>)$，小なり $(<)$ 等である．二項演算子はたとえ積記号であっても省略できない．二項演算子は多数あるので，その都度説明する．#footnote[Haskellでは $and$ を `&&` と書き，$or$ を `||` と書く．]
 
 二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $circle.dotted$ について $x class("binary",circle.dotted) y$ 及び $(circle.dotted) x y$ は全く同じ意味である．すなわち $(circle.dotted) x y = x class("binary", circle.dotted) y$ である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
+
+一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(circle.dotted)$ も $(circle.dotted) x y = ((circle.dotted) x) y$ であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $(circle.dotted) x$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を `((+)1)` と書く．]
+
+前置される二項演算子 $(circle.dotted)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", circle.dotted) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium class("binary", circle.dotted) x)$ や $(x class("binary", circle.dotted) lozenge.stroked.medium)$ から無名パラメタを省略した $(circle.dotted x)$ と $(x circle.dotted)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
+
+二項演算子 $circle.dotted$ に対して $(circle.dotted x)$ および $(x circle.dotted)$ はそれぞれ以下の通りである．
+$ (circle.dotted x) &= (lozenge.stroked.medium class("binary", circle.dotted) x) \
+ (x circle.dotted) &= (x class("binary", circle.dotted) lozenge.stroked.medium)
+ = (circle.dotted) x $
+
+例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を `(1+)` と書く．また `(-1)
+` はセクションではなくマイナス $1$ を表す（`-1` というリテラルとみなされる）．ただし `(- 1)}
+` のように空白を挟んでも同じくマイナス $1$ とみなされる（`1` というリテラルに単項マイナス演算子が適用される）．]
+
+なお，二項演算子の結合性，すなわち左結合か右結合かは，演算子によって異なる．また演算の優先順位を明示的に与えるために括弧が用いられる．
+
+一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．
+
 = RENEW
 
 = 変数・関数・型

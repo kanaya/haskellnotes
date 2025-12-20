@@ -134,6 +134,12 @@
   $xx_yy$
 }
 
+// Infix.
+#let infix(x) = {
+  let xx = x
+  $class("binary", quote.chevron.l.single xx quote.chevron.r.single)$
+}
+
 // Shortcut.
 
 #let a = $typename(a)$
