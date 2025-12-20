@@ -666,80 +666,44 @@ $ f colon.double (haskell.r -> lozenge.filled.medium)_haskell.q $
 
 $ f_2 compose f_1 = f_2 haskell.fmap f_1 $
 
-$ haskell.id compose f &= id compose f = f \
-  (h compose g) compose f &= h compose (g compose f) $
+$ haskell.id compose f = id compose f = f \
+  (h compose g) compose f = h compose (g compose f) $
 
 = アプリカティブ関手
 
 == アプリカティブ関手
+
+演算子 $haskell.fmap$ は関手型クラスの型の値に1引数関数を適用することを可能にした．一方で2引数関数を適用するのは若干面倒である．いま関数 $f$ が2引数をとるとし，関手型クラスの型の変数 $haskell.xc$ と $haskell.yc$ があるとする．関数 $f$ に変数 $haskell.xc$ を部分適用して関数 $f' = f haskell.fmap haskell.xc$ を作ると，定義によって関数 $f'$ は関手型クラスの型の変数になる．そこで，関手型クラスの型の関数を関手型クラスの型の変数に適用する新しい演算子が必要になる．このような演算子を#keyword[アプリカティブマップ演算子]と呼び $haskell.amap$ で表す．アプリカティブマップ演算子を用いると2引数の関数適用は次のように書ける．
+$ haskell.zc &= f' haskell.amap haskell.yc \
+  &= f haskell.fmap haskell.xc haskell.amap haskell.yc $<fmap-and-amap>
+
+任意の変数または関数を関手型クラスの型に入れる#keyword[ピュア演算子]があり，次のように書く．#footnote[Haskellでは `z = pure x` と書く．]
+$ haskell.zc = shell.l x shell.r $
+
+なおピュア演算子の名称は「純粋(pure)」であるが，意味合いはむしろ「不純(impure)」のほうが近い．
+
+ピュア演算子を用いると，@fmap-and-amap は次のように書ける．#footnote[Haskell では `zm = (pure f) <*> xm <*> ym` と書く．]
+
+$ haskell.zc = shell.l f shell.r haskell.amap haskell.xc haskell.amap haskell.yc $<applicative-style>
+
+
+@applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
+$ haskell.zc = [| f haskell.xc haskell.yc |] ... "採用されなかった文法" $
+
+
+ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
+
+いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $haskell.fc$ ただし $haskell.fc = shell.l f shell.r $ を作ったとすると，関数 $haskell.fc$ は次の型を持つ．
+$ haskell.fc colon.double haskell.Applicative supset haskell.f
+  ==> haskell.f_(haskell.a -> haskell.b) $
+
+アプリカティブマップ演算子は変数 $haskell.xc colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.a $ に対して，関数 $haskell.fc$ を $haskell.zc = haskell.fc haskell.amap haskell.xc$ のように作用させる．変数 $haskell.zc$ の型は $haskell.zc colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.b$ である．
 
 == モナド
 
 /* 
 
 
-\chapter{アプリカティブ関手}
-
-\section{アプリカティブ関手}
-
-演算子$\mathFMap$は関手型クラスの型の値に1引数関数を適用することを可能にした．一方で2引数関数を適用するのは若干面倒である．いま関数$f$が2引数をとるとし，関手型クラスの型の変数$\mathPure{x}$と$\mathPure{y}$があるとする．関数$f$に変数$\mathPure{x}$を部分適用して関数$f'$すなわち
-\begin{equation}
-f'=f\mathFMap\mathPure{x}
-\end{equation}
-を作ると，定義によって関数$f'$は関手型クラスの型の変数になる．そこで，関手型クラスの型の関数を関手型クラスの型の変数に適用する新しい演算子が必要になる．このような演算子を#keyword[アプリカティブマップ演算子}と呼び$\mathApplicativeMap$で表す．アプリカティブマップ演算子を用いると
-\begin{align}
-\mathPure{z}&=f'\mathApplicativeMap\mathPure{y}\\
-&=f\mathFMap\mathPure{x}\mathApplicativeMap\mathPure{y}
-\label{eq:fmap-and-amap}
-\end{align}
-と書ける．
-
-任意の変数または関数を関手型クラスの型に入れる#keyword[ピュア演算子}があり，次のように書く．#footnote[Haskell では `zm = pure x| と書く．}
-\begin{equation}
-\mathPure{z}=\mathMakePure{x}
-\end{equation}
-なおピュア演算子の名称は「純粋(pure)」であるが，意味合いはむしろ「不純(impure)」のほうが近い．
-
-ピュア演算子を用いると，式\eqref{eq:fmap-and-amap}は
-\begin{equation}
-\mathPure{z}=\mathMakePure{f}\mathApplicativeMap\mathPure{x}\mathApplicativeMap\mathPure{y}
-\label{eq:applicative-style}
-\end{equation}
-と書ける．#footnote[Haskell では `zm = (pure f) <*> xm <*> ym| と書く．}
-
-式\eqref{eq:applicative-style}はかつて
-\begin{equation}
-\mathPure{z}=\mathApplicativeFuncCall{f\,\mathPure{x}\,\mathPure{y}}
-\end{equation}
-のように書くことも提案されたが，普及はしなかった．#footnote[現在のHaskell では `zm = liftA2 f xm ym| と書くことで代用されている．元の提案は \verb/zm = [|f xm ym|]/ であった．}
-
-ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手}と呼び$\mathClassApplicative$で表す．
-
-いま関数$f\mathTypeIs\mathTypeFunctionAB$に対して，新たな関数$\mathPure{f}$ただし
-\begin{equation}
-\mathPure{f}=\mathMakePure{f}
-\end{equation}
-を作ったとすると，関数$\mathPure{f}$は
-\begin{equation}
-  \mathPure{f}\mathTypeIs
-  \mathTypeClass{\mathClassApplicative}
-    {\mathClassF}
-    {\mathFunctorTypeGeneral{\mathClassF}}
-    {\mathTypeFunctionAB}
-\end{equation}
-という型を持つ．アプリカティブマップ演算子は変数
-\begin{equation}
-\mathPure{x}\mathTypeIs\mathTypeClass{\mathClassApplicative}{\mathClassF}{\mathFunctorTypeGeneral{\mathClassF}}{\mathTypeA}
-\end{equation}
-に対して，関数$\mathPure{f}$を
-\begin{equation}
-\mathPure{z}=\mathPure{f}\mathApplicativeMap\mathPure{x}
-\end{equation}
-のように作用させる．変数$\mathPure{z}$の型は
-\begin{equation}
-  \mathPure{z}\mathTypeIs\mathTypeClass{\mathClassApplicative}{\mathClassF}{\mathFunctorTypeGeneral{\mathClassF}}{\mathTypeB}
-\end{equation}
-である．
 
 
 

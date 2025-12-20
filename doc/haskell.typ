@@ -54,6 +54,7 @@
 
 // Type class.
 #let typeclass(x) = math.frak(x)
+#let Applicative = typeclass("Applicative")
 #let Functor = typeclass("Functor")
 #let Num = typeclass("Num")
 
@@ -172,6 +173,7 @@
 #let xm = $maybe(x)$
 #let ym = $maybe(y)$
 #let zm = $maybe(z)$
+#let fc = $ctxt(f)$
 #let xc = $ctxt(x)$
 #let yc = $ctxt(y)$
 #let zc = $ctxt(z)$
