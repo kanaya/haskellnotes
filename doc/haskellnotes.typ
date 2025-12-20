@@ -245,7 +245,7 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 
 このように式の左側を優先的に演算していくことを#keyword[左結合]と呼ぶ．Haskellの場合，関数適用はいつも左結合である．
 
-部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を `max x y` と書く．]
+部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を `max x y` と書く．なお関数 $(max x)$ のことを $max_x$ と書く教科書も多い．関数引数を添え字で表す記法は，本書でも後に採用する．]
 
 == ラムダ式
 
@@ -432,7 +432,7 @@ $ x colon.double haskell.Int $
 1引数関数の型は次のように注釈できる．#footnote[Haskellでは `f :: Int -> Int` と書く．]
 $ f colon.double haskell.Int -> haskell.Int $
 
-ここで関数 $f$ は整数型の引数をひとつとり，整数型の値を返す．#footnote[正確には `->` は型コンストラクタである．無名の型引数を $lozenge.filled.medium$ で表すと `->` は $(lozenge.filled.medium -> lozenge.filled.medium)$ という，ふたつの型引数を取る型コンストラクタである．]
+ここで関数 $f$ は整数型の引数をひとつとり，整数型の値を返す．#footnote[正確には `->` は型コンストラクタである．無名の型引数を $lozenge.filled.medium$ で表すと `->` は $chevron.l lozenge.filled.medium -> lozenge.filled.medium chevron.r$ という，ふたつの型引数を取る型コンストラクタである．]
 
 2引数関数の方は次のように注釈できる．#footnote[Haskellでは `f :: Int -> Int -> Int` と書く．]
 $ f colon.double haskell.Int -> haskell.Int -> haskell.Int $
@@ -724,9 +724,9 @@ $ lozenge.stroked.medium haskell.fmap lozenge.stroked.medium
 
 $ f colon.double haskell.r -> haskell.q $
 
-$ f colon.double (haskell.r -> lozenge.filled.medium)_haskell.q $
+$ f colon.double chevron.l haskell.r -> lozenge.filled.medium chevron.r_haskell.q $
 
-$ f colon.double ((->) haskell.r lozenge.filled.medium)_haskell.q $
+$ f colon.double chevron.l (->) haskell.r lozenge.filled.medium chevron.r_haskell.q $
 
 ```haskell
 f :: ((->) r) q
