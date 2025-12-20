@@ -398,9 +398,43 @@ $ f haskell.apply x = f x $
 
 == 高階関数
 
+関数を引数に取ったり，あるいは関数を返す関数のことを#keyword[高階関数]と呼ぶことがある．関数合成演算子と関数適用演算子は高階関数の好例である．
+
+他に例えば，引数として整数 $a$ を取り，関数 $f x = a + x$ を返すような関数 $g$ を次のように定義することが出来る．
+$ g a = a + lozenge.stroked.medium $
+
+このとき，
+$ f &= g 100 \
+  x &= f 1 $
+とすれば $x = 101$ を得る．#footnote[Haskell では $g a = a + lozenge.stroked.medium$ を $g a = backslash x |-> a + x$ と展開しておいて `g a = \ x -> a + x` と書く．]
+
+高階関数は今後度々顔をだすことになる．後で登場するマップ演算子や畳込み演算子は高階関数の一種である．
+
 == 余談：演算子の定義
 
+Haskellでは関数だけでなく，新しい演算子も定義できる．#footnote[Haskellで演算子に使える記号は `! @ # $ % ^ & * - + = . \ | / < : > ? ~` の組み合わせである．]
 
+計算機科学者ドナルド・クヌースは，整数 $x, n$ が与えられたとき $x$ の $n$ 乗を $x^n$ ではなく $x arrow.t n$ と書いた．これは
+$ x arrow.t n = underbrace(x times x times ... times x, n) $
+という意味である．#footnote[Haskellでは $x arrow.t n$ を `x ^ n` と書く．]
+
+クヌースはさらに演算子 $arrow.t arrow.t$ を
+$ x arrow.t arrow.t n = underbrace(x arrow.t x arrow.t ... arrow.t x, n) $
+のように定義した．これを#keyword[クヌースの矢印]と呼ぶ．クヌースの矢印は
+$ x arrow.t arrow.t n &|_(n <= 0) = 1 \
+  &|_"otherwise" = x arrow.t (x arrow.t arrow.t (n - 1)) $
+と定義できる．#footnote[Haskell では次のように定義する．
+```haskell
+  x^^.n | n <= 0 = 1 
+        | otherwise = x^(x^^.(n-1))
+```
+なお厳密には
+```haskell
+  (^^.) :: Integral a => a -> a -> a
+```
+と演算子の型を宣言しておく必要がある．]
+
+なおこの定義は自分自身を呼び出す#keyword[再帰]を行っている．再帰に関しては〜〜〜で詳しく述べる．
 
 
 
