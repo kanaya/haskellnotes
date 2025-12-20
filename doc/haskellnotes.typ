@@ -751,16 +751,18 @@ $ shell.l haskell.id shell.r haskell.amap haskell.xc &= haskell.xc \
 
 #tk
 
-$ tilde(f) haskell.bind shell.l.stroked x shell.r.stroked &= tilde(f) x \
+$ mu haskell.bind shell.l.stroked x shell.r.stroked &= mu x \
   shell.l.stroked lozenge.stroked.medium shell.r.stroked haskell.bind haskell.xc
   &= haskell.xc \
-  tilde(g) haskell.bind tilde(f) haskell.bind haskell.xc
-  &= tilde(g) haskell.bind(tilde(f) haskell.bind haskell.xc) $
+  nu haskell.bind mu haskell.bind haskell.xc
+  &= nu haskell.bind (mu haskell.bind haskell.xc) $
 
-関数 $tilde(f)$ に作用する#keyword[クライスリスター]演算子 $star.stroked$ を $f^star.stroked = (tilde(f) haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ f^star.stroked shell.l x shell.r &= tilde(f) x \
+$(MM, haskell.bind, shell.l.stroked lozenge.stroked.medium shell.r.stroked)$ はモノイドである．
+
+関数 $mu$ に作用する#keyword[クライスリスター]演算子 $star.stroked$ を $mu^star.stroked = (mu haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
+$ mu^star.stroked shell.l x shell.r &= mu x \
   shell.l lozenge.stroked.medium shell.r^star.stroked haskell.xc &= haskell.xc \
-  (g^star.stroked tilde(f))^star.stroked haskell.xc &= g^star.stroked (f^star.stroked haskell.xc) $
+  (nu^star.stroked mu)^star.stroked haskell.xc &= nu^star.stroked (mu^star.stroked haskell.xc) $
 
 == クラスの定義
 
