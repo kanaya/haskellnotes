@@ -621,7 +621,7 @@ $ haskell.zm = (f haskell.map) haskell.fmap haskell.xm $
 $ f colon.double haskell.a -> haskell.a $
 
 #keyword[型パラメタ]には制約をつけることができる．型の集合を#keyword[型クラス]と呼び，フラクチュール体で書く．たとえば数を表す型クラスは $haskell.Num$ である．型パラメタ $haskell.a$ が型クラス $haskell.Num$ に属するとき，上述の関数 $f$ の型注釈は次のようになる．#footnote[Haskellでは `f :: Num a => a -> a` と書く．]
-$ f colon.double haskell.Num supset haskell.a ==> haskell.a -> haskell.a $
+$ f colon.double haskell.Num supset haskell.a harpoons.rtrb haskell.a -> haskell.a $
 
 ここに $haskell.Num$ 型クラスには，整数型 $haskell.Int$，浮動小数点型 $haskell.Double$ が含まれる一方，論理型 $haskell.Bool$ は含まれない．
 
@@ -640,7 +640,7 @@ $ haskell.zs = f haskell.map haskell.xs $
 $ haskell.zm = f haskell.fmap haskell.xm $
 
 リストもMaybeも元の型 $haskell.a$ から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手]という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを $haskell.Functor$ で表す．関手型クラスの $haskell.a$ 型の変数を次のように型注釈する．#footnote[Haskellでは `xm :: Functor f => f a` と書く．]
-$ haskell.xc colon.double haskell.Functor supset haskell.f ==> haskell.typeconstructor1(haskell.f, haskell.a) $
+$ haskell.xc colon.double haskell.Functor supset haskell.f harpoons.rtrb haskell.typeconstructor1(haskell.f, haskell.a) $
 
 型クラス $haskell.Functor$ に属する型は $haskell.fmap$ 演算子を必ず持つ．演算子 $haskell.fmap$ は次の形を持つ．#footnote[Haskellでは `zm = f <$> xm` と書く．]
 $ haskell.zc = f haskell.fmap haskell.xc $
@@ -648,7 +648,7 @@ $ haskell.zc = f haskell.fmap haskell.xc $
 演算子 $haskell.fmap$ の型は次のとおりである．
 $ lozenge.stroked.medium haskell.fmap lozenge.stroked.medium
   colon.double haskell.Functor supset haskell.f
-  ==> (haskell.a -> haskell.b)
+  harpoons.rtrb (haskell.a -> haskell.b)
   -> haskell.fa
   -> haskell.fb $
 
@@ -695,9 +695,9 @@ $ haskell.zc = [| f haskell.xc haskell.yc |] ... "採用されなかった文法
 
 いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $haskell.fc$ ただし $haskell.fc = shell.l f shell.r $ を作ったとすると，関数 $haskell.fc$ は次の型を持つ．
 $ haskell.fc colon.double haskell.Applicative supset haskell.f
-  ==> haskell.f_(haskell.a -> haskell.b) $
+  harpoons.rtrb haskell.f_(haskell.a -> haskell.b) $
 
-アプリカティブマップ演算子は変数 $haskell.xc colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.a $ に対して，関数 $haskell.fc$ を $haskell.zc = haskell.fc haskell.amap haskell.xc$ のように作用させる．変数 $haskell.zc$ の型は $haskell.zc colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.b$ である．
+アプリカティブマップ演算子は変数 $haskell.xc colon.double haskell.Applicative supset haskell.f harpoons.rtrb haskell.f_haskell.a $ に対して，関数 $haskell.fc$ を $haskell.zc = haskell.fc haskell.amap haskell.xc$ のように作用させる．変数 $haskell.zc$ の型は $haskell.zc colon.double haskell.Applicative supset haskell.f harpoons.rtrb haskell.f_haskell.b$ である．
 
 == モナド
 
