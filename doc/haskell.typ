@@ -36,6 +36,7 @@
 #let Char = typename("Char")
 #let Double = typename("Double")
 #let Int = typename("Int")
+#let List = typename("[]")
 #let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 
