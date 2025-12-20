@@ -367,11 +367,43 @@ $ (circle.dotted x) &= (lozenge.stroked.medium class("binary", circle.dotted) x)
 
 一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．
 
-== 関数合成
+== 関数合成と関数適用
+
+ある変数に複数の関数を順に適用することはよくあることである．例えば
+#sourcecode[```python
+y = f(x)
+z = g(y)
+```]
+あるいは同じことであるが
+#sourcecode[```python
+z = g(f(x))
+```]
+とすることがある．本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数をるので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
+
+ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 `g` と関数 `f` の合成は `g.f` である．式 $z = g compose f x$ は `z = g.f x` と書く．]
+
+関数合成演算子は，連続して用いることができる．関数合成演算子は左結合するので，関数 $f, g, h$ について $h compose g compose f = (h compose g) compose f$ であるが，これを展開すると以下のようになる．
+$ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
+  &= h(g(f lozenge.stroked.medium)) \
+  &= h compose (g compose f) $
+
+そのため $h compose g compose f = h compose (g compose f)$ である．つまり，関数合成は順序に依存しない．
+
+関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
+$ f haskell.apply x = f x $
+
+演算子 $haskell.apply$ の優先順位は関数適用も含めあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を `g $ f x` と書く．]
+
+関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を `($x)f` と書く．]
+
 
 == 高階関数
 
 == 余談：演算子の定義
+
+
+
+
 
 == この章のまとめ
 
