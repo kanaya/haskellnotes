@@ -703,172 +703,59 @@ $ haskell.fc colon.double haskell.Applicative supset haskell.f
 
 == モナド
 
-/* 
+== 種
 
+== Data
 
+== 型クラスとインスタンス
 
+== IOモナド
 
+== Do構文
 
-\section{モナド}
+#sourcecode[```haskell
+z = do { x' <- x; y' <- y; f x'; g y' }
+```]
 
+== モノイド則
 
-\section{種}
+$(ZZ, +, 0)$ はモノイドである．
 
-\begin{equation}
-\mathTypeFunction{\mathAnyKind}{\mathAnyKind}
-\end{equation}
+同じ型を持つ関数を集めた関数の集合 $FF$ があるとする．任意の関数 $f in FF$ について $haskell.id f = f$ なる関数 $haskell.id$ があり，かつ任意の関数 $f, g, h in FF$ に対して $(h compose g) compose f) = h compose (g compose f)$ が成り立つとする．このとき組み合わせ $(FF, compose, haskell.id)$ は#keyword[モノイド]であるという．
 
-\section{Data}
+- 単位元の存在
+- 結合律
 
-Data:#footnote[In Haskell,
-\begin{footcode}
-data Suit = Spade | Heart | Club | Diamond
-\end{footcode}}
-\begin{equation}
-\mathData{\mathTypeGeneral{Suit}}
-  {\mathConstructor{Spade}\mathOr\mathConstructor{Heart}\mathOr\mathConstructor{Club}\mathOr\mathConstructor{Diamond}}
-\end{equation}
+== 関手則
 
-Data with parameters:#footnote[In Haskell,
-\begin{footcode}
-data V2 = V2 { x :: Int, y :: Int}
-\end{footcode}
-or `data V2 = V2 Int Int|.}
-\begin{equation}
-\mathData{\mathTypeGeneral{V^2}}
-  {\mathConstructor{V^2}\left\{x\mathTypeIs\mathTypeInt,y\mathTypeIs\mathTypeInt\right\}}
-\end{equation}
+$ haskell.id haskell.fmap haskell.xc &= haskell.id haskell.xc \
+  (g compose f) haskell.fmap haskell.xc &= ((g haskell.fmap) compose (f haskell.fmap)) haskell.xc $
 
-\section{型クラスとインスタンス}
+== アプリカティブ関手則
 
-\section{IOモナド}
+$ shell.l haskell.id shell.r haskell.amap haskell.xc &= haskell.xc \
+  shell.l f shell.r haskell.amap shell.l x shell.r 
+  &= shell.l lozenge.stroked.medium haskell.apply x shell.r haskell.amap shell.l f shell.r \
+  &= shell.l f x shell.r \
+  shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap haskell.hc haskell.amap haskell.gc haskell.amap haskell.fc
+  &= haskell.hc haskell.amap (haskell.gc haskell.amap haskell.fc) $
 
-IO example:#footnote[In Haskell, `main = getLine >>= print >> return 0|.}
-\begin{equation}
-\mathMain=\mathGetLine\mathBindRight\mathPrint\mathNext\mathMakeReturn{0}
-\end{equation}
+== モナド則
 
-\section{Do構文}
+$ tilde(f) haskell.bind shell.l.stroked x shell.r.stroked &= tilde(f) x \
+  shell.l.stroked lozenge.stroked.medium shell.r.stroked haskell.bind haskell.xc
+  &= haskell.xc \
+  tilde(g) haskell.bind tilde(f) haskell.bind haskell.xc
+  &= tilde(g) haskell.bind(tilde(f) haskell.bind haskell.xc) $
 
-Do notation:#footnote[In Haskell, `z = do {x' <- x; y' <- y; f x'; g y'}|.}
-\begin{equation}
-\mathPure{z}=\mathDo{x'\leftarrow\mathPure{x};y'\leftarrow\mathPure{y};fx';gy'}
-\end{equation}
+#keyword[クライスリスター]
 
-\dbend
+$f^star.stroked = (tilde(f) haskell.bind lozenge.stroked.medium)$ を用いると，モナド則は次のように書き直せる．
+$ f^star.stroked shell.l x shell.r &= tilde(f) x \
+  shell.l lozenge.stroked.medium shell.r^star.stroked shell.l x shell.r &= haskell.xc \
+  (g^star.stroked tilde(f))^star.stroked shell.l x shell.r &= g^star.stroked (f^star.stroked shell.l x shell.r) $
 
-\section{モノイド}
-
-任意の関数$f$に対して
-\begin{equation}
-\mathId f=f
-\end{equation}
-なる関数$\mathId$があり，かつ任意の関数$f,g,h$に対して
-\begin{equation}
-(h\mathCompose g)\mathCompose f=h\mathCompose(g\mathCompose f)
-\end{equation}
-が成り立つとする．このとき関数は#keyword[モノイド}であるという．
-
-\tobewritten{一般のモノイド．}
-
-\section{モノイド則}
-型$\mathTypeA$の変数$x,y,z\mathTypeIs\mathTypeA$について，特別な変数$\mathIdentity\mathTypeIs\mathTypeA$および二項演算子$\mathAnyBinaryOperator$ただし$x\mathAnyBinaryOperator y\mathTypeIs\mathTypeA$があり，
-\begin{align}
-\mathIdentity\mathAnyBinaryOperator x&=x\dots\text{（単位元の存在）}\\
-(x\mathAnyBinaryOperator y)\mathAnyBinaryOperator z&=x\mathAnyBinaryOperator(y\mathAnyBinaryOperator z)\dots\text{（結合律）}
-\end{align}
-であるとき，組み合わせ$(\mathTypeA,\mathAnyBinaryOperator,\mathIdentity)$をモノイドと呼ぶ．
-
-組み合わせ$(\mathTypeInt,+,0)$や$(\mathTypeInt,\times,1)$はモノイドである．
-
-同じ型から同じ型への1引数関数を改めて$\mathTypeFunctionAA$で表し，特別な変数$\mathIdentity$を関数$\mathId$，二項演算子を$\mathCompose$とすると以下の関係が成り立つ．
-\begin{align}
-\mathId\mathCompose f&=f\dots\text{（単位元の存在）}\\
-(h\mathCompose g)\mathCompose f&=h\mathCompose(g\mathCompose f)\dots\text{（結合律）}
-\end{align}
-そこで組み合わせ$(\mathTypeFunctionAA,\mathCompose,\mathId)$はモノイドであると言える．
-
-\section{関手則}
-
-関手のマップ演算子$\mathFMap$は以下の#keyword[関手則}に従う．
-\begin{align}
-\mathId\mathFMap\mathPure{x}&=\mathId\mathPure{x}\\
-(g\mathCompose f)\mathFMap\mathPure{x}&=((g\mathFMap)\mathCompose(f\mathFMap))\mathPure{x}\\
-&=g\mathFMap(f\mathFMap\mathPure{x})
-\end{align}
-
-関手則は#keyword[関手（数学）}に由来する．
-
-#keyword[圏}$\mathCategory{C}$の#keyword[対象}を$\mathObject{X}$とする．圏$\mathCategory{D}$の対象は関手（数学）$\mathFunctor{F}$によって対象$\mathObject{X}$と関係づけられる．圏$\mathCategory{C}$における#keyword[射}$f:\mathObject{X}\rightarrow\mathObject{Y}$が$\mathFunctor{F}f:\mathFunctor{F}\mathObject{X}\rightarrow\mathFunctor{F}\mathObject{Y}$に対応し，次の関係を満たす．
-\begin{itemize}
-\item $\mathObject{X}\in\mathCategory{C}$に対して$\mathFunctor{F}\mathId_{\mathObject{X}}=\mathId_{\mathFunctor{F}\mathObject{X}}$
-\item $f:\mathObject{X}\rightarrow\mathObject{Y}$および$g:\mathObject{Y}\rightarrow\mathObject{Z}$に対して$\mathFunctor{F}(g\mathCompose f)=(\mathFunctor{F}g)\mathCompose(\mathFunctor{F}f)$
-\end{itemize}
-
-いま
-\begin{align}
-\mathId_{\mathObject{X}},\mathId_{\mathFunctor{F}\mathObject{X}}&\rightarrow\mathId\\
-f\mathFMap&\rightarrow\mathFunctor{F}f
-\end{align}
-と対応付けると，関手（数学）が満たす法則と関手則は一致する．
-
-\section{アプリカティブ関手則}
-
-アプリカティブ関手のマップ演算子$\mathApplicativeMap$は以下の規則に従う．
-\begin{align}
-\mathMakePure{\mathId}\mathApplicativeMap\mathPure{x}&=\mathPure{x}\\
-\mathMakePure{f}\mathApplicativeMap\mathMakePure{x}&=\mathMakePure{fx}\\
-\mathPure{f}\mathApplicativeMap\mathMakePure{x}&=\mathMakePure{\mathAnonymousParameter\mathApply x}\mathApplicativeMap\mathPure{f}\\
-\mathMakePure{\mathAnonymousParameter\mathCompose\mathAnonymousParameter}\mathApplicativeMap\mathPure{h}\mathApplicativeMap\mathPure{g}\mathApplicativeMap\mathPure{f}
-&=\mathPure{h}\mathApplicativeMap(\mathPure{g}\mathApplicativeMap\mathPure{f})
-\end{align}
-
-\section{モナド則}
-
-モナドのマップ演算子$\mathBind$は以下の規則に従う．
-\begin{align}
-\mathMonadic{f}\mathBind\mathMakeReturn{x}&=\mathMonadic{f}x\\
-\mathMakeReturn{\mathAnonymousParameter}\mathBind\mathPure{x}&=\mathPure{x}\\
-(\mathMonadic{g}\mathBind\mathMonadic{f})\mathBind\mathPure{x}&=\mathMonadic{g}\mathBind(\mathMonadic{f}\mathBind\mathPure{x})
-\end{align}
-% つまり，組み合わせ$(\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathTypeGeneral{m}}{\mathTypeA}},\mathMakePure{\mathAnonymousParameter},\mathBind)$はモノイドである． -- bindの両辺の型が一致しないのでモノイドではない．
-
-次の#keyword[クライスリスター}すなわち
-\begin{equation}
-\mathKleisliStar{f}=(\mathMonadic{f}\mathBind\mathAnonymousParameter)
-\end{equation}
-を用いると，モナド則は次のように書き換えられる．
-\begin{align}
-\left(\mathKleisliStar{f}\right)\mathMakePure{x}&=\mathMonadic{f}x\\
-\mathKleisliStar{\left(\mathMakePure{\mathAnonymousParameter}\right)}\mathPure{x}&=\mathPure{x}\\
-\mathKleisliStar{\left(\mathKleisliStar{g}\mathMonadic{f}\right)}\mathPure{x}&=\mathKleisliStar{g}\left(\mathKleisliStar{f}\mathPure{x}\right)
-\end{align}
-
-% \begin{tikzpicture}[nodes = {text depth = 1ex, text height = 2ex}]
-%   \graph{ tex -> dvi -> ps -> pdf,
-%   bib -> bbl,
-%   bbl -> dvi};
-% \end{tikzpicture}
-
-\section{クラスの定義}
-
-アプリカティブ関手は関手の拡張である．
-
-% class Functor f => Applicative f where
-% pure :: a -> f a
-% (<*>) :: f (a -> b) -> f a -> f b
-
-\begin{gather}
-  \mathClass{\mathClassFunctor}{\mathClassF}{\mathClassApplicative}{\mathClassF}\\
-  \begin{aligned}
-    \mathMakePure{\mathAnonymousParameter}
-    &\mathTypeIs\mathTypeFunction{\mathTypeA}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}\\
-    \mathAnonymousParameter\mathApplicativeMap\mathAnonymousParameter
-    &\mathTypeIs\mathTypeFunctionII{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeFunctionAB}}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeA}}{\mathFunctorTypeGeneral{\mathClassF}{\mathTypeB}}
-  \end{aligned}
-\end{gather}
-
-*/
+== クラスの定義
 
 #pagebreak()
 
