@@ -294,17 +294,29 @@ dash.wave.double --> frac(sin x, x, style: "skewed")) $
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
-関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は関数 $f$ と同じ振る舞いをする関数 $h$ は以下のように定義する．#footnote[Haskell では
+関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は関数 $f$ と同じ振る舞いをする関数 $h$ は以下のように定義する．#footnote[Haskellでは
 ```haskell
-  h x| x<0       = 0
-     | x==0      = 1
-     | otherwise = (sin x)/x
+  h x | x < 0     = 0
+      | x == 0    = 1
+      | otherwise = f x
 ```
 と書く．]
 $ h x&|_(x < 0) = 0 \
-  &|_(x = 0) = 1 \
+  &|_(x equiv 0) = 1 \
   &|_haskell.otherwise = f x $
 
+関数定義の場合分けを駆使すれば#keyword[条件式]はなくても構わないが，条件式の記法があるのは便利である．Pythonには
+#sourcecode[```python
+def f(x):
+  if x == 0:
+    return 1
+  else:
+    return sin(x)/x
+```]
+のような#keyword[制御構造]としての条件文があるが，我々は値を持つ#keyword[条件式]を考える．
+
+我々の条件式とは $f x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse (sin x) / x$ のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.if$ 節の式の値が真 $haskell.True$ であれば $haskell.kwthen$ 節の式が評価され，偽 $haskell.False$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われ
+るため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellではを $f x = if x equiv 0 haskell.kwthen 0$ のように使う．$ haskell.kwelse (sin x) / x$ を `f x = if x==0 then 1 else (sin x)/x` と書く．}
 
 ///
 
