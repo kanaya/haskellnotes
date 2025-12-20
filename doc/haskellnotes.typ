@@ -247,6 +247,27 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 
 部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を `max x y` と書く．]
 
+== ラムダ式
+
+関数の正体は#keyword[ラムダ式]である．ラムダ式とは，仮の引数をとり，その値をもとになにがしかの演算を行い，その結果を返す式である．ラムダ式は名前のない関数のようなものだ．それゆえ，無名関数と呼ばれることもある．
+
+例えば引数 $x$ をとり値 $1+x$ を返すラムダ式をPythonでは
+#sourcecode[```python
+lambda x: 1 + x
+```]
+と書くが，我々はより簡潔に $backslash x |-> 1 + x$ と書くことにする．
+
+この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $.$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ` \x -> 1 + x` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
+
+ラムダ式は関数である．ラムダ式を適用するには，ラムダ式を括弧で包む必要がある．例を挙げる．
+$ (backslash x |-> 1 + x) 2 $
+
+この式は結果として $3$ を返す．
+
+複数引数をとるラムダ式は例えば $backslash x y |-> x + y$ のように引数を並べて書く．
+
+本書では新たに，次のラムダ式記法も導入する．式中に記号 $lozenge.stroked.medium$ が現れた場合，その式全体がラムダ式であるとみなす．記号 $lozenge.stroked.medium$ の部分には引数が入る．第 $n$ 番目の $lozenge.stroked.medium$ には第 $n$ 番目の引数が入る．例えばラムダ式 $backslash x y |-> x + y$ は $lozenge.stroked.medium + lozenge.stroked.medium$  と書いても良い．式を左から読んで1番目の $lozenge.stroked.medium$ が元々の $x$ すなわち第1引数を，2番目の $lozenge.stroked.medium$ が元々の $y$ すなわち第2引数を意味する．この省略記法はプログラミング言語Schemeにおける `cut` プロシジャに由来する．#footnote[Haskellでは，中置演算子に限ってこの表現が使える．例えば $(lozenge.stroked.medium + lozenge.stroked.medium)$ は単に `(+)` と表現できる．ただしSchemeにおける `cut` プロシジャの `<>` はHaskellにはないため，Schemeでいう `(cut f <> y)` に相当するコードを直接は書けない．]
+
 
 = 変数・関数・型
 
