@@ -268,6 +268,22 @@ $ (backslash x |-> 1 + x) 2 $
 
 本書では新たに，次のラムダ式記法も導入する．式中に記号 $lozenge.stroked.medium$ が現れた場合，その式全体がラムダ式であるとみなす．記号 $lozenge.stroked.medium$ の部分には引数が入る．第 $n$ 番目の $lozenge.stroked.medium$ には第 $n$ 番目の引数が入る．例えばラムダ式 $backslash x y |-> x + y$ は $lozenge.stroked.medium + lozenge.stroked.medium$  と書いても良い．式を左から読んで1番目の $lozenge.stroked.medium$ が元々の $x$ すなわち第1引数を，2番目の $lozenge.stroked.medium$ が元々の $y$ すなわち第2引数を意味する．この省略記法はプログラミング言語Schemeにおける `cut` プロシジャに由来する．#footnote[Haskellでは，中置演算子に限ってこの表現が使える．例えば $(lozenge.stroked.medium + lozenge.stroked.medium)$ は単に `(+)` と表現できる．ただしSchemeにおける `cut` プロシジャの `<>` はHaskellにはないため，Schemeでいう `(cut f <> y)` に相当するコードを直接は書けない．]
 
+== パタンマッチ・ガード・条件分岐
+
+関数の定義は，基本的にはラムダ式の変数への代入である．引数 $x$ をとり値 $2x$ を返す関数 $f$ は $f = backslash x |-> 2 times x$ と定義できる．ただし，この省略形として $f x = 2 times x$ と書いても良い．#footnote[Haskellでは $f = backslash x |-> 2 times x$ を `f = \ x -> 2 * x` と書き，一方 $f x = 2 times x$ を `f x = 2 * x` と書く．]
+
+関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $1$ であり，その他の場合は関数 $f$ と同じ振る舞いをする関数 $g$ を考える．このとき $g$ は以下のように定義できる．
+$ g 0 &= 1 \
+  g x &= 2 times x $
+  
+これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは
+#sourcecode[```haskell
+  g 0 = 1
+  g x = 2 * x
+```]
+と書く．]
+
+///
 
 = 変数・関数・型
 
