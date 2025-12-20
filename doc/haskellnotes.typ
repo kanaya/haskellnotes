@@ -498,6 +498,21 @@ $ backslash x y |-> x + y = backslash x |-> (backslash y |-> x + y) $
 $ backslash x y |-> x + y = backslash x |-> backslash y |-> x + y $
 とも書かれる．
 
+複数引数をとる関数を1引数関数に分解することを#keyword[カリー化]と呼ぶ．これはこの分野の先駆者であるハスケル・カリーの名前に由来する．
+
+整数引数を二つ取り，整数を返す関数 $g$ は
+$ g colon.double haskell.Int -> haskell.Int -> haskell.Int $
+という型を持つ．写像の矢印記号は右結合するので，これは
+$ g colon.double haskell.Int -> (haskell.Int -> haskell.Int) $
+と同じ意味である．上式は
+$ g colon.double underbrace(haskell.Int, x) -> underbrace(overbrace(haskell.Int, y) -> overbrace(haskell.Int, (g x)y), g x) $
+のようにイメージすると良い．
+
+自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $(->)haskell.a haskell.b$ の別名であり，型コンストラクタ $(->)$ に引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
+
+Haskellには#keyword[タプル]という型がある．タプルとは，複数の変数を組み合わせたもので，例えば変数 $x$ と $y$ をひとまとめにした $paren.l.flat x, y paren.r.flat$ はタプルである．変数 $x$, $y$ の型は同じでも良いし，異なっても良い．#footnote[Haskellでは $paren.l.flat x, y paren.r.flat$ を `(x, y)` と書く．]
+
+
 == 多相型と型クラス
 
 == 余談：モノイド
@@ -542,37 +557,6 @@ $ backslash x y |-> x + y = backslash x |-> backslash y |-> x + y $
 
 /*
 
-
-
-複数引数をとる関数を1引数関数に分解することを#keyword[カリー化}と呼ぶ．これはこの分野の先駆者であるハスケル・カリーの名前に由来する．
-
-% \section{関数の型}
-
-整数引数を二つ取り，整数を返す関数 $\hxFunc{g}$ は
-\begin{equation}
-  \hxFunc{g}
-  \hIsTypeOfhaskell.Int\hFunctionArrowhaskell.Int\hFunctionArrowhaskell.Int
-\end{equation}
-という型を持つ．写像の矢印記号は右結合するので，これは
-\begin{equation}
-  \hxFunc{g}
-  \hIsTypeOfhaskell.Int\hFunctionArrow(haskell.Int\hFunctionArrowhaskell.Int)
-\end{equation}
-と同じ意味である．上式は
-\begin{equation*}
-  \hxFunc{g}
-  \hIsTypeOf\underbrace{haskell.Int}_{\hxVar{x}}
-  \hFunctionArrow\underbrace{\overbrace{haskell.Int}^{\hxVar{y}}\hFunctionArrow\overbrace{haskell.Int}^{(\hxFunc{g}\hxVar{x})\hxVar{y}}}_{\hxFunc{g}\hxVar{x}}
-\end{equation*}
-のようにイメージすると良い．自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $\hFunctionArrow$ は2引数をとる型コンストラクタである．型コンストラクタに関しては第XYZ章で詳しく述べる．例えば $\hTypeName{a}\hFunctionArrow\hTypeName{b}$ という型は $(\hFunctionArrow)\hTypeName{a}\hTypeName{b}$ の別名であり，型コンストラクタ $(\hFunctionArrow)$ に引数 $\hTypeName{a}$ と $\hTypeName{b}$ を与えたものと読む．}
-
-\separator
-
-Haskellには#keyword[タプル}という型がある．タプルとは，複数の変数を組み合わせたもので，例えば変数 $\hxVar{x},\hxVar{y}$ をひとまとめにした
-\begin{equation}
-  \hPairWith{\hxVar{x}}{\hxVar{y}}
-\end{equation}
-はタプルである．変数 $\hxVar{x}$, $\hxVar{y}$ の型は同じでも良いし，異なっても良い．#footnote[Haskellでは $\hPairWith{\hxVar{x}}{\hxVar{y}}$ を \code{(x, y)} と書く．}
 
 いまタプルを引数に取る関数
 \begin{equation}

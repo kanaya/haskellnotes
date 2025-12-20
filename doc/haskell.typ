@@ -17,6 +17,7 @@
 
 // Function.
 #let longfunction(x) = math.serif(x)
+#let curry = longfunction("curry")
 #let even = longfunction("even")
 #let fib = longfunction("fib")
 #let id = longfunction("id")
@@ -25,6 +26,7 @@
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
 #let sqrt = longfunction("sqrt")
+#let uncurry = longfunction("uncurry")
 #let words = longfunction("words")
 
 // Type parameter.
@@ -40,7 +42,7 @@
 #let Integer = typename("Integer")
 #let List = typename("[]")
 #let String = typename("String")
-#let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
+#let Unit = typename(math.paren.l.flat+math.paren.r.flat)
 
 // Type constructor.
 #let typeconstructor(x) = math.bold(x)
