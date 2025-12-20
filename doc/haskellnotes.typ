@@ -283,7 +283,7 @@ $ g 0 &= 1 \
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
 $ g x = cases(0 --> 1,
-dash.wave.double --> (sin x) / x) $
+dash.wave.double --> frac(sin x, x, style: "skewed")) $
 
 ここに $dash.wave.double$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Hhaskellでは
 ```haskell
@@ -293,6 +293,18 @@ dash.wave.double --> (sin x) / x) $
 または `g x = case x of {0 -> 1; _ -> (sin x)/x}` と書く．]
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
+
+関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は関数 $f$ と同じ振る舞いをする関数 $h$ は以下のように定義する．#footnote[Haskell では
+```haskell
+  h x| x<0       = 0
+     | x==0      = 1
+     | otherwise = (sin x)/x
+```
+と書く．]
+$ h x&|_(x < 0) = 0 \
+  &|_(x = 0) = 1 \
+  &|_haskell.otherwise = f x $
+
 
 ///
 
