@@ -396,7 +396,6 @@ $ f haskell.apply x = f x $
 
 関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を `($x)f` と書く．]
 
-
 == 高階関数
 
 == 余談：演算子の定義
