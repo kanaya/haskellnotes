@@ -642,6 +642,8 @@ $ haskell.zm = f haskell.fmap haskell.xm $
 リストもMaybeも元の型 $haskell.a$ から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手]という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを $haskell.Functor$ で表す．関手型クラスの $haskell.a$ 型の変数を次のように型注釈する．#footnote[Haskellでは `xm :: Functor f => f a` と書く．]
 $ haskell.xc colon.double haskell.Functor supset haskell.f harpoons.rtrb haskell.typeconstructor1(haskell.f, haskell.a) $
 
+型 $haskell.typeconstructor1([], haskell.a)$ や型 $haskell.MaybeType(haskell.a)$ は型 $haskell.a$ のところに $haskell.Int$ や $haskell.Double$ を代入すると具体的な型となる抽象的な型であった．今度は $[]$ や $haskell.Maybe$ のほうも $haskell.f$ と抽象化するのである．この $haskell.f$ は#keyword[型コンストラクタ]と呼ぶ．型コンストラクタには，具体的な引数，例えば $haskell.Int$ や $haskell.Double$ を与えると具体的な型になる．
+
 型クラス $haskell.Functor$ に属する型は $haskell.fmap$ 演算子を必ず持つ．演算子 $haskell.fmap$ は次の形を持つ．#footnote[Haskellでは `zm = f <$> xm` と書く．]
 $ haskell.zc = f haskell.fmap haskell.xc $
 
