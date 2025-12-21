@@ -21,11 +21,14 @@
 #let even = longfunction("even")
 #let fib = longfunction("fib")
 #let id = longfunction("id")
+#let fromIntegral = longfunction("fromIntegral")
 #let lines = longfunction("lines")
 #let norm = longfunction("norm")
+#let pred = longfunction("pred")
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
 #let sqrt = longfunction("sqrt")
+#let succ = longfunction("succ")
 #let uncurry = longfunction("uncurry")
 #let words = longfunction("words")
 
@@ -60,8 +63,13 @@
 // Type class.
 #let typeclass(x) = math.frak(x)
 #let Applicative = typeclass("Applicative")
+#let Enum = typeclass("Enum")
+#let Eq = typeclass("Eq")
 #let Functor = typeclass("Functor")
+#let Integral = typeclass("Integral")
 #let Num = typeclass("Num")
+#let Ord = typeclass("Ord")
+#let Real = typeclass("Real")
 
 // Action.
 #let action(x) = math.sans(x)
