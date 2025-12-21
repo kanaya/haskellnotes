@@ -19,7 +19,9 @@
 #let longfunction(x) = math.serif(x)
 #let curry = longfunction("curry")
 #let even = longfunction("even")
+#let first = longfunction("first")
 #let fib = longfunction("fib")
+#let head = longfunction("head")
 #let id = longfunction("id")
 #let fromIntegral = longfunction("fromIntegral")
 #let lines = longfunction("lines")
@@ -28,9 +30,11 @@
 #let pred = longfunction("pred")
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
+#let rest = longfunction("rest")
 #let sqrt = longfunction("sqrt")
 #let succ = longfunction("succ")
 #let take = longfunction("take")
+#let tail = longfunction("tail")
 #let uncurry = longfunction("uncurry")
 #let words = longfunction("words")
 
@@ -88,7 +92,8 @@
 // Binary operator.
 #let anonymousoperator = math.class("binary",math.square.stroked)
 #let anyop = math.class("binary", math.circle.dotted)
-#let at = math.class("binary", math.excl.double)
+#let at = math.class("binary", math.at)
+#let bangbang = math.class("binary", math.excl.double)
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.dollar)
 #let map = math.ast

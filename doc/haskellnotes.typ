@@ -669,7 +669,7 @@ $ x_"s" = haskell.take 5 space n_"s" $
 
 関数 $haskell.take$ の型は $haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a]$ である．
 
-リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.at n$ とすることでアクセスできる．#footnote[Haskellでは `xs !! n` と書く．]
+リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.bangbang n$ とすることでアクセスできる．#footnote[Haskellでは `xs !! n` と書く．]
 
 == 畳み込み
 
@@ -764,6 +764,35 @@ $ f &= backslash x |-> 100 + x \
 
 == 余談：リストの実装
 
+
+ここでリストの実装について述べておこう．紙上ではリストは自由に考えられるが，計算機上ではそれほど自由ではないからである．我々はリストをLISPにおけるリストと同じ構造を持つものとする．LISPにおけるリストとは変数 $haskell.first$ と変数 $haskell.rest$ からなるペアの集合である．変数$haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する特別な値を持つ．
+
+リストのための特別な表現 $haskell.first : haskell.rest$ を用い，リファレンス $haskell.first$ はリストが保持する型，リファレンス $haskell.rest$ はリスト型であるとする．演算子 $:$ をLISPに倣って#keyword[cons演算子]と呼ぶ．#footnote[Haskellでも要素 `x` をリスト `xs` の先頭に追加することを `x : xs` と書く．]
+
+要素 $haskell.rest$ はリストまたは空リストであるから，一般にリストは次のように展開できることになる．
+$ [x_0, x_1, ..., x_n] &= x_0 : [x_1, x_2, ..., x_n] \
+  &= x_0 : x_1 : [x_2, ..., x_n] \
+  &= x_0, x_1 : ... : x_n : emptyset $
+\begin{align}
+cons演算子 $(:)$ は右結合する．すなわち $x_0 : x_1 : x_2 = x_0 : (x_1 : x_2)$ である．
+
+マップ演算子の実装は，リストの実装に踏み込めば簡単である．空でないリストは必ず $x : x_"s"$ へと分解できるから
+$ f * emptyset &= emptyset \
+  f * (x : x_"s") &= (f x) : (f * x_"s") $
+とマップ演算子 $(*)$ を定義できる．つまりマップ演算子 $(*)$ はcons演算子 $(:)$ から作ることができる．換言すれば，マップ演算子はシンタックスシュガーである．
+
+Haskellでは任意のリスト $x_"s"$ に対し，次の関数が用意されている．
+$ haskell.head x_"s" &... "先頭要素" \
+  haskell.tail x_"s" &... "2番目以降の要素からなるリスト" $
+これらはLISPの `car` 関数，`cdr` 関数と同じものであり，この二者を用いればどのようなリストの処理も可能である．#footnote[Haskellでは `head` 関数の利用は非推奨である．これは `head []` と書くとエラーになるからである．]
+
+このように基本的な関数から高機能な関数を実装する方法はよく行われる．この例ではcons演算子からマップ演算子を合成した．
+
+リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
+$ f underparen(a_"s" haskell.at (x : x_"s")) = ... $
+として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは `f as@(x:xs)` と書く．]
+
+
 == この章のまとめ
 
 = 再帰
@@ -792,63 +821,6 @@ $ f &= backslash x |-> 100 + x \
 
 /*
 
-
-\section{余談：リストの実装}
-
-ここでリストの実装について述べておこう．紙上ではリストは自由に考えられるが，計算機上ではそれほど自由ではないからである．我々はリストを\lisp におけるリストと同じ構造を持つものとする．\lisp におけるリストとは変数 $\mFirstVar$ と変数 $\mRestVar$ からなるペアの集合である．変数$\mFirstVar$ がリストの要素を参照し，変数 $\mRestVar$ が次のペアを参照する．リストの最後のペアの $\mRestVar$ は空リストを参照する特別な値を持つ．
-
-リストのための特別な表現
-\begin{equation}
-  \mFirstVar:\mRestVar
-\end{equation}
-を用い，リファレンス $\mFirstVar$ はリストが保持する型，リファレンス $\mRestVar$ はリスト型であるとする．演算子 $:$ を\lisp に倣って#keyword[cons演算子}と呼ぶ．#footnote[Haskellでも要素 \code{x} をリスト \code{xs} の先頭に追加することを \code{x:xs} と書く．}
-
-要素 $\mRestVar$ はリストまたは空リストであるから，一般にリストは次のように展開できることになる．
-\begin{align}
-  [\hxVar{x}_0,\hxVar{x}_1,\hxVar{x}_2\dotsb \hxVar{x}_n]
-  &=\hxVar{x}_0:[\hxVar{x}_1,\hxVar{x}_2\dotsb \hxVar{x}_n]\\
-  &=\hxVar{x}_0:\hxVar{x}_1:[\hxVar{x}_2\dotsb \hxVar{x}_n]\\
-  &=\hxVar{x}_0:\hxVar{x}_1:\hxVar{x}_2:\dotsb:\hxVar{x}_n:{\hEmptyList}
-\end{align}
-cons演算子 $(:)$ は右結合する．すなわち $\hxVar{x}_0:\hxVar{x}_1:\hxVar{x}_2=\hxVar{x}_0:(\hxVar{x}_1:\hxVar{x}_2)$ である．
-
-マップ演算子の実装は，リストの実装に踏み込めば簡単である．空でないリストは必ず $\hxVar{x}:\hListVar{x}$ へと分解できるから
-\begin{equation}
-  \left\{
-  \begin{aligned}
-    \hxFunc{f}\hMap{\hEmptyList}
-    &={\hEmptyList}\\
-    \hxFunc{f}\hMap{}(\hxVar{x}:\hListVar{x})
-    &=(\hxFunc{f}\hxVar{x}):(\hxFunc{f}\hMap\hListVar{x})
-  \end{aligned}
-  \right.
-\end{equation}
-とマップ演算子 $(\hMap)$ を定義できる．つまりマップ演算子 $(\hMap)$ はcons演算子 $(:)$ から作ることができる．換言すれば，マップ演算子はシンタックスシュガーである．
-
-Haskellでは任意のリスト $\hListVar{x}$ に対し，次の関数が用意されている．
-\begin{align*}
-  \mHead\hListVar{x}
-  &\dots\text{$\hListVar{x}$の先頭要素}\\
-  \mTail\hListVar{x}
-  &\dots\text{$\hListVar{x}$の2番目以降の要素からなるリスト}
-\end{align*}
-これらは\lisp の \code{car} 関数，\code{cdr} 関数と同じものであり，この二者を用いればどのようなリストの処理も可能である．
-
-このように基本的な関数から高機能な関数を実装する方法はよく行われる．この例ではcons演算子からマップ演算子を合成した．
-
-\separator
-
-リストを引数にとる関数はいつでも
-\begin{equation}
-  \hxFunc{f}(\hxVar{x}:\hListVar{x})
-  =\dotsb
-\end{equation}
-という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(\hxVar{x}:\hListVar{x})$ を参照したい場合もあるであろう．そのような場合は
-\begin{equation}
-  \hxFunc{f}\hAsSyntax{\hListVar{a}}{(\hxVar{x}:\hListVar{x})}
-  =\dotsb
-\end{equation}
-として，変数 $\hListVar{a}$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン}と呼ぶ．#footnote[Haskellでは $\hxFunc{f}\hAsSyntax{\hListVar{a}}{(\hxVar{x}:\hListVar{x})}$ を \code{f as@(x:xs)} と書く．}
 
 \section{この章のまとめ}
 
