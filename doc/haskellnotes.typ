@@ -881,11 +881,78 @@ $ haskell.fold_0^+ x_"s" &= union_0^+(x_0 : x_1 : x_2 : emptyset) \
 
 == 余談：クロージャ
 
-== 余談：リストの実装
+ラムダ式をサポートするほとんどのプログラミング言語は，#keyword[レキシカルクロージャ]をサポートする．レキシカルクロージャとは，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む機構である．例えば
+$ a &= 100 \
+  f &= a + lozenge.stroked.medium $
+というラムダ式があるとする．当然我々は関数 $f$ がいつも $f = 100 + lozenge.stroked.medium$ であることを期待するし，Haskellにおいてはいつも保証される．#footnote[Haskellでは
+```haskell
+  a = 100
+  f = \x -> a+x
+```
+と書く．]
+
+ところが，参照透過性のない言語，言い換えると変数への破壊的代入が許されている言語では，変数 $a$ の値がいつ変わっても不思議ではない．そこで，それらの言語では関数 $f$ が定義された時点での $a$ の値を，関数 $f$ の定義に含めておく．これがレキシカルクロージャの考え方である．
+
+Haskellではそもそも変数への破壊的代入がないので，関数 $f$ がレキシカルクロージャであるかどうか悩む必要はない．あえて言えば，Haskellではラムダ式はいつもレキシカルクロージャである．もしあなたのそばのC++プログラマが「え？　Haskellにはレキシカルクロージャが無いの？」などと聞いてきたら，「ええ，Haskellには破壊的代入すらありませんから」と答えておこう．
+
+== この章のまとめ
+
+#tk
 
 = Maybe
 
+この章では計算結果が正しいかもしれないし，正しくないかもしれないという曖昧な状況を表す型を導入する．手始めにPythonでクラス `Possibly` を実装し，それがカリー風の数式で綺麗に書けることを示す．またリストとの共通点についても見ていくことにする．
+
 == Possibly
+
+計算の途中で，計算にまつわる状態を残りの計算に引き継ぎたくなる場合がある．例えば，整数 $x, y, z$ があり $z = frac(y, x, style: "skewed")$ なる値を続く計算で利用したいとする．だが $x equiv 0$ のときには $z$ は正しく計算されない．こんなときプログラマが取れる手段は
+- $z = frac(y, x, style: "skewed") $ を計算した時点で#keyword[ゼロ除算例外]を発生させ，プログラムの制御を他の場所へ移す（大域ジャンプを行う）
+- グローバル変数にゼロ除算エラーが起こったことを記録しておき，$z$ にはとりあえずの数値，例えば $0$ を代入しておいて，計算を続行させる
+- $z$ にエラー状態を示す印を新たにつけておいて，計算を続行させる
+といったところだろう．
+
+大域ジャンプも，グローバル変数の書き換えも破壊的代入を伴うものであり，受け入れがたい．そこで我々は第三のエラー状態を示す印をつける方法を採用することにする．普通変数が整数だろうが実数だろうが，計算機表現には余分なビットが残っていないので，変数をラップする次のようなクラス `Possibly` を導入することにしよう．メンバ変数 `value` が値を，メンバ変数 `valid` がエラーの有無を表す．
+#sourcecode[```python
+class Possibly:
+  def __init__(self, a_valid, a_value = 0):
+    self.valid = a_valid
+    self.value = a_value
+```]
+
+例えば整数値 `123` を持つ `Possibly` クラスの値 `p` は
+#sourcecode[```python
+p = Possibly(True, 123)
+```]
+として生成できるし，`Possibly` 値 `p` が計算エラーを表す場合は
+#sourcecode[```python
+p = Possibly(False)
+```]
+と初期化できる．
+
+ここで，引数に `1` を加えて返す関数 `f` があるとしよう．関数 `f` の定義は次の通りである．
+#sourcecode[```python
+f = lambda x: 1 + x
+```]
+
+関数 `f` に直接 `Possibly` 値 `p` を食わせるとランタイムエラーを引き起こす．
+#sourcecode[```python
+q = f(p) # エラー!!
+```]
+これは関数 `f` が引数として数値を期待していたにもかかわらず，`Possibly` クラスの値が渡されたからである．もし関数 `f` のほうをいじりたくないとすれば，次のような関数 `map_over` を使って
+#sourcecode[```python
+q = map_over(f, p)
+```]
+というふうに間接的に関数適用を行う必要がある．
+
+関数 `map_over(f, p)` はもし `p` がエラーを表す値でなければ中身の値を関数 `f` に適用し，その結果を `Possibly` クラスに包んで返す．もし `p` がエラー値を表す値であれば，結果もエラー値である．関数 `map_over` の実装は次のようになる．
+#sourcecode[```python
+def map_over(f, p):
+  if p.valid == True:
+    return Possibly(True, f(p.value))
+  else:
+    return Possibly(False)
+```]
+さて，次節では以上のようなことを抽象数学的に綺麗に描いてみよう．
 
 == Maybe
 
@@ -897,142 +964,7 @@ $ haskell.fold_0^+ x_"s" &= union_0^+(x_0 : x_1 : x_2 : emptyset) \
 
 /*
 
-% Haskellには言語拡張として，#keyword[アンボックス化タプル}という機能がある．
-%
-% http://qiita.com/7shi/items/d3d3492ddd90d47160f2
-% https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/primitives.html
 
-\section{余談：クロージャ}
-
-ラムダ式をサポートするほとんどのプログラミング言語は，#keyword[レキシカルクロージャ}をサポートする．レキシカルクロージャとは，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む機構である．例えば
-\begin{align}
-  \hxVar{a}
-  &=\hxConstant{100}\\
-  \hxFunc{f}
-  &=\hxVar{a}+\hxAnonParam
-\end{align}
-というラムダ式があるとする．当然我々は関数 $\hxFunc{f}$ がいつも $\hxFunc{f}=\hxConstant{100}+\hxAnonParam$ であることを期待するし，Haskellにおいてはいつも保証される．#footnote[Haskellでは
-\begin{verbatim}
-  a = 100
-  f = \x -> a+x
-\end{verbatim}
-と書く．}
-
-ところが，参照透過性のない言語，言い換えると変数への破壊的代入が許されている言語では，変数 $\hxVar{a}$ の値がいつ変わっても不思議ではない．そこで，それらの言語では関数 $\hxFunc{f}$ が定義された時点での $\hxVar{a}$ の値を，関数 $\hxFunc{f}$ の定義に含めておく．これがレキシカルクロージャの考え方である．
-
-Haskellではそもそも変数への破壊的代入がないので，関数 $\hxFunc{f}$ がレキシカルクロージャであるかどうか悩む必要はない．あえて言えば，Haskellではラムダ式はいつもレキシカルクロージャである．もしあなたのそばの\cxx プログラマが「え？Haskellにはレキシカルクロージャが無いの？」などと聞いてきたら，「ええ，Haskellには破壊的代入すらありませんから」と答えておこう．
-
-\section{この章のまとめ}
-
-\begin{enumerate}
-\item 関数は再帰適用できる．ループは再帰適用によって実現する．
-\item 末尾再帰はスタックを消費しないように最適化される．
-\item 関数はいつも遅延評価される．そのため無限リストを扱うことも可能である．
-\end{enumerate}
-
-\begin{note}{Haskellによるクイックソート}
-我々の記法を使うと，クイックソートは次のように定義できる．
-\begin{equation*}
-  \left\{
-  \begin{aligned}
-    \mSort{\hEmptyList}
-    &={\hEmptyList}\\
-    \mSort(\hxVar{x}:\hListVar{x})
-    &=(\mSort\hListVar{a})\hAppend[x]\hAppend{}(\mSort\hListVar{b})\\
-    &\quad\mWhere\left\{\begin{aligned}
-    \hListVar{a}&\mLetEq{}[a\mListComp a\mFrom\hListVar{x},a\le x]\\
-    \hListVar{b}&\mLetEq{}[b\mListComp b\mFrom\hListVar{x},b>x]
-    \end{aligned}
-    \right.
-  \end{aligned}
-  \right.
-\end{equation*}
-Haskellでは % Num a =>
-\begin{haskellcode}
-\begin{verbatim}
-srt[] = []
-srt(\hxVar{x}:xs) = srt as ++ [x] ++ srt bs where
-  as = [a| a<-xs, a<=x]
-  bs = [b| b<-xs, b>x]
-\end{verbatim}
-\end{haskellcode}
-と書く．このコードはしばしばHaskellのパワーを示すために紹介される．しかし，クイックソートのピボットとして常にリストの先頭要素を用いているため，必ずしも良いコードではない．
-\end{note}
-
-\chapter{Maybe*}
-\label{ch:maybe}
-
-\begin{leader}
-この章では計算結果が正しいかもしれないし，正しくないかもしれないという曖昧な状況を表す型を導入する．手始めにPythonでクラス \code{Possibly} を実装し，それがカリー風の数式で綺麗に書けることを示す．またリストとの共通点についても見ていくことにする．
-\end{leader}
-
-\section{Possibly}
-
-計算の途中で，計算にまつわる状態を残りの計算に引き継ぎたくなる場合がある．例えば，整数 $\hxVar{x},\hxVar{y},\hxVar{z}$ があり $\hxVar{z}=\hxVar{y}/\hxVar{x}$ なる値を続く計算で利用したいとする．だが $\hxVar{x}\hIfEq\hxConstant{0}$ のときには $\hxVar{z}$ は正しく計算されない．こんなときプログラマが取れる手段は
-\begin{itemize}
-\item $\hxVar{z}=\hxVar{y}/\hxVar{x}$ を計算した時点で#keyword[ゼロ除算例外}を発生させ，プログラムの制御を他の場所へ移す（大域ジャンプを行う）
-\item グローバル変数にゼロ除算エラーが起こったことを記録しておき，$\hxVar{z}$ にはとりあえずの数値，例えば $\hxConstant{0}$ を代入しておいて，計算を続行させる
-\item $\hxVar{z}$ にエラー状態を示す印を新たにつけておいて，計算を続行させる
-\end{itemize}
-といったところだろう．
-
-大域ジャンプも，グローバル変数の書き換えも破壊的代入を伴うものであり，受け入れがたい．そこで我々は第三のエラー状態を示す印をつける方法を採用することにする．普通変数が整数だろうが実数だろうが，計算機表現には余分なビットが残っていないので，変数をラップする次のようなクラス \code{Possibly} を導入することにしよう．メンバ変数 \code{value} が値を，メンバ変数 \code{valid} がエラーの有無を表す．
-\begin{pythoncode}
-\begin{verbatim}
-class Possibly:
-  def __init__(self, a_valid, a_value = 0):
-    self.valid = a_valid
-    self.value = a_value
-\end{verbatim}
-\end{pythoncode}
-
-例えば整数値 \code{123} を持つ \code{Possibly} クラスの値 \code{p} は
-\begin{pythoncode}
-\begin{verbatim}
-p = Possibly(True, 123)
-\end{verbatim}
-\end{pythoncode}
-として生成できるし，\code{Possibly} 値 \code{p} が計算エラーを表す場合は
-\begin{pythoncode}
-\begin{verbatim}
-p = Possibly(False)
-\end{verbatim}
-\end{pythoncode}
-と初期化できる．
-
-ここで，引数に \code{1} を加えて返す関数 \code{f} があるとしよう．関数 \code{f} の定義は次の通りである．
-\begin{pythoncode}
-\begin{verbatim}
-f = lambda x: 1+x
-\end{verbatim}
-\end{pythoncode}
-
-関数 \code{f} に直接 \code{Possibly} 値 \code{p} を食わせるとランタイムエラーを引き起こす．
-\begin{pythoncode}
-\begin{verbatim}
-q = f(p) # エラー!!
-\end{verbatim}
-\end{pythoncode}
-これは関数 \code{f} が引数として数値を期待していたにもかかわらず，\code{Possibly} クラスの値が渡されたからである．もし関数 \code{f} のほうをいじりたくないとすれば，次のような関数 \code{map\_over} を使って
-\begin{pythoncode}
-\begin{verbatim}
-q = map_over(f, p)
-\end{verbatim}
-\end{pythoncode}
-というふうに間接的に関数適用を行う必要がある．
-
-関数 \code{map\_over(f, p)} はもし \code{p} がエラーを表す値でなければ中身の値を関数 \code{f} に適用し，その結果を \code{Possibly} クラスに包んで返す．もし \code{p} がエラー値を表す値であれば，結果もエラー値である．関数 \code{map\_over} の実装は次のようになる．
-\begin{pythoncode}
-\begin{verbatim}
-def map_over(f, p):
-  if p.valid == True:
-    return Possibly(True, f(p.value))
-  else:
-    return Possibly(False)
-\end{verbatim}
-\end{pythoncode}
-
-さて，次節では以上のようなことを抽象数学的に綺麗に描いてみよう．
 
 \section{Maybe}
 
