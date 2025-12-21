@@ -842,17 +842,42 @@ $ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double
 と書いてみよう．この定義の末尾の式は $(times)x(haskell.fact(x - 1))$ である．これだと末尾の関数は $haskell.fact$ ではなく演算子 $(times)$ なので，末尾に再帰適用を行ったことにはならない．
 
 そこで，次のように形を変えた階乗関数 $haskell.fact'$ を考えてみる．
-$ haskell.fact' a x = haskell.kwkase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) (x - 1)) $
-こうすれば末尾の関数がもとの $\hFactPrime$ と一致する．#footnote[Haskellでは
+$ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) (x - 1)) $
+こうすれば末尾の関数がもとの $haskell.fact$ と一致する．#footnote[Haskellでは
 ```haskell
   fact' a x = case x of 0 -> 1
                         _ -> fact' (a*x) (x-1)
 ```
 と書く．]
 
+関数 $haskell.fact$ が，例えば
+$ haskell.fact 3 &= 3 times haskell.fact 2 \
+  &= 3 times 2 times haskell.fact 1 \
+  &= 3 times 2 times 1 times haskell.fact 0 \
+  &= 3 times 2 times 1 times 1 \
+  &= 6 $
+と展開されるのに対し，同じく $haskell.fact' 3$ は
+$ haskell.fact' 1 space 3 &= haskell.fact' (1 times 3)(3 - 1) \
+  &= haskell.fact' 3 space 2 \
+  &= haskell.fact' (3 times 2)(2 - 1) \
+  &= haskell.fact' 6 space 1 \
+  &= haskell.fact' (6 times 1)(1 - 1) \
+  &= haskell.fact' 6 space 0 \
+  &= 6 $
+であるから，関数 $haskell.fact$ が「横に伸びる」のに対して，関数 $haskell.fact'$ は「横に伸びない」ことになる．計算式が「横に伸びない」性質は，計算機のリソースを無駄に消耗しないことが期待されるため，計算機科学者が好むのである．また末尾再帰は後述する「末尾再帰最適化」のチャンスをコンパイラに与える．
 
+Haskellを含む幾つかのプログラミング言語処理系は，コンパイル時に#keyword[末尾再帰最適化]を行う．末尾再帰最適化とは，一言で言うと再帰を計算機が扱いやすいループに置き換えることである．では最初から我々もループで関数を表現しておけば，と思われるかもしれないが，再帰以外の方法でループを表現する場合には必ず変数（ループカウンタ）への破壊的代入が必要になるため，我々は末尾再帰に慎ましくループを隠すのである．#footnote[Schemeは末尾再帰最適化を行うことが言語仕様によって決められている．]
 
 == 遅延評価
+
+Haskellは，意図しない限り遅延評価を行う．これは特に左畳み込み演算子 $union$ を使う場合に問題となる．いま $x_"s" = [x_0, x_1, x_2, x_3]$ とすると，左畳み込み演算 $union_0^+ x_"s"$ は
+$ haskell.fold_0^+ x_"s" &= union_0^+(x_0 : x_1 : x_2 : emptyset) \
+  &= haskell.fold_(0+x_0)^+(x_1 : x_2 : x_3 : emptyset) \
+  &= haskell.fold_((0 + x_0) + x_1)^+ (x_2 : x_3 : emptyset) \
+  &= haskell.fold_(((0 + x_0) + x_1) + x_2)^+ (x_3 : emptyset) \
+  &= haskell.fold_((((0 + x_0) + x_1) + x_2) + x_3) emptyset \
+  &= (((0 + x_0) + x_1) + x_2) + x_3 $
+と展開される．遅延評価のために，Haskell処理系は値ではなく式をメモリにストアしなければならないが，左畳み込み演算は大きなメモリを必要としがちである．もし例えば予め $0 + x_0$ を先に計算しておくなど左畳み込みだけ先に評価しておけば，大いにメモリの節約になる．そのためにHaskellは「遅延評価無し」の左畳み込み演算子を用意している．#footnote[「遅延評価無し」の左畳み込み演算子をHaskellでは `foldl'` と書く．]
 
 == 余談：クロージャ
 
@@ -871,45 +896,6 @@ $ haskell.fact' a x = haskell.kwkase x haskell.kwof cases(0 --> a, dash.wave.dou
 == この章のまとめ
 
 /*
-
-関数 $\hFact$ が，例えば
-\begin{align}
-  \hFact\hxConstant{3}&=\hxConstant{3}*\hFact\hxConstant{2}\\
-  &=\hxConstant{3}*\hxConstant{2}*\hFact\hxConstant{1}\\
-  &=\hxConstant{3}*\hxConstant{2}*\hxConstant{1}*\hFact\hxConstant{0}\\
-  &=\hxConstant{3}*\hxConstant{2}*\hxConstant{1}*\hxConstant{1}\\
-  &=\hxConstant{6}
-\end{align}
-と展開されるのに対し，同じく $\hFactPrime\hxConstant{3}$ は
-\begin{align}
-  \hFactPrime\hxConstant{1}\;\hxConstant{3}
-  &=\hFactPrime(\hxConstant{1}*\hxConstant{3})(\hxConstant{3}-\hxConstant{1})\\
-  &=\hFactPrime\hxConstant{3}\;\hxConstant{2}\\
-  &=\hFactPrime(\hxConstant{3}*\hxConstant{2})(\hxConstant{2}-\hxConstant{1})\\
-  &=\hFactPrime\hxConstant{6}\;\hxConstant{1}\\
-  &=\hFactPrime(\hxConstant{6}*\hxConstant{1})(\hxConstant{1}-\hxConstant{1})\\
-  &=\hFactPrime\hxConstant{6}\;\hxConstant{0}\\
-  &=\hxConstant{6}
-\end{align}
-であるから，関数 $\hFact$ が「横に伸びる」のに対して，関数 $\hFactPrime$ は「横に伸びない」ことになる．計算式が「横に伸びない」性質は，計算機のリソースを無駄に消耗しないことが期待されるため，計算機科学者が好むのである．また末尾再帰は後述する「末尾再帰最適化」のチャンスをコンパイラに与える．
-
-% 関数 $\hFact$ と違い関数 $\hFactPrime$ は引数を2個とる．関数 $\hFactPrime$ を使って $\hxVar{x}$ の階乗を求める場合は $\hFactPrime\,\hxConstant{1}\,x$ と第1引数に $\hxConstant{1}$ を与えることにする．この第1引数 $\hxVar{a}$ はアキュムレータという．アキュムレータが演算の途中経過を引き渡していくイメージを描けば，末尾再帰の意味が理解できるだろう．
-
-Haskellを含む幾つかのプログラミング言語処理系は，コンパイル時に#keyword[末尾再帰最適化}を行う．末尾再帰最適化とは，一言で言うと再帰を計算機が扱いやすいループに置き換えることである．では最初から我々もループで関数を表現しておけば，と思われるかもしれないが，再帰以外の方法でループを表現する場合には必ず変数（ループカウンタ）への破壊的代入が必要になるため，我々は末尾再帰に慎ましくループを隠すのである．#footnote[\scheme は末尾再帰最適化を行うことが言語仕様によって決められている．}
-
-\section{遅延評価}
-
-Haskellは，意図しない限り遅延評価を行う．これは特に左畳み込み演算子 $(\hFold)$ を使う場合に問題となる．いま $\hListVar{x}=[\hxVar{x}_0,\hxVar{x}_1,\hxVar{x}_2,\hxVar{x}_3]$ とすると，左畳み込み演算 $\hFold^+_{\hxConstant{0}}\hListVar{x}$ は
-\begin{align}
-  \hFold^+_{\hxConstant{0}}\hListVar{x}
-  &=\hFold^+_{\hxConstant{0}}{}(\hxVar{x}_0:\hxVar{x}_1:\hxVar{x}_2:{\hEmptyList})\\
-  &=\hFold^+_{\hxConstant{0}+\hxVar{x}_0}{}(\hxVar{x}_1:\hxVar{x}_2:\hxVar{x}_3:{\hEmptyList})\\
-  &=\hFold^+_{(\hxConstant{0}+\hxVar{x}_0)+\hxVar{x}_1}{}(\hxVar{x}_2:\hxVar{x}_3:{\hEmptyList})\\
-  &=\hFold^+_{((\hxConstant{0}+\hxVar{x}_0)+\hxVar{x}_1)+\hxVar{x}_2}{}(\hxVar{x}_3:{\hEmptyList})\\
-  &=\hFold^+_{(((\hxConstant{0}+\hxVar{x}_0)+\hxVar{x}_1)+\hxVar{x}_2)+\hxVar{x}_3}{}{\hEmptyList}\\
-  &=(((\hxConstant{0}+\hxVar{x}_0)+\hxVar{x}_1)+\hxVar{x}_2)+\hxVar{x}_3
-\end{align}
-と展開される．遅延評価のために，Haskell処理系は値ではなく式をメモリにストアしなければならないが，左畳み込み演算は大きなメモリを必要としがちである．もし例えば予め $\hxConstant{0}+\hxVar{x}_0$ を先に計算しておくなど左畳み込みだけ先に評価しておけば，大いにメモリの節約になる．そのためにHaskellは「遅延評価無し」の左畳み込み演算子を用意している．#footnote[「遅延評価無し」の左畳み込み演算子をHaskellでは \code{foldl'} と書く．}
 
 % Haskellには言語拡張として，#keyword[アンボックス化タプル}という機能がある．
 %
