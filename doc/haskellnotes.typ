@@ -726,6 +726,42 @@ $ haskell.flat = haskell.fold_emptyset^smash $
 
 == マップ
 
+リストの各要素に決まった関数を適用したい場合がある．Pythonではリスト `ls` に関数 `f` を適用するときには
+#sourcecode[```python
+map(f, ls)
+```]
+のように `map` 関数を用いる．例えば
+#sourcecode[```python
+f = lambda x: 100 + x
+ls = [1, 2, 3, 4, 5]
+ms = map(f, ls)
+```]
+とすると，結果として `ms` には `[101, 102, 103, 104, 105]` が入る．
+
+このように引数として関数 $f$ とリスト $[x_0, x_1, ..., x_n]$ を取り，戻り値として $[f x_0, f x_1, ..., f x_n]$ を返す演算子 $*$ を考えよう．このとき
+$ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $
+であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは `{map f xs` または `f <$> xs` と書く．演算子 `<$>` は `fmap` 演算子の中置バージョンである．]
+
+リストのマップ演算子の型は
+$ * colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $
+である．矢印 $->$ は右結合なので，これは
+$ * colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $
+の意味でもある．念のため上式に注釈を加えると
+$ * colon.double underbrace((haskell.a -> haskell.b.), f)
+  -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $
+である．
+
+ここで $f$ と $f*$ の型を並べてみると
+$ f &colon.double haskell.a -> haskell.b \
+  f * &colon.double [haskell.a] -> [haskell.b] $
+となり，マップ演算子が何をしているのか一目瞭然になる．
+
+具体例を見てみよう．先程のPythonコードの例にあわせて
+$ f &= backslash x |-> 100 + x \
+  x_"s" &= [1, 2, ..., 5] \
+  y_"s" &= f * x_"s" $
+とすると $y_"s"$ の値は $101, 102, 103, 104, 105]$ となる．
+
 == 余談：リストの実装
 
 == この章のまとめ
@@ -756,80 +792,6 @@ $ haskell.flat = haskell.fold_emptyset^smash $
 
 /*
 
-
-
-\separator
-
-
-\separator
-
-% ***CHECK***
-
-\section{マップ}
-
-リストの各要素に決まった関数を適用したい場合がある．Pythonではリスト \code{ls} に関数 \code{f} を適用するときには
-\begin{pythoncode}
-\begin{verbatim}
-map(f, ls)
-\end{verbatim}
-\end{pythoncode}
-のように \code{map} 関数を用いる．例えば
-\begin{pythoncode}
-\begin{verbatim}
-f = lambda x: 100+x
-ls = [1, 2, 3, 4, 5]
-ms = map(f, ls)
-\end{verbatim}
-\end{pythoncode}
-とすると，結果として \code{ms} には \code{[101, 102, 103, 104, 105]} が入る．
-
-このように引数として関数 $\hxFunc{f}$ とリスト $\hListWith{\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n}$ を取り，戻り値として $\hListWith{\hxFunc{f}\hxVar{x}_0,\hxFunc{f}\hxVar{x}_1\dotsb \hxFunc{f}\hxVar{x}_n}$ を返す演算子 $\hMap$ を考えよう．このとき
-\begin{equation}
-  \hxFunc{f}\hMap\hListWith{\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n}
-  =\hListWith{\hxFunc{f}\hxVar{x}_0,\hxFunc{f}\hxVar{x}_1\dotsb \hxFunc{f}\hxVar{x}_n}
-\end{equation}
-であると定義する．この演算子 $\hMap$ をリストの#keyword[マップ演算子}と呼ぶ．#footnote[Haskellでは $\hxFunc{f}\hMap\hListVar{x}$ を\code{map f xs} または \code{f<\$>xs} と書く．ただし演算子 \code{<\$>} は \code{fmap} 演算子の中置バージョンである．}
-
-リストのマップ演算子の型は
-\begin{equation}
-  \hMap
-  \hIsTypeOf{}(haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow\hListConstruct{haskell.a}\hFunctionArrow[haskell.b]
-\end{equation}
-である．矢印 $\hFunctionArrow$ は右結合なので，これは
-\begin{equation}
-  \hMap
-  \hIsTypeOf{}(haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow\left(\hListConstruct{haskell.a}\hFunctionArrow[haskell.b]\right)
-\end{equation}
-の意味でもある．念のため上式に注釈を加えると
-\begin{equation}
-  \hMap
-  \hIsTypeOf\underbrace{\left(haskell.a\hFunctionArrowhaskell.b\right)}_{\hxFunc{f}}
-  \hFunctionArrow\left(\underbrace{\hListConstruct{haskell.a}}_{[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]}
-  \hFunctionArrow\underbrace{[haskell.b]}_{[\hxFunc{f}\hxVar{x}_0,\hxFunc{f}\hxVar{x}_1\dotsb \hxFunc{f}\hxVar{x}_n]}\right)
-\end{equation}
-である．
-
-ここで $\hxFunc{f}$ と $\hxFunc{f}\hMap$ の型を並べてみると
-\begin{align}
-  \hxFunc{f}
-  &\hIsTypeOfhaskell.a\hFunctionArrowhaskell.b\\
-  \hxFunc{f}\hMap
-  &\hIsTypeOf{}\hListConstruct{haskell.a}\hFunctionArrow[haskell.b]
-\end{align}
-となり，マップ演算子が何をしているのか一目瞭然になる．
-
-% \TK{liftM}
-
-具体例を見てみよう．先程のPythonコードの例にあわせて
-\begin{align}
-  \hxFunc{f}
-  &=\mLambda\hxVar{x}\mLambdaArrow\hxConstant{100}+\hxVar{x}\\
-  \hListVar{x}
-  &=[\hxConstant{1}\dotsb\hxConstant{5}]\\
-  \hListVar{y}
-  &=\hxFunc{f}\hMap\hListVar{x}
-\end{align}
-とすると $\hListVar{y}$ の値は $[\hxConstant{101},\hxConstant{102},\hxConstant{103},\hxConstant{104},\hxConstant{105}]$ となる．
 
 \section{余談：リストの実装}
 
