@@ -698,6 +698,15 @@ s = ls.inject(0) { |x, y| x+y }
 ```]
 と書ける．
 
+リストの総和をとる演算子 $sum$ は
+$ sum x_"s" = haskell.fold_0^+ x_"s" $
+とすれば得られる．この式は両辺の $x_"s"$ を省略して
+$ sum = haskell.fold_0^+ $
+とも書く．
+
+リストの要素のすべての積をとる演算子 $product$ は
+$ product = haskell.fold_1^times $
+とすれば得られる．
 
 
 == マップ
@@ -732,25 +741,6 @@ s = ls.inject(0) { |x, y| x+y }
 
 /*
 
-リストの総和をとる演算子 $\sum$ は
-\begin{equation}
-  \sum\hListVar{x}
-  =\hFold^+_{\hxConstant{0}}\hListVar{x}
-\end{equation}
-とすれば得られる．この式は両辺の $\hListVar{x}$ を省略して
-\begin{equation}
-  \sum
-  =\hFold^+_{\hxConstant{0}}
-\end{equation}
-とも書く．
-% このように，ラムダ式を使わずに引数を省略してしまう書き方を#keyword[ポイントフリースタイル}と呼ぶ．ポイントフリースタイルは今後も頻出するので，是非慣れておいてもらいたい．#footnote[Haskellはポイントフリースタイルをサポートする．}
-
-リストの要素のすべての積をとる演算子 $\prod$ は
-\begin{equation}
-  \prod
-  =\hFold^*_{\hxConstant{1}}
-\end{equation}
-とすれば得られる．
 
 畳み込み演算子は第1（上）引数に $haskell.a$ 型と $\hTypeName{b}$ 型の引数を取り $haskell.a$ 型の戻り値を返す二項演算子，第2（下）引数に$haskell.a$ 型，第3（右）引数に $\hTypeName{b}$ 型のリストすなわち$[\hTypeName{b}]$ 型を取り，$haskell.a$ 型の値を返す．従って畳み込み演算子の型は
 \begin{equation}
