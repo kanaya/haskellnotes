@@ -1061,7 +1061,7 @@ template <class a, class b, class fn>
 maybe<b> map_over(fn f, maybe<a> w);
 ```]
 
-やはりそっくりである．であるならば，うまく統一したい．\cxx では次のような書き方が文法的には可能である．
+やはりそっくりである．であるならば，うまく統一したい．C++では次のような書き方が文法的には可能である．
 
 #sourcecode[```cpp
 template <class a, class b, template<class> X, class fn>
