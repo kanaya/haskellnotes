@@ -30,6 +30,7 @@
 #let readDouble = longfunction("readDouble")
 #let sqrt = longfunction("sqrt")
 #let succ = longfunction("succ")
+#let take = longfunction("take")
 #let uncurry = longfunction("uncurry")
 #let words = longfunction("words")
 
@@ -83,6 +84,7 @@
 // Binary operator.
 #let anonymousoperator = math.class("binary",math.square.stroked)
 #let anyop = math.class("binary", math.circle.dotted)
+#let at = math.class("binary", math.excl.double)
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.dollar)
 #let map = math.ast

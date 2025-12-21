@@ -659,6 +659,18 @@ $ smash colon.double [haskell.a] -> [haskell.a] -> [haskell.a] $
 $ haskell.null colon.double [haskell.a] -> haskell.Bool $
 である．
 
+我々は無限リストを持つことができる．例えば自然数を表すリスト $n_"s"$ は $n_"s" = [1, 2, ...]$ と書くことができる．#footnote[Haskellでは `ns = [1, 2..]` と書く．]
+
+無限リストを扱えるのは，我々がいつも遅延評価を行うからである．遅延評価とは，本当の計算は必要になるまで行わないという方式のことである．
+
+もし本当に無限リストを計算機の上で再現する必要があったなら，計算機には無限のメモリが必要になってしまう．しかし我々は，計算が必要になるまで評価を行わないので，無限リストの中から有限個の要素が取り出されるのを待つことができるのである．例えば関数 $haskell.take m space n_"s"$ はリスト $n_"s"$ から最初の $m$ 個の要素からなるリストを返す．いま
+$ x_"s" = haskell.take 5 space n_"s" $
+とすると，リスト $x_"s"$ は $x_"s" = [1, 2, ..., 5]$ という値を持つ．#footnote[Haskellでは `xs = take 5 ns` と書く．]
+
+関数 $haskell.take$ の型は $haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a]$ である．
+
+リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.at n$ とすることでアクセスできる．#footnote[Haskellでは `xs !! n` と書く．]
+
 
 == 畳み込み
 
@@ -694,45 +706,6 @@ $ haskell.null colon.double [haskell.a] -> haskell.Bool $
 
 /*
 
-
-
-
-\separator
-
-
-\separator
-
-我々は無限リストを持つことができる．例えば自然数を表すリスト
-$\hListVar{n}$ は
-\begin{equation*}
-  \hListVar{n}
-  =\hListWith{\hxConstant{1},\hxConstant{2}\dotsb}
-\end{equation*}
-と書くことができる．#footnote[Haskellでは$\hListVar{n}=\hListWith{1,2\dots}$ を \code{ns = [1, 2..]} と書く．}
-
-無限リストを扱えるのは，我々がいつも遅延評価を行うからである．遅延評価とは，本当の計算は必要になるまで行わないという方式のことである．
-
-もし本当に無限リストを計算機の上で再現する必要があったなら，計算機には無限のメモリが必要になってしまう．しかし我々は，計算が必要になるまで評価を行わないので，無限リストの中から有限個の要素が取り出されるのを待つことができるのである．例えば関数 $\hTake\hxVar{m}\,\hListVar{n}$ はリスト $\hListVar{n}$ から最初の $\hxVar{m}$ 個の要素からなるリストを返す．いま
-\begin{equation*}
-  \hListVar{x}
-  =\hTake\,\hxConstant{5}\,\hListVar{n}
-\end{equation*}
-とすると，リスト $\hListVar{x}$ は $\hListVar{x}=[\hxConstant{1},\hxConstant{2}\dotsb\hxConstant{5}]$ という値を持つ．#footnote[Haskellでは \code{xs = take 5 ns} と書く．}
-
-関数 $\hTake$ の型は
-\begin{equation}
-  \hTake
-  \hIsTypeOfhaskell.Int\hFunctionArrow\hListConstruct{haskell.a}\hFunctionArrow\hListConstruct{haskell.a}
-\end{equation}
-である．
-
-\separator
-
-リスト $\hListVar{x}$ の $\hxVar{n}$ 番目の要素には
-\begin{equation}
-  \hListVar{x}\mListAt\hxVar{n}
-\end{equation}
-とすることでアクセスできる．#footnote[Haskellでは $\hListVar{x}\mListAt\hxVar{n}$ を \code{xs!!n} と書く．}
 
 \section{畳み込み}
 \label{sec:convolution}
