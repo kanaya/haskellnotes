@@ -24,6 +24,7 @@
 #let fromIntegral = longfunction("fromIntegral")
 #let lines = longfunction("lines")
 #let norm = longfunction("norm")
+#let null = longfunction("null")
 #let pred = longfunction("pred")
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
