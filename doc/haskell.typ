@@ -81,6 +81,10 @@
 #let print = action("print")
 #let printEach = action("printEach")
 
+// Unary operator
+
+#let flat = math.class("unary", math.flat)
+
 // Binary operator.
 #let anonymousoperator = math.class("binary",math.square.stroked)
 #let anyop = math.class("binary", math.circle.dotted)
@@ -96,6 +100,7 @@
 
 // Big operator
 #let fold = math.union.big
+#let foldright = math.union.sq.big
 
 // Keyword.
 #let keyword(x) = math.mono(x)
