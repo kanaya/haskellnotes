@@ -94,6 +94,9 @@
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let leteq = math.equiv
 
+// Big operator
+#let fold = math.union.big
+
 // Keyword.
 #let keyword(x) = math.mono(x)
 #let kwcase = keyword("case")

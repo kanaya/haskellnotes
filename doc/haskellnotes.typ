@@ -671,8 +671,34 @@ $ x_"s" = haskell.take 5 space n_"s" $
 
 リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.at n$ とすることでアクセスできる．#footnote[Haskellでは `xs !! n` と書く．]
 
-
 == 畳み込み
+
+我々はよくリストの総和を表現するために総和演算子 $(sum)$ を使う．総和演算子とはリスト $[x_0, x_1, ..., x_n]$ に対して
+$ sum [x_0, x_1, ..., x_n] = x_0 + x_1 + ... + x_n $
+で定義される演算子である．
+
+この表現を一般化してみよう．リスト $[x_0, x_1, ..., x_n]$ が与えられたとき，任意の二項演算子を $haskell.anyop$ として
+$ haskell.fold_a^haskell.anyop [x_0, x_1, ..., x_n]
+  = a haskell.anyop x_1 haskell.anyop ... haskell.anyop x_n $
+であると定義する．
+
+この新しい演算子 $haskell.fold$ は#keyword[畳み込み演算子]と呼ばれる．変数 $a$ は#keyword[アキュムレータ]と呼ぶ．アキュムレータは右側の引数が空であった場合のデフォルト値と考えても良い．#footnote[Haskellでは $haskell.fold_a^+ x_"s"$ を `foldl (+)) a xs` と書く．]
+
+Python 2.7 には畳み込み演算子に相当する `reduce` 関数があり，リスト `ls` の総和 `s` を
+#sourcecode[```python
+# Python 2.7
+ls = [0, 1, 2, 3, 4, 5]
+s = reduce(lambda x, y: x + y, ls, 0)
+```]
+のように求めることができる．この `reduce` 関数はPythonバージョン3では非推奨になっているが，Rubyには受け継がれていて，Rubyでは
+#sourcecode[```ruby
+# Ruby
+ls = [0, 1, 2, 3, 4, 5]
+s = ls.inject(0) { |x, y| x+y }
+```]
+と書ける．
+
+
 
 == マップ
 
@@ -705,42 +731,6 @@ $ x_"s" = haskell.take 5 space n_"s" $
 == この章のまとめ
 
 /*
-
-
-\section{畳み込み}
-\label{sec:convolution}
-
-我々はよくリストの総和を表現するために総和演算子 $(\sum)$ を使う．総和演算子とはリスト $[\hxVar{x}_0,\hxVar{x}_1\dotsb\hxVar{x}_n]$ に対して
-\begin{equation}
-  \sum[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]
-  =\hxVar{x}_0+\hxVar{x}_1+\dotsb+\hxVar{x}_n
-\end{equation}
-で定義される演算子である．この表現を一般化してみよう．リスト $[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]$ が与えられたとき，任意の二項演算子を $\hAnyBinOp$ として
-\begin{equation}
-  \hFold^{\hAnyBinOp}_a[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]
-  =a\hAnyBinOp \hxVar{x}_0\hAnyBinOp \hxVar{x}_1\hAnyBinOp\dotsb\hAnyBinOp \hxVar{x}_n
-\end{equation}
-であると定義する．
-
-この新しい演算子 $\hFold$ は#keyword[畳み込み演算子}と呼ばれる．変数 $a$ は#keyword[アキュムレータ}と呼ぶ．アキュムレータは右側の引数が空であった場合のデフォルト値と考えても良い．#footnote[Haskellでは $\hFold^*_a\hListVar{x}$ を \code{foldl (*) a xs} と書く．}
-% ***CHECK***
-
-\python\ 2.7 には畳み込み演算子に相当する \code{reduce} 関数があり，リスト \code{ls} の総和 \code{s} を
-\begin{pythoncode}
-\begin{verbatim}
-# Python 2.7
-ls = [0, 1, 2, 3, 4, 5]
-s = reduce(lambda x, y: x+y, ls, 0)
-\end{verbatim}
-\end{pythoncode}
-のように求めることができる．この \code{reduce} 関数はPythonバージョン3では非推奨になっているが，\ruby には受け継がれていて，\ruby では
-\begin{rubycode}
-\begin{verbatim}
-ls = [0, 1, 2, 3, 4, 5]
-s = ls.inject(0) { |x, y| x+y }
-\end{verbatim}
-\end{rubycode}
-と書ける．
 
 リストの総和をとる演算子 $\sum$ は
 \begin{equation}
