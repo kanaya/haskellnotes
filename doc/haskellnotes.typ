@@ -58,16 +58,15 @@
   align: center,
   table.header([*種類*], [*字体・表記法*], [*例*]),
   [変数・関数], [イタリック（1文字）], $x, f$,
-  [有名な変数・関数・定数], [ローマン・大文字], $haskell.first, haskell.id, haskell.otherwise$,
+  [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, haskell.id, haskell.otherwise$,
   [リスト変数], [変数名にsをつける], $haskell.xs$,
   [Maybe変数], [変数名に $?$ をつける], $haskell.xm$,
   [一般のコンテナ変数], [変数名に $*$ をつける], $haskell.xc$,
-  // [コンテナに入れる関数], [関数名に $dagger$ をつける], $haskell.monadic(f)$,
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
   [有名な定数値コンストラクタ], [数学記号], $emptyset, emptyset.rev$,
   [有名な値コンストラクタ], [特別な括弧で包む], $[x], haskell.pure(y)$,
-  [アクション], [ギリシア文字（1文字）], $alpha, mu$,
+  [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
   [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
   [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
@@ -560,6 +559,34 @@ $ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.In
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは `x :: Double = fromIntegral 1 :: Int` と書く．]
 
 == 余談：モノイド
+整数全てからなる#keyword[集合]を $ZZ$ で表すことにする．計算機科学で整数と言うと，本当の整数と，例えば $-2^(63)$ から $2^(63)-1$ までの間の整数の意味と両方あるが，今は前者の意味である．
+
+集合 $ZZ$ の任意の#keyword[元]（#keyword[要素]）$z$ を $z in ZZ$ と書く．
+
+二つの整数 $z_1, z_2 in ZZ$ があるとしよう．両者の間には#keyword[足し算] $(+)$ が定義されており，その結果すなわち#keyword[和]もまた整数である．ここで $z_1 + z_2 in ZZ$ であるとき，演算子 $+$ が集合 $ZZ$ に対して#keyword[全域性]を持つと言う．
+
+一般に集合 $AA$ の元に対して二項演算子 $circle.dotted$ が定義されていて，$a_1, a_2 in AA$ のときに
+$ a_1 circle.dotted a_2 in AA $<totality>
+である場合，つまり演算子 $circle.dotted$ が集合 $AA$ に対して全域性を持つ場合，組み合わせ $(AA, circle.dotted)$ を#keyword[マグマ]と呼ぶ．組み合わせ $(ZZ, +)$ はマグマの例であり，$(ZZ, times)$ もマグマの例である．
+
+他に#keyword[論理集合] $BB = \{tack.b, tack.t\}$ に対して，#keyword[論理和] $(or)$ は全域性を持つから，組み合わせ $(BB, or)$ はマグマであるし，同様に#keyword[論理積] $(and)$ も全域性を持つから，組み合わせ $(BB, and)$ もマグマである．論理集合 $BB$ とは論理型 $haskell.Bool$ を数学風に言い換えたものである．
+
+マグマのうち，演算を2回続ける場合，その順序によって結果が異ならない，つまり
+$ a_1 circle.dotted (a_2 circle.dotted a_3) = (a_1 circle.dotted a_2) circle.dotted a_3 $<associativity>
+ただし $a_1, a_2, a_3 in AA$ のとき，組み合わせ $(AA, circle.dotted)$ のことを#keyword[半群]と呼ぶ．この@associativity で表される性質を#keyword[結合性]と呼ぶ．組み合わせ $(ZZ, +), (ZZ, times), (BB, or), (BB, and)$ はすべて半群である．
+
+ところで，整数全体の集合 $ZZ$ には特別な元 $0 in ZZ$ がある．この元 $0$ は $z in ZZ$ のとき
+$ 0 + z = z + 0 = z $
+という性質を持つ．この $0$ を演算 $+$ における#keyword[単位元]と呼ぶ．足し算のことを#keyword[加法]とも言うので $0$ のことは#keyword[加法単位元]と呼ぶこともあるし，文字通り#keyword[零元]と呼ぶこともある．
+
+一般に，$a in AA$ として
+$ 0 circle.dotted a = a circle.dotted 0 = a $<identity>
+であるとき，元 $0$ を単位元と呼ぶ．#footnote[厳密には $0_"left" circle.dotted a = a$ のとき $0_"left"$ を#keyword[左単位元]と呼び，$a circle.dotted 0_"right" = a$ のとき $0_"right"$ を#keyword[右単位元]と呼ぶが，本書では両者を区別せず単位元と呼ぶ．]
+
+組み合わせ $(AA, circle.dotted)$ が半群のとき，集合 $AA$ の単位元 $0$ との組み合わせ $(AA, circle.dotted, 0)$ のことを#keyword[モノイド]または#keyword[単位的半群]と呼ぶ．例えば $(ZZ, +, 0)$ はモノイドであるし，$(ZZ, times, 1), (BB, or, tack.t)$, $(BB, and, tack.b)$ もモノイドである．
+
+このように，数学者は数の性質を抽象化し，集合とその集合に対する演算というものの見方をよく行う．プログラミングの言葉で言えば，複数のクラスに共通のインタフェースを定義するようなものである．
+
 
 == この章のまとめ
 
@@ -612,68 +639,6 @@ $ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.In
 
 
 \TK{種}
-
-\section{余談：モノイド}
-
-整数全てからなる#keyword[集合}を $\hSet{Z}$ で表すことにする．計算機科学で整数と言うと，本当の整数と，例えば $-2^{63}$ から $2^{63}-1$ までの間の整数の意味と両方あるが，今は前者の意味である．
-
-集合 $\hSet{Z}$ の任意の#keyword[元}（#keyword[要素}）$\hxVar{z}$ を
-\begin{equation}
-  \hxVar{z}
-  \hIsTypeOf\hSet{Z}
-\end{equation}
-と書く．
-
-二つの整数 $\hxVar{z}_1,\hxVar{z}_2\hIsTypeOf\hSet{Z}$ があるとしよう．両者の間には#keyword[足し算} $(+)$ が定義されており，その結果すなわち#keyword[和}もまた整数である．ここで
-\begin{equation}
-  \hxVar{z}_1+\hxVar{z}_2
-  \hIsTypeOf\hSet{Z}
-\end{equation}
-であるとき，演算子 $+$ が集合 $\hSet{Z}$ に対して#keyword[全域性}を持つと言う．
-% ***CHECK***
-一般に集合 $\hSet{A}$ の元に対して二項演算子 $\hAnyBinOp$ が定義されていて，$\hxVar{a}_1,\hxVar{a}_2\hIsTypeOf\hSet{A}$ のときに
-\begin{equation}
-  \label{eq:totality}
-  \hxVar{a}_1\hAnyBinOp \hxVar{a}_2
-  \in\hSet{A}
-\end{equation}
-である場合，つまり演算子 $\hAnyBinOp$ が集合 $\hSet{A}$ に対して全域性を持つ場合，組み合わせ $(\hSet{A},\hAnyBinOp)$ を#keyword[マグマ}と呼ぶ．組み合わせ $(\hSet{Z},+)$ はマグマの例であり，$(\hSet{Z},*)$ もマグマの例である．
-% マグマはかつて亜群と呼ばれていたが，現在は亜群は別の意味(groupoid)の訳語に使われている．
-
-他に#keyword[論理集合} $\hSet{B}=\{\hTrue,\hFalse\}$ に対して，#keyword[論理和} $(\hLogicalOr)$ は全域性を持つから，組み合わせ $(\hSet{B},\hLogicalOr)$ はマグマであるし，同様に#keyword[論理積} $(\hLogicalAnd)$ も全域性を持つから，組み合わせ $(\hSet{B},\hLogicalAnd)$ もマグマである．論理集合 $\hSet{B}$ とは論理型 $haskell.Bool$ を数学風に言い換えたものである．
-
-マグマのうち，演算を2回続ける場合，その順序によって結果が異ならない，つまり
-\begin{equation}
-  \label{eq:associativity}
-  \left(\hxVar{a}_1\hAnyBinOp \hxVar{a}_2\right)\hAnyBinOp \hxVar{a}_3
-  =\hxVar{a}_1\hAnyBinOp\left(\hxVar{a}_2\hAnyBinOp{\hxVar{a}_3}\right)
-\end{equation}
-ただし $\hxVar{a}_1,\hxVar{a}_2,\hxVar{a}_3\hIsTypeOf\hSet{A}$ のとき，組み合わせ $(\hSet{A},\hAnyBinOp)$ のことを#keyword[半群}と呼ぶ．この式\eqref{eq:associativity}で表される性質を#keyword[結合性}と呼ぶ．組み合わせ $(\hSet{Z},+)$, $(\hSet{Z},*)$, $(\hSet{B},\hLogicalOr)$, $(\hSet{B},\hLogicalOr)$ はすべて半群である．
-
-\separator
-
-ところで，整数全体の集合 $\hSet{Z}$ には特別な元 $\hxConstant{0}\hIsTypeOf\hSet{Z}$ がある．この元 $\hxConstant{0}$ は $\hxVar{z}\hIsTypeOf\hSet{Z}$ のとき
-\begin{equation}
-  \hxConstant{0}+\hxVar{z}
-  =\hxVar{z}+\hxConstant{0}
-  =\hxVar{z}
-\end{equation}
-という性質を持つ．この $\hxConstant{0}$ を演算 $+$ における#keyword[単位元}と呼ぶ．足し算のことを#keyword[加法}とも言うので $\hxConstant{0}$ のことは#keyword[加法単位元}と呼ぶこともあるし，文字通り#keyword[零元}と呼ぶこともある．
-
-一般に，$\hxVar{a},\hZero\hIsTypeOf\hSet{A}$ として
-\begin{equation}
-  \label{eq:identity}
-  \hZero\hAnyBinOp\hxVar{a}
-  =\hxVar{a}\hAnyBinOp\hZero
-  =\hxVar{a}
-\end{equation}
-であるとき，元 $\hZero$ を単位元と呼ぶ．（厳密には $\hZero_\text{left}\hAnyBinOp\hxVar{a}=\hxVar{a}$ のとき $\hZero_\text{left}$ を#keyword[左単位元}と呼び，$\hxVar{a}\hAnyBinOp\hZero_\text{right}=\hxVar{a}$ のとき $\hZero_\text{right}$ を#keyword[右単位元}と呼ぶが，本書では両者を区別せず単位元と呼ぶ．）
-
-組み合わせ $(\hSet{A},\hAnyBinOp)$ が半群のとき，集合 $\hSet{A}$ の単位元 $\hZero$ との組み合わせ $(\hSet{A},\hAnyBinOp,\hZero)$ のことを#keyword[モノイド}または#keyword[単位的半群}と呼ぶ．例えば $(\hSet{Z},+,\hxConstant{0})$ はモノイドであるし，$(\hSet{Z},*,\hxConstant{1})$, $(\hSet{B},\hLogicalOr,\hFalse)$, $(\hSet{B},\hLogicalAnd,\hTrue)$ もモノイドである．
-
-このように，数学者は数の性質を抽象化し，集合とその集合に対する演算というものの見方をよく行う．プログラミングの言葉で言えば，複数のクラスに共通のインタフェースを定義するようなものである．
-
-表\ref{tab:monoids}に型と対応するモノイドの単位元，演算子の一覧を示す．組み合わせ $(haskell.Int,+,\hxConstant{0})$ はモノイドである．同様に $(haskell.Int,*,\hxConstant{1})$, $(haskell.Float,+,\hxConstant{0})$, $(haskell.Float,*,\hxConstant{1})$, $(haskell.Bool,\hLogicalOr,\hFalse)$, $(haskell.Bool,\hLogicalAnd,\hTrue)$ もモノイドである．
 
 \begin{table}
 \caption{モノイド（単位的半群）}
@@ -6645,7 +6610,7 @@ $ z = (x, y) $
 $ z colon.double (haskell.Int, haskell.Int) $
 
 要素を含まないタプルを#keyword[ユニット]と呼ぶ．ユニットは次のように書く．#footnote[Haskellでは `z = ()` と書く．]
-$ z = () $
+$ z = emptyset.rev $
 
 ユニットの型は#keyword[ユニット型]で，型注釈を次のように書く．#footnote[Haskellでは `z :: ()` と書く．]
 $ z colon.double haskell.Unit $
