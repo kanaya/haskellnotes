@@ -65,7 +65,7 @@
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
   [有名な定数値コンストラクタ], [数学記号], $emptyset, emptyset.rev$,
-  [有名な値コンストラクタ], [特別な括弧で包む], $[x], haskell.pure(y)$,
+  [有名な値コンストラクタ], [特別な括弧で包む], $[x], shell.l y shell.r$,
   [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
   [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
@@ -1081,55 +1081,27 @@ X<b> map_over(fn f, X<a> x, b dummy);
 
 一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのは Eugenio Moggi を始めとする計算機科学者たちである．この人類の英知は第〜〜〜章から見ていくことにしよう．
 
-
 == 余談: Either
+
+Maybeとよく似た型にEitherがある．Maybeが $haskell.a$ 型または $haskell.Nothing$ のいずれかの値をとったように，Eitherは $haskell.a$ 型または $haskell.b$ 型のいずれかの値を取る．$haskell.a$ 型または $haskell.b$ 型を取るEither型の変数 $e_!$ があるとすると，
+$ e_! colon.double haskell.EitherType(haskell.a, haskell.b) $
+と書く．Either型は型 $haskell.a$ および $haskell.b$ から型コンストラクタを用いて $haskell.EitherType(haskell.a, haskell.b)$ と書く．#footnote[Haskellでは `Either a b` と書く．]
+
+Eitherには値コンストラクタが2種類あり，それぞれ $haskell.Right(x)$ と $haskell.Left(x)$ である．値コンストラクタは
+$ e_! = haskell.Right(x) $
+または
+$ e_! = haskell.Left(x) $
+のように使う．#footnote[Haskellではそれぞれ `e = Right x` および `e = Left x` と書く．]
+
+Eitherはより複雑な計算エラーが発生する場合に用いる．Maybeが単に失敗を表す $haskell.Nothing$ しか表現できなかったのに対し，Eitherは任意の型の変数で表現できる．習慣的に，正しい(right) 計算結果は $haskell.Right(x)$ 値コンストラクタで格納し，残された (left) エラーの情報は $haskell.Left(x)$ 値コンストラクタで格納する．
+
+Either型はCの共有型 (`union`) やC++のバリアント型 (`std::variant`) に近い．
 
 == この章のまとめ
 
+#tk
+
 /*
-\section{余談: Either}
-
-Maybeとよく似た型にEitherがある．Maybeが $haskell.a$ 型または $haskell.Nothing$ のいずれかの値をとったように，Eitherは $haskell.a$ 型または $haskell.b$ 型のいずれかの値を取る．$haskell.a$ 型または $haskell.b$ 型を取るEither型の変数 $\hEitherVar{e}$ があるとすると，
-\begin{equation}
-  \hEitherVar{e}
-  \hIsTypeOf{}\hEitherConstruct{haskell.a}{haskell.b}
-\end{equation}
-と書く．Either型は型 $haskell.a$ および $haskell.b$ から型コンストラクタを用いて
-\begin{equation}
-  \hEitherConstruct{haskell.a}{haskell.b}
-  =\hEither\,haskell.a \,haskell.b
-\end{equation}
-のように作られる．#footnote[Haskellでは $\hEitherConstruct{a}{b}$ も $\hEither\,haskell.a\,haskell.b $ も区別せずに\code{Either a b} と書く．}
-
-Etherには値コンストラクタが2種類あり，それぞれ $\hRightWith{x}$ と $\hLeftWith{x}$ である．値コンストラクタは
-\begin{equation}
-  \hEitherVar{e}
-  =\hRightWith{x}
-\end{equation}
-または
-\begin{equation}
-  \hEitherVar{e}
-  =\hLeftWith{x}
-\end{equation}
-のように使う．#footnote[Haskellではそれぞれ \code{e = Right x} および \code{e = Left x} と書く．}
-
-% See https://downloads.haskell.org/~ghc/7.0.1/docs/html/users_guide/type-class-extensions.html
-% Multiparameter Typeclass Extension
-
-Eitherはより複雑な計算エラーが発生する場合に用いる．Maybeが単に失敗を表す $haskell.Nothing$ しか表現できなかったのに対し，Eitherは任意の型の変数で表現できる．習慣的に，正しい (right) 計算結果は $\hRightWith{x}$ 値コンストラクタで格納し，残された (left) エラーの情報は $\hLeftWith{x}$
-値コンストラクタで格納する．
-
-Either型はCの共有型 (\code{union}) や\cxx のバリアント型 (\code{std::variant}) に近い．
-
-\section{この章のまとめ}
-
-\begin{enumerate}
-\item ある型 $haskell.a$ からそのMaybe型 $\hMaybeConstruct{haskell.a}$ を作ることを $\hMaybeConstruct{haskell.a}=\hMaybehaskell.a $ と書く．ここに $\hMaybe$ はMaybe型コンストラクタである．
-\item ある変数 $\hxVar{x}$ からMaybe変数 $\hMaybeVar{u}$ を作るには $\hMaybeVar{u}=\hJustWith{\hxVar{x}}$ とする．ここに $\hJustWith{\dotsb}$ はMaybe値コンストラクタである．
-\item Maybe変数は $\hJustWith{\hxVar{x}}$ のような値か，かまたは $haskell.Nothing$ なる「ナッシング」値のかどちらかを持つことができる．
-\item 普通の関数 $\hxFunc{f}\hIsTypeOf\mProjEXP{haskell.a }{haskell.b }$をMaybe値に適用することはできない．関数 $\hxFunc{f}$ をMaybe値に適用するには$\hxFunc{f}\hFunctorMap\hMaybeVar{u}$ のようにMaybeマップ演算子が必要であり，この関数適用の結果は $\hMaybeConstruct{b}$ 型である．
-\item Either変数は二つの型のいずれかを持つことができ，$\hEitherVar{e}=\hRightWith{x}$ または$\hEitherVar{e}=\hLeftWith{x}$ のように生成する．
-\end{enumerate}
 
 \chapter{関手*}
 \label{ch:functor}

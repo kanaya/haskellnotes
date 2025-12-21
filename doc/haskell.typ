@@ -73,6 +73,7 @@
   $xx_(yy space zz)$
 }
 
+#let EitherType(x, y) = typeconstructor2(Either, x, y)
 #let MaybeType(x) = typeconstructor1(Maybe, x)
 
 // Type class.
@@ -147,11 +148,10 @@
   let yy = y
   $xx_yy$
 }
+
+#let Left(x) = constructor1("Left", x)
 #let Just(x) = constructor1("Just", x)
-#let pure(x) = {
-  let xx = x
-  $shell.l xx shell.r$
-}
+#let Right(x) = constructor1("Right", x)
 
 // Type constructor with one argument.
 #let typename1(x, y) = {
