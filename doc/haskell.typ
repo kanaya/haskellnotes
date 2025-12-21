@@ -121,18 +121,6 @@
 #let kwwhere = keyword("where")
 
 // Container.
-#let list(x) = {
-  let xx = x
-  $xx_"s"$
-}
-#let listlist(x) = {
-  let xx = x
-  $xx_"ss"$
-}
-#let maybe(x) = {
-  let xx = x
-  $xx_?$
-}
 #let ctxt(x) = {
   let xx = x
   $xx_*$
@@ -202,17 +190,3 @@
 #let fa = $typeconstructor1(typename(f), typename(a))$
 #let fb = $typeconstructor1(typename(f), typename(b))$
 #let fc = $typeconstructor1(typename(f), typename(c))$
-
-#let xs = $list(x)$
-#let xss = $listlist(x)$
-#let ys = $list(y)$
-#let zs = $list(z)$
-#let xm = $maybe(x)$
-#let ym = $maybe(y)$
-#let zm = $maybe(z)$
-#let fc = $ctxt(f)$
-#let gc = $ctxt(g)$
-#let hc = $ctxt(h)$
-#let xc = $ctxt(x)$
-#let yc = $ctxt(y)$
-#let zc = $ctxt(z)$
