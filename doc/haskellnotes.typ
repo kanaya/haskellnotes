@@ -350,16 +350,16 @@ Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない
 
 二項演算子のうちよく使われるものは和 $(+)$，積 $(times)$，論理和 $(or)$，論理積 $(and)$，同値 $(equiv)$，大なり$(>)$，小なり $(<)$ 等である．二項演算子はたとえ積記号であっても省略できない．二項演算子は多数あるので，その都度説明する．#footnote[Haskellでは $and$ を `&&` と書き，$or$ を `||` と書く．]
 
-二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $circle.dotted$ について $x class("binary",circle.dotted) y$ 及び $(circle.dotted) x y$ は全く同じ意味である．すなわち $(circle.dotted) x y = x class("binary", circle.dotted) y$ である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
+二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $haskell.anyop$ について $x class("binary",haskell.anyop) y$ 及び $(haskell.anyop) x y$ は全く同じ意味である．すなわち $(haskell.anyop) x y = x class("binary", haskell.anyop) y$ である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
 
-一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(circle.dotted)$ も $(circle.dotted) x y = ((circle.dotted) x) y$ であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $(circle.dotted) x$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を `((+)1)` と書く．]
+一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ も $(haskell.anyop) x y = ((haskell.anyop) x) y$ であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $(haskell.anyop) x$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を `((+)1)` と書く．]
 
-前置される二項演算子 $(circle.dotted)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", circle.dotted) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium class("binary", circle.dotted) x)$ や $(x class("binary", circle.dotted) lozenge.stroked.medium)$ から無名パラメタを省略した $(circle.dotted x)$ と $(x circle.dotted)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
+前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium class("binary", haskell.anyop) x)$ や $(x class("binary", haskell.anyop) lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
 
-二項演算子 $circle.dotted$ に対して $(circle.dotted x)$ および $(x circle.dotted)$ はそれぞれ以下の通りである．
-$ (circle.dotted x) &= (lozenge.stroked.medium class("binary", circle.dotted) x) \
- (x circle.dotted) &= (x class("binary", circle.dotted) lozenge.stroked.medium)
- = (circle.dotted) x $
+二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
+$ (haskell.anyop x) &= (lozenge.stroked.medium class("binary", haskell.anyop) x) \
+ (x haskell.anyop) &= (x class("binary", haskell.anyop) lozenge.stroked.medium)
+ = (haskell.anyop) x $
 
 例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を `(1+)` と書く．また `(-1)
 ` はセクションではなくマイナス $1$ を表す（`-1` というリテラルとみなされる）．ただし `(- 1)}
@@ -565,25 +565,25 @@ $ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.In
 
 二つの整数 $z_1, z_2 in ZZ$ があるとしよう．両者の間には#keyword[足し算] $(+)$ が定義されており，その結果すなわち#keyword[和]もまた整数である．ここで $z_1 + z_2 in ZZ$ であるとき，演算子 $+$ が集合 $ZZ$ に対して#keyword[全域性]を持つと言う．
 
-一般に集合 $AA$ の元に対して二項演算子 $circle.dotted$ が定義されていて，$a_1, a_2 in AA$ のときに
-$ a_1 circle.dotted a_2 in AA $<totality>
-である場合，つまり演算子 $circle.dotted$ が集合 $AA$ に対して全域性を持つ場合，組み合わせ $(AA, circle.dotted)$ を#keyword[マグマ]と呼ぶ．組み合わせ $(ZZ, +)$ はマグマの例であり，$(ZZ, times)$ もマグマの例である．
+一般に集合 $AA$ の元に対して二項演算子 $haskell.anyop$ が定義されていて，$a_1, a_2 in AA$ のときに
+$ a_1 haskell.anyop a_2 in AA $<totality>
+である場合，つまり演算子 $haskell.anyop$ が集合 $AA$ に対して全域性を持つ場合，組み合わせ $(AA, haskell.anyop)$ を#keyword[マグマ]と呼ぶ．組み合わせ $(ZZ, +)$ はマグマの例であり，$(ZZ, times)$ もマグマの例である．
 
-他に#keyword[論理集合] $BB = \{tack.b, tack.t\}$ に対して，#keyword[論理和] $(or)$ は全域性を持つから，組み合わせ $(BB, or)$ はマグマであるし，同様に#keyword[論理積] $(and)$ も全域性を持つから，組み合わせ $(BB, and)$ もマグマである．論理集合 $BB$ とは論理型 $haskell.Bool$ を数学風に言い換えたものである．
+他に#keyword[論理集合] $BB = \{tack.b, tack.t\}$ に対して，#keyword[論理和] $(or)$ は全域性を持つから，組み合わせ $(BB, or)$ はマグマであるし，同様に#keyword[論理積] $(and)$ も全域性を持つから，組み合わせ $(BB, and)$ もマグマである．論理集合 $BB$ とは論理型 $haskell.Bool$ を数学風に言い換えたものである．#footnote[記号 $tack.b$ は $haskell.True$ を，記号 $tack.t$ は $haskell.False$ を抽象化したものである．記号 $and$ はandと読み，記号 $or$ はorと読む．]
 
 マグマのうち，演算を2回続ける場合，その順序によって結果が異ならない，つまり
-$ a_1 circle.dotted (a_2 circle.dotted a_3) = (a_1 circle.dotted a_2) circle.dotted a_3 $<associativity>
-ただし $a_1, a_2, a_3 in AA$ のとき，組み合わせ $(AA, circle.dotted)$ のことを#keyword[半群]と呼ぶ．この@associativity で表される性質を#keyword[結合性]と呼ぶ．組み合わせ $(ZZ, +), (ZZ, times), (BB, or), (BB, and)$ はすべて半群である．
+$ a_1 haskell.anyop (a_2 haskell.anyop a_3) = (a_1 haskell.anyop a_2) haskell.anyop a_3 $<associativity>
+ただし $a_1, a_2, a_3 in AA$ のとき，組み合わせ $(AA, haskell.anyop)$ のことを#keyword[半群]と呼ぶ．この@associativity で表される性質を#keyword[結合性]と呼ぶ．組み合わせ $(ZZ, +), (ZZ, times), (BB, or), (BB, and)$ はすべて半群である．
 
 ところで，整数全体の集合 $ZZ$ には特別な元 $0 in ZZ$ がある．この元 $0$ は $z in ZZ$ のとき
 $ 0 + z = z + 0 = z $
 という性質を持つ．この $0$ を演算 $+$ における#keyword[単位元]と呼ぶ．足し算のことを#keyword[加法]とも言うので $0$ のことは#keyword[加法単位元]と呼ぶこともあるし，文字通り#keyword[零元]と呼ぶこともある．
 
 一般に，$a in AA$ として
-$ 0 circle.dotted a = a circle.dotted 0 = a $<identity>
-であるとき，元 $0$ を単位元と呼ぶ．#footnote[厳密には $0_"left" circle.dotted a = a$ のとき $0_"left"$ を#keyword[左単位元]と呼び，$a circle.dotted 0_"right" = a$ のとき $0_"right"$ を#keyword[右単位元]と呼ぶが，本書では両者を区別せず単位元と呼ぶ．]
+$ 0 haskell.anyop a = a haskell.anyop 0 = a $<identity>
+であるとき，元 $0$ を単位元と呼ぶ．#footnote[厳密には $0_"left" haskell.anyop a = a$ のとき $0_"left"$ を#keyword[左単位元]と呼び，$a haskell.anyop 0_"right" = a$ のとき $0_"right"$ を#keyword[右単位元]と呼ぶが，本書では両者を区別せず単位元と呼ぶ．]
 
-組み合わせ $(AA, circle.dotted)$ が半群のとき，集合 $AA$ の単位元 $0$ との組み合わせ $(AA, circle.dotted, 0)$ のことを#keyword[モノイド]または#keyword[単位的半群]と呼ぶ．例えば $(ZZ, +, 0)$ はモノイドであるし，$(ZZ, times, 1), (BB, or, tack.t)$, $(BB, and, tack.b)$ もモノイドである．
+組み合わせ $(AA, haskell.anyop)$ が半群のとき，集合 $AA$ の単位元 $0$ との組み合わせ $(AA, haskell.anyop, 0)$ のことを#keyword[モノイド]または#keyword[単位的半群]と呼ぶ．例えば $(ZZ, +, 0)$ はモノイドであるし，$(ZZ, times, 1), (BB, or, tack.t)$, $(BB, and, tack.b)$ もモノイドである．
 
 このように，数学者は数の性質を抽象化し，集合とその集合に対する演算というものの見方をよく行う．プログラミングの言葉で言えば，複数のクラスに共通のインタフェースを定義するようなものである．
 
