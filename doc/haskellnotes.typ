@@ -588,6 +588,12 @@ $ 0 haskell.anyop a = a haskell.anyop 0 = a $<identity>
 このように，数学者は数の性質を抽象化し，集合とその集合に対する演算というものの見方をよく行う．プログラミングの言葉で言えば，複数のクラスに共通のインタフェースを定義するようなものである．
 
 
+型 $haskell.a$ を任意の型としたとき，型 $haskell.a -> haskell.a$ の関数もまたモノイドとなる．まず「何もしない」関数 $haskell.id$ を次のように定義する．
+$ id = lozenge.stroked.medium $
+これはもちろん $id = backslash x |-> x$ の意味で，引数をそのまま返す関数である．
+
+我々は関数を合成できる．そこで $haskell.a -> haskell.a$ 型の関数 $f$ と関数 $haskell.id$ の合成を考えると $haskell.id compose f = f compose id = f$ であり，また関数 $f, g, h colon.double haskell.a -> haskell.a$ について $(h compose g) compose f = h compose (g compose f)$ でるから，組み合わせ $(haskell.a -> haskell.a, compose, haskell.id)$ はモノイドであることがわかる．
+
 == この章のまとめ
 
 = リスト
@@ -627,54 +633,6 @@ $ 0 haskell.anyop a = a haskell.anyop 0 = a $<identity>
 == この章のまとめ
 
 /*
-
-
-% これらの関係を表にまとめたものが表\ref{tab:type-and-typeclass}である．
-% この表から，型 $haskell.Int$ は型クラス $haskell.Integral$,
-% $haskell.Real$, $haskell.Ord$, $haskell.Num$,
-% $haskell.Enum$, $\haskell.Eq$ に属しているのに対し，型
-% $haskell.Bool$ は $haskell.Ord$, $haskell.Enum$, $\haskell.Eq$
-% にのみ属しているのがわかる．
-
-
-
-\TK{種}
-
-\begin{table}
-\caption{モノイド（単位的半群）}
-\label{tab:monoids}
-\begin{center}
-\begin{tabular}{||c|c|c|c||}\hline
-種&型&演算子&単位元\\\hline\hline
-\multirow{6}{*}{$\hGenus$}&\multirow{2}{*}{$haskell.Bool$}&$\vee$&$\hFalse$\\
-&&$\wedge$&$\hTrue$\\\cline{2-4}
-&\multirow{2}{*}{$haskell.Int$}&$+$&$\hxConstant{0}$\\
-&&$*$ &$\hxConstant{1}$\\\cline{2-4}
-&\multirow{2}{*}{$haskell.Float$}&$+$&$\hxConstant{0}$\\
-&&$*$&$\hxConstant{1}$\\\hline
-$\hGenus\hFunctionArrow\hGenus$&$haskell.a\hFunctionArrowhaskell.a$ &$\hCompose$&$\hId$\\\hline
-\end{tabular}
-\end{center}
-\end{table}
-
-\separator
-
-型 $haskell.a$ を任意の型としたとき，型 $haskell.a\hFunctionArrowhaskell.a$ の関数もまたモノイドとなる．まず「何もしない」関数 $\hId$ を次のように定義する．
-\begin{equation}
-  \hId=\hxAnonParam
-\end{equation}
-これはもちろん $\hId=\hxLambdaSyntax{\hxVar{x}}{\hxVar{x}}$ の意味で，引数をそのまま返す関数である．
-
-我々は関数を合成できる．そこで $haskell.a\hFunctionArrowhaskell.a$ 型の関数 $\hxFunc{f}$ と関数 $\hId$ の合成を考えると
-\begin{equation}
-  \hId\hCompose\hxFunc{f}=\hxFunc{f}\hCompose\hId=\hxFunc{f}
-\end{equation}
-であり，また関数 $\hxFunc{f},\hxFunc{g},\hxFunc{h}\hIsTypeOfhaskell.a\hFunctionArrowhaskell.a$ について
-\begin{equation}
-  (\hxFunc{h}\hCompose\hxFunc{g})\hCompose\hxFunc{f}
-  = \hxFunc{h}\hCompose(\hxFunc{g}\hCompose\hxFunc{f})
-\end{equation}
-でるから，組み合わせ $(haskell.a\hFunctionArrowhaskell.a,\hCompose,\hId)$ はモノイドであることがわかる．
 
 % そこで，任意の型 $haskell.a$ について，組み合わせ $\hSingleTuppleWith{haskell.a ,\hAnyBinOp,\mZero}$ がモノイドである場合には
 % \begin{equation}
