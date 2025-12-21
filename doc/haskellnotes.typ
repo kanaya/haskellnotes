@@ -6142,7 +6142,7 @@ $ &f colon.double [haskell.Int] -> haskell.Int\
 
 $f emptyset$ が $0$ を返すのは不自然だが，関数$f$の戻り型を整数型としているためこれは仕方がない．エラーを考慮する場合は@maybe で述べるMaybeを使う必要がある．
 
-リストのリストは次のように構成できる．#footnote[Haskellでは `x_"s"s = [[1,2],[3,4]]` と書く．]
+リストのリストは次のように構成できる．#footnote[Haskellでは `x_"s" = [[1,2],[3,4]]` と書く．]
 $ x_"s"s = [[1,2],[3,4]] $
 
 == 内包表記
@@ -6179,11 +6179,11 @@ $ z &= union.big_0^(lozenge.stroked.medium+lozenge.stroked.medium) x_"s"\
 
 Haskellでは $sum = union_0^(lozenge.stroked.medium+lozenge.stroked.medium)$ として関数 $sum$ が定義されている．#footnote[Haskellでは $sum$ 関数を `sum` と書く．]
 
-リスト $x_"s"$ が $x_"s"=[x_0,x_1,...,x_n]$ のとき，一般に $union_a^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) x_"s" = a haskell.anonymousoperator x_0 haskell.anonymousoperator x_1 haskell.anonymousoperator ... haskell.anonymousoperator x_n$ が成り立つ．ここに $haskell.anonymousoperator$ は任意の二項演算子である．
+リスト $x_"s"$ が $x_"s"=[x_0,x_1,...,x_n]$ のとき，一般に $union_a^(lozenge.stroked.medium haskell.anyop lozenge.stroked.medium) x_"s" = a haskell.anyop x_0 haskell.anyop x_1 haskell.anyop ... haskell.anyop x_n$ が成り立つ．ここに $haskell.anyop$ は任意の二項演算子である．
 
 畳み込み演算子には次の右結合バージョンが存在する．#footnote[Haskellでは `foldr` を用いる．]
-$ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.stroked.medium) x_"s"\
-&= a haskell.anonymousoperator (x_0 haskell.anonymousoperator (x_1 haskell.anonymousoperator ... haskell.anonymousoperator (x_(n-2) haskell.anonymousoperator (x_(n-1) haskell.anonymousoperator x_n))...)) $
+$ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anyop lozenge.stroked.medium) x_"s"\
+&= a haskell.anyop (x_0 haskell.anyop (x_1 haskell.anyop ... haskell.anyop (x_(n-2) haskell.anyop (x_(n-1) haskell.anyop x_n))...)) $
 
 == IOサバイバルキット2
 
@@ -6198,7 +6198,7 @@ $ z &= union.sq.big_0^(lozenge.stroked.medium haskell.anonymousoperator lozenge.
 ```haskell
       norm :: [haskell.Double] -> haskell.Double
       norm [] = 0.0
-      norm x_"s" = sqrt (sum [x * x | x <- x_"s"])
+      norm x_"s" = sqrt (sum [x * x | x <- xs])
 ```]
 $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
  &haskell.norm emptyset = 0.0\
@@ -6226,16 +6226,16 @@ $ &haskell.readDouble colon.double haskell.String -> haskell.Double\
 ```]
 $ haskell.main
   = haskell.print
-    compose (norm haskell.map)
-    compose ((haskell.readDouble haskell.map) haskell.map)
-    compose (haskell.words haskell.map)
+    compose (norm *)
+    compose ((haskell.readDouble *) *)
+    compose (haskell.words *)
     compose haskell.lines
     haskell.bind haskell.getContents $
 
 アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach x_"s" = mapM print x_"s"` と書く．]
-$ haskell.printEach x_"s" = haskell.print haskell.mapM x_"s" $
+$ haskell.printEach x_"s" = haskell.print *M x_"s" $
 
-演算子 $haskell.mapM$ はアクション版のマップ演算子である．
+演算子 $*M$ はアクション版のマップ演算子である．
 
 
 = 関手とモナド
@@ -6276,7 +6276,7 @@ haskell.Nothing &= f ast.op.o haskell.Nothing $
 リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
 
 $x_* = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
-$ z_* = (f haskell.map) ast.op.o x_* $
+$ z_* = (f *) ast.op.o x_* $
 
 == 型パラメタと型クラス
 
@@ -6297,7 +6297,7 @@ $ f colon.double haskell.Num supset haskell.a ==> haskell.a -> haskell.a $
 型 $haskell.a$ のMaybeの変数は $x_* colon.double haskell.MaybeType(haskell.a)$ という型注釈を持つ．
 
 普段遣いの関数 $f colon.double haskell.a -> haskell.a$ をリスト変数 $x_"s" colon.double [haskell.a]$ に適用する場合は次のように書く．#footnote[Haskellでは `zs = f `map` x_"s"` と書く．]
-$ z_"s" = f haskell.map x_"s" $
+$ z_"s" = f * x_"s" $
 
 同じく関数 $f colon.double haskell.a -> haskell.a$ をMaybe変数 $x_* colon.double haskell.MaybeType(haskell.a)$ に適用する場合は次のように書く．
 $ z_* = f ast.op.o x_* $
@@ -6317,7 +6317,7 @@ $ lozenge.stroked.medium ast.op.o lozenge.stroked.medium
   -> haskell.fa
   -> haskell.fb $
 
-もし変数 $x_*$ の型がリストであれば $ast.op.o = haskell.map$ であると解釈する．
+もし変数 $x_*$ の型がリストであれば $ast.op.o = *$ であると解釈する．
 
 == 関手としての関数
 
@@ -6515,7 +6515,7 @@ zm = g =<< f =<< xm
 ```]
 
 == Contextual map
-$ haskell.action("printEach") = haskell.action("print") haskell.mapM x_"s" $
+$ haskell.action("printEach") = haskell.action("print") *M x_"s" $
 
 #sourcecode[```haskell
 printEach = print `mapM` x_"s"
