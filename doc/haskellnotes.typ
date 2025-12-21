@@ -713,7 +713,7 @@ $ haskell.fold colon.double (haskell.a -> haskell.b -> haskell.a)
 畳み込み演算子には次のようなもう一つのバリエーションがある．
 $ haskell.foldright_a^haskell.anyop [x_0, x_1, ..., x_n]
   = (x_0 haskell.anyop (x_1 haskell.anyop ... haskell.anyop (x_n haskell.anyop a))) $
-これは#keyword[右畳み込み]と呼ばれる演算子である．#footnote[Haskellでは `foldr (+) x_"s" a` と書く．引数の順序に注意しよう．]
+これは#keyword[右畳み込み]と呼ばれる演算子である．#footnote[Haskellでは `foldr (+) xs a` と書く．引数の順序に注意しよう．]
 
 畳み込み演算子の面白い応用例を示そう．リストの結合演算子 $(smash)$ を使うと
 $ haskell.fold_emptyset^smash [[0, 1, 2], [3, 4, 5], ...] = [0, 1, 2, 3, 4, 5, ...] $
@@ -740,11 +740,11 @@ $ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $
 であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは `map f x_"s"` または `f <$> x_"s"` と書く．演算子 `<$>` は `fmap` 演算子の中置バージョンである．]
 
 リストのマップ演算子の型は
-$ * colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $
+$ (*) colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $
 である．矢印 $->$ は右結合なので，これは
-$ * colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $
+$ (*) colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $
 の意味でもある．念のため上式に注釈を加えると
-$ * colon.double underbrace((haskell.a -> haskell.b.), f)
+$ (*) colon.double underbrace((haskell.a -> haskell.b.), f)
   -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $
 である．
 
@@ -835,11 +835,11 @@ $ sum nothing &= 0 \
 計算機科学者は，同じ再帰でも#keyword[末尾再帰]という再帰のスタイルを好む．末尾再帰とは，関数の再帰適用を関数定義の末尾にすることである．この章に出てきた階乗関数 $haskell.fact$ を例にとろう．階乗関数 $haskell.fact$ は
 $ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double --> x times haskell.fact(x - 1)) $
 のような形をしていた．末尾の関数をよりはっきりさせるために演算子 $(*)$ を前置にして
-$ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double --> (times) x space (haskell.fact(x - 1))) $
-と書いてみよう．この定義の末尾の式は $(times)x(haskell.fact(x - 1))$ である．これだと末尾の関数は $haskell.fact$ ではなく演算子 $(times)$ なので，末尾に再帰適用を行ったことにはならない．
+$ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double --> (times) x space haskell.fact(x - 1)) $
+と書いてみよう．この定義の末尾の式は $(times)x space haskell.fact(x - 1)$ である．これだと末尾の関数は $haskell.fact$ ではなく演算子 $(times)$ なので，末尾に再帰適用を行ったことにはならない．
 
 そこで，次のように形を変えた階乗関数 $haskell.fact'$ を考えてみる．
-$ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) (x - 1)) $
+$ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) space (x - 1)) $
 こうすれば末尾の関数がもとの $haskell.fact$ と一致する．#footnote[Haskellでは
 ```haskell
   fact' a x = case x of 0 -> 1
@@ -856,9 +856,9 @@ $ haskell.fact 3 &= 3 times haskell.fact 2 \
 と展開されるのに対し，同じく $haskell.fact' 3$ は
 $ haskell.fact' 1 space 3 &= haskell.fact' (1 times 3)(3 - 1) \
   &= haskell.fact' 3 space 2 \
-  &= haskell.fact' (3 times 2)(2 - 1) \
+  &= haskell.fact' (3 times 2) space (2 - 1) \
   &= haskell.fact' 6 space 1 \
-  &= haskell.fact' (6 times 1)(1 - 1) \
+  &= haskell.fact' (6 times 1) space (1 - 1) \
   &= haskell.fact' 6 space 0 \
   &= 6 $
 であるから，関数 $haskell.fact$ が「横に伸びる」のに対して，関数 $haskell.fact'$ は「横に伸びない」ことになる．計算式が「横に伸びない」性質は，計算機のリソースを無駄に消耗しないことが期待されるため，計算機科学者が好むのである．また末尾再帰は後述する「末尾再帰最適化」のチャンスをコンパイラに与える．
