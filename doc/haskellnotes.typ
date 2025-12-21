@@ -740,7 +740,7 @@ ms = map(f, ls)
 
 このように引数として関数 $f$ とリスト $[x_0, x_1, ..., x_n]$ を取り，戻り値として $[f x_0, f x_1, ..., f x_n]$ を返す演算子 $*$ を考えよう．このとき
 $ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $
-であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは `{map f xs` または `f <$> xs` と書く．演算子 `<$>` は `fmap` 演算子の中置バージョンである．]
+であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは `map f xs` または `f <$> xs` と書く．演算子 `<$>` は `fmap` 演算子の中置バージョンである．]
 
 リストのマップ演算子の型は
 $ * colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $
