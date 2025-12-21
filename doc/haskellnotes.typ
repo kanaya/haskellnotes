@@ -596,9 +596,60 @@ $ id = lozenge.stroked.medium $
 
 == この章のまとめ
 
+#tk
+
 = リスト
 
+型から作る型をコンテナと呼ぶ．代表的なコンテナはある型のホモジニアスな配列であるリストである．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
+
 == リスト
+
+同じ型の値を一列に並べたもの，つまりホモジニアスな配列のことを#keyword[リスト]と呼ぶ．Pythonではリスト `ls` を
+#sourcecode[```python
+xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+```]
+のように定義できる．
+
+我々も $0$ から始まり $9$ まで続く整数のリストを $[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]$ と書くことにしよう．ただし，これでは冗長なので#keyword[等差数列]に限って簡略化した書き方を許す．例えば $0$ から $9$ までのリストは $[0, 1, ..., 9]$ と書いても良い．#footnote[Haskellでは `[0, 1..9]` と書く．ピリオドの数に注意しよう．]
+
+リストの中身の一つ一つの値のことを#keyword[要素]と呼ぶ．要素のことは元と呼んでも良いが，本書では要素と呼ぶことにする．要素も元も英語のelementの和訳である．
+
+複数の型の要素が混在してもよい配列のことをヘテロジニアスな配列と呼び，ホモジニアスな配列とは区別する．
+
+今後，リストを指す変数は，リストであることを忘れないように変数名にsをつけて $haskell.list(x) = [0, 1, ..., 9]$ と書くことにする．なお，変数 $x$ とリスト変数 $haskell.list(x)$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて `xs = [0, 1..9]}
+` のように書く習慣がある．]
+
+Pythonではリスト内包表記が使える．例えば $0$ から $9$ までの倍数のリストは次のように作った．
+#sourcecode[```python
+xs = [x*2 for x in range(0, 10)]
+```]
+ここに `range(a, b)` は `a` から増加する方向に連続する `b` 個の整数からなるリストを返すPythonの関数である．
+
+我々も内包表記を
+$ haskell.list(x) = [x times 2 | x in [0, 1, ..., 9]] $
+のように書こう．ここに右辺のリストから一つずつ要素を取り出して左辺に代入する演算子 $in$ を用いた．#footnote[Haskellでは $haskell.list(x) = [x times 2 | x in [0, 1, ..., 9]]$ を `xs = [x * 2 | x <- [0, 1..9]]` と書く．]
+
+内包表記の式は複数あっても良い．例えば
+$ haskell.list(x) = [x + y | x in [0, 1, ..., 9], y in [0, 1, ..., 5], x + y > 3]$
+は $0 <= x <= 9$ かつ $0 <= y <= 5$ の範囲で $x + y > 3$ となる $x$ 及び $y$ から $x + y$ を並べたリストである．これはPythonでいう
+#sourcecode[```python
+xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
+```]
+のことである．#footnote[Haskellでは `xs = [x + y | x <- [0, 1..9], y <- [0, 1..5], x + y > 3]` と書く．]
+
+整数型 $(haskell.Int)$ のリストは $[haskell.Int]$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $[haskell.a]$ と書く．仮の型である $haskell.a$ の事を #keyword[型パラメタ]と呼ぶ．
+
+型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[]$ と書く．型 $[haskell.a]$ は $haskell.typeconstructor1([], haskell.a)$ のシンタックスシュガーである．
+
+型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++の「クラステンプレート」が相当する．#footnote[Haskellでは表記上コンテナ型 $[haskell.a]$ と型コンストラクタ式 $haskell.typeconstructor1([], haskell.a)$ を区別せず両者とも `[a]` と書くが，右辺は `[] a` とも書ける．]
+
+$[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$haskell.list(x)$ を作ることは $haskell.list(x) = [x]$ と書く．#footnote[Haskellでは `xs = [x]` と書く．]
+
+リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールドローマン体ならばリスト型，中身がイタリック体ならリスト値である．
+
+ある型を包み込んだ別の型を一般に#keyword[コンテナ型]または単に#keyword[コンテナ]と呼ぶ．コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．コンテナ型は多相型の一種である．
+
+
 
 == 畳み込み
 
@@ -634,114 +685,6 @@ $ id = lozenge.stroked.medium $
 
 /*
 
-% そこで，任意の型 $haskell.a$ について，組み合わせ $\hSingleTuppleWith{haskell.a ,\hAnyBinOp,\mZero}$ がモノイドである場合には
-% \begin{equation}
-% \hSingleTuppleWith{haskell.a ,\hAnyBinOp,\mZero}\hIsTypeOf\mMonoidTypeClass
-% \end{equation}
-% と書くことにする．二項演算子，単位元が自明な場合は簡略化して
-% \begin{equation}
-% haskell.a \hIsTypeOf\mMonoidTypeClass
-% \end{equation}
-% と書くことにする．#footnote[Haskellでは $\hAnyBinOp$ を \code{<|>} と書き，$\mZero$ を \code{mzero} と書く．}
-
-\section{この章のまとめ*}
-
-\begin{enumerate}
-\item 集合 $\hSet{A}$ の元 $\hxVar{a}_1,\hxVar{a}_2\hIsTypeOf\hSet{A}$ について，二項演算子 $\hAnyBinOp$ があり $\hxVar{a}_1\hAnyBinOp \hxVar{a}_2\hIsTypeOf\hSet{A}$ であるとき，すなわち演算子が全域性を有する場合 $(\hSet{A},\hAnyBinOp)$ のことをマグマと呼ぶ．
-\item マグマ $\hSet{A}$ の元 $\hxVar{a}_1,\hxVar{a}_2,\hxVar{a}_3\hIsTypeOf\hSet{A}$ について $(\hxVar{a}_1\hAnyBinOp \hxVar{a}_2)\hAnyBinOp \hxVar{a}_3=\hxVar{a}_1\hAnyBinOp(\hxVar{a}_2\hAnyBinOp \hxVar{a}_3)$ である場合，すなわち演算子が結合性を有する場合 $\hSet{A}$ を半群と呼ぶ．
-\item 半群のうち $\mZero\hIsTypeOf\hSet{A}$ なる元 $\mZero$ があり，任意の $a\hIsTypeOf\hSet{A}$ に対して $\mZero\hAnyBinOp a=a\hAnyBinOp\mZero=a$ である場合，すなわち単位元が存在する場合 $\hSet{A}$ をモノイドと呼ぶ．
-\item 関数は集合 $\hSet{A}$ から集合 $\hSet{A}'$ への写像という型を持つ．
-  %***写像***
-\item 複数引数を取る関数はカリー化によって，1引数をとる複数の関数へ分解される．
-\item 型のインタフェースをまとめたものを型クラスと呼ぶ．
-  %***インタフェース***
-\end{enumerate}
-
-\chapter{リスト}
-\label{ch:list}
-
-\begin{leader}
-型から作る型をコンテナと呼ぶ．代表的なコンテナはある型のホモジニアスな配列であるリストである．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
-\end{leader}
-
-\section{リスト}
-
-同じ型の値を一列に並べたもの，つまりホモジニアスな配列のことを#keyword[リスト}と呼ぶ．Pythonではリスト \code{ls} を
-\begin{pythoncode}
-\begin{verbatim}
-xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-\end{verbatim}
-\end{pythoncode}
-のように定義できる．
-
-我々も $\hxConstant{0}$ から始まり $\hxConstant{9}$ まで続く整数のリストを $[\hxConstant{1},\hxConstant{2},\hxConstant{3},\hxConstant{4},\hxConstant{5},\hxConstant{6},\hxConstant{7},\hxConstant{8},\hxConstant{9}]$ と書くことにしよう．ただし，これでは冗長なので#keyword[等差数列}に限って簡略化した書き方を許す．例えば $\hxConstant{0}$ から $\hxConstant{9}$ までのリストは $[\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{9}]$ と書いても良い．#footnote[Haskellでは \code{[0, 1..9]} と書く．ピリオドの数に注意しよう．}
-
-リストの中身の一つ一つの値のことを#keyword[要素}と呼ぶ．要素のことは元と呼んでも良いが，本書では要素と呼ぶことにする．要素も元も英語のelementの和訳である．
-
-複数の型の要素が混在してもよい配列のことをヘテロジニアスな配列と呼び，ホモジニアスな配列とは区別する．
-
-今後，リストを指す変数は，リストであることを忘れないように変数名にバーをつけて
-\begin{equation}
-  \hListVar{x}
-  =\hListWith{\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{9}}
-\end{equation}
-のように書くことにしよう．なお，変数 $\hxVar{x}$ とリスト変数 $\hListVar{x}$ は異なる変数であるとする．#footnote[Haskellでは \code{s} を変数名にくっつけて \code{xs = [0, 1..9]} のように書く習慣がある．}
-
-\separator
-
-Pythonではリスト内包表記が使える．例えば $\hxConstant{0}$ から $\hxConstant{9}$ までの倍数のリストは次のように作った．
-\begin{pythoncode}
-\begin{verbatim}
-xs = [x*2 for x in range(0, 10)]
-\end{verbatim}
-\end{pythoncode}
-ここに \code{range(a, b)} は \code{a} から増加する方向に連続する \code{b} 個の整数からなるリストを返すPythonの関数である．
-
-我々も内包表記を
-\begin{equation}
-  \hListVar{x}
-  =\hListWith{\hxVar{x}*\hxConstant{2}\hListComprehension\hxVar{x}\hFrom\hListWith{\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{9}}}
-\end{equation}
-のように書こう．ここに右辺のリストから一つずつ要素を取り出して左辺に代入する演算子$\hFrom$を用いた．#footnote[Haskellでは $  \hListVar{x}=\hListWith{\hxVar{x}*\hxConstant{2}\hListComprehension\hxVar{x}\hFrom\hListWith{\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{9}}}
-$ を \code{xs = [x*2 | x<-[0,1..9]]} と書く．}
-
-内包表記の式は複数あっても良い．例えば
-\begin{equation}
-  \hListVar{x}
-  =[\hxVar{x}+\hxVar{y}\mListComp\hxVar{x}\mFrom[\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{9}],\,\hxVar{y}\mFrom[\hxConstant{0},\hxConstant{1}\dotsb\hxConstant{5}],\,\hxVar{x}+\hxVar{y}>\hxConstant{3}]
-\end{equation}
-は $\hxConstant{0}\le\hxVar{x}\le\hxConstant{9}$ かつ $\hxConstant{0}\le\hxVar{y}\le\hxConstant{5}$ の範囲で $\hxVar{x}+\hxVar{y}>\hxConstant{3}$となる $\hxVar{x}$ 及び $\hxVar{y}$ から $\hxVar{x}+\hxVar{y}$ を並べたリストである．これはPythonでいう
-\begin{pythoncode}
-\begin{verbatim}
-xs = [x+y for x in range(0, 10) for y in range(0, 6) \
-  if x+y > 3]
-\end{verbatim}
-\end{pythoncode}
-のことである．#footnote[Haskellでは \code{xs = [x+y | x<-[0, 1..9], y<-[0, 1..5], x+y > 3]} と書く．}
-
-% ...もっと内包表記．
-
-整数型 $(haskell.Int)$ のリストは $\hListConstruct{haskell.Int}$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $\hListConstruct{haskell.a}$ と書く．仮の型である $haskell.a$ の事を #keyword[型パラメタ}と呼ぶ．
-
-型 $haskell.a$ から型 $\hListConstruct{haskell.a}$ を生成する演算子を#keyword[リスト型コンストラクタ}と呼んで$\hList$ と書き
-\begin{equation}
-  \hListConstruct{haskell.a}
-  =\hList\,haskell.a
-\end{equation}
-とする．この等式の両辺は変数ではなく型名であることに注意しよう．型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語である\cxx の「クラステンプレート」が相当する．#footnote[Haskellでは表記上コンテナ型 $\hListConstruct{haskell.a}$ と型コンストラクタ式$\hList\,haskell.a$ を区別せず両者とも \code{[a]} と書くが，右辺は \code{[] a} とも書ける．}
-
-$\hListWith{\hxVar{x}}$ のように $haskell.a$ 型の変数 $\hxVar{x}$ を入れた$\hListConstruct{haskell.a}$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ}と呼ぶ．$\hListConstruct{haskell.a}$ 型の変数のことを#keyword[リスト変数}とも呼ぶ．$haskell.a$ 型の変数 $\hxVar{x}$ からリスト値コンストラクタを使ってリスト$\hListVar{x}$ を作ることは
-\begin{equation}
-  \hListVar{x}
-  =\hListWith{\hxVar{x}}
-\end{equation}
-と書く．#footnote[Haskellでは \code{xs = [x]} と書く．}
-
-リスト型を表す $\hListConstruct{haskell.a}$ と，1要素のリストである $\hListWith{\hxVar{x}}$ の違いにはいつも気をつけておこう．本書では中身がボールドローマン体ならばリスト型，中身がイタリック体ならリスト値である．
-
-ある型を包み込んだ別の型を一般に#keyword[コンテナ型}または単に#keyword[コンテナ}と呼ぶ．コンテナ型の変数を#keyword[コンテナ変数}と呼ぶ．コンテナ型は多相型の一種である．
-
-% なお，リスト型，結合演算子，空リストの組み合わせ $\hSingleTuppleWith{\hListConstruct{haskell.a},\hAppend,{\hEmptyList}}$ はモノイドである．
 
 \separator
 
