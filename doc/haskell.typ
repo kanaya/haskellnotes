@@ -57,12 +57,20 @@
 // Type constructor.
 #let typeconstructor(x) = math.bold(x)
 
+#let Either = typeconstructor("Either")
 #let Maybe = typeconstructor("Maybe")
 
 #let typeconstructor1(x, y) = {
   let xx = x
   let yy = y
   $xx_yy$
+}
+
+#let typeconstructor2(x, y, z) = {
+  let xx = x
+  let yy = y
+  let zz = z
+  $xx_(yy space zz)$
 }
 
 #let MaybeType(x) = typeconstructor1(Maybe, x)
