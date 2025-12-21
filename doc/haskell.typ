@@ -19,6 +19,7 @@
 #let longfunction(x) = math.serif(x)
 #let curry = longfunction("curry")
 #let even = longfunction("even")
+#let fact = longfunction("fact")
 #let first = longfunction("first")
 #let fib = longfunction("fib")
 #let head = longfunction("head")

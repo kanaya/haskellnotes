@@ -292,7 +292,7 @@ $ g 0 &= 1 \
   g x &= 2 times x $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
-$ g x = cases(0 --> 1,
+$ g x = haskell.kwcase x haskell.kwof x cases(0 --> 1,
 dash.wave.double --> frac(sin x, x, style: "skewed")) $
 
 ここに $dash.wave.double$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Hhaskellでは
@@ -800,7 +800,57 @@ $ f underparen(a_"s" haskell.at (x : x_"s")) = ... $
 
 == 関数の再帰適用
 
+自然数 $n$ の#keyword[階乗]は次のように定義される．
+$ n! = n times (n - 1) times ... times 1 $
+
+数学者は $0! = 1$ と定義するので，この式は
+$ 0! &= 1 \
+  n! &= n times (n - 1)! $
+という風に「#keyword[再帰]的に」書き直すことが出来る．再帰とは，定義式の両辺に同じ関数名が現れることを指す．
+
+Haskellで書きやすいように，後置演算子 $!$ のかわりに関数 $haskell.fact$ を定義しよう．関数は内部で自分自身を適用しても良いので，階乗関数 $haskell.fact$ の定義は次のようになる．
+$ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1,
+  dash.wave.double --> x times haskell.fact(x - 1)) $
+と定義できる．関数が自分自身を適用することを関数の#keyword[再帰適用]と呼ぶ．#footnote[Haskellでは
+```haskell
+  fact x = case x of
+    0 -> 1
+    _ -> x * fact (x - 1)
+```
+と書く．]
+
+これで我々は関数の適用，変数の代入，ラムダ式，条件式，再帰の方法を学んだわけである．これだけあれば，原理的にはどのようなアルゴリズムも書くことができる．今日からはカリー風な数学であらゆるアルゴリズムを表現できるのである！
+
+cons演算子 $(:)$ は関数引数のパタンにも使える．これは，例えばリストの和をとる関数 $sum$ は
+$ sum nothing &= 0 \
+  sum (x : x_"s") &= x + sum x_"s" $
+のようにも定義できるということである．#footnote[Haskellでは
+```haskell
+  sum []     = 0
+  sum (x:xs) = x + sum xs
+```
+と書く．]
+
+なお，関数は再帰させるたびに計算機のスタックメモリを消費する．これを回避するためのテクニックが，次節で述べる末尾再帰である．
+
 == 末尾再帰
+
+計算機科学者は，同じ再帰でも#keyword[末尾再帰]という再帰のスタイルを好む．末尾再帰とは，関数の再帰適用を関数定義の末尾にすることである．この章に出てきた階乗関数 $haskell.fact$ を例にとろう．階乗関数 $haskell.fact$ は
+$ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double --> x times haskell.fact(x - 1)) $
+のような形をしていた．末尾の関数をよりはっきりさせるために演算子 $(*)$ を前置にして
+$ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double --> (times) x (haskell.fact(x - 1))) $
+と書いてみよう．この定義の末尾の式は $(times)x(haskell.fact(x - 1))$ である．これだと末尾の関数は $haskell.fact$ ではなく演算子 $(times)$ なので，末尾に再帰適用を行ったことにはならない．
+
+そこで，次のように形を変えた階乗関数 $haskell.fact'$ を考えてみる．
+$ haskell.fact' a x = haskell.kwkase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) (x - 1)) $
+こうすれば末尾の関数がもとの $\hFactPrime$ と一致する．#footnote[Haskellでは
+```haskell
+  fact' a x = case x of 0 -> 1
+                        _ -> fact' (a*x) (x-1)
+```
+と書く．]
+
+
 
 == 遅延評価
 
@@ -821,144 +871,6 @@ $ f underparen(a_"s" haskell.at (x : x_"s")) = ... $
 == この章のまとめ
 
 /*
-
-
-\section{この章のまとめ}
-
-\begin{enumerate}
-\item 配列はリストである．配列は $[\hxVar{x}_0,\hxVar{x}_1,\hxVar{x}_2]$ のように表記する．
-\item 等差数列の配列は $[\hxConstant{0},\hxConstant{1}\dotsb10]$ のように途中を $\dotsb$ で省略できる．
-\item 配列は無限長であってもよい．無限長配列は $[\hxConstant{0},\hxConstant{1}\dotsb]$ のように表記する．
-\item 1要素のリストは $[x]$ のように表記する．この括弧をリスト値コンス
-  トラクタと呼ぶ．
-\item 空リストは ${\hEmptyList}$ と表す．
-\item $haskell.a$型のリストを $\hListConstruct{haskell.a}$ 型で表す．
-\item リスト型コンストラクタ$\mListTypeConstructor$ は型パラメタ $haskell.a$ に作用して$\hListConstruct{haskell.a}$ を生成する．
-\item リストは先頭要素と続くリストから定義される．先頭要素を $\hxVar{x}$ とし，続くリストを $\hListVar{x}$ とすると$\hxVar{x}:\hListVar{x}$ はリストである．ここに演算子 $:$ は結合(cons)演算子である．
-\item リストはリスト結合(append)できる．リスト $\hListVar{y}$ とリスト $\hListVar{z}$ のリスト結合は $\hListVar{y}\hAppend\hListVar{z}$ である．
-\item 左畳み込み演算子$\hFold^{\hAnyBinOp}_a[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]$ は $a\hAnyBinOp \hxVar{x}_0\hAnyBinOp \hxVar{x}_1\hAnyBinOp\dotsb\hAnyBinOp \hxVar{x}_n$ を返す．
-\item 右畳み込み演算子 $\hFoldRight^{\hAnyBinOp}_{a}[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]$ は$(\hxVar{x}_0\hAnyBinOp(\hxVar{x}_1\hAnyBinOp\dotsb\hAnyBinOp(\hxVar{x}_n\hAnyBinOp a)))$ を返す．
-\item 平坦化演算子 $\mJoinList=\hFold_{\hEmptyList}^{\hAppend}$ はリストを平坦化する．
-\item 関数 $\hxFunc{f}\hIsTypeOf\mProjEXP{haskell.a }{haskell.a }$ はマップ演算子 $\hMap$ を用いて $\hxFunc{f}\hMap[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]=[\hxFunc{f}\hxVar{x}_0,\hxFunc{f}\hxVar{x}_1\dotsb \hxFunc{f}\hxVar{x}_n]$ のようにリスト$[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]$ に適用できる．
-\item マップ演算子$\hMap$ の型は$\mProjEXP{(\mProjEXP{haskell.a }{haskell.b})}{\mProjEXP{haskell.a }{haskell.b }}$である．
-\item $\mHead(\hxVar{x}:\hListVar{x})=x,\mTail(\hxVar{x}:\hListVar{x})=\hListVar{x}$である．
-\end{enumerate}
-
-% 型パラメタの話はどこが初出？
-
-\chapter{再帰}
-\label{ch:recursion}
-
-\begin{leader}
-\TK{To be written.}
-\end{leader}
-
-\section{関数の再帰適用}
-
-自然数 $\hxVar{n}$ の#keyword[階乗}は次のように定義される．
-\begin{equation}
-  \hxVar{n}!=\hxVar{n}(\hxVar{n}-\hxConstant{1})(\hxVar{n}-\hxConstant{2})\dots\hxConstant{1}
-\end{equation}
-数学者は $\hxConstant{0}!=\hxConstant{1}$ と定義するので，この式は
-\begin{equation}
-  \left\{
-    \begin{split}
-      \hxConstant{0}!&=\hxConstant{1}\\
-      \hxVar{n}!&=\hxVar{n}(\hxVar{n}-\hxConstant{1})!
-    \end{split}
-  \right.
-\end{equation}
-という風に「#keyword[再帰}的に」書き直すことが出来る．再帰とは，定義式の両辺に同じ関数名が現れることを指す．
-
-Haskellで書きやすいように，後置演算子 $!$ のかわりに関数 $\hFact$ を定義しよう．関数は内部で自分自身を適用しても良いので，階乗関数 $\hFact$ の定義は次のようになる．
-\begin{equation}
-  \hFact\hxVar{x}
-  =\hCaseSyntax{\hxVar{x}}
-  \begin{cases}
-    \hxConstant{0}
-    &\hIfSo\hxConstant{1}\\
-    \_
-    &\hIfSo\hxVar{x}*\hFact(\hxVar{x}-\hxConstant{1})
-  \end{cases}
-\end{equation}
-と定義できる．関数が自分自身を適用することを関数の#keyword[再帰適用}と呼ぶ．#footnote[Haskellでは
-\begin{verbatim}
-  fact x = case x of
-    0 -> 1
-    _ -> x * fact (x - 1)
-\end{verbatim}
-と書く．}
-
-これで我々は関数の適用，変数の代入，ラムダ式，条件式，再帰の方法を学んだわけである．これだけあれば，原理的にはどのようなアルゴリズムも書くことができる．今日からはカリー風な数学であらゆるアルゴリズムを表現できるのである！
-
-\separator
-
-cons演算子 $(:)$ は関数引数のパタンにも使える．これは，例えばリストの和をとる関数 $\hSum$ は
-\begin{equation}
-  \left\{
-  \begin{aligned}
-    \hSum{\hEmptyList}
-    &=\hxConstant{0}\\
-    \hSum(\hxVar{x}:\hListVar{x})
-    &=\hxVar{x}+\hSum\hListVar{x}
-  \end{aligned}
-  \right.
-\end{equation}
-のようにも定義できるということである．#footnote[Haskellでは
-\begin{verbatim}
-  sum []     = 0
-  sum (x:xs) = x + sum xs
-\end{verbatim}
-と書く．}
-
-なお，関数は再帰させるたびに計算機のスタックメモリを消費する．これを回避するためのテクニックが，次節で述べる末尾再帰である．
-
-\section{末尾再帰}
-
-計算機科学者は，同じ再帰でも#keyword[末尾再帰}という再帰のスタイルを好む．末尾再帰とは，関数の再帰適用を関数定義の末尾にすることである．この章に出てきた階乗関数 $\hFact$ を例にとろう．階乗関数 $\hFact$ は
-\begin{equation}
-  \hFact\hxVar{x}
-  =\hCaseSyntax{\hxVar{x}}\begin{cases}
-    \hxConstant{0}
-    &\hIfSo\hxConstant{1}\\
-    \_
-    &\hIfSo\hxVar{x}*\hFact(\hxVar{x}-\hxConstant{1})
-  \end{cases}
-\end{equation}
-のような形をしていた．末尾の関数をよりはっきりさせるために演算子 $(*)$ を前置にして
-\begin{equation}
-  \hFact\hxVar{x}
-  =\hCaseSyntax{\hxVar{x}}
-  \begin{cases}
-    \hxConstant{0}
-    &\hIfSo\hxConstant{1}\\
-    \_
-    &\hIfSo(*)\hxVar{x}(\hFact(\hxVar{x}-\hxConstant{1}))
-  \end{cases}
-\end{equation}
-と書いてみよう．この定義の末尾の式は
-\begin{equation}
-  (*)\hxVar{x}(\hFact(\hxVar{x}-\hxConstant{1}))
-\end{equation}
-である．これだと末尾の関数は $\hFact$ ではなく演算子 $(*)$ なので，末尾に再帰適用を行ったことにはならない．
-
-そこで，次のように形を変えた階乗関数 $\hFactPrime$ を考えてみる．
-\begin{equation}
-  \hFactPrime\hxVar{a}\hxVar{x}
-  =\hCaseSyntax{\hxVar{x}}
-  \begin{cases}
-    \hxConstant{0}
-    &\hIfSo\hxVar{a}\\
-    \_
-    &\hIfSo\hFactPrime(\hxVar{a}*\hxVar{x})(\hxVar{x}-\hxConstant{1})
-  \end{cases}
-\end{equation}
-こうすれば末尾の関数がもとの $\hFactPrime$ と一致する．#footnote[Haskellでは
-\begin{verbatim}
-  fact' a x = case x of 0 -> 1
-                        _ -> fact' (a*x) (x-1)
-\end{verbatim}
-と書く．}
 
 関数 $\hFact$ が，例えば
 \begin{align}
