@@ -15,7 +15,7 @@
 
 #set heading(numbering: "1.1")
 
-#set document(title: [Haskell Notes])
+#set document(title: [Haskell Notes by Ichi Kanaya])
 
 #set text(font: ("Times", "Toppan Bunkyu Mincho"))
 
@@ -45,7 +45,7 @@
 
 #import "haskell.typ"
 
-#title[Haskell Notes]
+#title()
 
 #outline()
 #pagebreak()
