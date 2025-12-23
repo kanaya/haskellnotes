@@ -293,7 +293,7 @@ $ g 0 &= 1 \
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
 $ g x = haskell.kwcase x haskell.kwof cases(0 --> 1,
-dash.wave.double --> frac(sin x, x, style: "skewed") $
+dash.wave.double --> frac(sin x, x, style: "skewed")) $
 
 ここに $dash.wave.double$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Hhaskellでは
 ```haskell
