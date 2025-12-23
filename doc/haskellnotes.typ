@@ -60,7 +60,8 @@
   [変数・関数], [イタリック（1文字）], $x, f$,
   [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, haskell.id, haskell.otherwise$,
   [リスト変数], [変数名にsをつける], $x_"s"$,
-  [Maybe変数], [変数名に $?$ をつける], $x_*$,
+  [Maybe変数], [変数名に $?$ をつける], $x_?$,
+  [Either変数], [変数名に $!$ をつける], $x_!$,
   [一般のコンテナ変数], [変数名に $*$ をつける], $x_*$,
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
@@ -195,7 +196,7 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '
 最後に，出現頻度順に逆順ソートをかけると「出現頻度順」になる．それには以下のようにする．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n' | sort | uniq -c | sort -nr
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n' | sort | uniq -c | sort -n -r
 ```]
 
 この出力の先頭10行は，そのまま出現頻度上位10傑の単語となる．
@@ -284,11 +285,11 @@ $ (backslash x |-> 1 + x) space 2 $
 
 関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $1$ であり，その他の場合は関数 $f$ と同じ振る舞いをする関数 $g$ を考える．このとき $g$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは
 #sourcecode[```haskell
-  g space 0 = 1
+  g 0 = 1
   g x = 2 * x
 ```]
 と書く．]
-$ g 0 &= 1 \
+$ g space 0 &= 1 \
   g x &= 2 times x $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
@@ -636,9 +637,9 @@ xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 
 整数型 $(haskell.Int)$ のリストは $[haskell.Int]$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $[haskell.a]$ と書く．仮の型である $haskell.a$ の事を #keyword[型パラメタ]と呼ぶ．
 
-型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[]$ と書く．型 $[haskell.a]$ は $haskell.typeconstructor1([], haskell.a)$ のシンタックスシュガーである．
+型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[]$ と書く．型 $[haskell.a]$ は $haskell.typeconstructor1([], haskell.a)$ のシンタックスシュガーである．#footnote[Haskellでは $haskell.typeconstructor1([], haskell.a)$ を `[] a` と書く．これは `[a]` と同じことである．]
 
-型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++の「クラステンプレート」が相当する．#footnote[Haskellでは表記上コンテナ型 $[haskell.a]$ と型コンストラクタ式 $haskell.typeconstructor1([], haskell.a)$ を区別せず両者とも `[a]` と書くが，右辺は `[] a` とも書ける．]
+型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++の「クラステンプレート」が相当する．
 
 $[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは $x_"s" = [x]$ と書く．#footnote[Haskellでは `x_"s" = [x]` と書く．]
 
@@ -788,7 +789,7 @@ $ haskell.head x_"s" &... "先頭要素" \
 このように基本的な関数から高機能な関数を実装する方法はよく行われる．この例ではcons演算子からマップ演算子を合成した．
 
 リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
-$ f underparen(a_"s" haskell.at (x : x_"s")) = ... $
+$ f a_"s" haskell.at (x : x_"s") = ... $
 として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは `f as @ (x : xs)` と書く．]
 
 == この章のまとめ
@@ -861,7 +862,7 @@ $ haskell.fact' space 1 space 3 &= haskell.fact' (1 times 3) space (3 - 1) \
   &= haskell.fact' (3 times 2) space (2 - 1) \
   &= haskell.fact' space 6 space 1 \
   &= haskell.fact' (6 times 1) space (1 - 1) \
-  &= haskell.fact' 6 space 0 \
+  &= haskell.fact' space 6 space 0 \
   &= 6 $
 であるから，関数 $haskell.fact$ が「横に伸びる」のに対して，関数 $haskell.fact'$ は「横に伸びない」ことになる．計算式が「横に伸びない」性質は，計算機のリソースを無駄に消耗しないことが期待されるため，計算機科学者が好むのである．また末尾再帰は後述する「末尾再帰最適化」のチャンスをコンパイラに与える．
 
