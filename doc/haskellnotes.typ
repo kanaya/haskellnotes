@@ -204,7 +204,7 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '
 
 さて，上述の出現頻度上位単語の抽出のどこが「関数型プログラミング」の考え方だったのだろうか．
 
-実はこんな風に考えることが出来る．入力を $x$ とする．いまの例では $x$ がファイル `the-great-gatsby.txt` である．出力を $y$ とする．ここに $y$ は出現頻度順に並んだ出現頻度と単語のリストである．僕たちが欲しいのは
+実はこんな風に考えることが出来る．入力を $x$ とする．いまの例では $x$ がファイル `the-great-gatsby.txt` である．出力を $y$ とする．ここに $y$ は出現頻度順に並んだ出現頻度と単語のリストである．我々が欲しいのは
 
 $ y = f(x) $
 
@@ -270,7 +270,7 @@ lambda x: 1 + x
 この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $.$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ` \x -> 1 + x` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
 
 ラムダ式は関数である．ラムダ式を適用するには，ラムダ式を括弧で包む必要がある．例を挙げる．
-$ (backslash x |-> 1 + x) 2 $
+$ (backslash x |-> 1 + x) space 2 $
 
 この式は結果として $3$ を返す．
 
@@ -284,7 +284,7 @@ $ (backslash x |-> 1 + x) 2 $
 
 関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $1$ であり，その他の場合は関数 $f$ と同じ振る舞いをする関数 $g$ を考える．このとき $g$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは
 #sourcecode[```haskell
-  g 0 = 1
+  g space 0 = 1
   g x = 2 * x
 ```]
 と書く．]
@@ -293,7 +293,7 @@ $ g 0 &= 1 \
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
 $ g x = haskell.kwcase x haskell.kwof cases(0 --> 1,
-dash.wave.double --> frac(sin x, x)) $
+dash.wave.double --> frac(sin x, x, style: "skewed") $
 
 ここに $dash.wave.double$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Hhaskellでは
 ```haskell
@@ -404,8 +404,8 @@ $ f haskell.apply x = f x $
 $ g a = a + lozenge.stroked.medium $
 
 このとき，
-$ f &= g 100 \
-  x &= f 1 $
+$ f &= g space 100 \
+  x &= f space 1 $
 とすれば $x = 101$ を得る．#footnote[Haskell では $g a = a + lozenge.stroked.medium$ を $g a = backslash x |-> a + x$ と展開しておいて `g a = \ x -> a + x` と書く．]
 
 高階関数は今後度々顔をだすことになる．後で登場するマップ演算子や畳込み演算子は高階関数の一種である．
@@ -642,7 +642,7 @@ xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 
 $[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは $x_"s" = [x]$ と書く．#footnote[Haskellでは `x_"s" = [x]` と書く．]
 
-リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールドローマン体ならばリスト型，中身がイタリック体ならリスト値である．
+リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールド体ならばリスト型，中身がイタリック体ならリスト値である．
 
 ある型を包み込んだ別の型を一般に#keyword[コンテナ型]または単に#keyword[コンテナ]と呼ぶ．コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．コンテナ型は多相型の一種である．
 
@@ -721,6 +721,8 @@ $ haskell.fold_emptyset^smash [[0, 1, 2], [3, 4, 5], ...] = [0, 1, 2, 3, 4, 5, .
 $ haskell.flat = haskell.fold_emptyset^smash $
 と定義することにする．#footnote[Haskellでは演算子 $haskell.flat$ の代わりに `concat` 関数（または `join` 関数）を使う．]
 
+// [[0, 1, 2, 3, ...]] にならないか？
+
 == マップ
 
 リストの各要素に決まった関数を適用したい場合がある．Pythonではリスト `ls` に関数 `f` を適用するときには
@@ -787,7 +789,7 @@ $ haskell.head x_"s" &... "先頭要素" \
 
 リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
 $ f underparen(a_"s" haskell.at (x : x_"s")) = ... $
-として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは `f as @ (x : x_"s")` と書く．]
+として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは `f as @ (x : xs)` と書く．]
 
 == この章のまとめ
 
@@ -840,7 +842,7 @@ $ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 --> 1, dash.wave.double
 
 そこで，次のように形を変えた階乗関数 $haskell.fact'$ を考えてみる．
 $ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 --> a, dash.wave.double --> haskell.fact' (a times x) space (x - 1)) $
-こうすれば末尾の関数がもとの $haskell.fact$ と一致する．#footnote[Haskellでは
+こうすれば末尾の関数がもとの $haskell.fact'$ と一致する．#footnote[Haskellでは
 ```haskell
   fact' a x = case x of 0 -> 1
                         _ -> fact' (a*x) (x-1)
@@ -853,11 +855,11 @@ $ haskell.fact 3 &= 3 times haskell.fact 2 \
   &= 3 times 2 times 1 times haskell.fact 0 \
   &= 3 times 2 times 1 times 1 \
   &= 6 $
-と展開されるのに対し，同じく $haskell.fact' 3$ は
-$ haskell.fact' 1 space 3 &= haskell.fact' (1 times 3)(3 - 1) \
-  &= haskell.fact' 3 space 2 \
+と展開されるのに対し，同じく $haskell.fact' space 3$ は
+$ haskell.fact' space 1 space 3 &= haskell.fact' (1 times 3) space (3 - 1) \
+  &= haskell.fact' space 3 space 2 \
   &= haskell.fact' (3 times 2) space (2 - 1) \
-  &= haskell.fact' 6 space 1 \
+  &= haskell.fact' space 6 space 1 \
   &= haskell.fact' (6 times 1) space (1 - 1) \
   &= haskell.fact' 6 space 0 \
   &= 6 $
@@ -959,7 +961,7 @@ def map_over(f, p):
 
 ここで変数 $w_"?"$ が取り得る値は正しく計算された値 $z$ をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．定数 $haskell.Nothing$ は「ナッシング」と呼ぶ．#footnote[Haskellでは $haskell.Nothing$ を `Nothing` と書く．]
 
-この変数 $w_"?"$ はもはや整数 $(haskell.Int)$ 型とは言えない．そこでこの $z_"?"$ の型を $haskell.MaybeType(haskell.Int)$ と表して「Maybe整数（おそらく整数）」型と呼ぶことにしよう．型 $haskell.a$ から型 $haskell.MaybeType(haskell.a)$ を生成するこには#keyword[型コンストラクタ] $haskell.Maybe$ を用いて $haskell.MaybeType(haskell.a)$ と表す．#footnote[Haskellでは `Maybe a` と書く．]
+この変数 $w_"?"$ はもはや整数 $(haskell.Int)$ 型とは言えない．そこでこの $z_"?"$ の型を $haskell.MaybeType(haskell.Int)$ と表して「Maybe整数（おそらく整数）」型と呼ぶことにしよう．型 $haskell.a$ から型 $haskell.MaybeType(haskell.a)$ を生成するとき，$haskell.Maybe$ を#keyword[型コンストラクタ]と呼ぶ．#footnote[Haskellでは `Maybe a` と書く．]
 
 $haskell.a$ 型の変数を $haskell.MaybeType(haskell.a)$ 型の変数に代入するには，次のMaybe値コンストラクタを用いて
 $ w_"?" = haskell.Just(z) $
@@ -987,7 +989,7 @@ $ f ast.op.o haskell.Just(x) &= haskell.Just(f x) \
 $ z_"?" = f ast.op.o w_"?" $
 のようにMaybeバージョンのマップ演算子 $ast.op.o$ を用いることにする．これはプログラムの安全性のためである．変数が一旦ゼロ除算の可能性に汚染されたら，最後までMaybeに包んでおかねばならない．
 
-PythonでMaybeの概念を忠実になぞることは難しい．と言うのもPythonは動的型付け言語であるため，型コンストラクタという概念が無いからだ．一方でMaybeの概念を静的型付け言語である\cxx や\java で実現することはできる．そこでC++の本物のコードで示しておこう．ただしポインタを使わないでおいたのでC++プログラマもJavaプログラマも参考にできるだろう．
+PythonでMaybeの概念を忠実になぞることは難しい．と言うのもPythonは動的型付け言語であるため，型コンストラクタという概念が無いからだ．一方でMaybeの概念を静的型付け言語であるC++やJavaで実現することはできる．そこでC++の本物のコードで示しておこう．ただしポインタを使わないでおいたのでC++プログラマもJavaプログラマも参考にできるだろう．
 
 Maybeは次の `maybe` クラステンプレートで表現できる．（Javaプログラマへの注意：これは `maybe<a>` クラスの定義と同じ意味である．）
 #sourcecode[```cpp
@@ -1083,7 +1085,7 @@ X<b> map_over(fn f, X<a> x, b dummy);
 
 Maybeとよく似た型にEitherがある．Maybeが $haskell.a$ 型または $haskell.Nothing$ のいずれかの値をとったように，Eitherは $haskell.a$ 型または $haskell.b$ 型のいずれかの値を取る．$haskell.a$ 型または $haskell.b$ 型を取るEither型の変数 $e_!$ があるとすると，
 $ e_! colon.double haskell.EitherType(haskell.a, haskell.b) $
-と書く．Either型は型 $haskell.a$ および $haskell.b$ から型コンストラクタを用いて $haskell.EitherType(haskell.a, haskell.b)$ と書く．#footnote[Haskellでは `Either a b` と書く．]
+と書く．Either型の生成は型 $haskell.a$ および $haskell.b$ から型コンストラクタを用いて $haskell.EitherType(haskell.a, haskell.b)$ と書く．#footnote[Haskellでは `Either a b` と書く．]
 
 Eitherには値コンストラクタが2種類あり，それぞれ $haskell.Right(x)$ と $haskell.Left(x)$ である．値コンストラクタは
 $ e_! = haskell.Right(x) $
