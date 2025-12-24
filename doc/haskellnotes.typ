@@ -38,7 +38,7 @@
 #show highlight: highlight_font
 
 #let tk = [ #emoji.ast.box *TK* ]
-#let keyword(x) = [#highlight[#x]]
+#let keyword(x) = [#highlight(fill: rgb("#FFFFE0"))[#x]]
 
 #let uparrow = $class("binary", arrow.t)$
 #let uparrow2 = $class("binary", arrow.t arrow.t)$
