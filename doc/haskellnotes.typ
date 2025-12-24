@@ -166,6 +166,16 @@ someFunc = putStrLn "someFunc"
 ```]
 を書き換えることになる．
 
+書き換え後は
+#sourcecode[```shell-unix-generic
+$ stack build
+```]
+でコンパイルし，
+#sourcecode[```shell-unix-generic
+$ stack run
+```]
+で実行する．
+
 #tk
 
 
