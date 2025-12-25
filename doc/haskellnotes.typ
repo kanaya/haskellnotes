@@ -65,7 +65,7 @@
   [一般のコンテナ変数], [変数名に $*$ をつける], $x_*$,
   [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
   [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
-  [有名な定数値コンストラクタ], [数学記号], $emptyset, emptyset.rev$,
+  [有名な定数値コンストラクタ], [数学記号], $emptyset, nothing.rev$,
   [有名な値コンストラクタ], [特別な括弧で包む], $[x], shell.l y shell.r$,
   [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, mu$,
   [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
@@ -554,7 +554,7 @@ Haskellには#keyword[タプル]という型がある．タプルとは，複数
 
 逆に，カリー化された関数 $f' x y = x + y$ に関しては $(haskell.uncurry f')paren.l.flat x, y paren.r.flat$ のように#keyword[アンカリー化]することで，タプルに適用することができる．
 
-タプルの中身の個数は0個または2個以上でなければならず，上限は処理系によって定められている．2個の変数からなるタプルを特別にペア，3個の変数からなるタプルを特別にトリプルと呼ぶ．中身が0個のタプルを $emptyset.rev$ で表し，特別に#keyword[ユニット]と呼ぶ．#footnote[GHC v8.2.1 は最大62個の変数からなるタプルまで生成できる．]
+タプルの中身の個数は0個または2個以上でなければならず，上限は処理系によって定められている．2個の変数からなるタプルを特別にペア，3個の変数からなるタプルを特別にトリプルと呼ぶ．中身が0個のタプルを $nothing.rev$ で表し，特別に#keyword[ユニット]と呼ぶ．#footnote[GHC v8.2.1 は最大62個の変数からなるタプルまで生成できる．]
 
 == 多相型と型クラス
 
@@ -6143,7 +6143,7 @@ $ z = (x, y) $
 $ z colon.double (haskell.Int, haskell.Int) $
 
 要素を含まないタプルを#keyword[ユニット]と呼ぶ．ユニットは次のように書く．#footnote[Haskellでは `z = ()` と書く．]
-$ z = emptyset.rev $
+$ z = nothing.rev $
 
 ユニットの型は#keyword[ユニット型]で，型注釈を次のように書く．#footnote[Haskellでは `z :: ()` と書く．]
 $ z colon.double haskell.Unit $
