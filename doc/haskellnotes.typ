@@ -406,7 +406,7 @@ $ (haskell.anyop x) &= (lozenge.stroked.medium class("binary", haskell.anyop) x)
 
 なお，二項演算子の結合性，すなわち左結合か右結合かは，演算子によって異なる．また演算の優先順位を明示的に与えるために括弧が用いられる．
 
-一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．
+一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．#footnote[Haskellでは $x haskell.infix(f) y$ を ```x `f` y``` と書く．]
 
 == 関数合成と関数適用
 

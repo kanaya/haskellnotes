@@ -161,7 +161,7 @@
 // Infix.
 #let infix(x) = {
   let xx = x
-  $class("binary", quote.chevron.l.single xx quote.chevron.r.single)$
+  $class("binary", quote.l.single xx quote.r.single)$
 }
 
 // Shortcut.
