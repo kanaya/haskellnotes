@@ -341,7 +341,7 @@ rect.stroked.h --> frac(sin x, x, style: "skewed")) $
   g x = case x of 0 -> 1
                   _ -> (sin x) / x
 ```
-または `g x = case x of {0 -> 1; _ -> (sin x)/x}` と書く．]
+または `g x = case x of {0 -> 1; _ -> (sin x) / x}` と書く．]
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
