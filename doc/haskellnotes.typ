@@ -409,7 +409,7 @@ Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない
 
 一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ も $(haskell.anyop) x y = ((haskell.anyop) x) y$ であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $(haskell.anyop) x$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を ```haskell ((+)1)``` と書く．]
 
-前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium class("binary", haskell.anyop) x)$ や $(x class("binary", haskell.anyop) lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
+前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium haskell.anyop x)$ や $(x haskell.anyop lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
 
 二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
 $ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
