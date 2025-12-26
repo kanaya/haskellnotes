@@ -1271,16 +1271,11 @@ $ f_"?" ast.square x_"?" = haskell.kwcase x_"s" haskell.kwof
 $ f convolve.o_"?" x_"?" = haskell.Just(f) ast.square_"?" x_"?" $
 のように導出できる．
 
-
+これらの関係を一般化して
+$ f ast.square x_* = shell.l f shell.r convolve.o x_* $
+となるような#keyword[一般アプリカティブマップ演算子] $(ast.square)$ を考える．ここに $f$ は関数，$x_*$ はリストやMaybeといったコンテナ型の変数すなわち#keyword[コンテナ変数]である．一般アプリカティブマップ演算子 $(ast.square)$ から一般マップ演算子 $(*)$ を導き出すには，式〜〜〜のように値コンストラクタが必要である．この一般化された値コンストラクタを#keyword[ピュア演算子]と呼ぶ．アプリカティブマップ演算子とピュア演算子を持つ型クラスを#keyword[アプリカティブ関手]と呼び，$haskell.Applicative$ 型クラスと定義する．#footnote[Haskellでは一般アプリカティブマップ演算子を ```haskell <*>``` と書く．]
 
 /*
-これらの関係を一般化して
-\begin{equation}
-  \label{eq:general-applicative-map}
-  \hxFunc{f}\mMap\mVarContainer{w}
-  =\mPureWith{f}haskell.appMap\mVarContainer{w}
-\end{equation}
-となるような#keyword[一般アプリカティブマップ演算子} $(haskell.appMap)$ を考える．ここに $\hxFunc{f}$ は関数，$\mVarContainer{w}$ はリストやMaybeといったコンテナ型の変数すなわち#keyword[コンテナ変数}である．一般アプリカティブマップ演算子 $(haskell.appMap)$ から一般マップ演算子 $(\mMap)$ を導き出すには，式\eqref{eq:general-applicative-map} のように値コンストラクタが必要である．この一般化された値コンストラクタを#keyword[ピュア演算子}と呼ぶ．アプリカティブマップ演算子とピュア演算子を持つ型クラスを#keyword[アプリカティブ関手}と呼び，$haskell.applicativeTypeClass$ 型クラスと定義する．#footnote[Haskellでは一般アプリカティブマップ演算子を \code{<*>} と書く．}
 
 ピュア演算子をピュア値コンストラクタと呼ばないのは，単純に「ピュア値」というものがないからである．$\hFunctor$ 型クラスはリスト型やMaybe型を抽象化したものであって，直接変数を生成できない．型クラスは，\cxx の用語で言えば純粋仮想クラスのようなものであるし，\objectivec の用語で言えばメタクラスであるからである．もちろんリストのピュア演算子は $[x]$ であるし，Maybeのピュア演算子は $\hJustWith{\hxVar{x}}$ であり，それぞれ具体的な変数を生成する．しかし変数 $\hxVar{x}$ にピュア演算子を適用した
 $\mPureWith{x}$ は抽象的な概念であり，そのような変数は実在しない．#footnote[Haskellは一般のピュア演算子の実装を与えていない．変数の型に応じて対応する関数が適用される．}
