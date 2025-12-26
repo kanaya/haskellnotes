@@ -1227,7 +1227,8 @@ $ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.
   align: horizon,
   table.header([型], [型コンストラクタ], [マップ], [値コンストラクタ]),
   $[haskell.a]$, $[]$, $*$, $[x], nothing$,
-  $haskell.MaybeType(haskell.a)$, $haskell.Maybe$, $convolve.o$, $haskell.Just(x), haskell.Nothing$
+  $haskell.MaybeType(haskell.a)$, $haskell.Maybe$, $convolve.o_"?"$, $haskell.Just(x), haskell.Nothing$,
+  $haskell.Functor supset haskell.f ==> haskell.f_haskell.a$, $haskell.f$, $convolve.o$, [具体的な型による]
 )
 
 == $haskell.Functor$ 型クラス
