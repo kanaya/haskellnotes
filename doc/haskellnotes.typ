@@ -45,10 +45,7 @@
   linebreak()
 }
 
-#lorem(50)
-#par-equation($ a + b $)
-#lorem(50)
-
+#let pb = [ #align(center, $suit.club.filled$) ]
 #let tk = [ #emoji.ast.box *TK* ]
 #let keyword(x) = [#highlight(fill: rgb("#FFCC99"))[#x]]
 
@@ -306,6 +303,8 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 
 関数 $f$ に引数 $x$を「食わせる」ことを#keyword[関数適用]と呼ぶ．もし $f x$ と書いてあったら，それは $f$ と $x$ の積，つまり $f times x$ ではなく，従来の $f(x)$ すなわち関数 $f$ に引数 $x$ を与えているものと解釈する．高校生向けの数学書でも $sin x$ のように三角関数に限ってはカリー風に書くことになっているので，まるで馴染みがないということもないだろう．なお，関数はいつも引数の左側に書くことにする．これを「関数 $f$ が変数 $x$ の左から作用する」と言い，また関数 $f$ のことを#keyword[左作用素]とも呼ぶ．
 
+#pb
+
 複数引数をとる関数をPythonや一般的な数学の教科書では $g(x, y)$ と書くが，これも括弧が冗長なので今後は $g x y$ と書く．この場合式 $g x y$ は左を優先して結合する．つまり $g x y = (g x) y$ である．これは引数 $y$ に関数 $(g x)$ が左から作用していると解釈する．関数 $(g x)$ は引数 $x$ に関数 $g$ を作用させて作った関数である．引数に「飢えた」関数 $(g x)$ を#keyword[部分適用]された関数と呼ぶ．
 
 このように式の左側を優先的に演算していくことを#keyword[左結合]と呼ぶ．Haskellの場合，関数適用はいつも左結合である．
@@ -330,6 +329,8 @@ $ (backslash x |-> 1 + x) space 2 $
 この式は結果として $3$ を返す．
 
 複数引数をとるラムダ式は例えば $backslash x y |-> x + y$ のように引数を並べて書く．
+
+#pb
 
 本書では新たに，次のラムダ式記法も導入する．式中に記号 $lozenge.stroked.medium$ が現れた場合，その式全体がラムダ式であるとみなす．記号 $lozenge.stroked.medium$ の部分には引数が入る．第 $n$ 番目の $lozenge.stroked.medium$ には第 $n$ 番目の引数が入る．例えばラムダ式 $backslash x y |-> x + y$ は $lozenge.stroked.medium + lozenge.stroked.medium$  と書いても良い．式を左から読んで1番目の $lozenge.stroked.medium$ が元々の $x$ すなわち第1引数を，2番目の $lozenge.stroked.medium$ が元々の $y$ すなわち第2引数を意味する．この省略記法はプログラミング言語Schemeにおける `cut` プロシジャに由来する．#footnote[Haskellでは，中置演算子に限ってこの表現が使える．例えば $(lozenge.stroked.medium + lozenge.stroked.medium)$ は単に ```haskell (+)``` と表現できる．ただしSchemeにおける `cut` プロシジャの `<>` はHaskellにはないため，Schemeでいう `(cut f <> y)` に相当するコードを直接は書けない．]
 
