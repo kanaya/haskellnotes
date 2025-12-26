@@ -412,8 +412,8 @@ Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない
 前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium class("binary", haskell.anyop) x)$ や $(x class("binary", haskell.anyop) lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
 
 二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
-$ (haskell.anyop x) &= (lozenge.stroked.medium class("binary", haskell.anyop) x) \
- (x haskell.anyop) &= (x class("binary", haskell.anyop) lozenge.stroked.medium)
+$ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
+ (x haskell.anyop) &= (x haskell.anyop lozenge.stroked.medium)
  = (haskell.anyop) x $
 
 例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を ```haskell (1+)``` と書く．また ```haskell (-1)``` はセクションではなくマイナス $1$ を表す（```haskell -1``` というリテラルとみなされる）．ただし ```haskell (- 1)``` のように空白を挟んでも同じくマイナス $1$ とみなされる（```haskell 1``` というリテラルに単項マイナス演算子が適用される）．]
