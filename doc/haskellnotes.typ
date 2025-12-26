@@ -717,7 +717,7 @@ $ haskell.null colon.double [haskell.a] -> haskell.Bool $
 無限リストを扱えるのは，我々がいつも遅延評価を行うからである．遅延評価とは，本当の計算は必要になるまで行わないという方式のことである．
 
 もし本当に無限リストを計算機の上で再現する必要があったなら，計算機には無限のメモリが必要になってしまう．しかし我々は，計算が必要になるまで評価を行わないので，無限リストの中から有限個の要素が取り出されるのを待つことができるのである．例えば関数 $haskell.take m space n_"s"$ はリスト $n_"s"$ から最初の $m$ 個の要素からなるリストを返す．いま
-$ x_"s" = haskell.take 5 space n_"s" $
+#par-equation($ x_"s" = haskell.take 5 space n_"s" $)
 とすると，リスト $x_"s"$ は $x_"s" = [1, 2, ..., 5]$ という値を持つ．#footnote[Haskellでは ```haskell xs = take 5 ns``` と書く．]
 
 関数 $haskell.take$ の型は $haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a]$ である．
