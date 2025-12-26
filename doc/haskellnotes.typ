@@ -37,6 +37,18 @@
 }
 #show highlight: highlight_font
 
+// From: https://forum.typst.app/t/why-does-a-display-equation-break-a-paragraph/403/3
+// #set par(hanging-indent: 3em)
+#let par-equation(eq) = {
+  linebreak()
+  box(inset: (y: 0.5em), width: 1fr, eq)
+  linebreak()
+}
+
+#lorem(50)
+#par-equation($ a + b $)
+#lorem(50)
+
 #let tk = [ #emoji.ast.box *TK* ]
 #let keyword(x) = [#highlight(fill: rgb("#FFCC99"))[#x]]
 
@@ -259,9 +271,9 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
   f_6 &= "sort"_(n,r) $
 
 そして $x$ から $y$ を得るために
-$ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $
+#par-equation($ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $)
 という計算を行った．括弧が多すぎるので，この式を
-$ y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x) $
+#par-equation($ y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x) $)
 と書き直そう．ここに演算子 $compose$ は「#keyword[関数合成演算子]」だ．
 
 関数合成演算子を使うと，プログラム $f$ を $f = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1$ と定義することも出来る．これが何を意味しているかと言うと，プログラムを小さな部分プログラムに分解したということだ．
