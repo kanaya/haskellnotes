@@ -1281,21 +1281,14 @@ $ f ast.square x_* = shell.l f shell.r convolve.o x_* $
 
 アプリカティブマップ演算子，ピュア演算子に一般化されたバージョンがあるように，リストの $emptyset$ やMaybeの $haskell.Nothing$ を一般化した値が必要である．それを $nothing.rev$ とする．$nothing.rev$ には特段名前が無いので，本書では単に「空」と呼ぶことにしよう．
 
+この節の最後に#keyword[アプリカティブスタイル]という記法を紹介しておこう．アプリカティブマップ演算子は連続して
+$ shell.l f shell.r ast.square x_* ast.square y_* $
+このようにアプリカティブマップ演算子を並べる書き方をアプリカティブスタイルと呼ぶ．
+
+
 /*
 
 \separator
-
-この節の最後に#keyword[アプリカティブスタイル}という記法を紹介しておこう．アプリカティブマップ演算子は連続して
-\begin{equation}
-  \label{eq:applicative-style}
-  \mVarContainer{w}
-  =\mPureWith{f}haskell.appMap\mVarContainer{u}haskell.appMap\mVarContainer{v}
-\end{equation}
-のように使える．もし $\mVarContainer{u}\hIfEq\mPureNothing$ もしくは $\mVarContainer{v}\hIfEq\mPureNothing$ であれば式の値は $\mPureNothing$ になる．式\eqref{eq:applicative-style}からピュア演算子を消すには，最初のアプリカティブマップ演算子をマップ演算子に置き換えて
-\begin{equation}
-  \mVarContainer{w}=\hxFunc{f}\mMap\mVarContainer{u}haskell.appMap\mVarContainer{v}
-\end{equation}
-とすれば良い．このようにアプリカティブマップ演算子を並べる書き方をアプリカティブスタイルと呼ぶ．
 
 % \section{関手としての関数}
 
