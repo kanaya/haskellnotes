@@ -1157,199 +1157,53 @@ Either型はCの共有型 (`union`) やC++のバリアント型 (`std::variant`)
 
 #tk
 
-/*
+= RENEW 1
 
-\chapter{関手*}
-\label{ch:functor}
-
-\begin{leader}
-A...
-\end{leader}
-
-\begin{itemize}
-  \item リストとMaybeの共通点
-  \item 関手
-  \item 関数
-  \item 余談：アプリカティブ関手
-  \item まとめ
-\end{itemize}
+== 関手
 
 Function laws.
 
-\begin{align}
-\hxFunc{f}\hCompose\hId&=\hxFunc{f}\\
-\hId\hCompose\hxFunc{f}&=\hxFunc{f}\\
-(\hxFunc{h}\hCompose\hxFunc{g})\hCompose\hxFunc{f}&=\hxFunc{h}\hCompose(\hxFunc{g}\hCompose\hxFunc{f})
-\end{align}
+$ f compose haskell.id &= haskell.id compose f = f \
+  (h compose g) compose f &= h compose (g compose f) $
 
 Functor laws.
 
-\begin{align}
-\hId\hFunctorMap&=\hId\\
-(\hxFunc{g}\hCompose\hxFunc{f})\hFunctorMap&=(\hxFunc{g}\hFunctorMap)\hCompose(\hxFunc{f}\hFunctorMap)
-\end{align}
-
-Map operator.
-
-\begin{equation}
-  (\hFunctorMap)\hIsTypeOf\hFunctor\hHasElementsOf\hTypeConstructor{f}\hAndThen
-    (haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow\hTypeConstruct{\hTypeConstructor{f}}{haskell.a}\hFunctionArrow\hTypeConstruct{\hTypeConstructor{f}}{haskell.b}
-\end{equation}
-
-\begin{align}
-  \hxFunc{f}\hFunctorMap{}\hListWith{\hxVar{x}}&=\hListWith{\hxFunc{f}\hxVar{x}}\\
-  \hxFunc{f}\hFunctorMap{}\hJustWith{\hxVar{x}}&=\hJustWith{\hxFunc{f}\hxVar{x}}
-\end{align}
-
-Composition operator.
-
-\begin{equation}
-  (\hCompose)\hIsTypeOf{}(haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow\hTypeConstruct{(\hFunctionArrow)\hTypeName{r}}{haskell.a}\hFunctionArrow\hTypeConstruct{(\hFunctionArrow)\hTypeName{r}}{haskell.b}
-\end{equation}
+$ haskell.id ast.op.o &= haskell.id \
+  (g compose f) ast.op.o &= (g ast.op.o) compose (f ast.op.o) $
 
 Applicative functor laws.
 
-\begin{align}
-\hPure\hId\hApplicativeMap&=\hId\\
-\hPure\hxFunc{f}\hApplicativeMap\hPure\hxVar{x}&=\hPure(\hxFunc{f}\hxVar{x})\\
-\hAnyContextDecor{\hxFunc{g}}\hApplicativeMap\hPure\hxFunc{f}&=\hPure(\hApply\hxFunc{f})\hApplicativeMap\hAnyContextDecor{\hxFunc{g}}\\
-\hAnyContextDecor{\hxFunc{h}}\hApplicativeMap(\hAnyContextDecor{\hxFunc{g}}\hApplicativeMap\hAnyContextDecor{\hxFunc{f}})&=(\hPure(\hCompose)\hApplicativeMap\hAnyContextDecor{\hxFunc{h}}\hApplicativeMap\hAnyContextDecor{\hxFunc{g}})\hApplicativeMap\hAnyContextDecor{\hxFunc{f}}
-\end{align}
+Monad laws.
 
-Monad law.
+== リストとMaybe
+== ファンクター
+== モナド
+== 余談：関数
+== この章のまとめ
 
-\begin{equation}
-\hxFunc{\psi}\hMonadicCompose\hxFunc{\phi}=\hxFunc{\psi}{}\hMonadicBind(\hxFunc{\phi}\hMonadicBind\hxAnonParam)
-\end{equation}
+== 圏と関手
 
-\begin{align}
-\hxFunc{\phi}\hMonadicCompose\hReturn&=\hxFunc{\phi}\\
-\hReturn\hMonadicCompose\hxFunc{\phi}&=\hxFunc{\phi}\\
-(\hxFunc{\omega}\hMonadicCompose\hxFunc{\psi})\hMonadicCompose\hxFunc{\phi}&=\hxFunc{\omega}\hMonadicCompose(\hxFunc{\psi}\hMonadicCompose\hxFunc{\phi})
-\end{align}
+$haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり $ y = f x $ であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．
 
-Bind operator.
+型 $haskell.MaybeType(haskell.a)$ の変数 $u_"?", v_"?" colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり $v_"?" = phi u_"?"$ であるとしよう．このように $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．
 
-\begin{equation}
-  \hAction{\phi}\hMonadicBind{}\hIOWith{\hxVar{x}}
-    =\hIOWith{\hxFunc{f}\hxVar{x}}
-\end{equation}
-where
-\begin{equation}
-  \hAction{\phi}\hxVar{x}=\hIOWith{\hxFunc{f}\hxVar{x}}
-\end{equation}
+ここで，変数 $x, y$ とMaybe変数 $u_"?", v_"?"$ はMaybe値コンストラクタによって
+$ u_"?" &= haskell.Just(x) \
+  v_"?" &= haskell.Just(y) $
+の関係にあるとしよう．値コンストラクタは値を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせる機能を持っている．
 
-\separator
-
-「普通の」変数$x$に「普通の」関数$f$を適用する．
-$$
-\hxVar{z}=\hxFunc{f}\hxVar{x}
-$$
-
-「普通の」変数$x$にモナドを返す関数$\phi$を適用する．
-$$
-\hAnyContextVar{z}=\hAction{\phi}\hxVar{x}
-$$
-
-文脈を持つ変数$\Tilde{x}$に「普通の」関数$f$を適用する．
-$$
-\hAnyContextVar{x}=\hxFunc{f}\hFunctorMap\hAnyContextVar{x}
-$$
-
-2引数の場合．
-\begin{align*}
-\hAnyContextVar{z}
-&=\hxFunc{g}\hFunctorMap\hAnyContextVar{x}\hApplicativeMap\hAnyContextVar{y}\\
-&=\hPure\hxFunc{g}\hApplicativeMap\hAnyContextVar{x}\hApplicativeMap\hAnyContextVar{y}
-\end{align*}
-
-文脈を持つ変数$haskell.athbf{x}$にモナドを返す関数$\Tilde{f}$をMaybe値に適用する．
-$$
-\hAnyContextVar{y}=\hAction{\phi}\hMonadicBind\hAnyContextVar{x}
-$$
-
-2引数の場合．
-\begin{align*}
-\hAnyContextVar{z}
-&=(\hxLambdaSyntax{\hxVar{y'}}{(\hxLambdaSyntax{\hxVar{x'}}{\hAction{\phi}\hxVar{x'}\hxVar{y'}})\hMonadicBind\hAnyContextVar{x}})\hMonadicBind\hAnyContextVar{y}\\
-&=\hDoSyntax{\hxVar{x'}\hDoArrow\hAnyContextVar{x};\;
-\hxVar{y'}\hDoArrow\hAnyContextVar{y};\;
-\hAction{\phi}\hxVar{x'}\hxVar{y'}}
-\end{align*}
-
-\separator
-
-書くこと．
-
-\begin{itemize}
-\item applicative style
-\item y compbinator
-\item IO monad
-\item ST monad
-\item random numbers
-\item category
-\item continuation
-\item arrow
-\item supermonad
-\item Alternative
-\item monda transformer
-\item category theory
-\item The Curry–Howard isomorphism
-\end{itemize}
-
-
-\section{リストとMaybe}
-\section{ファンクター}
-\section{モナド}
-\section{余談：関数}
-\section{この章のまとめ}
-
-% \section{圏と関手}
-
-$haskell.a$ 型の変数 $\hxVar{x},\hxVar{y}\hIsTypeOfhaskell.a$ について，関数 $\hxFunc{f}\hIsTypeOfhaskell.a\hFunctionArrowhaskell.a$ があり
-\begin{equation}
-  \hxVar{y}
-  =\hxFunc{f}\hxVar{x}
-\end{equation}
-であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．
-
-型 $\hMaybeConstruct{haskell.a}$ の変数 $\hMaybeVar{u},\hMaybeVar{v}\hIsTypeOf\hMaybeConstruct{haskell.a}$ について，関数
-\begin{equation}
-  \hxFunc{g}
-  \hIsTypeOf\hMaybeConstruct{haskell.a}\hFunctionArrow\hMaybeConstruct{haskell.a}
-\end{equation}
-があり
-\begin{equation}
-  \hMaybeVar{v}
-  =\hxFunc{g}\hMaybeVar{u}
-\end{equation}
-であるとしよう．このように $\hMaybeConstruct{haskell.a}$ で閉じた世界を仮に $\hMaybeConstruct{haskell.a}$ 世界と呼ぶことにする．
-
-ここで，変数 $\hxVar{x},\hxVar{y}$ とMaybe変数 $\hMaybeVar{u},\hMaybeVar{v}$ はMaybe値コンストラクタによって
-\begin{align}
-  \hMaybeVar{u}
-  &=\hJustWith{\hxVar{x}}\\
-  \hMaybeVar{v}
-  &=\hJustWith{y}
-\end{align}
-の関係にあるとしよう．値コンストラクタは値を $haskell.a$ 世界から $\hMaybeConstruct{haskell.a}$ 世界へとジャンプさせる機能を持っている．
-
-他に $haskell.a$ 世界から $\hMaybeConstruct{haskell.a}$ 世界へジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $\hMaybeVar{u}=\hJustWith{\hxVar{x}},\hMaybeVar{v}=\hJustWith{y}$ なのだから，$haskell.a$ 世界の関数 $\hxFunc{f}$ と $\hMaybeConstruct{haskell.a}$ 世界の関数 $\hxFunc{g}$ は無関係ではなく
-\begin{equation}
-  \hMaybeVar{v}
-  =\hxFunc{g}\hMaybeVar{u}
-  =\hxFunc{f}\hFunctorMap\hMaybeVar{u}
-\end{equation}
+他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_"?" = haskell.Just(x), v_"?" = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $phi$ は無関係ではなく
+$ v_"?" &= phi u_"?" \
+  &= f ast.op.o u_"?" $
 であり，
-\begin{equation}
-  \hxFunc{g}
-  =\hxFunc{f}\hFunctorMap
-\end{equation}
-である．つまりマップ演算子 $\hFunctorMap$ が関数 $\hxFunc{f}$ を $haskell.a$ 世界から $\hMaybeConstruct{haskell.a}$ 世界へとジャンプさせているのである．
+$ phi = f ast.op.o $
+である．つまりマップ演算子 $ast.op.o$ が関数 $f$ を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせているのである．
 
-いま「世界」と呼んだものを，数学者は#keyword[圏}と呼ぶ．圏とは#keyword[対象}と#keyword[射}の組み合わせである．本書では「対象」とは型のことであり，射とは関数だと思えば良い．（厳密にはコンテナに入れられた関数も射に含まれる．）そして，圏から圏へとジャンプさせるものを#keyword[関手}と呼ぶ．この例で言えば値コンストラクタ $\hJustWith{\hxVar{x}}$ とマップ演算子 $\hFunctorMap$ が関手である．値コンストラクタ $\hJustWith{\hxVar{x}}$ は $haskell.a\hFunctionArrow\hMaybeConstruct{haskell.a}$ という型を持ち，マップ演算子 $\hFunctorMap$ は $(haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow(\hMaybeConstruct{haskell.a}\hFunctionArrow\hMaybeConstruct{b})$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，\cxx の関数オブジェクト (function object) もかつてはファンクター(functor)と呼ばれていた．\cxx のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．}
+いま「世界」と呼んだものを，数学者は#keyword[圏]と呼ぶ．圏とは#keyword[対象]と#keyword[射]の組み合わせである．本書では「対象」とは型のことであり，射とは関数だと思えば良い．（厳密にはコンテナに入れられた関数も射に含まれる．）そして，圏から圏へとジャンプさせるものを#keyword[関手]と呼ぶ．この例で言えば値コンストラクタ $haskell.Just(x)$ とマップ演算子 $ast.op.o$ が関手である．値コンストラクタ $haskell.Just(x)$ は $haskell.a -> haskell.MaybeType(haskell.a)$ という型を持ち，マップ演算子 $ast.op.o$ は $(haskell.a -> haskell.b) -> (haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b))$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，C++の関数オブジェクト (function object) もかつてはファンクター(functor)と呼ばれていた．C++のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．]
 
-同じことはリストにも言える．値コンストラクタ $[\hxVar{x}]$ とマップ演算子 $\hMap$ もまた関手である．この場合値コンストラクタは $haskell.a\hFunctionArrow\hListConstruct{haskell.a}$ という型を持ち，マップ演算子も同じく $(haskell.a\hFunctionArrowhaskell.b)\hFunctionArrow(\hListConstruct{haskell.a}\hFunctionArrow[haskell.b])$ という型を持つ．
+同じことはリストにも言える．値コンストラクタ $[x]$ とマップ演算子 $*$ もまた関手である．この場合値コンストラクタは $haskell.a -> [haskell.a]$ という型を持ち，マップ演算子も同じく $(haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b])$ という型を持つ．
+
+/*
 
 \separator
 
@@ -5924,7 +5778,7 @@ int main(void) {
 
 */
 
-= RENEW
+= RENEW 2
 
 = 変数・関数・型
 
