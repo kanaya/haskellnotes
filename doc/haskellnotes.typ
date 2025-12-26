@@ -1239,78 +1239,41 @@ $ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.
 
 一般マップ演算子 $(convolve.o)$ は#keyword[多様的]である．この意味は，もし $f convolve.o x_"s"$ と書いてあれば $f * x_"s"$ のことであるし，もし $f convolve.o x_"?"$ と書いてあれば $f convolve.o_"?" x_"?"$ のことであると自動的に解釈することである．そして，何の飾りもつけられていない変数 $x$ がふらっと現れ，目の前に $f convolve.o x$ という式が登場しても，落ち着いて変数 $x$ の型を調べ，変数 $x$ がリストならば $convolve.o$ の部分に $*$ を，変数 $x$ がMaybeならば $convolve.o$ の部分に $convolve.o_"?"$ をはめ込むのだ．#footnote[Haskellでは一般マップ演算子 $(convolve.o)$ は ```haskell fmap``` である．ただしその実装は与えられず，対象とする型に応じて定義されるものとする．例えばリストに対しては ```haskell fmap = map``` と定義されている．]
 
-/*
+== アプリカティブ関手
 
+マップ演算子をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子]である．
 
+#tk
 
+$ [f, g, h] ast.square [x, y, z] = [f x, f y, f z, g x, g y, g z, h x, h y, h z] $
 
-% \section{アプリカティブ関手}
+リストのアプリカティブマップ演算子 $ast.square$ の型は
+$ [haskell.a  -> haskell.b] -> [haskell.a] -> [haskell.b]$ である．
 
-マップ演算子をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子}である．
-
-いま関数のリスト $[\hxFunc{f},\hxFunc{g},\mHFunc]$ と変数のリスト $[\hxVar{x},\hxVar{y},\hxVar{z}]$ があるとする．リストのアプリカティブマップ演算子 $haskell.appMapList$ を次のように定義する．
-\begin{equation}
-  [\hxFunc{f},\hxFunc{g},\mHFunc]haskell.appMapList[\hxVar{x},\hxVar{y},\hxVar{z}]
-  =[\hxFunc{f}\hxVar{x},\hxFunc{f}\hxVar{y},\hxFunc{f}\hxVar{z},\hxFunc{g}\hxVar{x},\hxFunc{g}\hxVar{y},\hxFunc{g}\hxVar{z},\mHFunc\hxVar{x},\mHFunc\hxVar{y},\mHFunc\hxVar{z}]
-\end{equation}
-リストのアプリカティブマップ演算子はこのように，左引数のリスト内のすべての関数を順番に右引数のリスト内の変数に適用し，その結果をリストとして返す．
-
-リストのアプリカティブマップ演算子 $haskell.appMapList$ の型は
-$[haskell.a\hFunctionArrowhaskell.b]\hFunctionArrow\hListConstruct{haskell.a}\hFunctionArrow[haskell.b]$ である．これは
-\begin{equation}
-  haskell.appMapList
-  \hIsTypeOf\underbrace{[haskell.ahaskell.apstohaskell.b]}_{[\hxFunc{f}_0,\hxFunc{f}_1\dotsb \hxFunc{f}_n]}
-  haskell.apsto\underbrace{\hListConstruct{haskell.a}}_{[\hxVar{x}_0,\hxVar{x}_1\dotsb \hxVar{x}_n]}
-  haskell.apsto\underbrace{[haskell.b]}_{[\hxFunc{f}_0\hxVar{x}_0,\hxFunc{f}_0\hxVar{x}_1\dotsb \hxFunc{f}_0\hxVar{x}_n,\hxFunc{f} \hxVar{x}_0,\hxFunc{f} \hxVar{x}_1\dotsb \hxFunc{f}_n\hxVar{x}_n]}
-\end{equation}
+これは
+$ ast.square colon.double underbrace([haskell.a -> haskell.b], [f, g, h]) -> underbrace([haskell.a], [x_0, x_1, ...]) -> underbrace([haskell.b], [f x_0, f x_1, ...]) $
 と解釈すれば良い．
 
-リストバージョンのアプリカティブマップ演算子 $(haskell.appMapList)$ の特別な場合として，左引数のリストの要素数が1の場合を考えると
-\begin{equation}
-  [\hxFunc{f}]haskell.appMapList{}[\hxVar{x},\hxVar{y},\hxVar{z}]
-  =[\hxFunc{f}\hxVar{x},\hxFunc{f}\hxVar{y},\hxFunc{f}\hxVar{z}]
-\end{equation}
-であり，通常のマップ演算子 $(\hMap)$ を使ったマップすなわち
-\begin{equation}
-  \hxFunc{f}\hMap{}[\hxVar{x},\hxVar{y},\hxVar{z}]
-  =[\hxFunc{f}\hxVar{x},\hxFunc{f}\hxVar{y},\hxFunc{f}\hxVar{z}]
-\end{equation}
+リストバージョンのアプリカティブマップ演算子 $(ast.square)$ の特別な場合として，左引数のリストの要素数が1の場合を考えると
+$ [f] ast.square [x, y, z] = [f x, f y, f z] $
+であり，通常のマップ演算子 $(*)$ を使ったマップすなわち
+$ [f] * [x, y, z] = [f x, f y, f z] $
 と右辺が一致する．つまり，マップ演算子はアプリカティブマップ演算子の特別な場合と考えることができる．実際，リストマップ演算子はアプリカティブマップ演算子から
-\begin{equation}
-  \hxFunc{f}\hMap\hListVar{x}
-  =[\hxFunc{f}]haskell.appMapList\hListVar{x}
-\end{equation}
+$ f * x_"s" = [f] ast.square x_"s" $
 と定義できる．
 
-Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $\hMaybeVar{i}$ をMaybeな変数 $\hMaybeVar{u}$ にマップするアプリカティブマップ演算子
-$haskell.appMapMaybe$ を
-\begin{equation}
-  \hMaybeVar{i}haskell.appMapMaybe\hMaybeVar{u}
-  =\hCaseSyntax{\hMaybeVar{i}}
-  \begin{cases}
-    \hJustWith{j}
-    &\hIfSo\mJFunc\hFunctorMap\hMaybeVar{u}\\
-    \_
-    &\hIfSohaskell.Nothing
-  \end{cases}
-\end{equation}
-% \begin{equation}
-% \hMaybeVar{i}haskell.appMapMaybe\hMaybeVar{u}
-% =\begin{cases}
-% \hJustWith{\hxFunc{f}\hxVar{x}}
-% &\mIf\left(\hMaybeVar{i}\hIfEq\hJustWith{f}\right)
-% \hLogicalAnd
-% \left(\hMaybeVar{u}\hIfEq\hJustWith{\hxVar{x}}\right)\\
-% haskell.Nothing&\hOtherwise
-% \end{cases}
-% \end{equation}
-で定義する．このMaybeバージョンのアプリカティブマップ演算子 $(haskell.appMapMaybe)$ からMaybeバージョンのマップ演算子 $(\hFunctorMap)$ は
-\begin{equation}
-  \hxFunc{f}\hFunctorMap\hMaybeVar{u}
-  =\hJustWith{f}haskell.appMapMaybe\hMaybeVar{u}
-\end{equation}
+Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_"?"$ をMaybeな変数 $x_"?"$ にマップするアプリカティブマップ演算子
+ $ast.square_"?"$ を
+$ f_"?" ast.square x_"?" = haskell.kwcase x_"s" haskell.kwof 
+  cases(haskell.Just(x) --> x convolve.o_"?" x_"?",
+  rect.stroked.h --> haskell.Nothing) $
+で定義する．このMaybeバージョンのアプリカティブマップ演算子 $(ast.square_"?")$ からMaybeバージョンのマップ演算子 $(convolve.o_"?")$ は
+$ f convolve.o_"?" x_"?" = haskell.Just(f) ast.square_"?" x_"?" $
 のように導出できる．
 
+
+
+/*
 これらの関係を一般化して
 \begin{equation}
   \label{eq:general-applicative-map}
