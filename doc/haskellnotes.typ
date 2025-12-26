@@ -1230,32 +1230,18 @@ $ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.
   $haskell.MaybeType(haskell.a)$, $haskell.Maybe$, $convolve.o$, $haskell.Just(x), haskell.Nothing$
 )
 
+== $haskell.Functor$ 型クラス
+
+我々はオブジェクト指向プログラミングよりもエレガントな方法で，リストとMaybeの共通項をくくりだすことにする．いよいよ型クラスの出番である．
+
+リスト型 $[haskell.a]$ もMaybe型 $haskell.MaybeType(haskell.a)$ も $haskell.Functor$ 型クラスに属すのであった．そこで $haskell.Functor$ 型クラスは#keyword[一般マップ演算子] $(convolve.o)$ を持つものとする．
+
+一般マップ演算子 $(convolve.o)$ は#keyword[多様的]である．この意味は，もし $f convolve.o x_"s"$ と書いてあれば $f * x_"s"$ のことであるし，もし $f convolve.o x_"?"$ と書いてあれば $f convolve.o_"?" x_"?"$ のことであると自動的に解釈することである．そして，何の飾りもつけられていない変数 $x$ がふらっと現れ，目の前に $f convolve.o x$ という式が登場しても，落ち着いて変数 $x$ の型を調べ，変数 $x$ がリストならば $convolve.o$ の部分に $*$ を，変数 $x$ がMaybeならば $convolve.o$ の部分に $convolve.o_"?"$ をはめ込むのだ．#footnote[Haskellでは一般マップ演算子 $(convolve.o)$ は ```haskell fmap``` である．ただしその実装は与えられず，対象とする型に応じて定義されるものとする．例えばリストに対しては ```haskell fmap = map``` と定義されている．]
+
 /*
 
-% \section{$\hFunctor$ 型クラス}
 
-% 我々はオブジェクト指向プログラミングよりもエレガントな方法で，リスト
-% とMaybeの共通項をくくりだすことにする．いよいよ型クラスの出番である．
 
-% リスト型 $\hListConstruct{haskell.a}$ もMaybe型 $\hMaybeConstruct{haskell.a}$ も
-% $\hFunctor$ 型クラスに属すのであった．そこで
-% $\hFunctor$ 型クラスは#keyword[一般マップ演算子} $(\mMap)$
-% を持つものとする．一般マップ演算子は，リスト型であれば $\hMap$
-% 演算子に，Maybe型であれば $\hFunctorMap$ 演算子にオーバーライドされる．
-
-% ---
-
-% 一般マップ演算子 $(\mMap)$ は#keyword[多様的}である．この意味は，も
-% し $\hxFunc{f}\mMap\hListVar{x}$ と書いてあれば $\hxFunc{f}\hMap\hListVar{x}$ のことであ
-% るし，もし $\hxFunc{f}\mMap\hMaybeVar{u}$ と書いてあれば $\hxFunc{f}\hFunctorMap\hMaybeVar{u}$
-% のことであると自動的に解釈することである．そして，何の飾りもつけられ
-% ていない変数 $\hxVar{x}$ がふらっと現れ，目の前に $\hxFunc{f}\mMap x$という式が登場し
-% ても，落ち着いて変数 $\hxVar{x}$ の型を調べ，変数 $\hxVar{x}$ がリストならば $\mMap$
-% の部分に $\hMap$ を，変数 $\hxVar{x}$ がMaybeならば $\mMap$ の部分に
-% $\hFunctorMap$ をはめ込むのだ．#footnote[Haskellでは一般マップ演算子
-% $(\mMap)$ は \code{fmap} である．ただしその実装は与えられず，対象と
-% する型に応じて定義されるものとする．例えばリストに対しては
-% \code{fmap = map} と定義されている．}
 
 % \section{アプリカティブ関手}
 
