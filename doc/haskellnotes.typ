@@ -46,7 +46,7 @@
 }
 
 #let pb = [ #align(center, $suit.club.filled$) ]
-#let tk = [ #emoji.ast.box *TK* ]
+#let tk = [ #emoji.pin.round *TK* ]
 #let keyword(x) = [#highlight(fill: rgb("#FFCC99"))[#x]]
 
 #let uparrow = $class("binary", arrow.t)$
