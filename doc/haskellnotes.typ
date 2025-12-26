@@ -1262,8 +1262,7 @@ $ [f] * [x, y, z] = [f x, f y, f z] $
 $ f * x_"s" = [f] ast.square x_"s" $
 と定義できる．
 
-Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_"?"$ をMaybeな変数 $x_"?"$ にマップするアプリカティブマップ演算子
- $ast.square_"?"$ を
+Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_"?"$ をMaybeな変数 $x_"?"$ にマップするアプリカティブマップ演算子 $ast.square_"?"$ を
 $ f_"?" ast.square x_"?" = haskell.kwcase x_"s" haskell.kwof 
   cases(haskell.Just(x) --> x convolve.o_"?" x_"?",
   rect.stroked.h --> haskell.Nothing) $
@@ -1285,119 +1284,48 @@ $ f ast.square x_* = shell.l f shell.r convolve.o x_* $
 $ shell.l f shell.r ast.square x_* ast.square y_* $
 このようにアプリカティブマップ演算子を並べる書き方をアプリカティブスタイルと呼ぶ．
 
-
-/*
-
-\separator
-
-% \section{関手としての関数}
+== 関手としての関数
 
 関数は関手である．関手とはマップ演算子を持つ型クラスのことであった．そこで，関数がどのようなマップ演算子を持つのか考えてみる．
 
-いま関数 $\hxFunc{f}$ が
-\begin{equation}
-  \hxFunc{f}
-  \hIsTypeOf\mR\hFunctionArrowhaskell.a
-\end{equation}
-という型を持っているとする．この式は $\hFunctionArrow$ を二項演算子，すなわち2引数関数とみなせば
-\begin{equation}
-  \hxFunc{f}
-  \hIsTypeOf(\hFunctionArrow)\mR\,haskell.a
-\end{equation}
-と等価である．全く形式的に，$\mFuncTypeConstructor$ なる型コンストラクタがあるとして
-\begin{equation}
-  \mR\hFunctionArrowhaskell.a=\mFuncTypeConstructorhaskell.a
-\end{equation}
-であると考えてみる．型 $haskell.a$ から型コンストラクタ $\mFuncTypeConstructor$ によって型 $(\mProjEXP{\mR}{haskell.a})$ が作られると考えるのだ．#footnote[Haskellでは $\mFuncTypeConstructor$ を \code{((->)r)} と書く．}
+いま関数 $f$ が $f colon.double haskell.r -> haskell.q$ という型を持っているとする．この式は $->$ を二項演算子，すなわち2引数関数とみなせば $f colon.double (->)haskell.r haskell.q$ と等価である．全く形式的に，$((->)haskell.r)$ なる型コンストラクタがあるとして
+$ haskell.r -> haskell.q = ((->)haskell.r)_haskell.q $
+であると考えてみる．型 $haskell.q$ から型コンストラクタ $((->)haskell.r)$ によって型 $(haskell.r -> haskell.q)$ が作られると考えるのだ．#footnote[Haskellでは $((->)haskell.r)$ を ```haskell ((->)r)``` と書く．]
 
-マップ演算子の型は，$\mFuncTypeConstructorhaskell.a=\mFuncType{a}$ とすると
-% $\mFuncTypeConstructorhaskell.a=\mPolymorphicTypeAssemble{\mFuncTypeConstructor}{haskell.a}$ とすると
-\begin{equation}
-  (\mMap)
-  \hIsTypeOf{}\hFunctor\hHasElementsOf\mTypeConstructor{f}
-  \hAndThen(haskell.a\hFunctionArrowhaskell.b)
-  \hFunctionArrow\mFuncType{a}
-  \hFunctionArrow\mFuncType{b}
-\end{equation}
-であって，関数のマップ演算子を $\mMapFunc$ とすると
-\begin{equation}
-  (\mMapFunc)
-  \hIsTypeOf{}(haskell.a\hFunctionArrowhaskell.b)
-  \hFunctionArrow\mFuncType{a}
-  \hFunctionArrow\mFuncType{b}
-\end{equation}
-であり，これはすなわち
-\begin{equation}
-  (\mMapFunc)
-  \hIsTypeOf{}(haskell.a\hFunctionArrowhaskell.b)
-  \hFunctionArrow(\mR\hFunctionArrowhaskell.a)
-  \hFunctionArrow(\mR\hFunctionArrowhaskell.b)
-\end{equation}
-のことである．
+マップ演算子の型．
 
-いま関数 $\hxFunc{f}\hIsTypeOf\mProjEXP{\mR}{haskell.a }$ とは別な関数 $g\hIsTypeOf\mProjEXP{haskell.a }{haskell.b }$ があったとしよう．関数 $\hxFunc{f}$ と関数 $\hxFunc{g}$ の合成 $\hxFunc{g}\hCompose\hxFunc{f}$ の型は
-\begin{equation}
-\hxFunc{g}\hCompose\hxFunc{f}\hIsTypeOf\mProjEXP{\mR}{haskell.b }
-\end{equation}
-であるから，
-\begin{equation}
-(\hCompose)\hIsTypeOf{}\mProjEXP{\mProjEXP{(\mProjEXP{haskell.a }{haskell.b })}{(\mProjEXP{\mR}{haskell.a })}}
-  {(\mProjEXP{\mR}{haskell.b })}
-\end{equation}
-である．つまり関数のマップ演算子 $(\mMapFunc)$ と関数の合成演算子 $(\hCompose)$ は同じ型を持つ．
+関数のマップ演算子 $(convolve.o_(((->)haskell.r)))$ と関数の合成演算子 $(compose)$ は同じ型を持つ．
 
-幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして第\ref{ch:monad}章で述べる関手則さえ守っていれば）自由に選べる．そこで
-\begin{equation}
-  \hxFunc{g}\mMapFunc\hxFunc{f}
-  =\hxFunc{g}\hCompose\hxFunc{f}
-\end{equation}
-としておこう．これは
-\begin{equation}
-  \hxFunc{g}\mMapFunc\hxFunc{f}
-  =\hxLambdaSyntax{\hxVar{x}}{\hxFunc{g}(\hxFunc{f}\hxVar{x})}
-\end{equation}
-と書いても同じことである．これが Haskellにおける関数のマップ演算子の定義である．
+幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして第〜〜〜章で述べる#keyword[関手則]さえ守っていれば）自由に選べる．そこで
+$ convolve.o_(((->)haskell.r)) = compose $
+としておこう．これがHaskellにおける関数のマップ演算子の定義である．
 
-\separator
+#pb
 
-関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $haskell.appMapFunc$ とし，関数版のピュア演算子を $\mConstWith{x}$ と書くことにしよう．
+関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とし，関数版のピュア演算子を $shell.l x shell.r_(((->)haskell.r))$ と書くことにしよう．
 
-ピュア演算子は $\mProjEXP{haskell.a }{(\mProjEXP{\mR}{haskell.a })}$ 型を持たなければならない．従って関数版のピュア演算子は変数から関数を作るとも考えられる．我々は関数版のピュア演算子として
-\begin{equation}
-  \mConstWith{x}
-  =\hxLambdaSyntax{\_}{\hxVar{x}}
-\end{equation}
-を採用する．#footnote[Haskellでは $\mConstWith{x}$ を \code{const x} と書く．}
+ピュア演算子は $haskell.q -> (haskell.r -> haskell.q)$ 型を持たなければならない．従って関数版のピュア演算子は変数から関数を作るとも考えられる．我々は関数版のピュア演算子として
+$ shell.l x shell.r_(((->)haskell.r)) = backslash rect.stroked.h |-> x $
+を採用する．#footnote[Haskellでは $shell.l x shell.r_(((->)haskell.r))$ を ```haskell const x``` と書く．]
 
-関数版のアプリカティブマップ演算子を $haskell.appMapFunc$ とすると，その型は
-\begin{equation}
-  (haskell.appMapFunc)
-  \hIsTypeOf\mFuncType{haskell.a\hFunctionArrowhaskell.b}
-  \hFunctionArrow\mFuncType{haskell.a}
-  \hFunctionArrow\mFuncType{haskell.b}
-\end{equation}
+関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とすると，その型は
+$ ast.square_(((->)haskell.r)) colon.double ((->)haskell.r)_(haskell.a -> haskell.b) -> ((->)haskell.r)_haskell.a -> ((->)haskell.r)_haskell.b $
 つまり
-\begin{equation}
-  (haskell.appMapFunc)
-  \hIsTypeOf{}(\mR\hFunctionArrowhaskell.a\hFunctionArrowhaskell.b)
-  \hFunctionArrow(\mR\hFunctionArrowhaskell.a)
-  \hFunctionArrow(\mR\hFunctionArrowhaskell.b)
-\end{equation}
+$ ast.square_(((->)haskell.r)) = (haskell.r -> haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $
 である．
 
 我々は関数版アプリカティブマップ演算子として
-\begin{equation}
-\hxFunc{g}haskell.appMapFunc\hxFunc{f}=\hxLambdaSyntax{\hxVar{x}}{\hxFunc{g}\hxVar{x}(\hxFunc{f}\hxVar{x})}
-\end{equation}
-とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $\hxFunc{f}\mMap\mVarContainer{w}=\mPureWith{f}haskell.appMap\mVarContainer{w}$ から導かれる．すなわち
-\begin{align}
-\mConstWith{g}haskell.appMapFunc\hxFunc{f}
-&=\hxLambdaSyntax{\hxVar{x}}{\mConstWith{g}\hxVar{x}(\hxFunc{f}\hxVar{x})}\\
-&=\hxLambdaSyntax{\hxVar{x}}{(\hxLambdaSyntax{\_}{\hxFunc{g}})\hxVar{x}(\hxFunc{f}\hxVar{x})}\\
-&=\hxLambdaSyntax{\hxVar{x}}{\hxFunc{g}(\hxFunc{f}\hxVar{x})}\\
-&=\hxFunc{g}\hCompose\hxFunc{f}
-\end{align}
+$ g ast.square_(((->)haskell.r)) f = backslash x |-> g x (f x) $
+とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $f convolve.o x_* = shell.l f shell.r ast.square x_*$ から導かれる．すなわち
+$ shell.l g shell.r ast.square f &= backslash x |-> shell.l g shell.r x (f x) \
+  &= backslash x |-> (backslash rect.stroked.h |-> g) x (f x) \
+  &= backslash x |-> g (f x) \
+  &= g compose f $
 であるからである．
+
+/*
+
+
 
 % \section{余談：アプリカティブマップ演算子の実装}
 
