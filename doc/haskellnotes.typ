@@ -1323,86 +1323,28 @@ $ shell.l g shell.r ast.square f &= backslash x |-> shell.l g shell.r x (f x) \
   &= g compose f $
 であるからである．
 
-/*
+== 余談：アプリカティブマップ演算子の実装
 
+#tk
 
+= モナド
 
-% \section{余談：アプリカティブマップ演算子の実装}
-
-リストとMaybeのアプリカティブマップ演算子は，それぞれのマップ演算子から定義することができる．リストのアプリカティブマップ演算子の定義は次の通り．
-\begin{equation}
-  \left\{
-  \begin{aligned}
-    {\hEmptyList}haskell.appMapList\hListVar{x}
-    &={\hEmptyList}\\
-    (f:\hListVar{f})haskell.appMapList\hListVar{x}
-    &=\mJoinList{}((\hxFunc{f}\hMap\hListVar{x}):(\hListVar{f}haskell.appMapList\hListVar{x}))
-  \end{aligned}
-  \right.
-\end{equation}
-ここに $(f:\hListVar{f})$ は関数のリストであり， $\hListVar{x}$ はリスト変数である．
-
-Maybeのアプリカティブマップ演算子の定義は次の通り．
-\begin{equation}
-\label{eq:maybe-applicative-map-by-maybe-map}
-\hMaybeVar{g}haskell.appMapMaybe\hMaybeVar{u}
-=\hCaseSyntax{\hMaybeVar{g}}
-\begin{cases}
-\hJustWith{h}&\hIfSo h\hFunctorMap\hMaybeVar{u}\\
-\_&\hIfSohaskell.Nothing
-\end{cases}
-\end{equation}
-ここに $\hMaybeVar{g}$ はMaybeコンテナに入れられた関数，$\hMaybeVar{u}$ はMaybe変数である．
-% 式\eqref{eq:maybe-applicative-map-by-maybe-map}を展開すると
-% \begin{align}
-% \hMaybeVar{h}haskell.appMapMaybe\hMaybeVar{u}
-% &=\begin{cases}
-% \left\{
-% \begin{array}{ll}
-% \hJustWith{\hxFunc{f}\hxVar{x}}&\mIf\hMaybeVar{u}\hIfEq\hJustWith{\hxVar{x}}\\
-% haskell.Nothing&\hOtherwise
-% \end{array}\right\}
-% &\mIf\hMaybeVar{h}\hIfEq\hJustWith{f}\\
-% haskell.Nothing&\hOtherwise
-% \end{cases}\\
-% &=\begin{cases}
-% \hJustWith{\hxFunc{f}\hxVar{x}}&\mIf\left(\hMaybeVar{u}\hIfEq\hJustWith{\hxVar{x}}\right)\hLogicalAnd\left(\hMaybeVar{h}\hIfEq\hJustWith{f}\right)\\
-% haskell.Nothing&\hOtherwise
-% \end{cases}
-% \end{align}
-% である．
-
-\section{この章のまとめ*}
-
-\begin{enumerate}
-\item ...
-\end{enumerate}
-
-\chapter{モナド*}
-\label{ch:monad}
-
-\section{バインド演算子}
+== バインド演算子
 
 一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．アプリカティブスタイルでは
-\begin{equation}
-  \hxFunc{f}\mMap\mVarContainer{u}haskell.appMap\mVarContainer{v}haskell.appMap\mVarContainer{w}
-\end{equation}
-という風にコンテナ変数 $\mVarContainer{u},\mVarContainer{v},\mVarContainer{w}$ に関数 $\hxFunc{f}$ を適用させることができる．コンテナ変数 $\mVarContainer{u},\mVarContainer{v},\mVarContainer{w}$ のいずれかが $\mPureNothing$ であれば式全体の値が$\mPureNothing$ になる．これは3個の計算を並列に行って，その結果をそれぞれ $\mVarContainer{u},\mVarContainer{v},\mVarContainer{w}$ に入れておき，最後に関数 $\hxFunc{f}$ に投げるという#keyword[計算構造}を具現化したものである．（関数 $\hxFunc{f}$ はCで言えば \code{main} 関数に相当するであろう．）
+$ f convolve.o x_* ast.square y_* ast.square z_* $
+という風にコンテナ変数 $x_*, y_*, z_*$ に関数 $f$ を適用させることができる．コンテナ変数 $x_*, y_*, z_*$ のいずれかが $nothing.rev$ であれば式全体の値が $nothing.rev$ になる．これは3個の計算を並列に行って，その結果をそれぞれ $x'_*, y'_*, z'_*$ に入れておき，最後に関数 $f$ に投げるという#keyword[計算構造]を具現化したものである．（関数 $f$ はCで言えば `main` 関数に相当するであろう．）
 
 しかしながら，アプリカティブスタイルでは変数に文脈を与えるタイミングがコンテナ変数を作るときのそれぞれ1回に限られている．そこで，任意のタイミングで変数に文脈を与えられるように，別な方法で一般マップ演算子を分解してみよう．
 
-Maybeの例を思い出そう．Maybe型の変数 $\hMaybeVar{u}$ はラップされた値 $\hJustWith{\hxVar{x}}$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $\hxVar{x}$ をとり何らかの計算をする関数 $\hxFunc{g}$ を考えよう．この関数 $\hxFunc{g}$ は引数 $\hxVar{x}$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
-\begin{equation}
-  \begin{aligned}
-    \hxFunc{g}\hxVar{x}&\hGuard{x\neq0}=\hJustWith{1/x}\\
-    &\hGuard{\hOtherwise}=haskell.Nothing
-  \end{aligned}
-\end{equation}
-といった関数が考えられる．変数 $\hxVar{x}$ は文脈を持っていないが，関数 $\hxFunc{g}$ を適用した結果である $\hxFunc{g}\hxVar{x}$ は文脈を持っていることに注意しよう．いま $\hxFunc{g}\hxVar{x}$ はMaybeという文脈を持っているから，我々は
-\begin{equation}
-\hMaybeVar{v}=\hxFunc{g}\hxVar{x}
-\end{equation}
-という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y=\hxFunc{f}\hxVar{x}$ や $\hMaybeVar{v}=\hxFunc{f}\hFunctorMap\hMaybeVar{u}$ の関係とは異なることに注意しよう．
+Maybeの例を思い出そう．Maybe型の変数 $x_"?"$ はラップされた値 $haskell.Just_x$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $phi$ を考えよう．この関数 $phi$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
+$ g x &|_(x != 0) = haskell.Just_x \
+  &|_haskell.otherwise = haskell.Nothing $
+といった関数が考えられる．変数 $x$ は文脈を持っていないが，関数 $phi$ を適用した結果である $phi x$ は文脈を持っていることに注意しよう．いま $phi x$ はMaybeという文脈を持っているから，我々は
+$ z_"?" = phi x $
+という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y = f x$ や $y_* = f convolve.o x_*$ の関係とは異なることに注意しよう．
+
+/*
 
 関数 $\hxFunc{g}$ の型は
 \begin{equation}
