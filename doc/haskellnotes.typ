@@ -324,8 +324,7 @@ lambda x: 1 + x
 この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $.$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
 
 ラムダ式は関数である．ラムダ式を適用するには，ラムダ式を括弧で包む必要がある．例を挙げる．
-$ (backslash x |-> 1 + x) space 2 $
-
+#par-equation($ (backslash x |-> 1 + x) space 2 $)
 この式は結果として $3$ を返す．
 
 複数引数をとるラムダ式は例えば $backslash x y |-> x + y$ のように引数を並べて書く．
