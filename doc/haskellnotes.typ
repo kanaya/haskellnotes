@@ -75,7 +75,7 @@
     [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
     [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
     [有名な定数値コンストラクタ], [数学記号], $emptyset, nothing.rev$,
-    [有名な値コンストラクタ], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.closed z paren.r.closed$,
+    [有名な値コンストラクタ], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.stroked u, v paren.r.stroked$,
     [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, mu$,
     [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
@@ -122,7 +122,7 @@ print("Hello, world.")
 
 ところで，プログラムのソースコードは現代でもASCII文字セットの範囲で書くことが標準的である．Unicodeを利用したり，まして文字にカラーを指定したり，書体や装飾を指定することは一般的ではない．たとえば変数 `a` のことを $a$ と書いたり $bold(a)$ と書いたり $tilde(a)$ と書いたりして区別することはない．
 
-Haskellプログラマもまた，多くの異なる概念を同じ貧弱な文字セットで表現しなければならない．これは，はじめてHaskellコードを読むときに大きな問題になりえる．たとえばHaskellでは ```haskell [a]``` という表記をよく扱う．この ```haskell [a]``` は ```haskell a``` という変数1要素からなるリストのこともあるし，```haskell a``` 型という仮の型から作ったリスト型の場合もあるが，字面からでは判断できない．もし変数はイタリック体，型はボールド体と決まっていれば，それぞれ $[a]$ および $[haskell.typeparameter(a)]$ と区別できたところである．
+Haskellプログラマもまた，多くの異なる概念を同じ貧弱な文字セットで表現しなければならない．これは，はじめてHaskellコードを読むときに大きな問題になりえる．たとえばHaskellでは ```haskell [a]``` という表記をよく扱う．この ```haskell [a]``` は ```haskell a``` という変数1要素からなるリストのこともあるし，```haskell a``` 型という仮の型から作ったリスト型の場合もあるが，字面からでは判断できない．もし変数はイタリック体，型はボールドイタリック体と決まっていれば，それぞれ $[a]$ および $[haskell.typeparameter(a)]$ と区別できたところである．
 
 本書は，異なる性質のものには異なる書体を割り当てるようにしている．ただし，どの表現もいつでもHaskellに翻訳できるように配慮している．実際，本書執筆の最大の困難点は，数学的に妥当で，かつHaskellの記法とも矛盾しない記法を見つけることであった．
 
@@ -202,7 +202,7 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '
 
 実はこんな風に考えることが出来る．入力を $x$ とする．いまの例では $x$ がファイル `the-great-gatsby.txt` である．出力を $y$ とする．ここに $y$ は出現頻度順に並んだ出現頻度と単語のリストである．我々が欲しいのは
 #par-equation($ y = f(x) $)
-となるようなプログラム $f$ だった．プログラム $f$ は簡単には手に入らないので，僕たちはUNIXコマンドの `tr` とか `sort` とか `uniq` とかをつなぎ合わせて作った．それらを「数学風」に書くと次のようになる．
+となるようなプログラム $f$ だった．プログラム $f$ は簡単には手に入らないので，我々はUNIXコマンドの `tr` とか `sort` とか `uniq` とかをつなぎ合わせて作った．それらを「数学風」に書くと次のようになる．
 
 $ f_1 &= "tr"_([A...Z]->[a...z])\
   f_2 &= "tr"_(overline([a...z, square])->emptyset)\
@@ -217,7 +217,9 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 #par-equation($ y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x) $)
 と書き直そう．ここに演算子 $compose$ は「#keyword[関数合成演算子]」だ．
 
-関数合成演算子を使うと，プログラム $f$ を $f = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1$ と定義することも出来る．これが何を意味しているかと言うと，プログラムを小さな部分プログラムに分解したということだ．
+関数合成演算子を使うと，プログラム $f$ を
+$ f = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1 $
+と定義することも出来る．これが何を意味しているかと言うと，プログラムを小さな部分プログラムに分解したということだ．
 
 分解したなら，合成する方法が必要になる．この例では，プログラムの各部分が他の部分に依存していないために，合成は数学的な関数合成と同じ方法が使える．
 
@@ -304,7 +306,9 @@ $ stack run
 #sourcecode[```python
 lambda x: 1 + x
 ```]
-と書くが，我々はより簡潔に $backslash x |-> 1 + x$ と書くことにする．
+と書くが，我々はより簡潔に
+$ backslash x |-> 1 + x $
+と書くことにする．
 
 この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $.$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
 
@@ -365,7 +369,9 @@ def f(x):
 ```]
 のような#keyword[制御構造]としての条件文があるが，我々は値を持つ#keyword[条件式]を考える．
 
-我々の条件式とは $f x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed")$ のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $haskell.True$ であれば $haskell.kwthen$ 節の式が評価され，偽 $haskell.False$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われ
+我々の条件式とは 
+$ f x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed") $
+のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $haskell.True$ であれば $haskell.kwthen$ 節の式が評価され，偽 $haskell.False$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われ
 るため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0 haskell.kwthen 0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0 then 1 else (sin x) / x``` と書く．]
 
 
@@ -415,16 +421,20 @@ Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない
 
 二項演算子のうちよく使われるものは和 $(+)$，積 $(times)$，論理和 $(or)$，論理積 $(and)$，同値 $(equiv)$，大なり$(>)$，小なり $(<)$ 等である．二項演算子はたとえ積記号であっても省略できない．二項演算子は多数あるので，その都度説明する．#footnote[Haskellでは $and$ を ```haskell &&``` と書き，$or$ を ```haskell ||``` と書く．]
 
-二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $haskell.anyop$ について $x class("binary",haskell.anyop) y$ 及び $(haskell.anyop) x y$ は全く同じ意味である．すなわち $(haskell.anyop) x y = x class("binary", haskell.anyop) y$ である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
+二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $haskell.anyop$ について $x class("binary",haskell.anyop) y$ 及び $(haskell.anyop) x y$ は全く同じ意味である．すなわち
+$ (haskell.anyop) x y = x class("binary", haskell.anyop) y $
+である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
 
-一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ も $(haskell.anyop) x y = ((haskell.anyop) x) y$ であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $(haskell.anyop) x$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を ```haskell ((+)1)``` と書く．]
+一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ についても
+$ (haskell.anyop) x y = ((haskell.anyop) x) y $
+であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $((haskell.anyop) x)$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を ```haskell ((+)1)``` と書く．]
 
 前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium haskell.anyop x)$ や $(x haskell.anyop lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
 
 二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
 $ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
  (x haskell.anyop) &= (x haskell.anyop lozenge.stroked.medium)
- = (haskell.anyop) x $
+ = ((haskell.anyop) x) $
 
 例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を ```haskell (1+)``` と書く．また ```haskell (-1)``` はセクションではなくマイナス $1$ を表す（```haskell -1``` というリテラルとみなされる）．ただし ```haskell (- 1)``` のように空白を挟んでも同じくマイナス $1$ とみなされる（```haskell 1``` というリテラルに単項マイナス演算子が適用される）．]
 
@@ -443,7 +453,7 @@ z = g(y)
 #sourcecode[```python
 z = g(f(x))
 ```]
-とすることがある．本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数をるので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
+とすることがある．本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
 
 ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g.f``` である．式 $z = g compose f x$ は ```haskell z = g.f x``` と書く．]
 
