@@ -164,6 +164,9 @@
   $class("binary", quote.l.single xx quote.r.single)$
 }
 
+// Unit type.
+#let unittype = $class("normal", bold(paren.l.closed paren.r.closed))$
+
 // Shortcut.
 
 #let a = $typename(a)$
