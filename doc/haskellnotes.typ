@@ -93,7 +93,7 @@
   )
 )
 
-= Part 1. Haskell入門
+= Haskell入門
 
 == Haskellについて
 
@@ -1202,6 +1202,23 @@ Either型はCの共有型 (`union`) やC++のバリアント型 (`std::variant`)
 
 == IO
 
+= Haskellの深い部分
+== Data
+== `do`記法
+== タプル
+== 関手則
+== アプリカティブ関手則
+== モナド則
+== 高速化
+== ファイルIO
+== ソケットIO
+
+= プログラミングと代数構造
+== モノイド
+== 参照透過性とIO
+
+= 執筆ノート
+
 == Part 1に入れるノート
 
 === 関手
@@ -1737,7 +1754,7 @@ $ z_* = haskell.ctxt(f) haskell.amap x_* $
 zm = fm <*> xm
 ```]
 
-=== Apllicative map 2
+=== Applicative map 2
 $ z_* = haskell.ctxt(g) haskell.amap x_* haskell.amap y_* $
 
 #sourcecode[```haskell
@@ -1846,7 +1863,7 @@ $ tilde(h) = tilde(g) class("binary", suit.heart.stroked) tilde(f) $
 h = g =<< f
 ```]
 
-== Types
+=== Types
 
 Scaler type.
 $ x colon.double bold("Int") $
@@ -1863,8 +1880,6 @@ $ x_"s" &colon.double [bold("Int")]\
 
 
 
-= Part 2. Haskellの深い部分
-
 == Part 2に入れるノート
 
 === Data
@@ -1880,9 +1895,6 @@ $ x_"s" &colon.double [bold("Int")]\
 #sourcecode[```haskell
 z = do { x' <- x; y' <- y; f x'; g y' }
 ```]
-
-
-= Part 3. プログラミングと代数構造
 
 == Part 3に入れるノート
 
@@ -2077,5 +2089,3 @@ $(MM, haskell.bind, shell.l.stroked lozenge.stroked.medium shell.r.stroked)$ は
 $ mu^star.stroked shell.l x shell.r &= mu x \
   shell.l lozenge.stroked.medium shell.r^star.stroked x_* &= x_* \
   (nu^star.stroked mu)^star.stroked x_* &= nu^star.stroked (mu^star.stroked x_*) $
-
-
