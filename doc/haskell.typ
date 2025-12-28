@@ -196,3 +196,5 @@
 #let fa = $typeconstructor1(typename(f), typename(a))$
 #let fb = $typeconstructor1(typename(f), typename(b))$
 #let fc = $typeconstructor1(typename(f), typename(c))$
+
+
