@@ -72,17 +72,17 @@
     [Maybe変数], [変数名に $?$ をつける], $x_?$,
     [Either変数], [変数名に $!$ をつける], $x_!$,
     [一般のコンテナ変数], [変数名に $*$ をつける], $x_*$,
-    [定数値コンストラクタ], [ローマン・大文字], $haskell.True, haskell.Nothing$,
-    [値コンストラクタ], [ローマン・大文字], $haskell.Just(x)$,
-    [有名な定数値コンストラクタ], [数学記号], $emptyset, nothing.rev$,
-    [有名な値コンストラクタ], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.stroked u, v paren.r.stroked$,
-    [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, mu$,
+    [値コンストラクタ（引数なし）], [ローマン・大文字], $haskell.True, haskell.Nothing$,
+    [値コンストラクタ（引数あり）], [ローマン・大文字], $haskell.Just(x)$,
+    [有名な値コンストラクタ1], [数学記号], $emptyset, nothing.rev$,
+    [有名な値コンストラクタ2], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.stroked u, v paren.r.stroked$,
+    [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, phi$,
     [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
     [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
-    [ユニット型], [括弧], $haskell.unittype$,
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
+    [ユニット型], [括弧], $haskell.unittype$,
     [型クラス], [フラクチュール], $haskell.Num$,
     [キーワード], [固定幅], $haskell.kwlet$,
     [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
@@ -95,13 +95,13 @@
 
 = Haskell入門
 
-== Haskellについて
-
 本書はプログラミング言語Haskellの入門書である．それと同時に，本書はプログラミング言語を用いた代数構造の入門書でもある．プログラミングと代数構造の間には密接な関係があるが，とくに#keyword[関数型プログラミング]を実践する時にはその関係を意識する必要が出てくる．本書はその両者を同時に解説することを試みる．
 
-=== Haskellという森
+== Haskellについて
 
 これからのプログラマにとってHaskellを無視することはできない．Haskellの「欠点をあげつらうことも，攻撃することもできるが，無視することだけはできない」のだ．それはHaskellがプログラミングの本質に深く関わっているからである．
+
+=== Haskellという森
 
 Haskellというプログラミング言語を知ろうとすると，従来のプログラミング言語の知識が邪魔をする．モダンで，人気があって，Haskellから影響を受けた言語，たとえばRubyやSwiftの知識さえ，Haskellを学ぶ障害になり得る．ではどのようにしてHaskellの深みに到達すればいいのだろうか．
 
@@ -375,7 +375,6 @@ def f(x):
 $ f x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed") $
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $haskell.True$ であれば $haskell.kwthen$ 節の式が評価され，偽 $haskell.False$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われ
 るため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0 haskell.kwthen 0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0 then 1 else (sin x) / x``` と書く．]
-
 
 === 余談：IOサバイバルキット1
 
@@ -1052,6 +1051,8 @@ def map_over(f, p):
 
 もう一度振り出しに戻る．
 
+// []に入れるという方法もある．
+
 整数 $x, y, z$ があり $z = frac(y, z, style: "skewed")$ という式があるとする．この式は $x equiv 0$ のときにはゼロ除算エラーである．しかし「例外」は内部状態の書き換えであり，我々の計算に入れたくない．そこで変数 $z$ が正しく計算されたかもしれないし，されていないかもしれないということを $w_"?"$ のように印をつけた変数に入れて，忘れないようにしておこう．
 
 ここで変数 $w_"?"$ が取り得る値は正しく計算された値 $z$ をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．定数 $haskell.Nothing$ は「ナッシング」と呼ぶ．#footnote[Haskellでは $haskell.Nothing$ を ```haskell Nothing``` と書く．]
@@ -1063,8 +1064,8 @@ $ w_"?" = haskell.Just(z) $
 とする．#footnote[Haskellでは ```haskell w = Just x``` と書く．Maybeを表す疑問符は省略する．]
 
 変数 $z$ が一度ゼロ除算の危険性に「汚染」された場合，その後ずっとMaybe変数に入れ続けなければいけない．そこで，普通の変数を引数にとる関数 $f$ にMaybe変数 $w_"?"$ を食わせるには，リストの時と同じようなマップ演算子が必要になる．具体的には，変数 $x$ が $haskell.Int$ 型として，Maybe変数 $w_"?"=haskell.Just(x)$ が与えられたとき
-$ f convolve.o w_"?" = haskell.Just(f x) $
-となるようなMaybeバージョンのマップ演算子 $convolve.o$ を用いる．ここに $f convolve.o w_"?"$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o w_"?"$ を ```haskell f <$> w``` と書く．]
+$ f convolve.o_? w_? = haskell.Just(f x) $
+となるようなMaybeバージョンのマップ演算子 $convolve.o_"?"$ を用いる．ここに $f convolve.o w_"?"$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o w_"?"$ を ```haskell f <$> w``` と書く．]
 
 実際には $w_"?" equiv haskell.Nothing$ の可能性も考えなければならないから，Maybeバージョンのマップ演算子は
 $ f convolve.o w_"?" = haskell.kwcase w_"?" haskell.kwof
@@ -1699,11 +1700,11 @@ $ z_* = [| f x_* y_* |] ... "採用されなかった文法" $
 
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
 
-いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $haskell.fc$ ただし $haskell.fc = shell.l f shell.r $ を作ったとすると，関数 $haskell.fc$ は次の型を持つ．
-$ haskell.fc colon.double haskell.Applicative supset haskell.f
+いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $f_*$ ただし $f_* = shell.l f shell.r $ を作ったとすると，関数 $f_*$ は次の型を持つ．
+$ f_* colon.double haskell.Applicative supset haskell.f
   ==> haskell.f_(haskell.a -> haskell.b) $
 
-アプリカティブマップ演算子は変数 $x_* colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.a $ に対して，関数 $haskell.fc$ を $z_* = haskell.fc haskell.amap x_*$ のように作用させる．変数 $z_*$ の型は $z_* colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.b$ である．
+アプリカティブマップ演算子は変数 $x_* colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.a $ に対して，関数 $f_*$ を $z_* = f_* haskell.amap x_*$ のように作用させる．変数 $z_*$ の型は $z_* colon.double haskell.Applicative supset haskell.f ==> haskell.f_haskell.b$ である．
 
 === モナド
 

@@ -70,7 +70,7 @@
   let xx = x
   let yy = y
   let zz = z
-  $xx_(yy space zz)$
+  $xx_(yy zz)$
 }
 
 #let EitherType(x, y) = typeconstructor2(Either, x, y)
