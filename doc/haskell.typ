@@ -100,7 +100,6 @@
 #let flat = math.class("unary", math.flat)
 
 // Binary operator.
-#let anonymousoperator = math.class("binary",math.square.stroked)
 #let anyop = math.class("binary", math.circle.dotted)
 #let at = math.class("binary", math.at)
 #let bangbang = math.class("binary", math.excl.double)
