@@ -380,27 +380,29 @@ def fppp(x):
 
 === 余談：IOサバイバルキット1
 
-プログラムとは合成された関数である．多くのプログラミング言語では，プログラムそのものにmainという名前をつける．本書では「#keyword[IOモナド]」の章で述べる理由によって，main関数をサンセリフ体で $haskell.main$ と書く．
+ここで，実用的なHaskellプログラムについて触れておきたいと思う．
 
-実用的なプログラムはユーザからの入力を受け取り，関数を適用し，ユーザへ出力する．Haskellではユーザからの1行の入力を $haskell.getLine$ で受け取り，変数の値を $haskell.print$ で書き出せる．ここに $haskell.getLine$ と $haskell.print$ は関数（ファンクション）ではあるが，特別に「#keyword[アクション]」とも呼ぶ．関数 $haskell.main$もアクションである．
+プログラムとは合成された関数である．多くのプログラミング言語では，プログラムそのものにmainという名前をつける．本書では#keyword[IOモナド]の章で述べる理由によって，main関数をサンセリフ体で $haskell.main$ と書く．
+
+実用的なプログラムはユーザからの入力を受け取り，関数を適用し，ユーザへ出力する．Haskellではユーザからの1行の入力を $haskell.getLine$ で受け取り，変数の値を $haskell.print$ で書き出せる．ここに $haskell.getLine$ と $haskell.print$ は関数（ファンクション）ではあるが，特別に#keyword[アクション]とも呼ぶ．関数 $haskell.main$ もアクションである．
 
 引数 $x$ の2乗を求める関数 $f$ は次のように定義できる．
-$
-  &f colon.double haskell.Double -> haskell.Double\
-  &f x = x times x
-$<square>
+$ &f colon.double haskell.Double -> haskell.Double\
+  &f x = x times x $
 
 ユーザからの入力に関数 $f$ を適用してユーザへ出力するプログラムをHaskellで書くと次のようになる．
-$ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
-ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は「#keyword[モナド]」の章で述べる．
 
-#haskell.block[Haskell では@square と@first-main をまとめて次のように書く．
+$ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
+
+ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は#keyword[モナド]の章で述べる．1行目は関数 $f$ の#keyword[型]を表している．型に関しては後述する．#footnote[Haskell では次のように書く．
 #sourcecode[```haskell
 f :: Double -> Double
 f x = x * x
 
 main = print . f . read =<< getLine
 ```]]
+
+
 
 // == 余談：局所変数
 
