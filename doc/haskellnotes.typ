@@ -251,8 +251,12 @@ Haskell Stackで新規プロジェクトを作成する．
 $ stack new myProject
 ```]
 
-自分の関数は `myProject/src/Lib.hs` に書かれている以下のソースコードを書き換えることになる．
+自分の関数は `myProject/src/Lib.hs` に書かれている以下のソースコードのうち ```haskell someFunc``` の定義を書き換えることになる．
 #sourcecode[```haskell
+module Lib
+    ( someFunc
+    ) where
+
 someFunc :: IO ()
 someFunc = putStrLn "someFunc"
 ```]
@@ -260,9 +264,6 @@ someFunc = putStrLn "someFunc"
 書き換え後は次のコマンドで実行する．
 #sourcecode[```shell-unix-generic
 $ stack build
-```]
-でコンパイルし，
-#sourcecode[```shell-unix-generic
 $ stack run
 ```]
 
@@ -286,7 +287,7 @@ $ stack run
 
 カリー風の書き方は数学の教科書やプログラミングの教科書で見かけるものとは若干違うが，圧倒的にシンプルでHaskellとの親和性も高く，慣れてくると非常に読みやすいものなので，本書でも全面的に採用する．
 
-まずは#keyword[関数]から見ていくことにしよう．Pythonや一般的な数学書では引数 $x$ をとる関数 $f$ を $f(x)$ と書くが，括弧は冗長なので今後は $f x$ と書くことにする．#footnote[Haskell では関数 ```haskell f``` に引数 ```haskell x``` を適用させることを ```haskell f x``` と書く．数学や物理学では $x$ をパラメタとする関数を $f(x)$ と書く場合もあるし，$f$ のようにパラメタを省略する場合もある．数学や物理学でパラメタを省略した場合は，$f(x_0)$ の意味で $f|_(x=x_0)$ と書くことがある．]
+まずは関数から見ていくことにしよう．Pythonや一般的な数学書では引数 $x$ をとる関数 $f$ を $f(x)$ と書くが，括弧は冗長なので今後は $f x$ と書くことにする．#footnote[Haskell では関数 ```haskell f``` に引数 ```haskell x``` を適用させることを ```haskell f x``` と書く．数学や物理学では $x$ をパラメタとする関数を $f(x)$ と書く場合もあるし，$f$ のようにパラメタを省略する場合もある．数学や物理学でパラメタを省略した場合は，$f(x_0)$ の意味で $f|_(x=x_0)$ と書くことがある．]
 
 関数 $f$ に引数 $x$を「食わせる」ことを#keyword[関数適用]と呼ぶ．もし $f x$ と書いてあったら，それは $f$ と $x$ の積，つまり $f times x$ ではなく，従来の $f(x)$ すなわち関数 $f$ に引数 $x$ を与えているものと解釈する．高校生向けの数学書でも $sin x$ のように三角関数に限ってはカリー風に書くことになっているので，まるで馴染みがないということもないだろう．なお，関数はいつも引数の左側に書くことにする．これを「関数 $f$ が変数 $x$ の左から作用する」と言い，また関数 $f$ のことを#keyword[左作用素]とも呼ぶ．
 
@@ -307,10 +308,10 @@ $ stack run
 lambda x: 1 + x
 ```]
 と書くが，我々はより簡潔に
-$ backslash x |-> 1 + x $
+#par-equation($ backslash x |-> 1 + x $)
 と書くことにする．
 
-この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $.$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
+この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $(.)$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
 
 ラムダ式は関数である．ラムダ式を適用するには，ラムダ式を括弧で包む必要がある．例を挙げる．
 #par-equation($ (backslash x |-> 1 + x) space 2 $)
@@ -324,40 +325,44 @@ $ backslash x |-> 1 + x $
 
 === パタンマッチ・ガード・条件分岐
 
-関数の定義は，基本的にはラムダ式の変数への代入である．引数 $x$ をとり値 $2x$ を返す関数 $f$ は $f = backslash x |-> 2 times x$ と定義できる．ただし，この省略形として $f x = 2 times x$ と書いても良い．#footnote[Haskellでは $f = backslash x |-> 2 times x$ を ```haskell f = \ x -> 2 * x``` と書き，一方 $f x = 2 times x$ を ```haskell f x = 2 * x``` と書く．]
+関数の定義は，基本的にはラムダ式の変数への代入である．引数 $x$ をとり値 $2 times x$ を返す関数 $f$ は
+#par-equation($ f = backslash x |-> 2 times x $)
+と定義できる．ただし，この省略形として
+#par-equation($ f x = 2 times x $)
+と書いても良い．#footnote[Haskellでは $f = backslash x |-> 2 times x$ を ```haskell f = \ x -> 2 * x``` と書き，一方 $f x = 2 times x$ を ```haskell f x = 2 * x``` と書く．]
 
-関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $1$ であり，その他の場合は関数 $f$ と同じ振る舞いをする関数 $g$ を考える．このとき $g$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは
+関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $1$ であり，その他の場合は $2 times x$ を返す関数 $f'$ を考える．このとき $f'$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは
 #sourcecode[```haskell
-  g 0 = 1
-  g x = 2 * x
+  f' 0 = 1
+  f' x = 2 * x
 ```]
 と書く．]
-$ g space 0 &= 1 \
-  g x &= 2 times x $
+$ f' space 0 &= 1 \
+  f' x &= 2 times x $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
-$ g x = haskell.kwcase x haskell.kwof cases(0 --> 1,
-rect.stroked.h --> frac(sin x, x, style: "skewed")) $
+$ f' x = haskell.kwcase x haskell.kwof cases(0 --> 1,
+rect.stroked.h --> 2 times x) $
 
-ここに $rect.stroked.h$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Hhaskellでは
+ここに $rect.stroked.h$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Haskellでは
 ```haskell
-  g x = case x of 0 -> 1
-                  _ -> (sin x) / x
+  f' x = case x of 0 -> 1
+                   _ -> 2 * x
 ```
-または ```haskell g x = case x of {0 -> 1; _ -> (sin x) / x}``` と書く．]
+または ```haskell f' x = case x of {0 -> 1; _ -> 2 * x}``` と書く．]
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
-関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は関数 $f$ と同じ振る舞いをする関数 $h$ は以下のように定義する．#footnote[Haskellでは
+関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は $2 times x$ を返す関数 $f''$ は以下のように定義する．#footnote[Haskellでは
 ```haskell
-  h x | x < 0     = 0
-      | x == 0    = 1
-      | otherwise = f x
+  f'' x | x < 0     = 0
+        | x == 0    = 1
+        | otherwise = 2 * x
 ```
 と書く．]
-$ h x&|_(x < 0) = 0 \
+$ f'' x&|_(x < 0) = 0 \
   &|_(x equiv 0) = 1 \
-  &|_haskell.otherwise = f x $
+  &|_haskell.otherwise = 2 * x $
 
 関数定義の場合分けを駆使すれば#keyword[条件式]はなくても構わないが，条件式の記法があるのは便利である．Pythonには
 #sourcecode[```python
