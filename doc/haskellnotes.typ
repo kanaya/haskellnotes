@@ -532,6 +532,8 @@ $ f &= g space 100 \
 
 高階関数は今後度々顔をだすことになる．後で登場する#keyword[マップ演算子]や#keyword[畳込み演算子]は高階関数の一種である．
 
+#tk クロージャ
+
 === 余談：演算子の定義
 
 Haskellでは関数だけでなく，新しい演算子も定義できる．#footnote[Haskellで演算子に使える記号は `! @ # $ % ^ & * - + = . \ | / < : > ? ~` の組み合わせである．]
@@ -928,14 +930,14 @@ $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
 #par-equation($ haskell.words colon.double haskell.String -> [haskell.String] $)
 である．関数 $haskell.words$ を用いると，入力 ```haskell "1.0 2.0 3.0"``` が ```haskell ["1.0", "2.0", "3.0"]``` になる．
 
-各文字列を数に変換するには次の関数 $haskell.readDouble colon.double haskell.String -> haskell.Double$ を定義して用いる．#footnote[Haskellでは次のように書く．
+文字列を浮動小数点数に変換するには次の関数 $haskell.readDouble$ を用いる．
+#par-equation($ &haskell.readDouble colon.double haskell.String -> haskell.Double\
+  &haskell.readDouble = haskell.read $)
+この関数 $haskell.readDouble$ は標準関数 $haskell.read$ に型注釈を付けただけのものであるが，今回の目的には十分である．例えば ```haskell readDouble "1.0"``` は ```haskell 1.0``` を返す．#footnote[Haskellでは次のように書く．
 ```
       readDouble :: String -> Double
       readDouble = read
 ```]
-#par-equation($ &haskell.readDouble colon.double haskell.String -> haskell.Double\
-  &haskell.readDouble = haskell.read $)
-この関数 $haskell.readDouble$ は標準関数 $haskell.read$ に型注釈を付けただけのものであるが，今回の目的には十分である．例えば ```haskell readDouble "1.0"``` は ```haskell 1.0``` を返す．
 
 入力ファイルの各行に書かれたベクトルを対象に関数 $norm$ を適用して，結果を書き出すには，これまでの関数を結合して次のように書く．#footnote[Haskell では次のように書く．
 ```haskell
@@ -946,49 +948,28 @@ $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
         . lines 
         =<< getContents
 ```]
+
 $ haskell.main
   = haskell.print
     compose (norm *)
     compose ((haskell.readDouble *) *)
     compose (haskell.words *)
     compose haskell.lines
-    haskell.bind haskell.getContents $
+    haskell.bind haskell.getContents $<io-survival-kit-2>
 
-アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach x_s = mapM print x_s` と書く．]
+@io-survival-kit-2 は，右辺の右端から次のように読むことが出来る．
+1. 入力全体を $haskell.getContents$ で読み込む．
+2. 読み込んだ入力を $haskell.lines$ で1行毎のリストに変換する．
+3. 1行毎のリストを $haskell.words$ で空白で区切ったリストに変換する．
+4. 空白で区切ったリストを $haskell.readDouble$ で浮動小数点数に変換する．
+5. 浮動小数点数のリストのノルムを $norm$ で計算する．
+6. ノルムのリストを $haskell.print$ で出力する．
+
+@io-survival-kit-2 において，アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach x_s = mapM print x_s` と書く．]
 #par-equation($ haskell.printEach x_"s" = haskell.print *_"M" x_"s" $)
 演算子 $*_"M"$ はアクション版のマップ演算子である．
 
 
-
-=== 余談：リストの実装【移動予定】
-
-
-ここでリストの実装について述べておこう．紙上ではリストは自由に考えられるが，計算機上ではそれほど自由ではないからである．我々はリストをLISPにおけるリストと同じ構造を持つものとする．LISPにおけるリストとは変数 $haskell.first$ と変数 $haskell.rest$ からなるペアの集合である．変数$haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する特別な値を持つ．
-
-リストのための特別な表現 $haskell.first : haskell.rest$ を用い，リファレンス $haskell.first$ はリストが保持する型，リファレンス $haskell.rest$ はリスト型であるとする．演算子 $:$ をLISPに倣って#keyword[cons演算子]と呼ぶ．#footnote[Haskellでも要素 ```haskell x``` をリスト ```haskell xs``` の先頭に追加することを ```haskell x : xs``` と書く．]
-
-要素 $haskell.rest$ はリストまたは空リストであるから，一般にリストは次のように展開できることになる．
-$ [x_0, x_1, ..., x_n] &= x_0 : [x_1, x_2, ..., x_n] \
-  &= x_0 : x_1 : [x_2, ..., x_n] \
-  &= x_0, x_1 : ... : x_n : emptyset $
-\begin{align}
-cons演算子 $(:)$ は右結合する．すなわち $x_0 : x_1 : x_2 = x_0 : (x_1 : x_2)$ である．
-
-マップ演算子の実装は，リストの実装に踏み込めば簡単である．空でないリストは必ず $x : x_"s"$ へと分解できるから
-$ f * emptyset &= emptyset \
-  f * (x : x_"s") &= (f x) : (f * x_"s") $
-とマップ演算子 $(*)$ を定義できる．つまりマップ演算子 $(*)$ はcons演算子 $(:)$ から作ることができる．換言すれば，マップ演算子はシンタックスシュガーである．
-
-Haskellでは任意のリスト $x_"s"$ に対し，次の関数が用意されている．
-$ haskell.head x_"s" &... "先頭要素" \
-  haskell.tail x_"s" &... "2番目以降の要素からなるリスト" $
-これらはLISPの `car` 関数，`cdr` 関数と同じものであり，この二者を用いればどのようなリストの処理も可能である．#footnote[Haskellでは ```haskell head``` 関数の利用は非推奨である．これは ```haskell head []``` と書くとエラーになるからである．]
-
-このように基本的な関数から高機能な関数を実装する方法はよく行われる．この例ではcons演算子からマップ演算子を合成した．
-
-リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
-$ f a_"s" haskell.at (x : x_"s") = ... $
-として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは ```haskell f as @ (x : xs) = ...``` と書く．]
 
 === この章のまとめ
 
@@ -1066,7 +1047,39 @@ $ haskell.fact' space 1 space 3 &= haskell.fact' (1 times 3) space (3 - 1) \
 
 Haskellを含む幾つかのプログラミング言語処理系は，コンパイル時に#keyword[末尾再帰最適化]を行う．末尾再帰最適化とは，一言で言うと再帰を計算機が扱いやすいループに置き換えることである．では最初から我々もループで関数を表現しておけば，と思われるかもしれないが，再帰以外の方法でループを表現する場合には必ず変数（ループカウンタ）への破壊的代入が必要になるため，我々は末尾再帰に慎ましくループを隠すのである．#footnote[Schemeは末尾再帰最適化を行うことが言語仕様によって決められている．]
 
-=== 遅延評価
+
+
+=== 余談：リストの実装【移動予定】
+
+
+ここでリストの実装について述べておこう．紙上ではリストは自由に考えられるが，計算機上ではそれほど自由ではないからである．我々はリストをLISPにおけるリストと同じ構造を持つものとする．LISPにおけるリストとは変数 $haskell.first$ と変数 $haskell.rest$ からなるペアの集合である．変数$haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する特別な値を持つ．
+
+リストのための特別な表現 $haskell.first : haskell.rest$ を用い，リファレンス $haskell.first$ はリストが保持する型，リファレンス $haskell.rest$ はリスト型であるとする．演算子 $:$ をLISPに倣って#keyword[cons演算子]と呼ぶ．#footnote[Haskellでも要素 ```haskell x``` をリスト ```haskell xs``` の先頭に追加することを ```haskell x : xs``` と書く．]
+
+要素 $haskell.rest$ はリストまたは空リストであるから，一般にリストは次のように展開できることになる．
+$ [x_0, x_1, ..., x_n] &= x_0 : [x_1, x_2, ..., x_n] \
+  &= x_0 : x_1 : [x_2, ..., x_n] \
+  &= x_0, x_1 : ... : x_n : emptyset $
+\begin{align}
+cons演算子 $(:)$ は右結合する．すなわち $x_0 : x_1 : x_2 = x_0 : (x_1 : x_2)$ である．
+
+マップ演算子の実装は，リストの実装に踏み込めば簡単である．空でないリストは必ず $x : x_"s"$ へと分解できるから
+$ f * emptyset &= emptyset \
+  f * (x : x_"s") &= (f x) : (f * x_"s") $
+とマップ演算子 $(*)$ を定義できる．つまりマップ演算子 $(*)$ はcons演算子 $(:)$ から作ることができる．換言すれば，マップ演算子はシンタックスシュガーである．
+
+Haskellでは任意のリスト $x_"s"$ に対し，次の関数が用意されている．
+$ haskell.head x_"s" &... "先頭要素" \
+  haskell.tail x_"s" &... "2番目以降の要素からなるリスト" $
+これらはLISPの `car` 関数，`cdr` 関数と同じものであり，この二者を用いればどのようなリストの処理も可能である．#footnote[Haskellでは ```haskell head``` 関数の利用は非推奨である．これは ```haskell head []``` と書くとエラーになるからである．]
+
+このように基本的な関数から高機能な関数を実装する方法はよく行われる．この例ではcons演算子からマップ演算子を合成した．
+
+リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
+$ f a_"s" haskell.at (x : x_"s") = ... $
+として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは ```haskell f as @ (x : xs) = ...``` と書く．]
+
+=== 余談：遅延評価
 
 Haskellは，意図しない限り遅延評価を行う．これは特に左畳み込み演算子 $union$ を使う場合に問題となる．いま $x_"s" = [x_0, x_1, x_2, x_3]$ とすると，左畳み込み演算 $union_0^+ x_"s"$ は
 $ haskell.fold_0^+ x_"s" &= union_0^+(x_0 : x_1 : x_2 : emptyset) \
@@ -1077,7 +1090,7 @@ $ haskell.fold_0^+ x_"s" &= union_0^+(x_0 : x_1 : x_2 : emptyset) \
   &= (((0 + x_0) + x_1) + x_2) + x_3 $
 と展開される．遅延評価のために，Haskell処理系は値ではなく式をメモリにストアしなければならないが，左畳み込み演算は大きなメモリを必要としがちである．もし例えば予め $0 + x_0$ を先に計算しておくなど左畳み込みだけ先に評価しておけば，大いにメモリの節約になる．そのためにHaskellは「遅延評価無し」の左畳み込み演算子を用意している．#footnote[「遅延評価無し」の左畳み込み演算子をHaskellでは ```haskell foldl'``` と書く．]
 
-=== 余談：クロージャ
+=== 余談：クロージャ（移動予定）
 
 ラムダ式をサポートするほとんどのプログラミング言語は，#keyword[レキシカルクロージャ]をサポートする．レキシカルクロージャとは，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む機構である．例えば
 $ a &= 100 \
