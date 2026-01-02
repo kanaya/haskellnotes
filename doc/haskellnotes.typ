@@ -1245,10 +1245,12 @@ template <typename a> class maybe {
 
 デフォルトコンストラクタ ```cpp maybe()``` は例外的な状況を表す $haskell.Nothing$ を生成し，1引数コンストラクタ ```cpp maybe(a)``` は ```cpp maybe<a>``` で包んだ引数値を生成する．#footnote[このC++コードは，型 ```cpp a``` が ```cpp 0``` を持てることを前提に書かれているため，HaskellのMaybeとは厳密には異なる．]
 
-C++プログラムで良く見かけるクラス設計と違い，この `maybe` クラスはコンストラクタ以外に中身を書き換える手段が提供されていない．これが破壊的代入の禁止が意味することである．
+C++プログラムで良く見かけるクラス設計と違い，この ```cpp maybe``` クラスはコンストラクタ以外に中身を書き換える手段が提供されていない．これが破壊的代入の禁止が意味することである．
 
-当然我々にはMaybeバージョンのマップ演算子が必要である．ここでは関数 `map_over` として書いてみよう．（Javaプログラマへの注意：関数 `map_over` はどのクラスにも属していないが，それで正解なのである．）
+当然我々にはMaybeバージョンのマップ演算子が必要である．ここでは関数 ```cpp map_over``` として書いてみよう．（Javaプログラマへの注意：関数 ```java map_over``` はどのクラスにも属していないが，それで正解なのである．）
+
 #sourcecode[```cpp
+// C++
 template <typename a, typename b, typename fn>
 maybe<b> map_over(fn f, maybe<a> w) {
   if (w.is_valid()) {
@@ -1261,7 +1263,7 @@ maybe<b> map_over(fn f, maybe<a> w) {
 ```]
 テンプレートの3番目の引数 `fn` は関数 `f` を受け取るために必要である．C++はコンパイル時までにすべての変数の型が決定していないといけないが，関数 `f` の型は関数 `map_over` 設計時には確定できないため，このようにテンプレートにしている．
 
-整数 $x$ からMaybe値 $u_"?" = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_"?"$ に食わせてMaybe値 $v_"?"$ ただし $v_"?" = g convolve.o u_"?"$ を得ることをC++では次のように書くことになる．
+整数 $x$ からMaybe値 $u_"?" = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_"?"$ に食わせてMaybe値 $v_"?"$ ただし $v_"?" = g convolve.o_? u_"?"$ を得ることをC++では次のように書くことになる．
 #sourcecode[```cpp
 int x = 123;
 maybe<int> u(x);
