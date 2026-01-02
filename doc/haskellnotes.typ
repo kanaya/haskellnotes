@@ -655,23 +655,25 @@ $ x colon.double haskell.Unit $
 整数型 $(haskell.Int)$ と浮動小数点型 $(haskell.Float)$ はよく似ている．どちらも値同士を比較可能で，それ故どちらにも等値演算子が定義されている．
 
 整数型の等値演算子は 
-$ (equiv) colon.double haskell.Int -> haskell.Int -> haskell.Bool $
+#par-equation($ (equiv) colon.double haskell.Int -> haskell.Int -> haskell.Bool $)
 であり，浮動小数点型の等値演算子は
-$ (equiv) colon.double haskell.Double -> haskell.Double -> haskell.Bool $
+#par-equation($ (equiv) colon.double haskell.Double -> haskell.Double -> haskell.Bool $)
 である．
 
 このように型が異なっても（だいたい）同じ意味で定義されている演算子のことを#keyword[多相的]な演算子と呼ぶ．等値演算子は多相的な演算子の例である．
 
-具体的な型を指定せずに，仮の変数で表したものを#keyword[型パラメタ]と呼ぶ．我々は型パラメタをボールド体で表す．いま型を表す仮の変数を $haskell.a$ として，等値演算子の型を
+具体的な型を指定せずに，仮の変数で表したものを#keyword[型パラメタ]と呼ぶ．我々は型パラメタをボールドイタリック体で表す．いま型を表す仮の変数を $haskell.a$ として，等値演算子の型を次のように表現してみよう．
+
 $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
-と表現してみよう．このような型パラメタを用いた型を総称して#keyword[多相型]と呼ぶ．
+
+このような型パラメタを用いた型を総称して#keyword[多相型]と呼ぶ．
 
 実は@equiv は不完全なものである．このままでは型 $haskell.a$ に何の制約もないため，等値演算の定義されていない型が来るかもしれないからである．そこで，型自身が所属する，より大きな型があるとしよう．そのような型を我々は#keyword[型クラス]と呼ぶ．例えば型 $haskell.Bool, haskell.Int,haskell.Integer, haskell.Float, haskell.Double$ は全て等値演算が定義できるので，型クラス $haskell.Eq$ に属すとする．この関係を我々は
-$ haskell.Eq supset haskell.Bool, haskell.Int, haskell.Integer, haskell.Float, haskell.Double $
+#par-equation($ haskell.Eq supset haskell.Bool, haskell.Int, haskell.Integer, haskell.Float, haskell.Double $)
 と書く．ここに $haskell.Eq supset haskell.a$ と書いて「型 $haskell.a$ は型クラス $haskell.Eq$ の#keyword[インスタンス]である」と読む．
 
 @equiv に型クラスの制約を加えてみよう．型 $haskell.a$ は型クラス $haskell.Eq$ に属さなければならないから，新たな記号 $==>$ を使って
-$ (equiv) colon.double haskell.Eq supset haskell.a ==> haskell.a -> haskell.a -> haskell.Bool $
+#par-equation($ (equiv) colon.double haskell.Eq supset haskell.a ==> haskell.a -> haskell.a -> haskell.Bool $)
 と書くことにする．#footnote[Haskellでは ```haskell (==) :: Eq a => a -> a -> Bool``` と書く．記号 $supset$ は省略する．]
 
 型 $haskell.a$ の変数同士の間で大小関係が定義されている場合，かつその型が型クラス $haskell.Eq$ に属する場合，その型は型クラス $haskell.Ord$ にも属する．型クラス $haskell.Ord$ に属する型は比較演算子 $<, <=, >=, >$ を提供する．例えば型 $haskell.Int$ は型クラス $haskell.Ord$ に属すが，型 $haskell.Bool$ は型クラス $haskell.Ord$ に属さない．
@@ -685,65 +687,15 @@ $ (equiv) colon.double haskell.Eq supset haskell.a ==> haskell.a -> haskell.a ->
 型 $haskell.a$ が型クラス $haskell.Real$ 及び型クラス$haskell.Enum$ に属しているとき，かつそのときに限り，型 $haskell.a$ は型クラス $haskell.Integral$ にも属する．
 
 便利な型変換演算子をひとつ紹介しておこう．型変換演関数 $haskell.fromIntegral$ は
-$ haskell.fromIntegral colon.double haskell.Integral supset haskell.a
-  ==> haskell.a -> haskell.b $
+#par-equation($ haskell.fromIntegral colon.double haskell.Integral supset haskell.a
+  ==> haskell.a -> haskell.b $)
 という型を持ち，$haskell.Integral$ 型クラスの型の変数を任意の型へ変換する．例えば，
-$ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $
+#par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談：IOサバイバルキット2
+== 余談
 
-1行ごとに3次元ベクトルが並べられた，以下の入力ファイルがあるとする．
-#sourcecode[```text
-1.0 2.0 3.0
-4.5 5.5 6.5
-```]
-このようなファイル形式は計算機科学者にとって見慣れたものである．
-
-各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数 $haskell.norm$ を次のように定義する．#footnote[Haskell では次のように書く．
-```haskell
-      norm :: [haskell.Double] -> haskell.Double
-      norm [] = 0.0
-      norm x_"s" = sqrt (sum [x * x | x <- xs])
-```]
-$ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
- &haskell.norm emptyset = 0.0\
- &haskell.norm x_"s" = haskell.sqrt (sum [x * x | x in x_"s"]) $
-
-入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．
-
-各文字列を数に変換するには次の関数 $haskell.readDouble colon.double haskell.String -> haskell.Double$ を用いる．#footnote[Haskellでは次のように書く．
-```
-      readDouble :: String -> Double
-      readDouble = read
-```]
-$ &haskell.readDouble colon.double haskell.String -> haskell.Double\
-  &haskell.readDouble = haskell.read $
-関数 $haskell.readDouble$ は標準関数 $haskell.read$ に型注釈を付けたものである．
-
-入力ファイルの各行に書かれたベクトルを対象に関数 $norm$ を適用して，結果を書き出すには次のように書く．#footnote[Haskell では次のように書く．
-```haskell
-      main = print 
-        . (norm <$>) 
-        . ((readDouble <$>) <$>) 
-        . (words <$>) 
-        . lines 
-        =<< getContents
-```]
-$ haskell.main
-  = haskell.print
-    compose (norm *)
-    compose ((haskell.readDouble *) *)
-    compose (haskell.words *)
-    compose haskell.lines
-    haskell.bind haskell.getContents $
-
-アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach x_"s" = mapM print x_"s"` と書く．]
-$ haskell.printEach x_"s" = haskell.print *M x_"s" $
-
-演算子 $*M$ はアクション版のマップ演算子である．
-
-
+#tk 余談．
 
 === この章のまとめ
 
@@ -914,7 +866,68 @@ $ f &= backslash x |-> 100 + x \
   y_"s" &= f * x_"s" $
 とすると $y_"s"$ の値は $101, 102, 103, 104, 105]$ となる．
 
-=== 余談：リストの実装
+
+=== 余談：IOサバイバルキット2
+
+1行ごとに3次元ベクトルが並べられた，以下の入力ファイルがあるとする．
+#sourcecode[```plain-text
+1.0 2.0 3.0
+4.5 5.5 6.5
+```]
+このようなファイル形式は計算機科学者にとって見慣れたものである．
+
+各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数 $haskell.norm$ を次のように定義する．#footnote[Haskell では次のように書く．
+```haskell
+      norm :: [haskell.Double] -> haskell.Double
+      norm [] = 0.0
+      norm x_"s" = sqrt (sum [x * x | x <- xs])
+```]
+$ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
+ &haskell.norm emptyset = 0.0\
+ &haskell.norm x_"s" = haskell.sqrt (sum [x * x | x in x_"s"]) $<norm>
+
+ @norm の1行目に出てくる型 $[haskell.Double]$ は $haskell.Double$ の#keyword[リスト]である．
+
+ @norm は関数のパタンマッチングを使っている．引数が#keyword[空リスト]つまり $emptyset$ の場合，関数は $0.0$ を返す．それ以外の場合は，#keyword[リスト内包表記]を使ってノルムを計算して返す．
+
+
+
+入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．
+
+各文字列を数に変換するには次の関数 $haskell.readDouble colon.double haskell.String -> haskell.Double$ を用いる．#footnote[Haskellでは次のように書く．
+```
+      readDouble :: String -> Double
+      readDouble = read
+```]
+$ &haskell.readDouble colon.double haskell.String -> haskell.Double\
+  &haskell.readDouble = haskell.read $
+関数 $haskell.readDouble$ は標準関数 $haskell.read$ に型注釈を付けたものである．
+
+入力ファイルの各行に書かれたベクトルを対象に関数 $norm$ を適用して，結果を書き出すには次のように書く．#footnote[Haskell では次のように書く．
+```haskell
+      main = print 
+        . (norm <$>) 
+        . ((readDouble <$>) <$>) 
+        . (words <$>) 
+        . lines 
+        =<< getContents
+```]
+$ haskell.main
+  = haskell.print
+    compose (norm *)
+    compose ((haskell.readDouble *) *)
+    compose (haskell.words *)
+    compose haskell.lines
+    haskell.bind haskell.getContents $
+
+アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では `printEach x_"s" = mapM print x_"s"` と書く．]
+$ haskell.printEach x_"s" = haskell.print *M x_"s" $
+
+演算子 $*M$ はアクション版のマップ演算子である．
+
+
+
+=== 余談：リストの実装【移動予定】
 
 
 ここでリストの実装について述べておこう．紙上ではリストは自由に考えられるが，計算機上ではそれほど自由ではないからである．我々はリストをLISPにおけるリストと同じ構造を持つものとする．LISPにおけるリストとは変数 $haskell.first$ と変数 $haskell.rest$ からなるペアの集合である．変数$haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する特別な値を持つ．
