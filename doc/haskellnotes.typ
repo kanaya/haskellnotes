@@ -1211,7 +1211,7 @@ $ w_"?" = haskell.Just(z) $
 #par-equation($ f convolve.o_? w_"?" = haskell.kwcase w_"?" haskell.kwof
   cases(haskell.Just(x) --> haskell.Just(f x),
     rect.stroked.h --> haskell.Nothing) $)
-でなければならない．このMaybeバージョンのマップ演算子 $convolve.o$ は
+でなければならない．このMaybeバージョンのマップ演算子 $convolve.o_?$ は
 #par-equation($ f convolve.o_? haskell.Just(x) &= haskell.Just(f x) \
   f convolve.o_? haskell.Nothing &= haskell.Nothing $)
 と定義すれば得られる．#footnote[Haskellでは
