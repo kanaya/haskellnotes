@@ -744,7 +744,7 @@ xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 #par-equation($ x_"s" = [0, 1, ..., 9] $)
 と書くことにする．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．]
 
-Pythonではリスト内包表記が使える．例えば $0$ から $9$ までの倍数のリストは次のように作った．
+Pythonでは#keyword[リスト内包表記]が使える．例えば $0$ から $9$ までの倍数のリストは次のように作った．
 
 #sourcecode[```python
 # Python
@@ -954,7 +954,7 @@ $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
 
  @norm の1行目に出てくる型 $[haskell.Double]$ は $haskell.Double$ の#keyword[リスト]である．
 
- @norm は関数のパタンマッチングを使っている．引数が#keyword[空リスト]つまり $emptyset$ の場合，関数は $0.0$ を返す．それ以外の場合は，#keyword[リスト内包表記]を使ってノルムを計算して返す．
+ @norm は関数のパタンマッチングを使っている．引数が空リストつまり $emptyset$ の場合，関数は $0.0$ を返す．それ以外の場合は，リスト内包表記を使ってノルムを計算して返す．
 
 入力ファイル全体を受け取るにはアクション $haskell.getContents$ を用いる．
 
@@ -1652,7 +1652,7 @@ $ z colon.double haskell.Unit $
 
 ある変数がリストであるとき，その変数がリストであることを忘れないように $x_"s"$ と小さく $"s"$ を付けることにする．
 
-#keyword[空リスト]は次のように定義する．#footnote[Haskellでは `x_"s" = []` と書く．]
+空リストは次のように定義する．#footnote[Haskellでは `s = []` と書く．]
 $ x_"s" = emptyset $
 
 任意のリストは次のように#keyword[リスト構築演算子] $:$ を用いて構成する．
