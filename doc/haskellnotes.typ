@@ -707,62 +707,79 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 
 == リスト
 
-型から作る型をコンテナと呼ぶ．代表的なコンテナはある型のホモジニアスな配列であるリストである．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
+型から作る型を#keyword[コンテナ型]と呼ぶ．代表的なコンテナはある型のホモジニアスな配列であるリストである．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
 
 === リスト
 
-同じ型の値を一列に並べたもの，つまりホモジニアスな配列のことを#keyword[リスト]と呼ぶ．Pythonではリスト `ls` を
+同じ型の値を一列に並べたもの，つまり#keyword[ホモジニアスな配列]のことを#keyword[リスト]と呼ぶ．Pythonではリスト `ls` を次のように定義できる．
+
 #sourcecode[```python
+# Python
 xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```]
-のように定義できる．
 
 我々も $0$ から始まり $9$ まで続く整数のリストを $[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]$ と書くことにしよう．ただし，これでは冗長なので#keyword[等差数列]に限って簡略化した書き方を許す．例えば $0$ から $9$ までのリストは $[0, 1, ..., 9]$ と書いても良い．#footnote[Haskellでは ```haskell [0, 1..9]``` と書く．ピリオドの数に注意しよう．]
 
 リストの中身の一つ一つの値のことを#keyword[要素]と呼ぶ．要素のことは元と呼んでも良いが，本書では要素と呼ぶことにする．要素も元も英語のelementの和訳である．
 
-複数の型の要素が混在してもよい配列のことをヘテロジニアスな配列と呼び，ホモジニアスな配列とは区別する．
+複数の型の要素が混在してもよい配列のことを#keyword[ヘテロジニアスな配列]と呼び，ホモジニアスな配列とは区別する．
 
-今後，リストを指す変数は，リストであることを忘れないように変数名にsをつけて $x_"s" = [0, 1, ..., 9]$ と書くことにする．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．]
+今後，リストを指す変数は，リストであることを忘れないように変数名にsをつけて
+#par-equation($ x_"s" = [0, 1, ..., 9] $)
+と書くことにする．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．]
 
 Pythonではリスト内包表記が使える．例えば $0$ から $9$ までの倍数のリストは次のように作った．
+
 #sourcecode[```python
+# Python
 xs = [x * 2 for x in range(0, 10)]
 ```]
-ここに `range(a, b)` は `a` から増加する方向に連続する `b` 個の整数からなるリストを返すPythonの関数である．
+
+ここに ```python range(a, b)``` は ```python a``` から増加する方向に連続する ```python b``` 個の整数からなるリストを返すPythonの関数である．
 
 我々も内包表記を
-$ x_"s" = [x times 2 | x in [0, 1, ..., 9]] $
+#par-equation($ x_"s" = [x times 2 | x in [0, 1, ..., 9]] $)
 のように書こう．ここに右辺のリストから一つずつ要素を取り出して左辺に代入する演算子 $in$ を用いた．#footnote[Haskellでは $x_"s" = [x times 2 | x in [0, 1, ..., 9]]$ を ```haskell xs = [x * 2 | x <- [0, 1..9]]``` と書く．]
 
 内包表記の式は複数あっても良い．例えば
-$ x_"s" = [x + y | x in [0, 1, ..., 9], y in [0, 1, ..., 5], x + y > 3]$
-は $0 <= x <= 9$ かつ $0 <= y <= 5$ の範囲で $x + y > 3$ となる $x$ 及び $y$ から $x + y$ を並べたリストである．これはPythonでいう
+#par-equation($ x_"s" = [x + y | x in [0, 1, ..., 9], y in [0, 1, ..., 5], x + y > 3] $)
+は $0 <= x <= 9$ かつ $0 <= y <= 5$ の範囲で $x + y > 3$ となる $x$ 及び $y$ から $x + y$ を並べたリストである．#footnote[Haskellでは ```haskell xs = [x + y | x <- [0, 1..9], y <- [0, 1..5], x + y > 3]``` と書く．]
+
+同じことをPythonで核と次のようになる．
+
 #sourcecode[```python
+# Python
 xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 ```]
-のことである．#footnote[Haskellでは ```haskell xs = [x + y | x <- [0, 1..9], y <- [0, 1..5], x + y > 3]``` と書く．]
+
+#pb
 
 整数型 $(haskell.Int)$ のリストは $[haskell.Int]$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $[haskell.a]$ と書く．仮の型である $haskell.a$ の事を #keyword[型パラメタ]と呼ぶ．
 
 型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[]$ と書く．型 $[haskell.a]$ は $haskell.typeconstructor1([], haskell.a)$ のシンタックスシュガーである．#footnote[Haskellでは $haskell.typeconstructor1([], haskell.a)$ を ```haskell [] a``` と書く．これは ```haskell [a]``` と同じことである．]
 
-型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++の「クラステンプレート」が相当する．
+型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++のクラステンプレートが相当する．
 
-$[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは $x_"s" = [x]$ と書く．#footnote[Haskellでは ```haskell xs = [x]``` と書く．]
+#pb
+
+$[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは 
+#par-equation($ x_"s" = [x] $)
+と書く．#footnote[Haskellでは ```haskell xs = [x]``` と書く．]
 
 リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールド体ならばリスト型，中身がイタリック体ならリスト値である．
 
-ある型を包み込んだ別の型を一般に#keyword[コンテナ型]または単に#keyword[コンテナ]と呼ぶ．コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．コンテナ型は多相型の一種である．
+ある型を包み込んだ別の型を一般にコンテナと呼ぶのであった．コンテナ型は多相型の一種である．また，コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．
 
-リストは#keyword[結合]できる．例えばリスト $x_"s"$ とリスト $haskell.y_"s"$ を結合したリストは $x_"s" smash y_"s"$ と表現する．リストの結合演算子の型は
-$ (smash) colon.double [haskell.a] -> [haskell.a] -> [haskell.a] $
+#pb
+
+リストは#keyword[結合]できる．例えばリスト $x_"s"$ とリスト $y_"s"$ を結合したリストは $x_"s" smash y_"s"$ と表現する．リストの結合演算子の型は
+#par-equation($ (smash) colon.double [haskell.a] -> [haskell.a] -> [haskell.a] $)
 である．#footnote[Haskellでは $x_"s" smash haskell.y_"s"$ を ```haskell xs ++ ys``` と書く．]
 
 リストは空でもよい．#keyword[空リスト]は $emptyset$ で表す．#footnote[Haskellでは空リストを ```haskell []``` で表す．]
 
 関数 $haskell.null$ はリストが空リストかどうかを判定する．リスト $x_"s"$ が空リストの場合 $haskell.null x_"s"$ は $haskell.True$ を，そうでなければ $haskell.False$ を返す．関数 $haskell.null$ は
-$ haskell.null colon.double [haskell.a] -> haskell.Bool $
+#par-equation($ haskell.null colon.double [haskell.a] -> haskell.Bool $)
 である．
 
 我々は無限リストを持つことができる．例えば自然数を表すリスト $n_"s"$ は $n_"s" = [1, 2, ...]$ と書くことができる．#footnote[Haskellでは ```haskell ns = [1, 2..]``` と書く．]
@@ -773,101 +790,104 @@ $ haskell.null colon.double [haskell.a] -> haskell.Bool $
 #par-equation($ x_"s" = haskell.take 5 space n_"s" $)
 とすると，リスト $x_"s"$ は $x_"s" = [1, 2, ..., 5]$ という値を持つ．#footnote[Haskellでは ```haskell xs = take 5 ns``` と書く．]
 
-関数 $haskell.take$ の型は $haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a]$ である．
+関数 $haskell.take$ の型は
+#par-equation($ haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a] $)
+である．
 
 リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.bangbang n$ とすることでアクセスできる．#footnote[Haskellでは ```haskell xs !! n``` と書く．]
 
 === 畳み込み
 
 我々はよくリストの総和を表現するために総和演算子 $(sum)$ を使う．総和演算子とはリスト $[x_0, x_1, ..., x_n]$ に対して
-$ sum [x_0, x_1, ..., x_n] = x_0 + x_1 + ... + x_n $
+#par-equation($ sum [x_0, x_1, ..., x_n] = x_0 + x_1 + ... + x_n $)
 で定義される演算子である．
 
 この表現を一般化してみよう．リスト $[x_0, x_1, ..., x_n]$ が与えられたとき，任意の二項演算子を $haskell.anyop$ として
-$ haskell.fold_a^haskell.anyop [x_0, x_1, ..., x_n]
-  = a haskell.anyop x_1 haskell.anyop ... haskell.anyop x_n $
+#par-equation($ haskell.fold_a^haskell.anyop [x_0, x_1, ..., x_n]
+  = a haskell.anyop x_1 haskell.anyop ... haskell.anyop x_n $)
 であると定義する．
 
-この新しい演算子 $haskell.fold$ は#keyword[畳み込み演算子]と呼ばれる．変数 $a$ は#keyword[アキュムレータ]と呼ぶ．アキュムレータは右側の引数が空であった場合のデフォルト値と考えても良い．#footnote[Haskellでは $haskell.fold_a^+ x_"s"$ を ```haskell foldl (+)) a xs``` と書く．]
+この新しい演算子 $haskell.fold$ は#keyword[畳み込み演算子]と呼ばれる．変数 $a$ を#keyword[アキュムレータ]と呼ぶ．アキュムレータは右側の引数が空であった場合のデフォルト値と考えても良い．#footnote[Haskellでは $haskell.fold_a^+ x_"s"$ を ```haskell foldl (+)) a xs``` と書く．]
 
-Python 2.7 には畳み込み演算子に相当する `reduce` 関数があり，リスト `ls` の総和 `s` を
+Python 2.7 には畳み込み演算子に相当する ```python reduce``` 関数があり，リスト ```python ls``` の総和 ```python s``` を次のように求めることが出来た．
+
 #sourcecode[```python
 # Python 2.7
 ls = [0, 1, 2, 3, 4, 5]
 s = reduce(lambda x, y: x + y, ls, 0)
 ```]
-のように求めることができる．この `reduce` 関数はPythonバージョン3では非推奨になっているが，Rubyには受け継がれていて，Rubyでは
+
+この ```python reduce``` 関数はPythonバージョン3では非推奨になっているが，Rubyには受け継がれていて，Rubyでは次のように書ける．
+
 #sourcecode[```ruby
 # Ruby
 ls = [0, 1, 2, 3, 4, 5]
-s = ls.inject(0) { |x, y| x+y }
+s = ls.inject(0) { |x, y| x + y }
 ```]
-と書ける．
+
+#pb
 
 リストの総和をとる演算子 $sum$ は
-$ sum x_"s" = haskell.fold_0^+ x_"s" $
+#par-equation($ sum x_"s" = haskell.fold_0^+ x_"s" $)
 とすれば得られる．この式は両辺の $x_"s"$ を省略して
-$ sum = haskell.fold_0^+ $
+#par-equation($ sum = haskell.fold_0^+ $)
 とも書く．
 
 リストの要素のすべての積をとる演算子 $product$ は
-$ product = haskell.fold_1^times $
+#par-equation($ product = haskell.fold_1^times $)
 とすれば得られる．
 
 畳み込み演算子は第1（上）引数に $haskell.a$ 型と $haskell.b$ 型の引数を取り $haskell.a$ 型の戻り値を返す二項演算子，第2（下）引数に $haskell.a$ 型，第3（右）引数に $haskell.b$ 型のリストすなわち $[haskell.b]$ 型を取り，$haskell.a$ 型の値を返す．従って畳み込み演算子の型は
-$ haskell.fold colon.double (haskell.a -> haskell.b -> haskell.a)
-  -> haskell.a -> [haskell.b] -> haskell.a $
+#par-equation($ haskell.fold colon.double (haskell.a -> haskell.b -> haskell.a
+  -> haskell.a -> [haskell.b] -> haskell.a $)
 である．
 
 畳み込み演算子には次のようなもう一つのバリエーションがある．
-$ haskell.foldright_a^haskell.anyop [x_0, x_1, ..., x_n]
-  = (x_0 haskell.anyop (x_1 haskell.anyop ... haskell.anyop (x_n haskell.anyop a))) $
+#par-equation($ haskell.foldright_a^haskell.anyop [x_0, x_1, ..., x_n]
+  = (x_0 haskell.anyop (x_1 haskell.anyop ... haskell.anyop (x_n haskell.anyop a))) $)
 これは#keyword[右畳み込み]と呼ばれる演算子である．#footnote[Haskellでは `foldr (+) xs a` と書く．引数の順序に注意しよう．]
 
 畳み込み演算子の面白い応用例を示そう．リストの結合演算子 $(smash)$ を使うと
-$ haskell.fold_emptyset^smash [[0, 1, 2], [3, 4, 5], ...] = [0, 1, 2, 3, 4, 5, ...] $
+#par-equation($ haskell.fold_emptyset^smash [[0, 1, 2], [3, 4, 5], ...] = [0, 1, 2, 3, 4, 5, ...] $)
 であるから，演算子 $haskell.fold_emptyset^smash$ はリストを平坦化する#keyword[平坦化演算子]である．平坦化演算子はconcat演算子とも呼ばれることもあるが，基本的な演算子であるため特別な記号をつけておこう．我々は
-$ haskell.flat = haskell.fold_emptyset^smash $
+#par-equation($ haskell.flat = haskell.fold_emptyset^smash $)
 と定義することにする．#footnote[Haskellでは演算子 $haskell.flat$ の代わりに ```haskell concat``` 関数（または ```haskell join``` 関数）を使う．]
-
-// [[0, 1, 2, 3, ...]] にならないか？
 
 === マップ
 
-リストの各要素に決まった関数を適用したい場合がある．Pythonではリスト `ls` に関数 `f` を適用するときには
+リストの各要素に決まった関数を適用したい場合がある．Pythonではリスト ```python ls``` に関数 ```python f``` を適用するときには次のように書く．
+
 #sourcecode[```python
-map(f, ls)
-```]
-のように `map` 関数を用いる．例えば
-#sourcecode[```python
+# Python
 f = lambda x: 100 + x
 ls = [1, 2, 3, 4, 5]
 ms = map(f, ls)
 ```]
-とすると，結果として `ms` には `[101, 102, 103, 104, 105]` が入る．
 
-このように引数として関数 $f$ とリスト $[x_0, x_1, ..., x_n]$ を取り，戻り値として $[f x_0, f x_1, ..., f x_n]$ を返す演算子 $*$ を考えよう．このとき
-$ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $
+このコードは結果として `ms` に `[101, 102, 103, 104, 105]` を入れる．
+
+このように引数として任意の関数 $f$ と任意のリスト $[x_0, x_1, ..., x_n]$ を取り，戻り値として $[f x_0, f x_1, ..., f x_n]$ を返す演算子 $*$ を考えよう．このとき
+#par-equation($ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $)
 であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは ```haskell map f xs``` または ```haskell f <$> xs``` と書く．演算子 ```haskell <$>``` は ```haskell fmap``` 演算子の中置バージョンである．]
 
 リストのマップ演算子の型は
-$ (*) colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $
+#par-equation($ (*) colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $)
 である．矢印 $->$ は右結合なので，これは
-$ (*) colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $
+#par-equation($ (*) colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $)
 の意味でもある．念のため上式に注釈を加えると
-$ (*) colon.double underbrace((haskell.a -> haskell.b.), f)
-  -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $
+#par-equation($ (*) colon.double underbrace((haskell.a -> haskell.b.), f)
+  -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $)
 である．
 
-ここで $f$ と $f*$ の型を並べてみると
-$ f &colon.double haskell.a -> haskell.b \
-  (f *) &colon.double [haskell.a] -> [haskell.b] $
+ここで $f$ と $(f*)$ の型を並べてみると
+#par-equation($ f &colon.double haskell.a -> haskell.b \
+  (f *) &colon.double [haskell.a] -> [haskell.b] $)
 となり，マップ演算子が何をしているのか一目瞭然になる．
 
 具体例を見てみよう．先程のPythonコードの例にあわせて
-$ f &= backslash x |-> 100 + x \
+#par-equation($ f &= backslash x |-> 100 + x \
   x_"s" &= [1, 2, ..., 5] \
-  y_"s" &= f * x_"s" $
+  y_"s" &= f * x_"s" $)
 とすると $y_"s"$ の値は $101, 102, 103, 104, 105]$ となる．
 
 
