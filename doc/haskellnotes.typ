@@ -693,9 +693,13 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談
+=== 余談：種
 
 #tk 余談．
+
+$ star.stroked $
+
+$ star.stroked -> star.stroked $
 
 === この章のまとめ
 
