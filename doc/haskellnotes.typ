@@ -1227,20 +1227,23 @@ $ w_"?" = haskell.Just(z) $
 
 PythonでMaybeの概念を忠実になぞることは難しい．と言うのもPythonは動的型付け言語であるため，型コンストラクタという概念が無いからだ．一方でMaybeの概念を静的型付け言語であるC++やJavaで実現することはできる．そこでC++の本物のコードで示しておこう．ただしポインタを使わないでおいたのでC++プログラマもJavaプログラマも参考にできるだろう．
 
-Maybeは次の `maybe` クラステンプレートで表現できる．（Javaプログラマへの注意：これは `maybe<a>` クラスの定義と同じ意味である．）
+Maybeは次の `maybe` クラステンプレートで表現できる．（Javaプログラマへの注意：これは ```java maybe<a>``` クラスの定義と同じ意味である．）
+
 #sourcecode[```cpp
+// C++
 template <typename a> class maybe {
   private:
     a value;
     bool valid;
   public:
-    maybe(): value(0), valid(false) { }
+    maybe(): value(0), valid(false) { }  // デフォルトコンストラクタ
     maybe(a a_value): value(a_value), valid(true) { }
     a get_value() const { return value; }
     bool is_valid() const { return valid; }
 };
 ```]
-デフォルトコンストラクタ `maybe()` は例外的な状況を表す $haskell.Nothing$ を生成し，1引数コンストラクタ `maybe(a)` は `maybe<a>` で包んだ引数値を生成する．
+
+デフォルトコンストラクタ ```cpp maybe()``` は例外的な状況を表す $haskell.Nothing$ を生成し，1引数コンストラクタ ```cpp maybe(a)``` は ```cpp maybe<a>``` で包んだ引数値を生成する．#footnote[このC++コードは，型 ```cpp a``` が ```cpp 0``` を持てることを前提に書かれているため，HaskellのMaybeとは厳密には異なる．]
 
 C++プログラムで良く見かけるクラス設計と違い，この `maybe` クラスはコンストラクタ以外に中身を書き換える手段が提供されていない．これが破壊的代入の禁止が意味することである．
 
