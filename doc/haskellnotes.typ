@@ -267,15 +267,15 @@ $ stack build
 $ stack run
 ```]
 
-#tk
+#tk Windowsの場合．
 
 === 余談：本書の構成
 
-#tk
+#tk 本書の構成．
 
 === この章のまとめ
 
-#tk
+#tk この章のまとめ．
 
 == カリー風な書き方
 
@@ -322,6 +322,10 @@ lambda x: 1 + x
 #pb
 
 本書では新たに，次のラムダ式記法も導入する．式中に記号 $lozenge.stroked.medium$ が現れた場合，その式全体がラムダ式であるとみなす．記号 $lozenge.stroked.medium$ の部分には引数が入る．第 $n$ 番目の $lozenge.stroked.medium$ には第 $n$ 番目の引数が入る．例えばラムダ式 $backslash x y |-> x + y$ は $lozenge.stroked.medium + lozenge.stroked.medium$  と書いても良い．式を左から読んで1番目の $lozenge.stroked.medium$ が元々の $x$ すなわち第1引数を，2番目の $lozenge.stroked.medium$ が元々の $y$ すなわち第2引数を意味する．この省略記法はプログラミング言語Schemeにおける `cut` プロシジャに由来する．#footnote[Haskellでは，中置演算子に限ってこの表現が使える．例えば $(lozenge.stroked.medium + lozenge.stroked.medium)$ は単に ```haskell (+)``` と表現できる．ただしSchemeにおける `cut` プロシジャの `<>` はHaskellにはないため，Schemeでいう `(cut f <> y)` に相当するコードを直接は書けない．]
+
+#pb
+
+#tk ラムダ式
 
 === パタンマッチ・ガード・条件分岐
 
@@ -386,15 +390,29 @@ def fppp(x):
 
 実用的なプログラムはユーザからの入力を受け取り，関数を適用し，ユーザへ出力する．Haskellではユーザからの1行の入力を $haskell.getLine$ で受け取り，変数の値を $haskell.print$ で書き出せる．ここに $haskell.getLine$ と $haskell.print$ は関数（ファンクション）ではあるが，特別に#keyword[アクション]とも呼ぶ．関数 $haskell.main$ もアクションである．
 
-引数 $x$ の2乗を求める関数 $f$ は次のように定義できる．
+ユーザ入力をただ受け取り，そのままユーザへ出力するプログラムをHaskellで書くと次のようになる．#footnote[Haskellでは次のように書く．
+```haskell
+main = print =<< getLine
+```]
+
+$ haskell.main = haskell.print haskell.bind haskell.getLine $
+<first-bind>
+
+新しい演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は#keyword[モナド]の章で述べる．
+
+#pb
+
+何らかの数値計算を行うプログラムは，ユーザ入力を数値として読み取り，数値に作用する関数を適用し，結果をユーザへ出力する．つまり @first-bind の $haskell.print$ と $haskell.getLine$ の間に数値計算を行う任意の関数 $f$ を挿入すれば良いことになる．ただし関数 $f$ は数値を受け取って数値を返すものだから，ユーザ入力すなわち#keyword[文字列]を数値に#[変換]する必要がある．幸いHaskellは型の違いを吸収する $haskell.read$ 関数を提供している．
+
+いま，任意の関数として引数 $x$ の2乗を求める関数 $f$ を次のように定義しよう．
+
 $ &f colon.double haskell.Double -> haskell.Double\
   &f x = x times x $
+<double-function>
 
-ユーザからの入力に関数 $f$ を適用してユーザへ出力するプログラムをHaskellで書くと次のようになる．
+@double-function の1行目は関数 $f$ の#keyword[型]を表している．型に関しては後述する．
 
-$ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
-
-ここに関数 $haskell.read$ は#keyword[文字列]であるユーザ入力を数に変換する関数である．また演算子 $haskell.bind$ は新たな関数合成演算子で，アクションとアクションを合成するための特別な演算子である．詳細は#keyword[モナド]の章で述べる．1行目は関数 $f$ の#keyword[型]を表している．型に関しては後述する．#footnote[Haskell では次のように書く．
+ユーザからの入力に関数 $f$ を適用してユーザへ出力するプログラムをHaskellで書くと次のようになる．#footnote[Haskell では次のように書く．
 #sourcecode[```haskell
 f :: Double -> Double
 f x = x * x
@@ -402,11 +420,27 @@ f x = x * x
 main = print . f . read =<< getLine
 ```]]
 
+$ haskell.main = haskell.print compose f compose haskell.read haskell.bind haskell.getLine $<first-main>
 
+我々はひとまずこれで，最低限の入出力と数値計算を行うプログラムが書けたわけである．プログラム名を `my-first-program` として，他に以下のような数値だけを記述したファイル `input.txt` があるとしよう．
 
-// == 余談：局所変数
+#sourcecode[```plain-text
+4
+```]
 
-#tk
+ここで，シェルで次のように実行する．
+#sourcecode[```shell-unix-generic
+$ stack run my-first-program < input.txt
+```]
+
+すると，次のような出力が得られる．
+#sourcecode[```shell-unix-generic
+16
+```]
+
+このように，Haskellではプログラムの実行によってユーザ入力を受け取り，ユーザへ出力を行うことができる．
+
+いまはまだ「ベイビー・プログラム」であるが，今後はより実用度を増していく．
 
 === この章のまとめ
 
