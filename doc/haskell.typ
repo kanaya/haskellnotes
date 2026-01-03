@@ -138,7 +138,6 @@
 #let constructor(x) = math.serif(x)
 #let False = constructor("False")
 #let Nothing = constructor("Nothing")
-#let haskellreturn = constructor("return")
 #let True = constructor("True")
 
 // Value constructor with one argument.
