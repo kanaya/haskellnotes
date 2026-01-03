@@ -1223,7 +1223,7 @@ $ w_? = haskell.Just(z) $
 
 変数 $z$ が一度ゼロ除算の危険性に「汚染」された場合，その後ずっとMaybe変数に入れ続けなければいけない．そこで，普通の変数を引数にとる関数 $f$ にMaybe変数 $w_?$ を食わせるには，リストの時と同じようなマップ演算子が必要になる．具体的には，変数 $x$ が $haskell.Int$ 型として，Maybe変数 $w_?=haskell.Just(x)$ が与えられたとき
 #par-equation($ f convolve.o_? w_? = haskell.Just(f x) $)
-となるようなMaybeバージョンのマップ演算子 $convolve.o_?$ を用いる．ここに $f convolve.o_? w_?$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o w_?$ を ```haskell f <$> w``` と書く．]
+となるようなMaybeバージョンのマップ演算子 $convolve.o_?$ を用いる．ここに $f convolve.o_? w_?$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o_? w_?$ を ```haskell f <$> w``` と書く．]
 
 実際には $w_? equiv haskell.Nothing$ の可能性も考えなければならないから，Maybeバージョンのマップ演算子は
 #par-equation($ f convolve.o_? w_? = haskell.kwcase w_? haskell.kwof
@@ -1279,7 +1279,7 @@ maybe<b> map_over(fn f, maybe<a> w) {
   }
 }
 ```]
-テンプレートの3番目の引数 `fn` は関数 `f` を受け取るために必要である．C++はコンパイル時までにすべての変数の型が決定していないといけないが，関数 `f` の型は関数 `map_over` 設計時には確定できないため，このようにテンプレートにしている．
+テンプレートの3番目の引数 ```cpp fn``` は関数 ```cpp f``` を受け取るために必要である．C++はコンパイル時までにすべての変数の型が決定していないといけないが，関数 ```cpp f``` の型は関数 ```cpp map_over``` 設計時には確定できないため，このようにテンプレートにしている．
 
 整数 $x$ からMaybe値 $u_? = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_?$ に食わせてMaybe値 $v_?$ ただし $v_? = g convolve.o_? u_?$ を得ることをC++では次のように書くことになる．
 #sourcecode[```cpp
@@ -1289,17 +1289,17 @@ maybe<int> u(x);
 auto g = [](int x) -> int { return 1 + x; };
 maybe<int> v = map_over(g, u);
 ```]
-注意してほしいのは `g(x)` も `map_over(g, u)` も正当なコードだが `g(u)` は型エラーであることだ．また `g(u.get_value())` は正当なコードだが，わざわざ `u` が持つ文脈を捨てることになる．
+注意してほしいのは ```cpp g(x)``` も ```cpp map_over(g, u)``` も正当なコードだが ```cpp g(u)``` は型エラーであることだ．また ```cpp g(u.get_value())``` は正当なコードだが，わざわざ ```cpp u``` が持つ文脈を捨てることになる．
 
 === リストとMaybe
 
 関数 $f$ をMayby値 $u_?$ に適用するために
-#par-equation($ v_? = f convolve.o u_? $)
-のようなMaybeバージョンのマップ演算子 $(convolve.o)$ を使った．一方で，同じ関数 $f$ をリスト $x_"s"$ に適用するには
+#par-equation($ v_? = f convolve.o_? u_? $)
+のようなMaybeバージョンのマップ演算子 $(convolve.o_?)$ を使った．一方で，同じ関数 $f$ をリスト $x_"s"$ に適用するには
 #par-equation($ y_"s" = f * x_"s" $)
 のようなリストバージョンのマップ演算子 $(*)$ を使った．
 
-リストバージョンのマップ演算子 $(*)$ をもしC++で書くとしたら，次のようなコードになる．ここでリスト型としてC++の標準テンプレートライブラリ(STL)の `std::list` クラスを流用した．
+リストバージョンのマップ演算子 $(*)$ をもしC++で書くとしたら，次のようなコードになる．ここでリスト型としてC++の標準テンプレートライブラリ（STL）の ```cpp std::list``` クラスを流用した．
 #sourcecode[```cpp
 // C++
 template <class a, class b, class fn>
@@ -1313,11 +1313,11 @@ std::list<b> map_over(fn f, std::list<a> xs) {
   return std::list<b>(ys);
 }
 ```]
-この関数 `map_over` の中身部分はどうでもよろしい．それよりも，リストバージョンのマップ演算子のC++関数のインタフェースと，Maybeバージョンのマップ演算子のC++関数のインタフェースを見比べてみよう．
+この関数 ```cpp map_over``` の中身部分はどうでもよろしい．それよりも，リストバージョンのマップ演算子のC++関数のインタフェースと，Maybeバージョンのマップ演算子のC++関数のインタフェースを見比べてみよう．
 
 #sourcecode[```cpp
 // C++
-// List
+// リスト
 template <class a, class b, class fn>
 std::list<b> map_over(fn f, std::list<a> x_"s");
 // Maybe
@@ -1333,7 +1333,7 @@ template <class a, class b, template<class> X, class fn>
 X<b> map_over(fn f, X<a> x);
 ```]
 
-これは一見上手く行きそうに見えるが，このコードは `map_over` のインスタンス化で躓くため，次のように `b` 型のダミー変数が必要になる．
+これは一見上手く行きそうに見えるが，このコードは ```cpp map_over``` のインスタンス化で躓くため，次のように ```cpp b``` 型のダミー変数が必要になる．
 
 #sourcecode[```cpp
 // C++
@@ -1341,7 +1341,7 @@ template <class a, class b, template<class> X, class fn>
 X<b> map_over(fn f, X<a> x, b dummy);
 ```]
 
-残念なことに，いずれのコードにしてもリストとMaybeの本質的な抽象化にはなってない．型 `X` がマップ可能なコンテナであることをテンプレート機構を使って保証することができないためである．この問題はC++26で導入予定の「コンセプト」機能によって解決する見込みである．
+残念なことに，いずれのコードにしてもリストとMaybeの本質的な抽象化にはなってない．型 ```cpp X``` がマップ可能なコンテナであることをテンプレート機構を使って保証することができないためである．この問題はC++26で導入予定の「コンセプト」機能によって解決する見込みである．
 
 一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのは Eugenio Moggi を始めとする計算機科学者たちである．この人類の英知は第〜〜〜章から見ていくことにしよう．
 
@@ -1363,9 +1363,56 @@ Either型はCの共有型 (`union`) やC++のバリアント型 (`std::variant`)
 
 === この章のまとめ
 
-#tk
+#tk この章のまとめ
 
 == 関手
+
+#tk 関手
+
+=== リストの世界・Maybeの世界
+
+$haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり $ y = f x $ であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．この世界では，関数 $f$ は値 $x$ を値 $y$ に変換する．
+
+同様に $haskell.MaybeType(haskell.a)$ 型の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり $v_? = phi u_?$ であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $phi$ は値 $u_?$ を値 $v_?$ に変換する．
+
+ここで，変数 $x, y$ とMaybe変数 $u_?, v_?$ は値コンストラクタによって
+#par-equation($ u_? &= haskell.Just(x) \
+  v_? &= haskell.Just(y) $)
+の関係にあるとしよう．値コンストラクタは値を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせる機能を持っている．
+
+他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_? = haskell.Just(x), v_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $phi$ は無関係ではなく
+#par-equation($ v_? = phi u_? = f convolve.o_? u_? $)
+であり，
+#par-equation($ phi = f convolve.o_? $)
+である．つまりマップ演算子 $convolve.o_?$ が関数 $f$ を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせているのである．
+
+いま「世界」と呼んだものを，数学者は#keyword[圏]と呼ぶ．圏とは#keyword[対象]と#keyword[射]の組み合わせである．本書では「対象」とは型のことであり，射とは関数だと思えば良い．そして，圏から圏へとジャンプさせるものを#keyword[関手]と呼ぶ．この例で言えば値コンストラク $haskell.Just(x)$ とマップ演算子 $convolve.o_?$ が関手である．値コンストラクタ $haskell.Just(x)$ は $haskell.a -> haskell.MaybeType(haskell.a)$ という型を持ち，マップ演算子 $convolve.o_?$ は $(haskell.a -> haskell.b) -> (haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b))$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，C++の関数オブジェクト （function object）もかつてはファンクター（functor）と呼ばれていた．C++のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．]
+
+#pb
+
+Haskellではマップ演算子が定義された型を関手型と呼ぶ．具体的には，マップ演算子が定義されたすべての方は $haskell.Functor$ 型クラスのインスタンスであるとする．つまり $haskell.Functor$ 型クラスには一般化されたマップ演算子が定義されており，そのインスタンスであるリストやMaybeは独自のマップ演算子を定義しなければならないということである．
+
+一般化されたマップ演算子を $convolve.o$ で表そう．この $convolve.o$ 演算子は
+#par-equation($ convolve.o colon.double haskell.Functor supset haskell.f ==> haskell.f_haskell.a -> haskell.f_haskell.b $)
+という型を持つ．ここに $haskell.Functor supset haskell.f$ は，$haskell.f$ が $haskell.Functor$ 型クラスに属すという制約を表している．また $haskell.f$ は型コンストラクタであり，$haskell.f_haskell.a$ は $haskell.f$ 型コンストラクタと$haskell.a$ 型によって作られたコンテナ型である．
+
+もし型コンストラクタがリスト型コンストラクタであれば，つまり $haskell.f = []$ であれば
+#par-equation($ convolve.o colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] = * $)
+であるし，もし型コンストラクタがMaybe型コンストラクタであれば，つまり $haskell.f = haskell.Maybe$ であれば
+#par-equation($ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b) = convolve.o_? $)
+である．
+
+#tk 表．
+
+リストとMaybeは両者ともマップ演算子（と値コンストラクタ）を持つ．両者の関係をまとてみたのが表〜〜〜である．オブジェクト指向プログラマなら，リストとMaybeに共通のスーパークラスを設計したくなるであろう．それが型クラス $haskell.Functor$ である．
+
+=== アプリカティブ関手
+
+#tk アプリカティブ関手
+
+=== 余談：関数と関手
+
+#tk 関数と関手
 
 == モナド
 
