@@ -1051,7 +1051,26 @@ Haskellで書きやすいように，後置演算子 $!$ のかわりに関数 $
 
 === リストと再帰
 
-#tk リストと再帰．
+数学におけるリストは自由に考えることが出来るが，計算機上ではその実装も考えておかねばならない．我々はリストをLispにおけるリスト構造と同じ構造を持つものとする．Lispにおけるリストとは，変数 $haskell.first$ と 変数 $haskell.rest$ からなるペアの集合である．変数 $haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する．
+
+リストのための特別な表現
+#par-equation($ haskell.first : haskell.rest $)
+を用い，変数 $haskell.first$ はリストが保持する型，変数 $haskell.rest$ はリスト型であるとする．演算子 $:$ をLispに倣って#keyword[cons演算子]と呼ぶ．
+
+要素 $haskell.rest$ はリストまたは空リストであるから，一般にリストは次のように展開できることになる．
+
+$ [x_0, x_1, x_2, ..., x_n] &= x_0 : [x_1, x_2, ..., x_n] \
+  &= x_0 : x_1 : [x_2, ..., x_n] \
+  &= x_0: x_1 : x_2 : ... : x_n : emptyset $
+
+cons演算子 $(:)$ は右結合する．すなわち $x_0 : x_1 : x_2 = x_0 : (x_1 : x_2)$ である．
+
+マップ演算子 $(*)$ の実装は，リストの実装に踏み込めば簡単である．空でないリストは必ず $x : x_"s"$ という形をしているから，次のようにマップ演算子を定義できる．
+
+$ f * emptyset &= emptyset \
+  f * (x : x_"s") &= (f x) : (f * x_"s") $
+
+#pb
 
 Haskellでは任意のリスト $x_"s"$ に対し，次の関数が用意されている．
 #par-equation($ haskell.head x_"s" &... "先頭要素" \
@@ -1204,22 +1223,22 @@ def map_over(f, p):
 
 // []に入れるという方法もある．
 
-整数 $x, y, z$ があり $z = frac(y, z, style: "skewed")$ という式があるとする．この式は $x equiv 0$ のときにはゼロ除算エラーである．しかし「例外」は内部状態の書き換えであり，我々の計算に入れたくない．そこで計算結果が正しく計算されたかもしれないし，されていないかもしれないということを $w_"?"$ のように?印をつけた変数に入れて，忘れないようにしておこう．
+整数 $x, y, z$ があり $z = frac(y, z, style: "skewed")$ という式があるとする．この式は $x equiv 0$ のときにはゼロ除算エラーである．しかし「例外」は内部状態の書き換えであり，我々の計算に入れたくない．そこで計算結果が正しく計算されたかもしれないし，されていないかもしれないということを $w_?$ のように?印をつけた変数に入れて，忘れないようにしておこう．
 
-ここで変数 $w_"?"$ が取り得る値は正しく計算された値 $z$ をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．定数 $haskell.Nothing$ は「ナッシング」と呼ぶ．#footnote[Haskellでは $haskell.Nothing$ を ```haskell Nothing``` と書く．]
+ここで変数 $w_?$ が取り得る値は正しく計算された値 $z$ をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．定数 $haskell.Nothing$ は「ナッシング」と呼ぶ．#footnote[Haskellでは $haskell.Nothing$ を ```haskell Nothing``` と書く．]
 
-この変数 $w_"?"$ はもはや整数 $(haskell.Int)$ 型とは言えない．そこでこの $z_"?"$ の型を $haskell.MaybeType(haskell.Int)$ と表して「Maybe整数（おそらく整数）」型と呼ぶことにしよう．型 $haskell.a$ から型 $haskell.MaybeType(haskell.a)$ を生成するとき，$haskell.Maybe$ を#keyword[型コンストラクタ]と呼ぶ．#footnote[Haskellでは ```haskell Maybe a``` と書く．]
+この変数 $w_?$ はもはや整数 $(haskell.Int)$ 型とは言えない．そこでこの $z_?$ の型を $haskell.MaybeType(haskell.Int)$ と表して「Maybe整数（おそらく整数）」型と呼ぶことにしよう．型 $haskell.a$ から型 $haskell.MaybeType(haskell.a)$ を生成するとき，$haskell.Maybe$ を#keyword[型コンストラクタ]と呼ぶ．#footnote[Haskellでは ```haskell Maybe a``` と書く．]
 
 $haskell.a$ 型の変数 $z$ を $haskell.MaybeType(haskell.a)$ 型の変数に代入するには，次のMaybe値コンストラクタを用いて
-$ w_"?" = haskell.Just(z) $
+$ w_? = haskell.Just(z) $
 とする．#footnote[Haskellでは ```haskell w = Just x``` と書く．Maybeを表す疑問符は省略する．]
 
-変数 $z$ が一度ゼロ除算の危険性に「汚染」された場合，その後ずっとMaybe変数に入れ続けなければいけない．そこで，普通の変数を引数にとる関数 $f$ にMaybe変数 $w_"?"$ を食わせるには，リストの時と同じようなマップ演算子が必要になる．具体的には，変数 $x$ が $haskell.Int$ 型として，Maybe変数 $w_"?"=haskell.Just(x)$ が与えられたとき
+変数 $z$ が一度ゼロ除算の危険性に「汚染」された場合，その後ずっとMaybe変数に入れ続けなければいけない．そこで，普通の変数を引数にとる関数 $f$ にMaybe変数 $w_?$ を食わせるには，リストの時と同じようなマップ演算子が必要になる．具体的には，変数 $x$ が $haskell.Int$ 型として，Maybe変数 $w_?=haskell.Just(x)$ が与えられたとき
 #par-equation($ f convolve.o_? w_? = haskell.Just(f x) $)
-となるようなMaybeバージョンのマップ演算子 $convolve.o_"?"$ を用いる．ここに $f convolve.o w_"?"$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o w_"?"$ を ```haskell f <$> w``` と書く．]
+となるようなMaybeバージョンのマップ演算子 $convolve.o_?$ を用いる．ここに $f convolve.o_? w_?$ の型は，もし $f colon.double haskell.Int -> haskell.Float$ ならば $haskell.MaybeType(haskell.Float)$ である．#footnote[Haskellでは $f convolve.o w_?$ を ```haskell f <$> w``` と書く．]
 
-実際には $w_"?" equiv haskell.Nothing$ の可能性も考えなければならないから，Maybeバージョンのマップ演算子は
-#par-equation($ f convolve.o_? w_"?" = haskell.kwcase w_"?" haskell.kwof
+実際には $w_? equiv haskell.Nothing$ の可能性も考えなければならないから，Maybeバージョンのマップ演算子は
+#par-equation($ f convolve.o_? w_? = haskell.kwcase w_? haskell.kwof
   cases(haskell.Just(x) --> haskell.Just(f x),
     rect.stroked.h --> haskell.Nothing) $)
 でなければならない．このMaybeバージョンのマップ演算子 $convolve.o_?$ は
@@ -1232,8 +1251,8 @@ $ w_"?" = haskell.Just(z) $
 ```
 と書く．]
 
-今後，普通の（引数にMaybeが来ることを想定していない）関数 $f$ をMaybe型である変数 $z_"?"$ に適用させるときには，必ず
-#par-equation($ w_"?" = f convolve.o_? w_? $)
+今後，普通の（引数にMaybeが来ることを想定していない）関数 $f$ をMaybe型である変数 $z_?$ に適用させるときには，必ず
+#par-equation($ w_? = f convolve.o_? w_? $)
 のようにMaybeバージョンのマップ演算子 $convolve.o$ を用いることにする．これはプログラムの安全性のためである．変数が一旦ゼロ除算の可能性に汚染されたら，最後までMaybeに包んでおかねばならない．
 
 PythonでMaybeの概念を忠実になぞることは難しい．と言うのもPythonは動的型付け言語であるため，型コンストラクタという概念が無いからだ．一方でMaybeの概念を静的型付け言語であるC++やJavaで実現することはできる．そこでC++の本物のコードで示しておこう．ただしポインタを使わないでおいたのでC++プログラマもJavaプログラマも参考にできるだろう．
@@ -1274,7 +1293,7 @@ maybe<b> map_over(fn f, maybe<a> w) {
 ```]
 テンプレートの3番目の引数 `fn` は関数 `f` を受け取るために必要である．C++はコンパイル時までにすべての変数の型が決定していないといけないが，関数 `f` の型は関数 `map_over` 設計時には確定できないため，このようにテンプレートにしている．
 
-整数 $x$ からMaybe値 $u_"?" = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_"?"$ に食わせてMaybe値 $v_"?"$ ただし $v_"?" = g convolve.o_? u_"?"$ を得ることをC++では次のように書くことになる．
+整数 $x$ からMaybe値 $u_? = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_?$ に食わせてMaybe値 $v_?$ ただし $v_? = g convolve.o_? u_?$ を得ることをC++では次のように書くことになる．
 #sourcecode[```cpp
 int x = 123;
 maybe<int> u(x);
@@ -1285,10 +1304,10 @@ maybe<int> v = map_over(g, u);
 
 === リストとMaybe
 
-関数 $f$ をMayby値 $u_"?"$ に適用するために
-$ v_"?" = f convolve.o u_"?" $
+関数 $f$ をMayby値 $u_?$ に適用するために
+#par-equation($ v_? = f convolve.o u_? $)
 のようなMaybeバージョンのマップ演算子 $(convolve.o)$ を使った．一方で，同じ関数 $f$ をリスト $x_"s"$ に適用するには
-$ y_"s" = f * x_"s" $
+#par-equation($ y_"s" = f * x_"s" $)
 のようなリストバージョンのマップ演算子 $(*)$ を使った．
 
 リストバージョンのマップ演算子 $(*)$ をもしC++で書くとしたら，次のようなコードになる．ここでリスト型としてC++の標準テンプレートライブラリ(STL)の `std::list` クラスを流用した．
@@ -1406,7 +1425,7 @@ Monad laws.
 
 リスト型 $[haskell.a]$ もMaybe型 $haskell.MaybeType(haskell.a)$ も $haskell.Functor$ 型クラスに属すのであった．そこで $haskell.Functor$ 型クラスは#keyword[一般マップ演算子] $(convolve.o)$ を持つものとする．
 
-一般マップ演算子 $(convolve.o)$ は#keyword[多様的]である．この意味は，もし $f convolve.o x_"s"$ と書いてあれば $f * x_"s"$ のことであるし，もし $f convolve.o x_"?"$ と書いてあれば $f convolve.o_"?" x_"?"$ のことであると自動的に解釈することである．そして，何の飾りもつけられていない変数 $x$ がふらっと現れ，目の前に $f convolve.o x$ という式が登場しても，落ち着いて変数 $x$ の型を調べ，変数 $x$ がリストならば $convolve.o$ の部分に $*$ を，変数 $x$ がMaybeならば $convolve.o$ の部分に $convolve.o_"?"$ をはめ込むのだ．#footnote[Haskellでは一般マップ演算子 $(convolve.o)$ は ```haskell fmap``` である．ただしその実装は与えられず，対象とする型に応じて定義されるものとする．例えばリストに対しては ```haskell fmap = map``` と定義されている．]
+一般マップ演算子 $(convolve.o)$ は#keyword[多様的]である．この意味は，もし $f convolve.o x_"s"$ と書いてあれば $f * x_"s"$ のことであるし，もし $f convolve.o x_?$ と書いてあれば $f convolve.o_? x_?$ のことであると自動的に解釈することである．そして，何の飾りもつけられていない変数 $x$ がふらっと現れ，目の前に $f convolve.o x$ という式が登場しても，落ち着いて変数 $x$ の型を調べ，変数 $x$ がリストならば $convolve.o$ の部分に $*$ を，変数 $x$ がMaybeならば $convolve.o$ の部分に $convolve.o_?$ をはめ込むのだ．#footnote[Haskellでは一般マップ演算子 $(convolve.o)$ は ```haskell fmap``` である．ただしその実装は与えられず，対象とする型に応じて定義されるものとする．例えばリストに対しては ```haskell fmap = map``` と定義されている．]
 
 === アプリカティブ関手
 
@@ -1431,12 +1450,12 @@ $ [f] * [x, y, z] = [f x, f y, f z] $
 $ f * x_"s" = [f] ast.square x_"s" $
 と定義できる．
 
-Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_"?"$ をMaybeな変数 $x_"?"$ にマップするアプリカティブマップ演算子 $ast.square_"?"$ を
-$ f_"?" ast.square x_"?" = haskell.kwcase x_"s" haskell.kwof 
-  cases(haskell.Just(x) --> x convolve.o_"?" x_"?",
+Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_?$ をMaybeな変数 $x_?$ にマップするアプリカティブマップ演算子 $ast.square_?$ を
+$ f_? ast.square x_? = haskell.kwcase x_"s" haskell.kwof 
+  cases(haskell.Just(x) --> x convolve.o_? x_?,
   rect.stroked.h --> haskell.Nothing) $
-で定義する．このMaybeバージョンのアプリカティブマップ演算子 $(ast.square_"?")$ からMaybeバージョンのマップ演算子 $(convolve.o_"?")$ は
-$ f convolve.o_"?" x_"?" = haskell.Just(f) ast.square_"?" x_"?" $
+で定義する．このMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ からMaybeバージョンのマップ演算子 $(convolve.o_?)$ は
+$ f convolve.o_? x_? = haskell.Just(f) ast.square_? x_? $
 のように導出できる．
 
 これらの関係を一般化して
@@ -1445,7 +1464,7 @@ $ f ast.square x_* = shell.l f shell.r convolve.o x_* $
 
 ピュア演算子をピュア値コンストラクタと呼ばないのは，単純に「ピュア値」というものがないからである．$haskell.Functor$ 型クラスはリスト型やMaybe型を抽象化したものであって，直接変数を生成できない．型クラスは，C++の用語で言えば純粋仮想クラスのようなものであるし，Objective-Cの用語で言えばメタクラスであるからである．もちろんリストのピュア演算子は $[x]$ であるし，Maybeのピュア演算子は $haskell.Maybe_x$ であり，それぞれ具体的な変数を生成する．しかし変数 $x$ にピュア演算子を適用した $shell.l x shell.r$ は抽象的な概念であり，そのような変数は実在しない．#footnote[Haskellは一般のピュア演算子の実装を与えていない．変数の型に応じて対応する関数が適用される．]
 
-一般アプリカティブマップ演算子 $(ast.square)$ は多様性によってそれぞれリストバージョンのアプリカティブマップ演算子 $(...)$ やMaybeバージョンのアプリカティブマップ演算子 $(ast.square_"?")$ にオーバーライドされ，それぞれリスト値コンストラクタ $([x])$, Maybe値コンストラクタ $(haskell.Maybe_x)$ を用いることでリストバージョンのマップ演算子 $(*)$, Maybeバージョンのマップ演算子 $(convolve.o_"?")$ を生成することができる．リスト値コンストラクタ，Maybe値コンストラクタはそれぞれピュア演算子 $shell.l x shell.r$ をオーバーライドしたものであるから，結局，一般アプリカティブマップ演算子とピュア演算子のふたつがあれば，任意のクラスのマップ演算子を生成することができる．
+一般アプリカティブマップ演算子 $(ast.square)$ は多様性によってそれぞれリストバージョンのアプリカティブマップ演算子 $(...)$ やMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ にオーバーライドされ，それぞれリスト値コンストラクタ $([x])$, Maybe値コンストラクタ $(haskell.Maybe_x)$ を用いることでリストバージョンのマップ演算子 $(*)$, Maybeバージョンのマップ演算子 $(convolve.o_?)$ を生成することができる．リスト値コンストラクタ，Maybe値コンストラクタはそれぞれピュア演算子 $shell.l x shell.r$ をオーバーライドしたものであるから，結局，一般アプリカティブマップ演算子とピュア演算子のふたつがあれば，任意のクラスのマップ演算子を生成することができる．
 
 アプリカティブマップ演算子，ピュア演算子に一般化されたバージョンがあるように，リストの $emptyset$ やMaybeの $haskell.Nothing$ を一般化した値が必要である．それを $nothing.rev$ とする．$nothing.rev$ には特段名前が無いので，本書では単に「空」と呼ぶことにしよう．
 
@@ -1461,11 +1480,11 @@ $ f convolve.o x_* ast.square y_* ast.square z_* $
 
 しかしながら，アプリカティブスタイルでは変数に文脈を与えるタイミングがコンテナ変数を作るときのそれぞれ1回に限られている．そこで，任意のタイミングで変数に文脈を与えられるように，別な方法で一般マップ演算子を分解してみよう．
 
-Maybeの例を思い出そう．Maybe型の変数 $x_"?"$ はラップされた値 $haskell.Just_x$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $phi$ を考えよう．この関数 $phi$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
+Maybeの例を思い出そう．Maybe型の変数 $x_?$ はラップされた値 $haskell.Just_x$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $phi$ を考えよう．この関数 $phi$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
 $ g x &|_(x != 0) = haskell.Just_x \
   &|_haskell.otherwise = haskell.Nothing $
 といった関数が考えられる．変数 $x$ は文脈を持っていないが，関数 $phi$ を適用した結果である $phi x$ は文脈を持っていることに注意しよう．いま $phi x$ はMaybeという文脈を持っているから，我々は
-$ z_"?" = phi x $
+$ z_? = phi x $
 という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y = f x$ や $y_* = f convolve.o x_*$ の関係とは異なることに注意しよう．
 
 === 変数
@@ -2074,16 +2093,16 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
 
 $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり $ y = f x $ であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．
 
-型 $haskell.MaybeType(haskell.a)$ の変数 $u_"?", v_"?" colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり $v_"?" = phi u_"?"$ であるとしよう．このように $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．
+型 $haskell.MaybeType(haskell.a)$ の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり $v_? = phi u_?$ であるとしよう．このように $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．
 
-ここで，変数 $x, y$ とMaybe変数 $u_"?", v_"?"$ はMaybe値コンストラクタによって
-$ u_"?" &= haskell.Just(x) \
-  v_"?" &= haskell.Just(y) $
+ここで，変数 $x, y$ とMaybe変数 $u_?, v_?$ はMaybe値コンストラクタによって
+$ u_? &= haskell.Just(x) \
+  v_? &= haskell.Just(y) $
 の関係にあるとしよう．値コンストラクタは値を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせる機能を持っている．
 
-他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_"?" = haskell.Just(x), v_"?" = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $phi$ は無関係ではなく
-$ v_"?" &= phi u_"?" \
-  &= f convolve.o u_"?" $
+他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_? = haskell.Just(x), v_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $phi$ は無関係ではなく
+$ v_? &= phi u_? \
+  &= f convolve.o u_? $
 であり，
 $ phi = f convolve.o $
 である．つまりマップ演算子 $convolve.o$ が関数 $f$ を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせているのである．
@@ -2116,7 +2135,7 @@ $ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.
   align: horizon,
   table.header([型], [型コンストラクタ], [マップ], [値コンストラクタ]),
   $[haskell.a]$, $[]$, $*$, $[x], nothing$,
-  $haskell.MaybeType(haskell.a)$, $haskell.Maybe$, $convolve.o_"?"$, $haskell.Just(x), haskell.Nothing$,
+  $haskell.MaybeType(haskell.a)$, $haskell.Maybe$, $convolve.o_?$, $haskell.Just(x), haskell.Nothing$,
   $haskell.Functor supset haskell.f ==> haskell.f_haskell.a$, $haskell.f$, $convolve.o$, [具体的な型による]
 )
 
