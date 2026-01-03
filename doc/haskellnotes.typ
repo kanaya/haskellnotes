@@ -709,13 +709,9 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談：種
+=== 余談
 
-型クラスは型を大きく分類するものであった．Haskellには他に#keyword[種]（kind）という，型を分類する概念がある．
-
-変数や定数などの写像 $(->)$ を含まない型の種を $star.stroked$ で表す．例えば $haskell.Int$ や $haskell.a$ の種は $star.stroked$ である．
-
-一方，関数のように写像 $(->)$ を含む型の種は $star.stroked -> star.stroked$ である．例えば $haskell.Int -> haskell.Int$ や $haskell.a -> haskell.b$ の種は $star.stroked -> star.stroked$ である．
+#tk 余談
 
 === この章のまとめ
 
@@ -2041,6 +2037,15 @@ $ x_"s" &colon.double [bold("Int")]\
 #sourcecode[```haskell
 z = do { x' <- x; y' <- y; f x'; g y' }
 ```]
+
+=== 種
+
+具体的な型を $star.stroked$ で表す．例えば $haskell.Int$ や $haskell.a$ の種は $star.stroked$ である．
+
+一方，型を作る型，つまり型コンストラクタの種は $star.stroked -> star.stroked$ である．
+
+
+
 
 == Part 3に入れるノート
 
