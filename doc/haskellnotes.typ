@@ -709,9 +709,16 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談
+=== 余談：全称量化子
 
-#tk 余談
+型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
+#par-equation($ f colon.double haskell.a -> haskell.a $)
+であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．]
+
+$ f colon.double forall haskell.a |=> haskell.a -> haskell.a $
+
+ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
+
 
 === この章のまとめ
 
