@@ -50,6 +50,7 @@
 #let Float = typename("Float")
 #let Int = typename("Int")
 #let Integer = typename("Integer")
+#let IO = typename("IO")
 #let List = typename("[]")
 #let String = typename("String")
 #let Unit = typename(math.paren.l.flat+math.paren.r.flat)
@@ -135,9 +136,10 @@
 
 // Value constructor.
 #let constructor(x) = math.serif(x)
-#let Nothing = constructor("Nothing")
-#let True = constructor("True")
 #let False = constructor("False")
+#let Nothing = constructor("Nothing")
+#let haskellreturn = constructor("return")
+#let True = constructor("True")
 
 // Value constructor with one argument.
 #let constructor1(x, y) = {
