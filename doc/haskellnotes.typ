@@ -2044,7 +2044,7 @@ z = do { x' <- x; y' <- y; f x'; g y' }
 
 一方，型を作る型，つまり型コンストラクタの種は $star.stroked -> star.stroked$ である．
 
-
+See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types-and-kinds
 
 
 == Part 3に入れるノート
