@@ -1283,6 +1283,7 @@ maybe<b> map_over(fn f, maybe<a> w) {
 
 整数 $x$ からMaybe値 $u_? = haskell.Just(x)$ を作り，関数 $g x = 1 + x$ をMaybe値 $u_?$ に食わせてMaybe値 $v_?$ ただし $v_? = g convolve.o_? u_?$ を得ることをC++では次のように書くことになる．
 #sourcecode[```cpp
+// C++
 int x = 123;
 maybe<int> u(x);
 auto g = [](int x) -> int { return 1 + x; };
@@ -1300,6 +1301,7 @@ maybe<int> v = map_over(g, u);
 
 リストバージョンのマップ演算子 $(*)$ をもしC++で書くとしたら，次のようなコードになる．ここでリスト型としてC++の標準テンプレートライブラリ(STL)の `std::list` クラスを流用した．
 #sourcecode[```cpp
+// C++
 template <class a, class b, class fn>
 std::list<b> map_over(fn f, std::list<a> xs) {
   std::list<b> y_s(xs.size());
@@ -1314,6 +1316,7 @@ std::list<b> map_over(fn f, std::list<a> xs) {
 この関数 `map_over` の中身部分はどうでもよろしい．それよりも，リストバージョンのマップ演算子のC++関数のインタフェースと，Maybeバージョンのマップ演算子のC++関数のインタフェースを見比べてみよう．
 
 #sourcecode[```cpp
+// C++
 // List
 template <class a, class b, class fn>
 std::list<b> map_over(fn f, std::list<a> x_"s");
@@ -1325,6 +1328,7 @@ maybe<b> map_over(fn f, maybe<a> w);
 やはりそっくりである．であるならば，うまく統一したい．C++では次のような書き方が文法的には可能である．
 
 #sourcecode[```cpp
+// C++
 template <class a, class b, template<class> X, class fn>
 X<b> map_over(fn f, X<a> x);
 ```]
@@ -1332,6 +1336,7 @@ X<b> map_over(fn f, X<a> x);
 これは一見上手く行きそうに見えるが，このコードは `map_over` のインスタンス化で躓くため，次のように `b` 型のダミー変数が必要になる．
 
 #sourcecode[```cpp
+// C++
 template <class a, class b, template<class> X, class fn>
 X<b> map_over(fn f, X<a> x, b dummy);
 ```]
