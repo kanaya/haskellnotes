@@ -329,7 +329,15 @@ lambda x: 1 + x
 
 #pb
 
-#tk ローカル変数．letとwhereキーワード．
+数式が長く続くとき，読みやすさのために#keyword[局所変数]を導入すると便利である．例えば
+#par-equation($ y = f(1 + x) $)
+という式のうち，先に $1 + x$ を計算して $x'$ のように名前をつけておきたいこともある．そんなときは次のように書く．#footnote[Haskellでは ```haskell y = let x' = 1 + x in f x'``` と書く．]
+
+$ y = haskell.kwlet x' eq.def 1 + x haskell.kwin f x' $
+
+なお，局所変数を後ろに回して
+#par-equation($ y = f x' haskell.kwwhere x' eq.def 1 + x $)
+と書いても良い．#footnote[Haskellでは ```haskell y = f x' where x' = 1 + x``` と書く．]
 
 === パタンマッチ・ガード・条件分岐
 
@@ -713,7 +721,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 
 型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
 #par-equation($ f colon.double haskell.a -> haskell.a $)
-であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．]
+であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a. a -> a``` と書く．]
 
 $ f colon.double forall haskell.a |=> haskell.a -> haskell.a $
 
