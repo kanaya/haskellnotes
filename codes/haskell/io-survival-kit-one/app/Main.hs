@@ -1,6 +1,5 @@
 module Main (main) where
-
-import Lib
-
+f :: Double -> Double
+f x = x * x
 main :: IO ()
-main = someFunc
+main = print . f . read =<< getLine
