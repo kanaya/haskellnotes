@@ -275,7 +275,8 @@ main :: IO ()
 main = someFunc
 ```]
 
-`Lib.hs` または `Main.hs` を書き換えた後は次のコマンドで実行する．
+`Lib.hs` または `Main.hs` を書き換えた後は次のコマンドで実行する．最初のビルド時には，必要なHaskellコンパイラやライブラリがダウンロードされるので少々の時間がかかる．
+
 #sourcecode[```shell-unix-generic
 $ stack build
 $ stack run
@@ -464,7 +465,7 @@ main :: IO ()
 main = print . f . read =<< getLine
 ```]
 
-我々はひとまずこれで，最低限の入出力と数値計算を行うプログラムが書けたわけである．プログラム名を `my-first-program` として，他に以下のような数値だけを記述したファイル `input.txt` があるとしよう．
+我々はひとまずこれで，最低限の入出力と数値計算を行うプログラムが書けたわけである．いま，以下のような数値だけを記述したファイル `input.txt` があるとしよう．
 
 #sourcecode[```plain-text
 4
@@ -472,12 +473,13 @@ main = print . f . read =<< getLine
 
 ここで，シェルで次のように実行する．
 #sourcecode[```shell-unix-generic
-$ stack run my-first-program < input.txt
+$ stack run < input.txt
 ```]
 
 すると，次のような出力が得られる．
+
 #sourcecode[```shell-unix-generic
-16
+16.0
 ```]
 
 このように，Haskellではプログラムの実行によってユーザ入力を受け取り，ユーザへ出力を行うことができる．
