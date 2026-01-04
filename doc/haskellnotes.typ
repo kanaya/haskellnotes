@@ -1414,7 +1414,7 @@ maybe<int> v = map_over(g, u);
 
 リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
 
-$x_? = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
+$x_? = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは ```haskell zm = (f <$>) <$> xm``` と書く．最初の ```haskell <$>``` はリストの各要素に関数 ```haskell f``` を適用する演算子，2番目の ```haskell <$>``` はMaybeの中のリストの各要素に関数 ```haskell f``` を適用する演算子である．]
 
 $ z_? = (f *) convolve.o_? x_? $
 
@@ -1448,7 +1448,7 @@ std::list<b> map_over(fn f, std::list<a> xs) {
 // C++
 // リスト
 template <class a, class b, class fn>
-std::list<b> map_over(fn f, std::list<a> x_"s");
+std::list<b> map_over(fn f, std::list<a> xs);
 // Maybe
 template <class a, class b, class fn>
 maybe<b> map_over(fn f, maybe<a> w);
@@ -1472,7 +1472,7 @@ X<b> map_over(fn f, X<a> x, b dummy);
 
 残念なことに，いずれのコードにしてもリストとMaybeの本質的な抽象化にはなってない．型 ```cpp X``` がマップ可能なコンテナであることをテンプレート機構を使って保証することができないためである．この問題はC++26で導入予定の「コンセプト」機能によって解決する見込みである．
 
-一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのは Eugenio Moggi を始めとする計算機科学者たちである．この人類の英知は第〜〜〜章から見ていくことにしよう．
+一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのは Eugenio Moggi を始めとする計算機科学者たちである．この人類の英知は@functor から見ていくことにしよう．
 
 === 余談: Either
 
@@ -1488,7 +1488,7 @@ Eitherには値コンストラクタが2種類あり，それぞれ $haskell.Rig
 
 Eitherはより複雑な計算エラーが発生する場合に用いる．Maybeが単に失敗を表す $haskell.Nothing$ しか表現できなかったのに対し，Eitherは任意の型の変数で表現できる．習慣的に，正しい(right) 計算結果は $haskell.Right(x)$ 値コンストラクタで格納し，残された (left) エラーの情報は $haskell.Left(x)$ 値コンストラクタで格納する．
 
-Either型はCの共有型 (`union`) やC++のバリアント型 (`std::variant`) に近い．
+Either型はCの共有型 (```c union```) やC++のバリアント型 (```cpp std::variant```) に近い．
 
 === この章のまとめ
 
