@@ -2,6 +2,10 @@
 #import "@preview/in-dexter:0.7.2": *
 #import "@preview/codelst:2.0.2": sourcecode
 
+#import "@preview/theorion:0.4.1": *
+#import cosmos.fancy: *
+#show: show-theorion
+
 #set text(lang:"ja")
 #set math.equation(numbering: "(1)")
 
@@ -1594,20 +1598,19 @@ $ lozenge.stroked.medium convolve.o lozenge.stroked.medium
 
 もし変数 $x_*$ の型がリストであれば $convolve.o = *$ であると解釈する．
 
-
 === 関手則
 
 #tk 関手則
 
-関手則とは，関手が満たすべき性質のことである．関手則は次の2つである．
-- 恒等射則：$id convolve.o x_* = id x_*$
-- 結合則：$(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$
+関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次の規則を満たす必要がある．
 
-#tk マージ
+#theorem-box(title: "恒等射の存在", outlined: false)[
+関手は恒等射 $id$ ただし $id convolve.o x_* = x_*$ を持つ．
+]
 
-
-$ id convolve.o x_* &= id x_* \
-  (g compose f) convolve.o x_* &= ((g convolve.o) compose (f convolve.o)) x_* $
+#theorem-box(title: "結合則", outlined: false)[
+マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
+]
 
 
 
