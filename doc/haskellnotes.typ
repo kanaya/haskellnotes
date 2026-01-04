@@ -567,16 +567,21 @@ $ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
 
 === 関数合成と関数適用
 
-ある変数に複数の関数を順に適用することはよくあることである．例えば
+ある変数に複数の関数を順に適用することはよくあることである．例えば次のようにしたいことがある．
+
 #sourcecode[```python
+# Python
 y = f(x)
 z = g(y)
 ```]
-あるいは同じことであるが
+
+あるいは同じことであるが次のようにしたいことがある．
 #sourcecode[```python
+# Python
 z = g(f(x))
 ```]
-とすることがある．本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
+
+本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
 
 ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g.f``` である．式 $z = g compose f x$ は ```haskell z = g.f x``` と書く．]
 
@@ -593,27 +598,6 @@ $ f haskell.apply x = f x $
 演算子 $haskell.apply$ の優先順位は関数適用も含めあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
 
 関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を ```haskell ($x)f``` と書く．]
-
-#tk マージ
-
-
-変数 $x$ に関数 $f$ と関数 $g$ を連続して適用したい場合
-$ z = g(f x)$
-とするところであるが，事前に関数 $f$ と関数 $g$ を#keyword[合成]しておきたいことがある．
-
-関数の合成は次のように書く．
-$ k = g compose f $
-関数の連続適用 $g(f x)$ と合成関数の適用 $(g compose f)x$ は同じ結果を返す．#footnote[Haskell では $k = g compose f$ を `k = g . f` と書く．]
-
-関数合成演算子 $compose$ は以下のように#keyword[左結合]する．
-$ k &= h compose g compose f \
-    &= (h compose g) compose f $
-
-関数適用のための特別な演算子 $haskell.apply$ があると便利である．演算子 $haskell.apply$ は関数合成演算子よりも優先順位が低い．例を挙げる．#footnote[Haskellでは $z = h haskell.apply g compose f x$ を `z = h $ (g . f) x` と書く．]
-$ z &= h compose (g compose f) x \
-    &= h haskell.apply g compose f x $
-
-
 
 === 高階関数
 
