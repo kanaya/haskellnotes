@@ -47,7 +47,7 @@
 
 #let pb = [ #align(center, $suit.club.filled$) ]
 #let tk = [ #emoji.pin.round *TK* ]
-#let keyword(x) = [#highlight(fill: yellow, top-edge: "x-height")[#x]]
+#let keyword(x) = [#highlight(fill: gradient.linear(white, yellow, angle: 90deg), top-edge: "x-height")[#x]]
 
 #let uparrow = $class("binary", arrow.t)$
 #let uparrow2 = $class("binary", arrow.t arrow.t)$
