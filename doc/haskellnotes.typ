@@ -296,9 +296,11 @@ $ stack run
 
 本書では一般の数学書やプログラミングの教科書からは少し異なった記法を用いる．ある概念が発明されてからずっと後になって正しい記法が見つかり，それがきっかけとなって正しく理解されるという現象は歴史上よくあることである．本書でも様々な新しい記号，記法を導入するが，この章ではHaskellに近い記法から始めることにする．
 
-=== 変数と関数
+数学やプログラミミング言語には書き方に一定の決まりがある．この章ではまず「カリー風の」数式記述方式を見てみることにする．「カリー風」というのは，数学者ハスケル・カリーから名前を借りた言い方で，筆者が勝手に命名したものだ．
 
-#tk リライト
+カリー風の書き方は数学の教科書やプログラミングの教科書で見かけるものとは若干違うが，圧倒的にシンプルでHaskellとの親和性も高く，慣れてくると非常に読みやすいものなので，本書でも全面的に採用する．
+
+=== 変数と関数
 
 変数 $x$ に値 $1$ を代入するには次のようにする．#footnote[Haskellでは `x = 1` と書く．]
 
@@ -308,54 +310,39 @@ $ x = 1 $<binding>
 
 リテラルや変数には#keyword[型]がある．型は数学者の#keyword[集合]と似た意味で，整数全体の集合 $ZZ$ に相当する#keyword[整数型]や，実数全体の集合 $RR$ に相当する#keyword[浮動小数点型]がある．整数と整数型，実数と浮動小数点型は異なるため，整数型を $haskell.Int$ で，浮動小数点型を $haskell.Double$ で表すことにする．#footnote[Haskellでは `Int` および `Double` と書く．]
 
-数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x colon.double haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．#footnote[Haskellでは $x colon.double haskell.Int$ を `x :: Int` と書く．]
+数学者は変数 $x$ が整数であることを $x in ZZ$ と書くが，本書では $x colon.double haskell.Int$ と書く．これは記号 $in$ を別の用途に用いるためである．また型の注釈と代入をまとめて $x colon.double haskell.Int = 1$ と書く事もできる．#footnote[Haskellでは $x colon.double haskell.Int$ を ```haskell x :: Int``` と書き $x colon.double haskell.Int = 1$ を ```haskell x :: Int = 1 ``` と書く．]
 
 本書では変数名を原則1文字として，イタリック体で表し $w,x,y,z$ のような $n$ 以降のアルファベットを使う．
 
+#pb
+
 変数の値がいつでも変化しないことを#keyword[参照透過性]と呼ぶ．プログラマが変数の値を変化させたい，つまり#keyword[破壊的代入]を行いたい理由はユーザ入力，ループ，例外，内部状態の変化，大域ジャンプ，継続を扱いたいからであろう．しかし，後に見るようにループ，例外，内部状態の変化，大域ジャンプ，継続に変数の破壊的代入は必要ない．ユーザ入力に関しても章を改めて取り上げる．参照透過性を強くサポートするプログラミング言語をを#keyword[関数型プログラミング言語]と呼ぶ．
 
-#tk マージ
-
-
-$ x colon.double haskell.Int $
-
-$ x = 1 $
-
-$ x colon.double haskell.Int = 1 $
-
-#tk マージ
-
+#pb
 
 整数 $x$ に $1$ を足す#keyword[関数] $f$ は次のように定義できる．
-$ f x = x + 1 $
+#par-equation($ f x = x + 1 $)
 ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．#footnote[Haskellでは `f x = x + 1` と書く．]
+
+Pythonや一般的な数学書では引数 $x$ をとる関数 $f$ を $f(x)$ と書くが，括弧は冗長なので今後は $f x$ と書くことにする．#footnote[Haskell では関数 ```haskell f``` に引数 ```haskell x``` を適用させることを ```haskell f x``` と書く．数学や物理学では $x$ をパラメタとする関数を $f(x)$ と書く場合もあるし，$f$ のようにパラメタを省略する場合もある．数学や物理学でパラメタを省略した場合は，$f(x_0)$ の意味で $f|_(x=x_0)$ と書くことがある．]
 
 本書では関数名を原則1文字として，イタリック体で表し，$f,g,h$ のようにアルファベットの $f$ 以降の文字を使う．ただし有名な関数についてはローマン体で表し，文字数も2文字以上とする．たとえば $sin$ などの三角関数や指数関数がそれにあたる．
 
-変数 $x$ に関数 $f$ を#keyword[適用]する場合は次のように書く．ここでも引数を括弧でくるまない．#footnote[Haskellでは `z = f x` と書く．]
+関数 $f$ に引数 $x$を「食わせる」ことを#keyword[適用]と呼ぶ．もし $f x$ と書いてあったら，それは $f$ と $x$ の積，つまり $f times x$ ではなく，従来の $f(x)$ すなわち関数 $f$ に引数 $x$ を与えているものと解釈する．高校生向けの数学書でも $sin x$ のように三角関数に限ってはカリー風に書くことになっているので，まるで馴染みがないということもないだろう．なお，関数はいつも引数の左側に書くことにする．これを「関数 $f$ が変数 $x$ の左から作用する」と言い，また関数 $f$ のことを#keyword[左作用素]とも呼ぶ．
+
+変数 $x$ に関数 $f$ を適用して $z$ を得る場合は次のように書く．#footnote[Haskellでは `z = f x` と書く．]
+
 $ z = f x $
-
-関数 $f$ が引数をふたつ取る場合は，次のように書く．#footnote[Haskellでは `z = f x y` と書く．]
-$ z = f x y $
-
-なお $f x y$ は $(f x)y$ と解釈される．前半の $(f x)$ は1引数の関数とみなせる．2引数関数を連続した1引数関数の適用とみなす考え方を，関数の#keyword[カリー化]と呼ぶ．
-
-
-
-
-#tk マージ
-
-数学やプログラミミング言語には書き方に一定の決まりがある．この章ではまず「カリー風の」数式記述方式を見てみることにする．「カリー風」というのは，数学者ハスケル・カリーから名前を借りた言い方で，筆者が勝手に命名したものだ．
-
-カリー風の書き方は数学の教科書やプログラミングの教科書で見かけるものとは若干違うが，圧倒的にシンプルでHaskellとの親和性も高く，慣れてくると非常に読みやすいものなので，本書でも全面的に採用する．
-
-まずは関数から見ていくことにしよう．Pythonや一般的な数学書では引数 $x$ をとる関数 $f$ を $f(x)$ と書くが，括弧は冗長なので今後は $f x$ と書くことにする．#footnote[Haskell では関数 ```haskell f``` に引数 ```haskell x``` を適用させることを ```haskell f x``` と書く．数学や物理学では $x$ をパラメタとする関数を $f(x)$ と書く場合もあるし，$f$ のようにパラメタを省略する場合もある．数学や物理学でパラメタを省略した場合は，$f(x_0)$ の意味で $f|_(x=x_0)$ と書くことがある．]
-
-関数 $f$ に引数 $x$を「食わせる」ことを#keyword[関数適用]と呼ぶ．もし $f x$ と書いてあったら，それは $f$ と $x$ の積，つまり $f times x$ ではなく，従来の $f(x)$ すなわち関数 $f$ に引数 $x$ を与えているものと解釈する．高校生向けの数学書でも $sin x$ のように三角関数に限ってはカリー風に書くことになっているので，まるで馴染みがないということもないだろう．なお，関数はいつも引数の左側に書くことにする．これを「関数 $f$ が変数 $x$ の左から作用する」と言い，また関数 $f$ のことを#keyword[左作用素]とも呼ぶ．
 
 #pb
 
 複数引数をとる関数をPythonや一般的な数学の教科書では $g(x, y)$ と書くが，これも括弧が冗長なので今後は $g x y$ と書く．この場合式 $g x y$ は左を優先して結合する．つまり $g x y = (g x) y$ である．これは引数 $y$ に関数 $(g x)$ が左から作用していると解釈する．関数 $(g x)$ は引数 $x$ に関数 $g$ を作用させて作った関数である．引数に「飢えた」関数 $(g x)$ を#keyword[部分適用]された関数と呼ぶ．
+
+関数 $f$ が引数をふたつ取る場合は，次のように書く．#footnote[Haskellでは `z = f x y` と書く．]
+
+$ z = f x y $
+
+なお $f x y$ は $(f x)y$ と解釈される．前半の $(f x)$ は1引数の関数とみなせる．2引数関数を連続した1引数関数の適用とみなす考え方を，関数の#keyword[カリー化]と呼ぶ．
 
 このように式の左側を優先的に演算していくことを#keyword[左結合]と呼ぶ．Haskellの場合，関数適用はいつも左結合である．
 
@@ -394,59 +381,26 @@ lambda x: 1 + x
 #par-equation($ y = f(1 + x) $)
 という式のうち，先に $1 + x$ を計算して $x'$ のように名前をつけておきたいこともある．そんなときは次のように書く．#footnote[Haskellでは ```haskell y = let x' = 1 + x in f x'``` と書く．]
 
-$ y = haskell.kwlet x' eq.def 1 + x haskell.kwin f x' $
+$ y = haskell.kwlet x' eq.def 1 + x haskell.kwin f x' $<let-in>
 
 なお，局所変数を後ろに回して
 #par-equation($ y = f x' haskell.kwwhere x' eq.def 1 + x $)
 と書いても良い．#footnote[Haskellでは ```haskell y = f x' where x' = 1 + x``` と書く．]
 
+局所変数はラムダ式を用いたシンタックスシュガーである．@let-in は次の式と等価である．
 
-#tk マージ
-
-ラムダ
-
-関数とは，変数名に束縛された#keyword[ラムダ式]である．引数をひとつとり，その引数に $1$ を足して返す関数 $f$ はラムダ式を用いて次のように書ける．
-$ f = backslash x |-> x + 1 $
-ラムダ式は入れ子に出来る．引数をふたつとり，その引数同士を足すラムダ式は次のように書ける．
-$ backslash x |-> (backslash y |-> x + y) $<lambda-nested>
-より簡潔に@lambda-nested を
-$ backslash x y |-> x + y $<lambda-nested-alternative>
-と書いても良い．
-
-本書では無名変数 $lozenge.stroked.medium$ を用いた以下の書き方も用いる．#footnote[無名変数はHaskellには無いが，代わりに「セクション」という書き方ができる．式 $f = (lozenge.stroked.medium + 1)$ をHaskellでは `f = (+1)` と書く．]
-$
-  f &= (lozenge.stroked.medium + 1)\
-    &= backslash x |-> x + 1
-$
-
-無名変数が2回以上登場した場合は，その都度新しいパラメタを生成する．たとえば次のとおりである．#footnote[Haskellでは $f = (lozenge.stroked.medium + lozenge.stroked.medium)$ を `f = (+)` と書く．]
-$
-  f &= lozenge.stroked.medium + lozenge.stroked.medium\
-    &= backslash x |-> backslash y |-> x + y\
-    &= backslash x y |-> x + y
-$
-
-ローカル変数
-
-関数内で#keyword[ローカル変数]を使いたい場合は以下のように行う．#footnote[Haskellでは $z = haskell.kwlet y haskell.leteq 1 haskell.kwin x + y$ を `z = let y = 1 in x + y` と書く．]
-$ z = haskell.kwlet y haskell.leteq 1 haskell.kwin x + y $<let-in>
-
-ローカル変数はラムダ式のシンタックスシュガーである．@let-in は次の式と等価である．
-$ z = (backslash y |-> x + y) 1 $<let-in-alternative>
-
-ローカル変数の定義は次のように後置できる．#footnote[Haskellでは $z = x + y haskell.kwwhere y haskell.leteq 1$ を `z = x + y where y = 1` と書く．]
-$ z = x + y haskell.kwwhere y haskell.leteq 1 $<where>
-
-クロージャ
-
-ラムダ式を返す関数は，ラムダ式内部に値を閉じ込めることができる．たとえば
-$ f n = backslash x |-> n + x $<closure>
-のように関数を定義して良い．関数 $f$ に引数 $n$ を与えると，新たな1引数関数が得られる．例を挙げる．
-$ n &= 3\
-  g &= f n $<closure-example>
-この例では，関数 $g$ の中に値 $n=3$ が閉じ込められているため $g 1$ は $4$ と評価される．値を閉じ込めたラムダ式を#keyword[クロージャ]と呼ぶ．
+$ z = (backslash x' |-> f x') (1 + x) $<let-in-alternative>
 
 #pb
+
+ラムダ式を返す関数は，ラムダ式内部に値を閉じ込めることができる．たとえば
+#par-equation($ f n = backslash x |-> n + x $)
+のように関数を定義して良い．関数 $f$ に引数 $n$ を与えると，新たな1引数関数が得られる．例を挙げる．
+
+$ n &= 3\
+  g &= f n $<closure-example>
+
+この例では，関数 $g$ の中に値 $n=3$ が閉じ込められているため $g 1$ は $4$ と評価される．値を閉じ込めたラムダ式を#keyword[クロージャ]と呼ぶ．
 
 ラムダ式をサポートするほとんどのプログラミング言語はクロージャを書ける．その大半は#keyword[レキシカルクロージャ]という種類で，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む．例えば $a = 100; f = backslash x |-> a + x$ というラムダ式があるとする．当然我々は関数 $f$ がいつも $f x = 100 + x$ であることを期待するし，Haskellにおいてはいつも保証される．ところが参照透過性のない言語，言い換えると変数への破壊的代入が許されている言語では，変数 $a$ の値がいつ変わっても不思議ではない．そこで，それらの言語では関数 $f$ が定義された時点での変数 $a$ の値を関数 $f$ の定義に含めておく．これがレキシカルクロージャの考え方である．
 
@@ -475,9 +429,14 @@ rect.stroked.h --> 2 times x) $
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
 関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $1$ を，それ以外の場合は $2 times x$ を返す関数 $f''$ は以下のように定義する．#footnote[Haskellでは ```haskell f'' x | x < 0 = 0  | x == 0 = 1  | otherwise = 2 * x ``` と書く．もっとも，この記法を使う場合は改行を適度に入れたほうが読みやすい．]
+
 $ f'' x&|_(x < 0) = 0 \
   &|_(x equiv 0) = 1 \
   &|_haskell.otherwise = 2 * x $
+
+ガードは上から順にマッチされる．
+
+#pb
 
 関数定義の場合分けを駆使すれば#keyword[条件式]はなくても構わないが，条件式の記法があるのは便利である．Pythonには次のような#keyword[制御構造]としての条件文がある．
 
@@ -490,45 +449,9 @@ def fppp(x):
     return sin(x) / x
 ```]
 
-一方，我々は値を持つ#keyword[条件式]を考える．
-
-我々の条件式とは 
+一方，我々は値を持つ#keyword[条件式]を考える．我々の条件式とは 
 #par-equation($ f''' x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed") $)
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0 haskell.kwthen 0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0 then 1 else (sin x) / x``` と書く．]
-
-#tk マージ
-
-
-#keyword[条件分岐]は次のように書く．#footnote[Haskell では `z = if x > 0 then x else (-x)` と書く．]
-$ z = haskell.kwif x > 0 haskell.kwthen x haskell.kwelse (-x) $
-
-$ f = haskell.kwcase x haskell.kwof cases(1 --> 1, rect.stroked.h --> 0) $
-この場合 $x equiv 1$ ならば $f$ は $1$ を，そうでなければ $f$ は $0$ を返す．ここに $rect.stroked.h$ はすべてのパターンに一致する記号である．パターンマッチは上から順に行われる．条件分岐の代わりに以下のような#keyword[パターンマッチ]も使える．#footnote[Haskellでは以下のように書くのが一般的である．
-```haskell
-      f = case x of 1 -> 1
-                    _ -> 0
-```]
-
-// https://haskell-tech.nkhn37.net/haskell-function-pattern-match/
-
-関数定義にもパターンマッチを使える．#footnote[Haskellでは次のように書く．
-```haskell
-      f 1 = 1
-      f _ = 0
-```]
-$ f 1 &= 1\
-  f rect.stroked.h &= 0 $
-
-関数定義には次のように#keyword[ガード]と呼ばれる条件を付与することができる．#footnote[Haskellでは次のように書く．
-```haskell
-      f x | x > 0     = x
-          | otherwise = (-x)
-```]
-$ f x &bar.v_(x > 0) = x\
-    &bar.v_haskell.otherwise = (-x) $
-ここに $haskell.otherwise$ は $haskell.True$ の別名である．
-
-ガードは上から順にマッチされる．
 
 === 余談：IOサバイバルキット1
 
