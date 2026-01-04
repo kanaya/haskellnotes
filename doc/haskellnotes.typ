@@ -1501,9 +1501,13 @@ Either型はCの共有型 (```c union```) やC++のバリアント型 (```cpp st
 
 === リストの世界・Maybeの世界
 
-$haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり $y = f x$ であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．この世界では，関数 $f$ は値 $x$ を値 $y$ に変換する．
+$haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり
+#par-equation($ y = f x $)
+であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．この世界では，関数 $f$ は値 $x$ を値 $y$ に変換する．
 
-同様に $haskell.MaybeType(haskell.a)$ 型の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり $v_? = phi u_?$ であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $phi$ は値 $u_?$ を値 $v_?$ に変換する．
+同様に $haskell.MaybeType(haskell.a)$ 型の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり
+#par-equation($ v_? = phi u_? $)
+であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $phi$ は値 $u_?$ を値 $v_?$ に変換する．
 
 ここで，変数 $x, y$ とMaybe変数 $u_?, v_?$ は値コンストラクタによって
 #par-equation($ u_? &= haskell.Just(x) \
@@ -1519,9 +1523,9 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
 #table(
   columns: (auto, auto, auto, auto, auto),
   inset: 10pt,
-  table.header([世界（圏）], [値（対象）], [写像（射）], [値コンストラクタ], [マップ]),
+  table.header([世界（圏）], [値（対象）], [写像（射）], [値のジャンプ], [関数のジャンプ]),
   [$haskell.a$ 世界], $x, y$, $y = f x$, [], [],
-  [$haskell.MaybeType(haskell.a)$ 世界], $u_?, v_?$, $v_? = phi u_?$, $u_? = haskell.Just(x), v_? = haskell.Just(y)$, $phi = f convolve.o_?$,
+  [$haskell.MaybeType(haskell.a)$ 世界], $u_?, v_?$, $v_? = phi u_?$, $x ~> u_?, y ~> v_?$, $f ~> phi$,
 )
 
 いま「世界」と呼んだものを，数学者は#keyword[圏]と呼ぶ．圏とは#keyword[対象]と#keyword[射]の組み合わせである．本書では「対象」とは変数のことであり，射とは関数だと思えば良い．そして，圏から圏へとジャンプさせるものを#keyword[関手]と呼ぶ．この例で言えば値コンストラク $haskell.Just(x)$ とマップ演算子 $convolve.o_?$ が関手である．値コンストラクタ $haskell.Just(x)$ は $haskell.a -> haskell.MaybeType(haskell.a)$ という型を持ち，マップ演算子 $convolve.o_?$ は $(haskell.a -> haskell.b) -> (haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b))$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，C++の関数オブジェクト （function object）もかつてはファンクター（functor）と呼ばれていた．C++のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．]
