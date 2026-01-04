@@ -23,7 +23,6 @@
 #let first = longfunction("first")
 #let fib = longfunction("fib")
 #let head = longfunction("head")
-#let id = longfunction("id")
 #let fromIntegral = longfunction("fromIntegral")
 #let lines = longfunction("lines")
 #let norm = longfunction("norm")
