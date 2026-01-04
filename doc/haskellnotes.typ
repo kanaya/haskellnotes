@@ -1410,24 +1410,13 @@ maybe<int> v = map_over(g, u);
 ```]
 注意してほしいのは ```cpp g(x)``` も ```cpp map_over(g, u)``` も正当なコードだが ```cpp g(u)``` は型エラーであることだ．また ```cpp g(u.get_value())``` は正当なコードだが，わざわざ ```cpp u``` が持つ文脈を捨てることになる．
 
-#tk マージ
-
-
-Maybeに対する計算
-
-Maybe変数に，非Maybe変数を受け取る関数を適用することは出来ない．そこで特別な演算子 $convolve.o$ を用いて，次のように計算する．#footnote[Haskellでは `zm = (+1) <$> xm` と書く．]
-$ z_* = f convolve.o x_* $
-
-ここに関数$f$は1引数関数で，演算子 $convolve.o$ は次のように定義される．
-$ haskell.Just((f x)) &= f convolve.o haskell.Just(x) \
-haskell.Nothing &= f convolve.o haskell.Nothing $
-
-Maybeの中のリスト
+#pb
 
 リストがMaybeの中に入っている場合は，リストの各要素に関数を適用することができる．例を挙げる．
 
-$x_* = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
-$ z_* = (f *) convolve.o x_* $
+$x_? = haskell.Just([1,2...100])$ のとき，リストの各要素に関数 $f colon.double haskell.Int -> haskell.Int$ を適用するには次のように書く．#footnote[Haskellでは `zm = (f <$>) <$> xm` と書く．最初の `<$>` はリストの各要素に関数 `f` を適用する演算子，2番目の `<$>` はMaybeの中のリストの各要素に関数 `f` を適用する演算子である．]
+
+$ z_? = (f *) convolve.o_? x_? $
 
 === リストとMaybe
 
