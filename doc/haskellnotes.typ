@@ -1815,6 +1815,7 @@ $ z_? = phi x $
 
 #tk モナド則
 
+// https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
 $ mu haskell.bind shell.l.stroked x shell.r.stroked &= mu x \
   shell.l.stroked lozenge.stroked.medium shell.r.stroked haskell.bind x_*
