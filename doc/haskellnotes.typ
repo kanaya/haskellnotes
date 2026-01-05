@@ -1607,7 +1607,7 @@ $ z_* = f convolve.o x_* $
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次のふたつの規則を満たす必要がある．
 
 #theorem-box(title: "恒等射の存在", outlined: false)[
-関手は恒等射 $id$ ただし $id convolve.o x_* = x_*$ を持つ．
+関手は恒等射 $(id convolve.o)$ ただし $id convolve.o x_* = x_*$ を持つ．
 ]
 
 #theorem-box(title: "結合則", outlined: false)[
@@ -1615,6 +1615,17 @@ $ z_* = f convolve.o x_* $
 ]
 
 このふたつをまとめて#keyword[関手則]と呼ぶ．
+
+まず関数 $id$ を定義しておくと，これは引数をそのまま返す関数で
+#par-equation($ id x = x $)
+である．引数 $x$ は変数でも関数でも良いので，ラムダ式を使って
+#par-equation($ id &= lozenge.stroked.medium \
+  &= backslash x |-> x $)
+と書いたほうがわかり良いかもしれない．
+
+恒等射の存在 $id convolve.o x_* = x_*$ とは $id convolve.o x_* = id x_*$ ということであるから，両辺の $x_*$ を削除して
+#par-equation($ id convolve.o = id $)
+となる．一言で言うと，関数 $id convolve.o$ は関数 $id$ と同じで，引数をそのまま返す．この法則は任意の型クラス $haskell.f$ について $haskell.Functor supset haskell.f$ であるならば，任意の型 $haskell.f_haskell.a$ に対して $(id convolve.o) colon.double $...
 
 #tk 関手則の説明
 
