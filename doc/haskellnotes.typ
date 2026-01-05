@@ -1911,11 +1911,15 @@ z = do { x' <- x; y' <- y; f x'; g y' }
 
 === この章のまとめ
 
+= Haskellプログラミング
+
+= プログラミングと代数構造
+
 = Haskellの深い部分
 
 
 
-=== 種
+== 種
 
 #tk 種
 
@@ -1927,7 +1931,6 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
 
 
 
-= プログラミングと代数構造
 
 = 執筆ノート
 
