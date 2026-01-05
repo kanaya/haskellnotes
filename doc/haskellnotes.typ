@@ -807,10 +807,8 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 
 型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
 #par-equation($ f colon.double haskell.a -> haskell.a $)
-であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a. a -> a``` と書く．]
-
-$ f colon.double forall haskell.a |=> haskell.a -> haskell.a $
-
+であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
+#par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
 ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
 
 
