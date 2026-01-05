@@ -1611,7 +1611,7 @@ $ z_* = f convolve.o x_* $
 ]
 
 #theorem-box(title: "結合則", outlined: false)[
-マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
+マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose f convolve.o x_*$ を満たす．
 ]
 
 このふたつをまとめて#keyword[関手則]と呼ぶ．
@@ -1698,20 +1698,20 @@ $ f_* colon.double haskell.Applicative supset haskell.f
 #tk マージ
 
 
-$ shell.l id shell.r haskell.amap x_* &= x_* \
-  shell.l f shell.r haskell.amap shell.l x shell.r 
-  &= shell.l lozenge.stroked.medium haskell.apply x shell.r haskell.amap shell.l f shell.r \
-  &= shell.l f x shell.r \
-  shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_*
-  &= h_* haskell.amap (g_* haskell.amap f_*) $
-
 #theorem-box(title: "恒等射の存在", outlined: false)[
 アプリカティブ関手は恒等射 $id$ ただし $shell.l id shell.r haskell.amap x_* = x_*$ を持つ．
 ]
 
+#theorem-box(title: "Homomorphism", outlined: false)[
+$shell.l f shell.r haskell.amap shell.l x shell.r = shell.l f x shell.r$
+]
 
-#theorem-box(title: "結合則", outlined: false)[
-アプリカティブマップ演算子 $(haskell.amap)$ は結合則 $shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_* = h_* haskell.amap (g_* haskell.amap f_*)$ を満たす．
+#theorem-box(title: "Interchange", outlined: false)[
+$shell.l f shell.r haskell.amap shell.l x shell.r = shell.l lozenge.stroked.medium dollar x shell.r haskell.amap f$
+]
+
+#theorem-box(title: "Composition", outlined: false)[
+$shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_* = h_* haskell.amap (g_* haskell.amap f_*)$
 ]
 
 
@@ -1829,6 +1829,18 @@ $ mu^star.stroked shell.l x shell.r &= mu x \
   shell.l lozenge.stroked.medium shell.r^star.stroked x_* &= x_* \
   (nu^star.stroked mu)^star.stroked x_* &= nu^star.stroked (mu^star.stroked x_*) $
 
+
+#theorem-box(title: "Right Identity", outlined: false)[
+$phi haskell.bind shell.l x shell.r = phi x$
+]
+
+#theorem-box(title: "Left Identity", outlined: false)[
+$shell.l lozenge.stroked.medium shell.r haskell.bind x_* = x_*$
+]
+
+#theorem-box(title: "Associativity", outlined: false)[
+$phi haskell.bind (psi haskell.bind x_*) = (backslash y |-> phi haskell.bind (psi y)) haskell.bind x_*$
+]
 
 === モノイド
 
