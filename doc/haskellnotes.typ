@@ -1590,12 +1590,10 @@ $ x_* colon.double haskell.Functor supset haskell.f ==> haskell.typeconstructor1
 $ z_* = f convolve.o x_* $
 
 演算子 $convolve.o$ の型は次のとおりである．
-$ lozenge.stroked.medium convolve.o lozenge.stroked.medium
-  colon.double haskell.Functor supset haskell.f
+#par-equation($ (convolve.o) colon.double haskell.Functor supset haskell.f
   ==> (haskell.a -> haskell.b)
   -> haskell.fa
-  -> haskell.fb $
-
+  -> haskell.fb $)
 もし変数 $x_*$ の型がリストであれば $convolve.o = *$ であると解釈する．
 
 === 関手則
