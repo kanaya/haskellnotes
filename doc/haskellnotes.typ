@@ -287,7 +287,10 @@ $ stack build
 $ stack run
 ```]
 
-#tk Windowsの場合．
+#pb
+
+Windows (Intel)の場合は https://docs.haskellstack.org/en/stable/ からWindows版インストーラをダウンロードできる．
+
 
 === 余談：本書の構成
 
