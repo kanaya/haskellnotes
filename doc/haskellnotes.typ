@@ -1611,7 +1611,7 @@ $ z_* = f convolve.o x_* $
 ]
 
 #theorem-box(title: "結合則", outlined: false)[
-マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose f convolve.o x_*$ を満たす．
+マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
 ]
 
 このふたつをまとめて#keyword[関手則]と呼ぶ．
