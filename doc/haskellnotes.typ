@@ -744,18 +744,21 @@ Haskellでは，どのような関数であれ引数は1個しかとらない．
 
 #pb
 
-Haskellには#keyword[タプル]という型がある．タプルとは，複数の変数を組み合わせたもので，例えば変数 $x$ と $y$ をひとまとめにした $paren.l.flat x, y paren.r.flat$ はタプルである．変数 $x$, $y$ の型は同じでも良いし，異なっても良い．#footnote[Haskellでは $paren.l.flat x, y paren.r.flat$ を ```haskell (x, y)``` と書く．]
+Haskellには#keyword[タプル]という型がある．タプルとは，複数の変数を組み合わせたもので，例えば変数 $x$ と $y$ をひとまとめにした $paren.l.stroked x, y paren.r.stroked$ はタプルである．変数 $x$, $y$ の型は同じでも良いし，異なっても良い．#footnote[Haskellでは $paren.l.stroked x, y paren.r.stroked$ を ```haskell (x, y)``` と書く．]
 
-いまタプルを引数に取る関数 $f paren.l.flat x, y paren.r.flat = x + y$ があったとしよう．Haskellにはタプルをとる関数をカリー化する関数 $haskell.curry$ があり，$(haskell.curry f) x y$ は $x + y$ になる．
+タプルの型は，要素の型をタプルにしたものである．例えば $haskell.Int$ が2個からなるタプルの型は次のようになる．#footnote[Haskellでは ```haskell z :: (Int, Int)``` と書く．]
 
-逆に，カリー化された関数 $f' x y = x + y$ に関しては $(haskell.uncurry f')paren.l.flat x, y paren.r.flat$ のように#keyword[アンカリー化]することで，タプルに適用することができる．
+$ z colon.double paren.l.stroked haskell.Int, haskell.Int paren.r.stroked $
+
+いまタプルを引数に取る関数 $f paren.l.stroked x, y paren.r.stroked = x + y$ があったとしよう．Haskellにはタプルをとる関数をカリー化する関数 $haskell.curry$ があり，$(haskell.curry f) x y$ は $x + y$ になる．
+
+逆に，カリー化された関数 $f' x y = x + y$ に関しては $(haskell.uncurry f')paren.l.stroked x, y paren.r.stroked$ のように#keyword[アンカリー化]することで，タプルに適用することができる．
 
 タプルの中身の個数は0個または2個以上でなければならず，上限は処理系によって定められている．2個の変数からなるタプルを特別にペア，3個の変数からなるタプルを特別にトリプルと呼ぶ．中身が0個のタプルを $nothing.rev$ で表し，特別に#keyword[ユニット]と呼ぶ．#footnote[GHC v8.2.1 は最大62個の変数からなるタプルまで生成できる．]
 
 ユニット $nothing.rev$ の型は#keyword[ユニット型]で，変数 $x$ がユニット型の場合は次のように書く．#footnote[Haskellでは ```haskell x :: ()``` と書く．]
 
 $ x colon.double haskell.Unit $
-
 
 === 多相型と型クラス
 
@@ -1879,21 +1882,9 @@ $(ZZ, +, 0)$ はモノイドである．
 $ haskell.main &colon.double haskell.IO_haskell.Int \
   haskell.main &= shell.l 0 shell.r $
 
-=== タプル
+=== IO
 
-#tk タプル
-
-複数の変数をまとめてひとつの#keyword[タプル]にすることができる．例を挙げる．#footnote[Haskellでは `z = (x, y)` と書く．]
-$ z = (x, y) $
-
-タプルの型は，要素の型をタプルにしたものである．例えば $haskell.Int$ が2個からなるタプルの型は次のようになる．#footnote[Haskellでは `z :: (Int, Int)` と書く．]
-$ z colon.double (haskell.Int, haskell.Int) $
-
-要素を含まないタプルを#keyword[ユニット]と呼ぶ．ユニットは次のように書く．#footnote[Haskellでは `z = ()` と書く．]
-$ z = nothing.rev $
-
-ユニットの型は#keyword[ユニット型]で，型注釈を次のように書く．#footnote[Haskellでは `z :: ()` と書く．]
-$ z colon.double haskell.Unit $
+#tk IO
 
 === IOモナド
 

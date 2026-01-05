@@ -54,7 +54,7 @@
 #let IO = typename("IO")
 #let List = typename("[]")
 #let String = typename("String")
-#let Unit = typename(math.paren.l.flat+math.paren.r.flat)
+#let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 
 // Type constructor.
 #let typeconstructor(x) = math.bold(x)
