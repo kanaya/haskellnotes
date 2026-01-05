@@ -1711,7 +1711,7 @@ $shell.l f shell.r haskell.amap shell.l x shell.r = shell.l lozenge.stroked.medi
 ]
 
 #theorem-box(title: "Composition", outlined: false)[
-$shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_* = h_* haskell.amap (g_* haskell.amap f_*)$
+$h_* haskell.amap (g_* haskell.amap f_*) = shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
 ]
 
 
