@@ -64,7 +64,7 @@
 #pagebreak()
 
 #figure(
-  caption: "凡例",
+  caption: "凡例1",
   table(
     columns: (auto, auto, auto),
     inset: 10pt,
@@ -91,11 +91,23 @@
     [キーワード], [固定幅], $haskell.kwlet$,
     [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
     [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
+    [カインド], [サンセリフ（大文字）], $haskell.Type$,
+  )
+)
+
+#figure(
+  caption: "凡例2",
+  table(
+    columns: (auto, auto, auto),
+    inset: 10pt,
+    align: center,
+    table.header([*種類*], [*字体・表記法*], [*例*]),
     [集合（数学）], [ブラックボード（1文字）], $ZZ$,
     [関手（数学）], [スクリプト（1文字）], $scr(F)$,
     [圏（数学）], [カリグラフィ（1文字）], $cal(C)$
   )
 )
+
 
 = Haskell入門
 

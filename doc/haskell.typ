@@ -128,6 +128,10 @@
 #let kwtype = keyword("type")
 #let kwwhere = keyword("where")
 
+// Kind
+#let kind(x) = math.sans(x)
+#let Type = kind("Type")
+
 // Container.
 #let ctxt(x) = {
   let xx = x
