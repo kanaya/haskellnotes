@@ -416,7 +416,7 @@ $ y = haskell.kwlet x' eq.def 1 + x haskell.kwin f x' $<let-in>
 
 $ z = (backslash x' |-> f x') (1 + x) $<let-in-alternative>
 
-=== パタンマッチ・ガード・条件分岐
+=== パタンマッチとガード
 
 関数の定義は，基本的にはラムダ式の変数への代入である．引数 $x$ をとり値 $2 times x$ を返す関数 $f$ は
 #par-equation($ f = backslash x |-> 2 times x $)
@@ -444,7 +444,7 @@ $ f'' x&|_(x < 0) = 0 \
 
 ガードは上から順にマッチされる．
 
-#pb
+=== 余談：条件式
 
 関数定義の場合分けを駆使すれば#keyword[条件式]はなくても構わないが，条件式の記法があるのは便利である．Pythonには次のような#keyword[制御構造]としての条件文がある．
 
