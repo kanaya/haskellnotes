@@ -286,7 +286,19 @@ main :: IO ()
 main = someFunc
 ```]
 
-`Lib.hs` または `Main.hs` を書き換えた後は次のコマンドで実行する．最初のビルド時には，必要なHaskellコンパイラやライブラリがダウンロードされるので少々の時間がかかる．
+計算機科学の習慣に従って "Hello, World!" と表示するプログラムを書いておこう．それには `Lib.hs` を書き換えて次のようにする．
+
+#sourcecode[```haskell
+-- Lib.hs
+module Lib
+    ( someFunc
+    ) where
+
+someFunc :: IO ()
+someFunc = putStrLn "Hello, World!"
+```]
+
+`Lib.hs`（または `Main.hs`）を書き換えた後は次のコマンドで実行する．最初のビルド時には，必要なHaskellコンパイラやライブラリがダウンロードされるので少々の時間がかかる．
 
 #sourcecode[```shell-unix-generic
 $ stack build
