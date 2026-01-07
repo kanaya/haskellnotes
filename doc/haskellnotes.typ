@@ -461,6 +461,116 @@ def fppp(x):
 #par-equation($ f''' x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed") $)
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0 haskell.kwthen 0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0 then 1 else (sin x) / x``` と書く．]
 
+=== 余談：XYZ
+
+#tk 余談
+
+=== この章のまとめ
+
+#tk この章のまとめ．
+
+== さらにカリー風な書き方
+<more-curry-style>
+
+我々は関数とラムダ式の「カリー風」な書き方を見てきた．この章ではさらに演算子，関数合成についても「カリー風」な書き方を見ていく．
+
+=== 演算子
+
+#keyword[演算子]は関数の特別な姿である．演算子は#keyword[作用素]と呼んでも良い．どちらも英語のoperatorの和訳である．演算子は普通アルファベット以外のシンボル1個で表現し，変数や関数の前に置いて直後の変数や関数に作用させるか，2個の変数や関数の中間に置いてその両者に作用させる．例えば $-x$ のマイナス記号 $(-)$ は変数の前に置いて直後の変数 $x$ に作用する演算子であり，$x+y$ のプラス記号 $(+)$ は2個の変数の間に置いてその両者 $(x, y)$ に作用する．
+
+1個の変数または関数に作用する演算子を#keyword[単項演算子]と呼び，2個の変数または関数に作用する演算子を#keyword[二項演算子]と呼ぶ．本書では単項演算子はすべて変数の前に置く，すなわち#keyword[前置]する．前置する演算子のことを#keyword[前置演算子]と呼ぶが，数学者は同じものを左作用素と呼ぶ．
+
+Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない．今後，誤解を避けるために数式中の $-x$ はすべて $(-x)$ と書く．
+
+二項演算子のうちよく使われるものは和 $(+)$，積 $(times)$，論理和 $(or)$，論理積 $(and)$，同値 $(equiv)$，大なり$(>)$，小なり $(<)$ 等である．二項演算子はたとえ積記号であっても省略できない．二項演算子は多数あるので，その都度説明する．#footnote[Haskellでは $and$ を ```haskell &&``` と書き，$or$ を ```haskell ||``` と書く．]
+
+二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $haskell.anyop$ について $x class("binary",haskell.anyop) y$ 及び $(haskell.anyop) x y$ は全く同じ意味である．すなわち
+#par-equation($ (haskell.anyop) x y = x class("binary", haskell.anyop) y $)
+である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
+
+一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ についても
+#par-equation($ (haskell.anyop) x y = ((haskell.anyop) x) y $)
+であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $((haskell.anyop) x)$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を ```haskell ((+)1)``` と書く．]
+
+前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium haskell.anyop x)$ や $(x haskell.anyop lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
+
+二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
+
+$ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
+ (x haskell.anyop) &= (x haskell.anyop lozenge.stroked.medium)
+ = ((haskell.anyop) x) $
+
+例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を ```haskell (1+)``` と書く．また ```haskell (-1)``` はセクションではなくマイナス $1$ を表す（```haskell -1``` というリテラルとみなされる）．ただし ```haskell (- 1)``` のように空白を挟んでも同じくマイナス $1$ とみなされる（```haskell 1``` というリテラルに単項マイナス演算子が適用される）．]
+
+なお，二項演算子の結合性，すなわち左結合か右結合かは，演算子によって異なる．また演算の優先順位を明示的に与えるために括弧が用いられる．
+
+一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．#footnote[Haskellでは $x haskell.infix(f) y$ を ```haskell x `f` y``` と書く．]
+
+=== 関数合成と関数適用
+
+ある変数に複数の関数を順に適用することはよくあることである．例えば次のようにしたいことがある．
+
+#sourcecode[```python
+# Python
+y = f(x)
+z = g(y)
+```]
+
+あるいは同じことであるが次のようにしたいことがある．
+#sourcecode[```python
+# Python
+z = g(f(x))
+```]
+
+このコードを本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
+
+ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g.f``` である．式 $z = g compose f x$ は ```haskell z = g.f x``` と書く．]
+
+関数合成演算子は，連続して用いることができる．関数合成演算子は左結合するので，関数 $f, g, h$ について $h compose g compose f = (h compose g) compose f$ であるが，これを展開すると以下のようになる．
+$ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
+  &= h(g(f lozenge.stroked.medium)) \
+  &= h compose (g compose f) $
+
+そのため $h compose g compose f = h compose (g compose f)$ である．つまり，関数合成は順序に依存しない．
+
+#pb
+
+#tk 関数合成則
+
+#pb
+
+関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
+$ f haskell.apply x = f x $
+
+演算子 $haskell.apply$ の優先順位は関数適用も含めあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
+
+関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を ```haskell ($x)f``` と書く．]
+
+=== 高階関数
+
+関数を引数に取ったり，あるいは関数を返す関数のことを#keyword[高階関数]と呼ぶことがある．関数合成演算子と関数適用演算子は高階関数の好例である．
+
+他に例えば，引数として整数 $a$ を取り，関数 $f x = a + x$ を返すような関数 $g$ を次のように定義することが出来る．
+$ g a = a + lozenge.stroked.medium $
+
+このとき，
+$ f &= g space 100 \
+  x &= f space 1 $
+とすれば $x = 101$ を得る．#footnote[Haskell では $g a = a + lozenge.stroked.medium$ を $g a = backslash x |-> a + x$ と展開しておいて ```hsakell g a = \ x -> a + x``` と書く．]
+
+高階関数は今後度々顔をだすことになる．後で登場する#keyword[マップ演算子]や#keyword[畳込み演算子]は高階関数の一種である．
+
+#pb
+
+ラムダ式をサポートするほとんどのプログラミング言語は，#keyword[レキシカルクロージャ]をサポートする．レキシカルクロージャとは，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む機構である．例えば
+$ a &= 100 \
+  f &= a + lozenge.stroked.medium $
+というラムダ式があるとする．当然我々は関数 $f$ がいつも $f = 100 + lozenge.stroked.medium$ であることを期待するし，Haskellにおいてはいつも保証される．#footnote[Haskellでは ```haskell a = 100; f = \x -> a + x``` と書く．]
+
+ところが，参照透過性のない言語，言い換えると変数への破壊的代入が許されている言語では，変数 $a$ の値がいつ変わっても不思議ではない．そこで，それらの言語では関数 $f$ が定義された時点での $a$ の値を，関数 $f$ の定義に含めておく．これがレキシカルクロージャの考え方である．
+
+Haskellではそもそも変数への破壊的代入がないので，関数 $f$ がレキシカルクロージャであるかどうか悩む必要はない．あえて言えば，Haskellではラムダ式はいつもレキシカルクロージャである．もしあなたのそばのC++プログラマが「え？　Haskellにはレキシカルクロージャが無いの？」などと聞いてきたら，「ええ，Haskellには破壊的代入すらありませんから」と答えておこう．
+
 === 余談：IOサバイバルキット1
 
 ここで，実用的なHaskellプログラムについて触れておきたいと思う．
@@ -533,122 +643,6 @@ $ stack run < input.txt
 
 いまはまだ「ベイビー・プログラム」であるが，今後はより実用度を増していく．
 
-=== この章のまとめ
-
-#tk この章のまとめ．
-
-== さらにカリー風な書き方
-<more-curry-style>
-
-我々は関数とラムダ式の「カリー風」な書き方を見てきた．この章ではさらに演算子，関数合成についても「カリー風」な書き方を見ていく．
-
-=== 演算子
-
-#keyword[演算子]は関数の特別な姿である．演算子は#keyword[作用素]と呼んでも良い．どちらも英語のoperatorの和訳である．演算子は普通アルファベット以外のシンボル1個で表現し，変数や関数の前に置いて直後の変数や関数に作用させるか，2個の変数や関数の中間に置いてその両者に作用させる．例えば $-x$ のマイナス記号 $(-)$ は変数の前に置いて直後の変数 $x$ に作用する演算子であり，$x+y$ のプラス記号 $(+)$ は2個の変数の間に置いてその両者 $(x, y)$ に作用する．
-
-1個の変数または関数に作用する演算子を#keyword[単項演算子]と呼び，2個の変数または関数に作用する演算子を#keyword[二項演算子]と呼ぶ．本書では単項演算子はすべて変数の前に置く，すなわち#keyword[前置]する．前置する演算子のことを#keyword[前置演算子]と呼ぶが，数学者は同じものを左作用素と呼ぶ．
-
-Haskellには単項マイナス $(-)$ を除いて他に単項演算子はない．今後，誤解を避けるために数式中の $-x$ はすべて $(-x)$ と書く．
-
-二項演算子のうちよく使われるものは和 $(+)$，積 $(times)$，論理和 $(or)$，論理積 $(and)$，同値 $(equiv)$，大なり$(>)$，小なり $(<)$ 等である．二項演算子はたとえ積記号であっても省略できない．二項演算子は多数あるので，その都度説明する．#footnote[Haskellでは $and$ を ```haskell &&``` と書き，$or$ を ```haskell ||``` と書く．]
-
-二項演算子は#keyword[中置]することが基本であるが，括弧で包むことで前置することも可能である．任意の二項演算子 $haskell.anyop$ について $x class("binary",haskell.anyop) y$ 及び $(haskell.anyop) x y$ は全く同じ意味である．すなわち
-#par-equation($ (haskell.anyop) x y = x class("binary", haskell.anyop) y $)
-である．従って，二項演算子と2引数関数に本質的な差はない．本書では演算子と関数という用語は全く同じ意味で用いる．#footnote[Haskellでは任意の二項演算子を括弧で包むことで前置演算子として使うことができる．例えば `x + y` と `(+) x y` は同じ結果を返す．]
-
-一般の関数が左結合であることを思い出すと，二項演算子を関数に見立てた $(haskell.anyop)$ についても
-#par-equation($ (haskell.anyop) x y = ((haskell.anyop) x) y $)
-であるから，部分適用が可能である．この式から第2引数 $y$ を取り除いて $((haskell.anyop) x)$ という「餓えた」1引数関数を取り出せる．例えば関数 $((+)1)$ は引数に $1$ を加える関数である．#footnote[Haskellでは $((+)1)$ を ```haskell ((+)1)``` と書く．]
-
-前置される二項演算子 $(haskell.anyop)$ は，ラムダ式 $(lozenge.stroked.medium class("binary", haskell.anyop) lozenge.stroked.medium)$ の無名パラメタ $lozenge.stroked.medium$ を省略したものと考えても良い．また $(lozenge.stroked.medium haskell.anyop x)$ や $(x haskell.anyop lozenge.stroked.medium)$ から無名パラメタを省略した $(haskell.anyop x)$ と $(x haskell.anyop)$ も有効な表現であり，特別に#keyword[セクション]と呼ばれる．
-
-二項演算子 $haskell.anyop$ に対して $(haskell.anyop x)$ および $(x haskell.anyop)$ はそれぞれ以下の通りである．
-
-$ (haskell.anyop x) &= (lozenge.stroked.medium haskell.anyop x) \
- (x haskell.anyop) &= (x haskell.anyop lozenge.stroked.medium)
- = ((haskell.anyop) x) $
-
-例えば $(1+)$ は $((+)1)$ と等価であり，これは $(+1)$ とも等価である．ただし，マイナス演算子 $(-)$ だけは例外で，$(-1)$ はマイナス $1$ を表す．負の数をいつも括弧で包んでおくのは良いアイディアである．#footnote[Haskell は $(1+)$ を ```haskell (1+)``` と書く．また ```haskell (-1)``` はセクションではなくマイナス $1$ を表す（```haskell -1``` というリテラルとみなされる）．ただし ```haskell (- 1)``` のように空白を挟んでも同じくマイナス $1$ とみなされる（```haskell 1``` というリテラルに単項マイナス演算子が適用される）．]
-
-なお，二項演算子の結合性，すなわち左結合か右結合かは，演算子によって異なる．また演算の優先順位を明示的に与えるために括弧が用いられる．
-
-一般の関数 $f$ を中置演算子に変換する記号 $haskell.infix(f)$ を今後用いる．この記号を用いると値 $f x y$ のことを $x haskell.infix(f) y$ と書くことができる．#footnote[Haskellでは $x haskell.infix(f) y$ を ```haskell x `f` y``` と書く．]
-
-=== 関数合成と関数適用
-
-ある変数に複数の関数を順に適用することはよくあることである．例えば次のようにしたいことがある．
-
-#sourcecode[```python
-# Python
-y = f(x)
-z = g(y)
-```]
-
-あるいは同じことであるが次のようにしたいことがある．
-#sourcecode[```python
-# Python
-z = g(f(x))
-```]
-
-このコードを本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
-
-ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g.f``` である．式 $z = g compose f x$ は ```haskell z = g.f x``` と書く．]
-
-関数合成演算子は，連続して用いることができる．関数合成演算子は左結合するので，関数 $f, g, h$ について $h compose g compose f = (h compose g) compose f$ であるが，これを展開すると以下のようになる．
-$ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
-  &= h(g(f lozenge.stroked.medium)) \
-  &= h compose (g compose f) $
-
-そのため $h compose g compose f = h compose (g compose f)$ である．つまり，関数合成は順序に依存しない．
-
-関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
-$ f haskell.apply x = f x $
-
-演算子 $haskell.apply$ の優先順位は関数適用も含めあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
-
-関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を ```haskell ($x)f``` と書く．]
-
-=== 高階関数
-
-関数を引数に取ったり，あるいは関数を返す関数のことを#keyword[高階関数]と呼ぶことがある．関数合成演算子と関数適用演算子は高階関数の好例である．
-
-他に例えば，引数として整数 $a$ を取り，関数 $f x = a + x$ を返すような関数 $g$ を次のように定義することが出来る．
-$ g a = a + lozenge.stroked.medium $
-
-このとき，
-$ f &= g space 100 \
-  x &= f space 1 $
-とすれば $x = 101$ を得る．#footnote[Haskell では $g a = a + lozenge.stroked.medium$ を $g a = backslash x |-> a + x$ と展開しておいて ```hsakell g a = \ x -> a + x``` と書く．]
-
-高階関数は今後度々顔をだすことになる．後で登場する#keyword[マップ演算子]や#keyword[畳込み演算子]は高階関数の一種である．
-
-#pb
-
-ラムダ式をサポートするほとんどのプログラミング言語は，#keyword[レキシカルクロージャ]をサポートする．レキシカルクロージャとは，ラムダ式が定義された時点での，周囲の環境をラムダ式に埋め込む機構である．例えば
-$ a &= 100 \
-  f &= a + lozenge.stroked.medium $
-というラムダ式があるとする．当然我々は関数 $f$ がいつも $f = 100 + lozenge.stroked.medium$ であることを期待するし，Haskellにおいてはいつも保証される．#footnote[Haskellでは ```haskell a = 100; f = \x -> a + x``` と書く．]
-
-ところが，参照透過性のない言語，言い換えると変数への破壊的代入が許されている言語では，変数 $a$ の値がいつ変わっても不思議ではない．そこで，それらの言語では関数 $f$ が定義された時点での $a$ の値を，関数 $f$ の定義に含めておく．これがレキシカルクロージャの考え方である．
-
-Haskellではそもそも変数への破壊的代入がないので，関数 $f$ がレキシカルクロージャであるかどうか悩む必要はない．あえて言えば，Haskellではラムダ式はいつもレキシカルクロージャである．もしあなたのそばのC++プログラマが「え？　Haskellにはレキシカルクロージャが無いの？」などと聞いてきたら，「ええ，Haskellには破壊的代入すらありませんから」と答えておこう．
-
-=== 余談：演算子の定義
-
-Haskellでは関数だけでなく，新しい演算子も定義できる．#footnote[Haskellで演算子に使える記号は `! @ # $ % ^ & * - + = . \ | / < : > ? ~` の組み合わせである．]
-
-計算機科学者ドナルド・クヌースは，整数 $x, n$ が与えられたとき $x$ の $n$ 乗を $x^n$ ではなく $x uparrow n$ と書いた．これは
-$ x uparrow n = underbrace(x times x times ... times x, n) $
-という意味である．#footnote[Haskellでは $x uparrow n$ を ```haskell x ^ n``` と書く．]
-
-クヌースはさらに演算子 $uparrow2$ を
-$ x uparrow2 n = underbrace(x uparrow x uparrow ... uparrow x, n) $
-のように定義した．これを#keyword[クヌースの矢印]と呼ぶ．クヌースの矢印は
-$ x uparrow2 n &|_(n <= 0) = 1 \
-  &|_"otherwise" = x uparrow (x uparrow2 (n - 1)) $
-と定義できる．#footnote[Haskellでは ```haskell  x^^.n | n <= 0 = 1  | otherwise = x^(x^^.(n-1))``` ように定義する．なお厳密には ```haskell (^^.) :: Integral a => a -> a -> a``` と演算子の型を宣言しておく必要がある．]
-
-なおこの定義は自分自身を呼び出す#keyword[再帰]を行っている．再帰に関しては@recursion で詳しく述べる．
 
 === この章のまとめ
 
@@ -808,6 +802,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
 ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
 
+#tk 型に対する演算
 
 === この章のまとめ
 
