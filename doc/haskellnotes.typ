@@ -1960,9 +1960,9 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
   [Functor map], $z_* = f convolve.o x_*$, [```haskell zm = f <$> xm ```],
   [Applicative map], $z_* = f_* haskell.amap x_*$, [```haskell zm = fm <*> xm ```],
   [Applicative map with 2 arguments], $z_* = g_* haskell.amap x_* haskell.amap y_*$, [```haskell zm = gm <*> xm <*> ym ```],
-  [Applicative map with 2 arguments], $z_* = g convolve.o x_* haskell.amap y_*$, [```haskell zm = gm <$> xm <*> ym ```],
+  [Applicative map with 2 arguments], $ z_* &= g convolve.o x_* haskell.amap y_* \ &= [| g x_* y_* |]$, [```haskell zm = gm <$> xm <*> ym ```],
   [Monadic function application], $z_* = phi x$, [```haskell zm = phi x ```],
   [Bind], $z_* = phi haskell.bind x_*$, [```haskell zm = phi =<< xm ```],
-  [Double bind], $z_* = psi haskell.bind phi haskell.bind x_*$, [```haskell zm = psi =<< phi =<< xm ```],
+  [Double bind（右結合）], $z_* = psi haskell.bind phi haskell.bind x_*$, [```haskell zm = psi =<< phi =<< xm ```],
 )
 
