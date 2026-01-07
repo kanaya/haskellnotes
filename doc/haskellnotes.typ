@@ -537,6 +537,14 @@ $ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
 
 #tk 関数合成則
 
+#theorem-box(title: "恒等関数の存在", outlined: false)[
+関数は恒等関数 $id$ ただし $id compose f = f$ を持つ．
+]
+
+#theorem-box(title: "結合則", outlined: false)[
+任意の関数 $f, g, h$ について $(h compose g) compose f = h compose (g compose f)$ が成り立つ．
+]
+
 #pb
 
 関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
