@@ -538,7 +538,7 @@ $ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
 #tk 関数合成則
 
 #theorem-box(title: "恒等関数の存在", outlined: false)[
-関数は恒等関数 $id$ ただし $id compose f = f$ を持つ．
+任意の関数 $f$ に対して恒等関数 $id$ ただし $id compose f = f$ が存在する．
 ]
 
 #theorem-box(title: "結合則", outlined: false)[
