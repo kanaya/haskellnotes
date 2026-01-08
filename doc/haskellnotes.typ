@@ -81,17 +81,17 @@
     [有名な値コンストラクタ1], [数学記号], $emptyset, nothing.rev$,
     [有名な値コンストラクタ2], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.stroked u, v paren.r.stroked$,
     [アクション（文脈に入れる関数）], [ギリシア文字（1文字）], $alpha, phi$,
-    [有名なアクション], [サンセリフ], $haskell.main, haskell.print$,
+    [有名なアクション], [サンセリフ（小文字）], $haskell.main, haskell.print$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
     [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
     [ユニット型], [括弧], $haskell.unittype$,
     [型クラス], [フラクチュール], $haskell.Num$,
+    [カインド], [サンセリフ（大文字）], $haskell.Type$,
     [キーワード], [固定幅], $haskell.kwlet$,
     [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
     [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
-    [カインド], [サンセリフ（大文字）], $haskell.Type$,
   )
 )
 
