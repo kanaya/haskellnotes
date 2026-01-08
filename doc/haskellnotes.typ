@@ -1553,13 +1553,13 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
 Haskellではマップ演算子が定義された型を関手型と呼ぶ．具体的には，マップ演算子が定義されたすべての型は $haskell.Functor$ 型クラスのインスタンスであるとする．つまり $haskell.Functor$ 型クラスには一般化されたマップ演算子が定義されており，そのインスタンスであるリストやMaybeは独自のマップ演算子を定義しなければならないということである．
 
 一般化されたマップ演算子を $convolve.o$ で表そう．この $convolve.o$ 演算子は
-#par-equation($ convolve.o colon.double haskell.Functor supset haskell.f arrow.r.stroked haskell.f_haskell.a -> haskell.f_haskell.b $)
+#par-equation($ (convolve.o) colon.double haskell.Functor supset haskell.f arrow.r.stroked haskell.f_haskell.a -> haskell.f_haskell.b $)
 という型を持つ．ここに $haskell.Functor supset haskell.f$ は，$haskell.f$ が $haskell.Functor$ 型クラスに属すという制約を表している．また $haskell.f$ は型コンストラクタであり，$haskell.f_haskell.a$ は $haskell.f$ 型コンストラクタと$haskell.a$ 型によって作られたコンテナ型である．
 
 もし型コンストラクタがリスト型コンストラクタであれば，つまり $haskell.f = []$ であれば
-#par-equation($ convolve.o colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] = * $)
+#par-equation($ (convolve.o) colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] = * $)
 であるし，もし型コンストラクタがMaybe型コンストラクタであれば，つまり $haskell.f = haskell.Maybe$ であれば
-#par-equation($ convolve.o colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b) = convolve.o_? $)
+#par-equation($ (convolve.o) colon.double (haskell.a -> haskell.b) -> haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b) = convolve.o_? $)
 である．
 
 #table(
