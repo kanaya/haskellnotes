@@ -1043,7 +1043,7 @@ ys = map(f, xs)
 である．矢印 $->$ は右結合なので，これは
 #par-equation($ (*) colon.double (haskell.a -> haskell.b) -> ([haskell.a] -> [haskell.b]) $)
 の意味でもある．念のため上式に注釈を加えると
-#par-equation($ (*) colon.double underbrace((haskell.a -> haskell.b.), f)
+#par-equation($ (*) colon.double underbrace((haskell.a -> haskell.b), f)
   -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $)
 である．
 
