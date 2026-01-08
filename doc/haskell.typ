@@ -90,7 +90,7 @@
 #let Real = typeclass("Real")
 
 // Action.
-#let action(x) = math.sans(x)
+#let action(x) = math.bold(x)
 #let main = action("main")
 #let getContents = action("getContents")
 #let getLine = action("getLine")
@@ -127,10 +127,6 @@
 #let kwthen = keyword("then")
 #let kwtype = keyword("type")
 #let kwwhere = keyword("where")
-
-// Kind
-#let kind(x) = math.sans(x)
-#let Type = kind("Type")
 
 // Container.
 #let ctxt(x) = {
@@ -172,6 +168,11 @@
 // Unit type.
 #let unittype = $class("normal", bold(paren.l.closed paren.r.closed))$
 
+// Kind
+#let kind(x) = math.sans(x)
+#let Type = kind("Type")
+#let k = kind("k")
+
 // Shortcut.
 
 #let a = $typename(a)$
@@ -184,7 +185,7 @@
 #let h = $typename(h)$
 #let i = $typename(i)$
 #let j = $typename(j)$
-#let k = $typename(k)$
+// #let k = $typename(k)$
 #let l = $typename(l)$
 #let m = $typename(m)$
 #let n = $typename(n)$
@@ -204,4 +205,6 @@
 #let fa = $typeconstructor1(typename(f), typename(a))$
 #let fb = $typeconstructor1(typename(f), typename(b))$
 #let fc = $typeconstructor1(typename(f), typename(c))$
+
+
 

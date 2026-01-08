@@ -73,7 +73,7 @@
     [変数・関数], [イタリック（1文字）], $x, f$,
     [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, id, haskell.otherwise$,
     [文脈に入れる関数（アクション）], [ギリシア文字（1文字）], $alpha, phi$,
-    [有名なアクション], [サンセリフ（小文字）], $haskell.main, haskell.print$,
+    [有名なアクション], [ボールド・小文字], $haskell.main, haskell.print$,
     [リスト変数], [変数名にsをつける], $x_"s"$,
     [Maybe変数], [変数名に $?$ をつける], $x_?$,
     [Either変数], [変数名に $!$ をつける], $x_!$,
@@ -88,7 +88,7 @@
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
     [ユニット型], [括弧], $haskell.unittype$,
     [型クラス], [フラクチュール], $haskell.Num$,
-    [カインド], [サンセリフ（大文字）], $haskell.Type$,
+    [カインド], [サンセリフ], $haskell.Type, haskell.k$,
     [キーワード], [固定幅], $haskell.kwlet$,
     [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
     [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
@@ -591,7 +591,7 @@ Haskellではそもそも変数への破壊的代入がないので，関数 $f$
 
 ここで，実用的なHaskellプログラムについて触れておきたいと思う．
 
-プログラムとは合成された関数である．多くのプログラミング言語では，プログラムそのものにmainという名前をつける．本書では#keyword[IOモナド]の章で述べる理由によって，main関数をサンセリフ体で $haskell.main$ と書く．
+プログラムとは合成された関数である．多くのプログラミング言語では，プログラムそのものにmainという名前をつける．本書では#keyword[IOモナド]の章で述べる理由によって，main関数をボールド体で $haskell.main$ と書く．
 
 実用的なプログラムはユーザからの入力を受け取り，関数を適用し，ユーザへ出力する．Haskellではユーザからの1行の入力を $haskell.getLine$ で受け取り，変数の値を $haskell.print$ で書き出せる．ここに $haskell.getLine$ と $haskell.print$ は関数（ファンクション）ではあるが，特別に#keyword[アクション]とも呼ぶ．関数 $haskell.main$ もアクションである．
 
