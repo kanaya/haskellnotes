@@ -79,7 +79,7 @@
 #let MaybeType(x) = typeconstructor1(Maybe, x)
 
 // Type class.
-#let typeclass(x) = math.frak(x)
+#let typeclass(x) = math.sans(x)
 #let Applicative = typeclass("Applicative")
 #let Enum = typeclass("Enum")
 #let Eq = typeclass("Eq")
@@ -169,9 +169,9 @@
 #let unittype = $class("normal", bold(paren.l.closed paren.r.closed))$
 
 // Kind
-#let kind(x) = math.sans(x)
+#let kind(x) = math.frak(x)
 #let Type = kind("Type")
-#let k = kind("k")
+#let k = kind("K")
 
 // Shortcut.
 
