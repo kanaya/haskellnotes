@@ -81,7 +81,7 @@
     [値コンストラクタ（引数なし）], [ローマン（大文字）], $haskell.True, haskell.Nothing$,
     [値コンストラクタ（引数あり）], [ローマン（大文字）], $haskell.Just(x)$,
     [有名な値コンストラクタ1], [数学記号], $emptyset, nothing.rev$,
-    [有名な値コンストラクタ2], [特別な括弧で包む], $[x], shell.l y shell.r, paren.l.stroked u, v paren.r.stroked$,
+    [有名な値コンストラクタ2], [特別な括弧で包む], $[x], chevron.l y chevron.r, paren.l.stroked u, v paren.r.stroked$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
     [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
@@ -1673,17 +1673,17 @@ $ f convolve.o_? x_? = haskell.Just(f) ast.square_? x_? $
 のように導出できる．
 
 これらの関係を一般化して
-$ f ast.square x_* = shell.l f shell.r convolve.o x_* $
+$ f ast.square x_* = chevron.l f chevron.r convolve.o x_* $
 となるような#keyword[一般アプリカティブマップ演算子] $(ast.square)$ を考える．ここに $f$ は関数，$x_*$ はリストやMaybeといったコンテナ型の変数すなわち#keyword[コンテナ変数]である．一般アプリカティブマップ演算子 $(ast.square)$ から一般マップ演算子 $(*)$ を導き出すには，式〜〜〜のように値コンストラクタが必要である．この一般化された値コンストラクタを#keyword[ピュア演算子]と呼ぶ．アプリカティブマップ演算子とピュア演算子を持つ型クラスを#keyword[アプリカティブ関手]と呼び，$haskell.Applicative$ 型クラスと定義する．#footnote[Haskellでは一般アプリカティブマップ演算子を ```haskell <*>``` と書く．]
 
-ピュア演算子をピュア値コンストラクタと呼ばないのは，単純に「ピュア値」というものがないからである．$haskell.Functor$ 型クラスはリスト型やMaybe型を抽象化したものであって，直接変数を生成できない．型クラスは，C++の用語で言えば純粋仮想クラスのようなものであるし，Objective-Cの用語で言えばメタクラスであるからである．もちろんリストのピュア演算子は $[x]$ であるし，Maybeのピュア演算子は $haskell.Maybe_x$ であり，それぞれ具体的な変数を生成する．しかし変数 $x$ にピュア演算子を適用した $shell.l x shell.r$ は抽象的な概念であり，そのような変数は実在しない．#footnote[Haskellは一般のピュア演算子の実装を与えていない．変数の型に応じて対応する関数が適用される．]
+ピュア演算子をピュア値コンストラクタと呼ばないのは，単純に「ピュア値」というものがないからである．$haskell.Functor$ 型クラスはリスト型やMaybe型を抽象化したものであって，直接変数を生成できない．型クラスは，C++の用語で言えば純粋仮想クラスのようなものであるし，Objective-Cの用語で言えばメタクラスであるからである．もちろんリストのピュア演算子は $[x]$ であるし，Maybeのピュア演算子は $haskell.Maybe_x$ であり，それぞれ具体的な変数を生成する．しかし変数 $x$ にピュア演算子を適用した $chevron.l x chevron.r$ は抽象的な概念であり，そのような変数は実在しない．#footnote[Haskellは一般のピュア演算子の実装を与えていない．変数の型に応じて対応する関数が適用される．]
 
-一般アプリカティブマップ演算子 $(ast.square)$ は多様性によってそれぞれリストバージョンのアプリカティブマップ演算子 $(...)$ やMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ にオーバーライドされ，それぞれリスト値コンストラクタ $([x])$, Maybe値コンストラクタ $(haskell.Maybe_x)$ を用いることでリストバージョンのマップ演算子 $(*)$, Maybeバージョンのマップ演算子 $(convolve.o_?)$ を生成することができる．リスト値コンストラクタ，Maybe値コンストラクタはそれぞれピュア演算子 $shell.l x shell.r$ をオーバーライドしたものであるから，結局，一般アプリカティブマップ演算子とピュア演算子のふたつがあれば，任意のクラスのマップ演算子を生成することができる．
+一般アプリカティブマップ演算子 $(ast.square)$ は多様性によってそれぞれリストバージョンのアプリカティブマップ演算子 $(...)$ やMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ にオーバーライドされ，それぞれリスト値コンストラクタ $([x])$, Maybe値コンストラクタ $(haskell.Maybe_x)$ を用いることでリストバージョンのマップ演算子 $(*)$, Maybeバージョンのマップ演算子 $(convolve.o_?)$ を生成することができる．リスト値コンストラクタ，Maybe値コンストラクタはそれぞれピュア演算子 $chevron.l x chevron.r$ をオーバーライドしたものであるから，結局，一般アプリカティブマップ演算子とピュア演算子のふたつがあれば，任意のクラスのマップ演算子を生成することができる．
 
 アプリカティブマップ演算子，ピュア演算子に一般化されたバージョンがあるように，リストの $emptyset$ やMaybeの $haskell.Nothing$ を一般化した値が必要である．それを $nothing.rev$ とする．$nothing.rev$ には特段名前が無いので，本書では単に「空」と呼ぶことにしよう．
 
 この節の最後に#keyword[アプリカティブスタイル]という記法を紹介しておこう．アプリカティブマップ演算子は連続して
-$ shell.l f shell.r ast.square x_* ast.square y_* $
+$ chevron.l f chevron.r ast.square x_* ast.square y_* $
 このようにアプリカティブマップ演算子を並べる書き方をアプリカティブスタイルと呼ぶ．
 
 #tk マージ
@@ -1694,13 +1694,13 @@ $ z_* &= f' haskell.amap y_* \
   &= f convolve.o x_* haskell.amap y_* $<fmap-and-amap>
 
 任意の変数または関数を関手型クラスの型に入れる#keyword[ピュア演算子]があり，次のように書く．#footnote[Haskellでは `z = pure x` と書く．]
-$ z_* = shell.l x shell.r $
+$ z_* = chevron.l x chevron.r $
 
 なおピュア演算子の名称は「純粋(pure)」であるが，意味合いはむしろ「不純(impure)」のほうが近い．
 
 ピュア演算子を用いると，@fmap-and-amap は次のように書ける．#footnote[Haskell では `zm = (pure f) <*> xm <*> ym` と書く．]
 
-$ z_* = shell.l f shell.r haskell.amap x_* haskell.amap y_* $<applicative-style>
+$ z_* = chevron.l f chevron.r haskell.amap x_* haskell.amap y_* $<applicative-style>
 
 
 @applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
@@ -1708,7 +1708,7 @@ $ z_* = [| f x_* y_* |] ... "採用されなかった文法" $
 
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
 
-いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $f_*$ ただし $f_* = shell.l f shell.r $ を作ったとすると，関数 $f_*$ は次の型を持つ．
+いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $f_*$ ただし $f_* = chevron.l f chevron.r $ を作ったとすると，関数 $f_*$ は次の型を持つ．
 $ f_* colon.double haskell.Applicative supset haskell.f
   arrow.r.stroked haskell.f_(haskell.a -> haskell.b) $
 
@@ -1718,19 +1718,19 @@ $ f_* colon.double haskell.Applicative supset haskell.f
 
 
 #theorem-box(title: "恒等射の存在", outlined: false)[
-アプリカティブ関手は恒等射 $id$ ただし $shell.l id shell.r haskell.amap x_* = x_*$ を持つ．
+アプリカティブ関手は恒等射 $id$ ただし $chevron.l id chevron.r haskell.amap x_* = x_*$ を持つ．
 ]
 
 #theorem-box(title: "Homomorphism", outlined: false)[
-$shell.l f shell.r haskell.amap shell.l x shell.r = shell.l f x shell.r$
+$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
 ]
 
 #theorem-box(title: "Interchange", outlined: false)[
-$shell.l f shell.r haskell.amap shell.l x shell.r = shell.l lozenge.stroked.medium dollar x shell.r haskell.amap f$
+$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l lozenge.stroked.medium dollar x chevron.r haskell.amap f$
 ]
 
 #theorem-box(title: "Composition", outlined: false)[
-$h_* haskell.amap (g_* haskell.amap f_*) = shell.l lozenge.stroked.medium compose lozenge.stroked.medium shell.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
+$h_* haskell.amap (g_* haskell.amap f_*) = chevron.l lozenge.stroked.medium compose lozenge.stroked.medium chevron.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
 ]
 
 
@@ -1767,11 +1767,11 @@ $ convolve.o_(((->)haskell.r)) = compose $
 
 #pb
 
-関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とし，関数版のピュア演算子を $shell.l x shell.r_(((->)haskell.r))$ と書くことにしよう．
+関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とし，関数版のピュア演算子を $chevron.l x chevron.r_(((->)haskell.r))$ と書くことにしよう．
 
 ピュア演算子は $haskell.q -> (haskell.r -> haskell.q)$ 型を持たなければならない．従って関数版のピュア演算子は変数から関数を作るとも考えられる．我々は関数版のピュア演算子として
-$ shell.l x shell.r_(((->)haskell.r)) = backslash rect.stroked.h |-> x $
-を採用する．#footnote[Haskellでは $shell.l x shell.r_(((->)haskell.r))$ を ```haskell const x``` と書く．]
+$ chevron.l x chevron.r_(((->)haskell.r)) = backslash rect.stroked.h |-> x $
+を採用する．#footnote[Haskellでは $chevron.l x chevron.r_(((->)haskell.r))$ を ```haskell const x``` と書く．]
 
 関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とすると，その型は
 $ ast.square_(((->)haskell.r)) colon.double ((->)haskell.r)_(haskell.a -> haskell.b) -> ((->)haskell.r)_haskell.a -> ((->)haskell.r)_haskell.b $
@@ -1781,8 +1781,8 @@ $ ast.square_(((->)haskell.r)) = (haskell.r -> haskell.a -> haskell.b) -> (haske
 
 我々は関数版アプリカティブマップ演算子として
 $ g ast.square_(((->)haskell.r)) f = backslash x |-> g x (f x) $
-とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $f convolve.o x_* = shell.l f shell.r ast.square x_*$ から導かれる．すなわち
-$ shell.l g shell.r ast.square f &= backslash x |-> shell.l g shell.r x (f x) \
+とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $f convolve.o x_* = chevron.l f chevron.r ast.square x_*$ から導かれる．すなわち
+$ chevron.l g chevron.r ast.square f &= backslash x |-> chevron.l g chevron.r x (f x) \
   &= backslash x |-> (backslash rect.stroked.h |-> g) x (f x) \
   &= backslash x |-> g (f x) \
   &= g compose f $
@@ -1836,26 +1836,26 @@ $ z_? = phi x $
 
 // https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
-$ mu haskell.bind shell.l.stroked x shell.r.stroked &= mu x \
-  shell.l.stroked lozenge.stroked.medium shell.r.stroked haskell.bind x_*
+$ mu haskell.bind chevron.l x chevron.r &= mu x \
+  chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*
   &= x_* \
   nu haskell.bind mu haskell.bind x_*
   &= nu haskell.bind (mu haskell.bind x_*) $
 
-$(MM, haskell.bind, shell.l.stroked lozenge.stroked.medium shell.r.stroked)$ はモノイドである．
+$(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
 
 関数 $mu$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $mu^star.filled = (mu haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ mu^star.filled shell.l x shell.r &= mu x \
-  shell.l lozenge.stroked.medium shell.r^star.filled x_* &= x_* \
+$ mu^star.filled chevron.l x chevron.r &= mu x \
+  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
   (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
 #theorem-box(title: "Right Identity", outlined: false)[
-$phi haskell.bind shell.l x shell.r = phi x$
+$phi haskell.bind chevron.l x chevron.r = phi x$
 ]
 
 #theorem-box(title: "Left Identity", outlined: false)[
-$shell.l lozenge.stroked.medium shell.r haskell.bind x_* = x_*$
+$chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
 ]
 
 #theorem-box(title: "Associativity", outlined: false)[
@@ -1921,7 +1921,7 @@ $(ZZ, +, 0)$ はモノイドである．
 <io>
 
 $ haskell.main &colon.double haskell.IO_haskell.Int \
-  haskell.main &= shell.l 0 shell.r $
+  haskell.main &= chevron.l 0 chevron.r $
 
 === IO
 
