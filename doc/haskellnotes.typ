@@ -418,10 +418,10 @@ lambda x: 1 + x
 #par-equation($ y = f(1 + x) $)
 という式のうち，先に $1 + x$ を計算して $x'$ のように名前をつけておきたいこともある．そんなときは次のように書く．#footnote[Haskellでは ```haskell y = let x' = 1 + x in f x'``` と書く．]
 
-$ y = haskell.kwlet x' eq.def 1 + x haskell.kwin f x' $<let-in>
+$ y = haskell.kwlet x' eq.delta 1 + x haskell.kwin f x' $<let-in>
 
 なお，局所変数を後ろに回して
-#par-equation($ y = f x' haskell.kwwhere x' eq.def 1 + x $)
+#par-equation($ y = f x' haskell.kwwhere x' eq.delta 1 + x $)
 と書いても良い．#footnote[Haskellでは ```haskell y = f x' where x' = 1 + x``` と書く．]
 
 局所変数はラムダ式を用いたシンタックスシュガーである．@let-in は次の式と等価である．
@@ -1844,10 +1844,10 @@ $ mu haskell.bind shell.l.stroked x shell.r.stroked &= mu x \
 
 $(MM, haskell.bind, shell.l.stroked lozenge.stroked.medium shell.r.stroked)$ はモノイドである．
 
-関数 $mu$ に作用する#keyword[クライスリスター]演算子 $star.stroked$ を $mu^star.stroked = (mu haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ mu^star.stroked shell.l x shell.r &= mu x \
-  shell.l lozenge.stroked.medium shell.r^star.stroked x_* &= x_* \
-  (nu^star.stroked mu)^star.stroked x_* &= nu^star.stroked (mu^star.stroked x_*) $
+関数 $mu$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $mu^star.filled = (mu haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
+$ mu^star.filled shell.l x shell.r &= mu x \
+  shell.l lozenge.stroked.medium shell.r^star.filled x_* &= x_* \
+  (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
 #theorem-box(title: "Right Identity", outlined: false)[
@@ -1962,6 +1962,8 @@ z = do { x' <- x; y' <- y; f x'; g y' }
 === 種
 
 #tk 種
+
+$ haskell.kk arrow.r.filled haskell.Type $
 
 // 具体的な型を $star.stroked$ で表す．例えば $haskell.Int$ や $haskell.a$ の種は $star.stroked$ である．
 
