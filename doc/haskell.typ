@@ -5,6 +5,22 @@
   h(1em)
   x}
 
+// Keyword.
+#let keyword(x) = math.mono(x)
+#let kwcase = keyword("case")
+#let kwclass = keyword("class")
+#let kwdata = keyword("data")
+#let kwdo = keyword("do")
+#let kwelse = keyword("else")
+#let kwif = keyword("if")
+#let kwin = keyword("in")
+#let instance = keyword("instance")
+#let kwlet = keyword("let")
+#let kwof = keyword("of")
+#let kwthen = keyword("then")
+#let kwtype = keyword("type")
+#let kwwhere = keyword("where")
+
 // Constant.
 
 #let constantstring(x) = { "\"" + math.mono(x) + "\"" }
@@ -116,18 +132,6 @@
 #let fold = math.union.big
 #let foldright = math.union.sq.big
 
-// Keyword.
-#let keyword(x) = math.mono(x)
-#let kwcase = keyword("case")
-#let kwelse = keyword("else")
-#let kwif = keyword("if")
-#let kwin = keyword("in")
-#let kwlet = keyword("let")
-#let kwof = keyword("of")
-#let kwthen = keyword("then")
-#let kwtype = keyword("type")
-#let kwwhere = keyword("where")
-
 // Container.
 #let ctxt(x) = {
   let xx = x
@@ -171,7 +175,7 @@
 // Kind
 #let kind(x) = math.frak(x)
 #let Type = kind("Type")
-#let k = kind("K")
+#let kk = kind("K")
 
 // Shortcut.
 
@@ -185,7 +189,7 @@
 #let h = $typename(h)$
 #let i = $typename(i)$
 #let j = $typename(j)$
-// #let k = $typename(k)$
+#let k = $typename(k)$
 #let l = $typename(l)$
 #let m = $typename(m)$
 #let n = $typename(n)$

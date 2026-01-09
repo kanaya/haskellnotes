@@ -88,7 +88,7 @@
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
     [ユニット型], [括弧], $haskell.unittype$,
     [型クラス], [サンセリフ], $haskell.Num$,
-    [カインド], [星，フラクチュール], $star.stroked, haskell.Type, haskell.k$,
+    [カインド], [星，フラクチュール], $star.stroked, haskell.Type, haskell.kk$,
     [キーワード], [固定幅], $haskell.kwlet$,
     [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
     [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
@@ -1992,3 +1992,16 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
   [Double bind（右結合）], $z_* = psi haskell.bind phi haskell.bind x_*$, [```haskell zm = psi =<< phi =<< xm ```],
 )
 
+$ haskell.kwclass &haskell.Eq supset haskell.a haskell.kwwhere \
+  &(equiv) colon.double haskell.a -> haskell.a -> haskell.Bool \
+  &(equiv.not) colon.double haskell.a -> haskell.a -> haskell.Bool \
+  &(equiv) = not (x equiv.not y) \
+  &(equiv.not) = not (x equiv y) $
+
+$ haskell.kwdata "TrafficLight" = "Red" or.curly "Yellow" or.curly "Green" $
+
+$ haskell.instance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
+  &"Red" equiv "Red" = haskell.True \
+  &"Yellow" equiv "Yellow" = haskell.True \
+  &"Green" equiv "Green" = haskell.True \
+  &rect.stroked.h equiv rect.stroked.h = haskell.False $
