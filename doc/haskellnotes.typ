@@ -1969,7 +1969,7 @@ z = do { x' <- x; y' <- y; f x'; g y' }
 
 See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types-and-kinds
 
-== マクロ
+== マクロとTemplate Haskell
 
 #tk マクロ
 
