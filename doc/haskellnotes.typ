@@ -1937,10 +1937,10 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
 
 #sourcecode[```python
 import sys
-def read_and_write():
+def main():
   s = readline()
   print(s)
-read_and_write()
+main()
 ```]
 
 #sourcecode[```haskell
@@ -1950,9 +1950,9 @@ main = do { s <- getLine; print s }
 
 #sourcecode[```haskell
 -- Haskell
-main = do
-  s <- getLine
-  print s
+main = do       -- In Python
+  s <- getLine  -- s = readline()
+  print s       -- print(s)
 ```]
 
 $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.print s } \
@@ -1963,11 +1963,11 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.print s } \
 
 #sourcecode[```python
 import sys
-def read_and_write():
+def main():
   s = readline()
   t = f(s)
   print(t)
-read_and_write()
+main()
 ```]
 
 
@@ -1980,10 +1980,10 @@ main = do { s <- getLine; let t = f s in print t}
 #sourcecode[```haskell
 --Haskell
 -- f :: String -> String
-main = do
-  s <- getLine
-  let t = f s
-  print t
+main = do       -- In Python
+  s <- getLine  -- s = readline()
+  let t = f s   -- t = f(s)
+  print t       -- print(t)
 ```]
 
 $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.delta f s haskell.kwin haskell.print t} \
