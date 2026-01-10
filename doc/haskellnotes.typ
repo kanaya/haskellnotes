@@ -1348,7 +1348,7 @@ def map_over(f, p):
 もう一度振り出しに戻る．
 
 いま関数 $f$ が引数 $x$ と $y$ を取り，$x != 0$ であるならば $frac(y, x, style: "skewed")$ を返すとする．もし $x!=0$ であれば失敗を意味する $haskell.Nothing$ （ナッシング）を返すとする．すると関数 $f$ の定義は次のようになる．
-#par-equation($ f x y = haskell.kwif x != 0 haskell.kwthen frac(y, x, style: "skewed") haskell.kwelse haskell.Nothing ... "不完全な定義" $)
+#par-equation($ f x y = haskell.kwif x != 0 haskell.kwthen frac(y, x, style: "skewed") haskell.kwelse haskell.Nothing ... text("不完全な定義") $)
 残念ながら上式は不完全である．なぜならば $x != 0$ のときの戻り値は数であるのに対して， $x != 0$ のときの戻り値は数ではないからである．そこで
 #par-equation($ f x y = haskell.kwif x != 0 haskell.kwthen haskell.Just((frac(y, x, style: "horizontal"))) haskell.kwelse haskell.Nothing $)
 とする．ここに $haskell.Just((frac(y, x, style: "horizontal")))$ は数 $frac(y, x, style: "skewed")$ から作られる，Maybeで包まれた数である．#footnote[Haskell では `f x y = if x /= 0 then Just y / x else Nothing` と書く．]
@@ -1650,6 +1650,22 @@ $ z_* = f convolve.o x_* $
 #tk アプリカティブ関手
 
 マップ演算子をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子]である．
+
+いま1変数を取る関数 $f$ があり，リスト変数 $x_"s"$ があるとする．リスト変数 $x_"s"$ の各要素に関数 $f$ を適用した結果をリスト変数 $z_"s"$ とする．このことを我々は関手マップ演算子 $(convolve.o)$ を用いて次のように書いた．
+
+$ z_"s" = f convolve.o x_"s" $
+
+この式は次のように書いても同じである．
+
+$ z_"s" = [f x | x in x_"s"] $
+
+ここでもし2引数を取る関数 $g$ があったとして，この関数 $g$ をリスト変数 $x_"s"$ の各要素と，別な変数 $y$ に適用した結果をリスト変数 $z_"s"$ とする．このことを我々はどのように書いたら良いだろうか．一案はリスト内包表記に戻ることであり，次のように書くことである．
+
+$ z_"s" = [g x y | x in x_"s"] $
+
+しかし，もっと見通しの良い書き方は出来ないだろうか．一度Haskell標準に提案され，却下された書き方がある．それは次のようなものであった．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
+
+$ z_"s" = [| g x_"s" y |] ... text("現在は使われていない") $
 
 #tk
 
