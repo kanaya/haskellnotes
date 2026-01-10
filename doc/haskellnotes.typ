@@ -1686,18 +1686,9 @@ $ z_* = chevron.l g chevron.r haskell.amap x_* haskell.amap y_* $<applicative-st
 @applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 g x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
 $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
+#pb
 
-#tk
-
-ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
-
-いま関数 $f colon.double haskell.a -> haskell.b$ に対して，新たな関数 $f_*$ ただし $f_* = chevron.l f chevron.r $ を作ったとすると，関数 $f_*$ は次の型を持つ．
-$ f_* colon.double haskell.Applicative supset haskell.f
-  arrow.r.stroked haskell.f_(haskell.a -> haskell.b) $
-
-アプリカティブマップ演算子は変数 $x_* colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.f_haskell.a $ に対して，関数 $f_*$ を $z_* = f_* haskell.amap x_*$ のように作用させる．変数 $z_*$ の型は $z_* colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.f_haskell.b$ である．
-
-#tk マージ
+ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．
 
 
 #theorem-box(title: "恒等射の存在", outlined: false)[
