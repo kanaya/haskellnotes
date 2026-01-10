@@ -1935,11 +1935,62 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
 
 #tk
 
-#sourcecode[```haskell
--- Haskell
-z = do { x' <- x; y' <- y; f x'; g y' }
+#sourcecode[```python
+import sys
+def read_and_write():
+  s = readline()
+  print(s)
+read_and_write()
 ```]
 
+#sourcecode[```haskell
+-- Haskell
+main = do { s <- getLine; print s }
+```]
+
+#sourcecode[```haskell
+-- Haskell
+main = do
+  s <- getLine
+  print s
+```]
+
+$ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.print s } \
+  arrow.t.b.double \
+  haskell.main = haskell.getLine haskell.bindRight (backslash s |-> haskell.print s) \
+  arrow.t.b.double \
+  haskell.main = haskell.print haskell.bind haskell.getLine $
+
+#sourcecode[```python
+import sys
+def read_and_write():
+  s = readline()
+  t = f(s)
+  print(t)
+read_and_write()
+```]
+
+
+#sourcecode[```haskell
+--Haskell
+-- f :: String -> String
+main = do { s <- getLine; let t = f s in print t}
+```]
+
+#sourcecode[```haskell
+--Haskell
+-- f :: String -> String
+main = do
+  s <- getLine
+  let t = f s
+  print t
+```]
+
+$ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.delta f s haskell.kwin haskell.print t} \
+  arrow.t.b.double \
+  haskell.main = haskell.getLine haskell.bindRight (backslash s |-> haskell.kwlet t eq.delta f s haskell.kwin haskell.print t) \
+  arrow.t.b.double \
+  haskell.main = (backslash s |-> haskell.print haskell.bind f s) haskell.bind haskell.getLine $
 
 === この章のまとめ
 
@@ -2007,3 +2058,7 @@ $ haskell.instance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
   &"Yellow" equiv "Yellow" = haskell.True \
   &"Green" equiv "Green" = haskell.True \
   &rect.stroked.h equiv rect.stroked.h = haskell.False $
+
+  // UFO演算子の定義
+
+
