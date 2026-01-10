@@ -1671,80 +1671,23 @@ $ g' &= [g x | x in x_"s"] \
 つまり関数 $g'$ はリストである．いま我々が欲しいのは，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子である．なお @partial-application-of-g の2行目の通り，関数リスト $g'$ は $g convolve.o x_"s"$ と同じである．さて，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子を $haskell.amap$ とする．そうすると @application-of-g は次のように書ける．
 
 $ z_"s" &= g' haskell.amap y_"s" \
-  &= g convolve.o x_"s" haskell.amap y_"s" $
+  &= g convolve.o x_"s" haskell.amap y_"s" $<applicative-map>
 
 この演算子 $haskell.amap$ を#keyword[アプリカティブマップ演算子]と呼ぶ．アプリカティブマップ演算子は関手マップ演算子よりも汎用的である．なぜならば
 #par-equation($ f convolve.o x_* = chevron.l f chevron.r haskell.amap x_* $)
 であり，関手マップ演算子 $(convolve.o)$ はアプリカティブマップ演算子 $(haskell.amap)$ から導出できるからである．ここに $chevron.l f chevron.r$ は文脈に応じて $[f]$ であったり $haskell.Just(f)$ であったりする．記号 $chevron.l ... chevron.r$ を#keyword[ピュア演算子]と呼ぶ．#footnote[Haskellでは ```haskell pure f``` と書く．]
 
+なおピュア演算子の名称は「純粋（pure）」であるが，意味合いはむしろ「不純（impure）」のほうが近い．
 
-// 一度Haskell標準に提案され，却下された書き方がある．それは次のようなものであった．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|g x y|]` であった．]
+ピュア演算子を用いると，@applicative-map の2行目は次のように書ける．#footnote[Haskell では `zm = (pure g) <*> xm <*> ym` と書く．]
 
-// $ z_"s" = [| g x_"s" y |] ... text("現在は使われていない") $
+$ z_* = chevron.l g chevron.r haskell.amap x_* haskell.amap y_* $<applicative-style>
 
+@applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 g x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
+$ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
-  
 
 #tk
-
-$ [f, g, h] ast.square [x, y, z] = [f x, f y, f z, g x, g y, g z, h x, h y, h z] $
-
-リストのアプリカティブマップ演算子 $ast.square$ の型は
-$ [haskell.a  -> haskell.b] -> [haskell.a] -> [haskell.b]$ である．
-
-これは
-$ ast.square colon.double underbrace([haskell.a -> haskell.b], [f, g, h]) -> underbrace([haskell.a], [x_0, x_1, ...]) -> underbrace([haskell.b], [f x_0, f x_1, ...]) $
-と解釈すれば良い．
-
-リストバージョンのアプリカティブマップ演算子 $(ast.square)$ の特別な場合として，左引数のリストの要素数が1の場合を考えると
-$ [f] ast.square [x, y, z] = [f x, f y, f z] $
-であり，通常のマップ演算子 $(*)$ を使ったマップすなわち
-$ [f] * [x, y, z] = [f x, f y, f z] $
-と右辺が一致する．つまり，マップ演算子はアプリカティブマップ演算子の特別な場合と考えることができる．実際，リストマップ演算子はアプリカティブマップ演算子から
-$ f * x_"s" = [f] ast.square x_"s" $
-と定義できる．
-
-Maybeバージョンについても考えてみよう．Maybeに包まれた関数 $f_?$ をMaybeな変数 $x_?$ にマップするアプリカティブマップ演算子 $ast.square_?$ を
-$ f_? ast.square x_? = haskell.kwcase x_"s" haskell.kwof 
-  cases(haskell.Just(x) arrow.r.dotted x convolve.o_? x_?,
-  rect.stroked.h arrow.r.dotted haskell.Nothing) $
-で定義する．このMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ からMaybeバージョンのマップ演算子 $(convolve.o_?)$ は
-$ f convolve.o_? x_? = haskell.Just(f) ast.square_? x_? $
-のように導出できる．
-
-これらの関係を一般化して
-$ f ast.square x_* = chevron.l f chevron.r convolve.o x_* $
-となるような#keyword[一般アプリカティブマップ演算子] $(ast.square)$ を考える．ここに $f$ は関数，$x_*$ はリストやMaybeといったコンテナ型の変数すなわち#keyword[コンテナ変数]である．一般アプリカティブマップ演算子 $(ast.square)$ から一般マップ演算子 $(*)$ を導き出すには，式〜〜〜のように値コンストラクタが必要である．この一般化された値コンストラクタを#keyword[ピュア演算子]と呼ぶ．アプリカティブマップ演算子とピュア演算子を持つ型クラスを#keyword[アプリカティブ関手]と呼び，$haskell.Applicative$ 型クラスと定義する．#footnote[Haskellでは一般アプリカティブマップ演算子を ```haskell <*>``` と書く．]
-
-ピュア演算子をピュア値コンストラクタと呼ばないのは，単純に「ピュア値」というものがないからである．$haskell.Functor$ 型クラスはリスト型やMaybe型を抽象化したものであって，直接変数を生成できない．型クラスは，C++の用語で言えば純粋仮想クラスのようなものであるし，Objective-Cの用語で言えばメタクラスであるからである．もちろんリストのピュア演算子は $[x]$ であるし，Maybeのピュア演算子は $haskell.Maybe_x$ であり，それぞれ具体的な変数を生成する．しかし変数 $x$ にピュア演算子を適用した $chevron.l x chevron.r$ は抽象的な概念であり，そのような変数は実在しない．#footnote[Haskellは一般のピュア演算子の実装を与えていない．変数の型に応じて対応する関数が適用される．]
-
-一般アプリカティブマップ演算子 $(ast.square)$ は多様性によってそれぞれリストバージョンのアプリカティブマップ演算子 $(...)$ やMaybeバージョンのアプリカティブマップ演算子 $(ast.square_?)$ にオーバーライドされ，それぞれリスト値コンストラクタ $([x])$, Maybe値コンストラクタ $(haskell.Maybe_x)$ を用いることでリストバージョンのマップ演算子 $(*)$, Maybeバージョンのマップ演算子 $(convolve.o_?)$ を生成することができる．リスト値コンストラクタ，Maybe値コンストラクタはそれぞれピュア演算子 $chevron.l x chevron.r$ をオーバーライドしたものであるから，結局，一般アプリカティブマップ演算子とピュア演算子のふたつがあれば，任意のクラスのマップ演算子を生成することができる．
-
-アプリカティブマップ演算子，ピュア演算子に一般化されたバージョンがあるように，リストの $emptyset$ やMaybeの $haskell.Nothing$ を一般化した値が必要である．それを $nothing.rev$ とする．$nothing.rev$ には特段名前が無いので，本書では単に「空」と呼ぶことにしよう．
-
-この節の最後に#keyword[アプリカティブスタイル]という記法を紹介しておこう．アプリカティブマップ演算子は連続して
-$ chevron.l f chevron.r ast.square x_* ast.square y_* $
-このようにアプリカティブマップ演算子を並べる書き方をアプリカティブスタイルと呼ぶ．
-
-#tk マージ
-
-
-演算子 $convolve.o$ は関手型クラスの型の値に1引数関数を適用することを可能にした．一方で2引数関数を適用するのは若干面倒である．いま関数 $f$ が2引数をとるとし，関手型クラスの型の変数 $x_*$ と $y_*$ があるとする．関数 $f$ に変数 $x_*$ を部分適用して関数 $f' = f convolve.o x_*$ を作ると，定義によって関数 $f'$ は関手型クラスの型の変数になる．そこで，関手型クラスの型の関数を関手型クラスの型の変数に適用する新しい演算子が必要になる．このような演算子を#keyword[アプリカティブマップ演算子]と呼び $haskell.amap$ で表す．アプリカティブマップ演算子を用いると2引数の関数適用は次のように書ける．
-$ z_* &= f' haskell.amap y_* \
-  &= f convolve.o x_* haskell.amap y_* $<fmap-and-amap>
-
-任意の変数または関数を関手型クラスの型に入れる#keyword[ピュア演算子]があり，次のように書く．#footnote[Haskellでは `z = pure x` と書く．]
-$ z_* = chevron.l x chevron.r $
-
-なおピュア演算子の名称は「純粋(pure)」であるが，意味合いはむしろ「不純(impure)」のほうが近い．
-
-ピュア演算子を用いると，@fmap-and-amap は次のように書ける．#footnote[Haskell では `zm = (pure f) <*> xm <*> ym` と書く．]
-
-$ z_* = chevron.l f chevron.r haskell.amap x_* haskell.amap y_* $<applicative-style>
-
-
-@applicative-style はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
-$ z_* = [| f x_* y_* |] ... "採用されなかった文法" $
 
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び $haskell.Applicative$ で表す．
 
