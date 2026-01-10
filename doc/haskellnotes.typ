@@ -545,12 +545,9 @@ $ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
 
 #tk 関数合成則
 
-#theorem-box(title: "恒等関数の存在", outlined: false)[
-任意の関数 $f$ に対して恒等関数 $id$ ただし $id compose f = f$ が存在する．
-]
-
-#theorem-box(title: "結合則", outlined: false)[
-任意の関数 $f, g, h$ について $(h compose g) compose f = h compose (g compose f)$ が成り立つ．
+#theorem-box(title: "関数の規則", outlined: false)[
+1. 恒等関数の存在：任意の関数 $f$ に対して恒等関数 $id$ ただし $id compose f = f$ が存在する．
+2. 結合則：任意の関数 $f, g, h$ について $(h compose g) compose f = h compose (g compose f)$ が成り立つ．
 ]
 
 #pb
@@ -1620,12 +1617,9 @@ $ z_* = f convolve.o x_* $
 
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次のふたつの規則を満たす必要がある．
 
-#theorem-box(title: "恒等射の存在", outlined: false)[
-関手は恒等射 $(id convolve.o)$ ただし $id convolve.o x_* = x_*$ を持つ．
-]
-
-#theorem-box(title: "結合則", outlined: false)[
-マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
+#theorem-box(title: "関手の規則", outlined: false)[
+1. 恒等射の存在：関手は恒等射 $(id convolve.o)$ ただし $id convolve.o x_* = x_*$ を持つ．
+2. 結合則：マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
 ]
 
 このふたつをまとめて#keyword[関手則]と呼ぶ．
@@ -1691,20 +1685,11 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．
 
 
-#theorem-box(title: "恒等射の存在", outlined: false)[
-アプリカティブ関手は恒等射 $id$ ただし $chevron.l id chevron.r haskell.amap x_* = x_*$ を持つ．
-]
-
-#theorem-box(title: "Homomorphism", outlined: false)[
-$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
-]
-
-#theorem-box(title: "Interchange", outlined: false)[
-$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l lozenge.stroked.medium dollar x chevron.r haskell.amap f$
-]
-
-#theorem-box(title: "Composition", outlined: false)[
-$h_* haskell.amap (g_* haskell.amap f_*) = chevron.l lozenge.stroked.medium compose lozenge.stroked.medium chevron.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
+#theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
+1. 恒等射の存在：アプリカティブ関手は恒等射 $id$ ただし $chevron.l id chevron.r haskell.amap x_* = x_*$ を持つ．
+2. 結合則：$h_* haskell.amap (g_* haskell.amap f_*) = chevron.l lozenge.stroked.medium compose lozenge.stroked.medium chevron.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
+3. 交換則：$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l lozenge.stroked.medium dollar x chevron.r haskell.amap f$
+4. $chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
 ]
 
 
@@ -1824,17 +1809,12 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
   (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
-#theorem-box(title: "Right Identity", outlined: false)[
-$phi haskell.bind chevron.l x chevron.r = phi x$
+#theorem-box(title: "モナドの法則", outlined: false)[
+1. $phi haskell.bind chevron.l x chevron.r = phi x$
+2. $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
+3. 結合則：$phi haskell.bind (psi haskell.bind x_*) = (backslash y |-> phi haskell.bind (psi y)) haskell.bind x_*$
 ]
 
-#theorem-box(title: "Left Identity", outlined: false)[
-$chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-]
-
-#theorem-box(title: "Associativity", outlined: false)[
-$phi haskell.bind (psi haskell.bind x_*) = (backslash y |-> phi haskell.bind (psi y)) haskell.bind x_*$
-]
 
 === モノイド
 
