@@ -1938,7 +1938,7 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
 #sourcecode[```python
 import sys
 def main():
-  s = readline()
+  s = sys.stdin.readline()
   print(s)
 main()
 ```]
@@ -1964,7 +1964,7 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.print s } \
 #sourcecode[```python
 import sys
 def main():
-  s = readline()
+  s = sys.stdin.readline()
   t = f(s)
   print(t)
 main()
