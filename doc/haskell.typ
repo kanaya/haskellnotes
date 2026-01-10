@@ -33,6 +33,7 @@
 
 // Function.
 #let longfunction(x) = math.serif(x)
+#let const = longfunction("const")
 #let curry = longfunction("curry")
 #let even = longfunction("even")
 #let fact = longfunction("fact")
