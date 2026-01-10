@@ -1661,15 +1661,21 @@ $ z_"s" = [f x | x in x_"s"] $
 
 ここでもし2引数を取る関数 $g colon.double haskell.a -> haskell.a -> haskell.a$ があったとして，この関数 $g$ をリスト変数 $x_"s"$ の各要素と，別なリスト変数 $y_"s"$ の各要素に適用した結果をリスト変数 $z_"s"$ とする．このことを我々はどのように書いたら良いだろうか．一案はリスト内包表記に戻ることであり，次のように書くことである．
 
-$ z_"s" = [g x y | x in x_"s", y in y_"s"] $
+$ z_"s" = [g x y | x in x_"s", y in y_"s"] $<application-of-g>
 
 しかし，もっと見通しの良い書き方は出来ないだろうか．いま関数 $g$ にリスト変数 $x_"s"$ だけを適用した結果を関数 $g'$ とする．関数 $g'$ は次のようになる．
 
-$ g' = [g x | x in x_"s"] $
+$ g' &= [g x | x in x_"s"] \
+  &= g convolve.o x_"s" $<partial-application-of-g>
 
-つまり関数 $g'$ はリストである．いま我々が欲しいのは，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子である．なお
-#par-equation($ g' = g convolve.o x_"s" $)
-である．
+つまり関数 $g'$ はリストである．いま我々が欲しいのは，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子である．なお @partial-application-of-g の2行目の通り，関数リスト $g'$ は $g convolve.o x_"s"$ と同じである．さて，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子を $haskell.amap$ とする．そうすると @application-of-g は次のように書ける．
+
+$ z_"s" &= g' haskell.amap y_"s" \
+  &= g convolve.o x_"s" haskell.amap y_"s" $
+
+この演算子 $haskell.amap$ を#keyword[アプリカティブマップ演算子]と呼ぶ．アプリカティブマップ演算子は関手マップ演算子よりも汎用的である．なぜならば
+#par-equation($ f convolve.o x_* = chevron.l f chevron.r haskell.amap x_* $)
+であり，関手マップ演算子 $(convolve.o)$ はアプリカティブマップ演算子 $(haskell.amap)$ から導出できるからである．ここに $chevron.l f chevron.r$ は文脈に応じて $[f]$ であったり $haskell.Just(f)$ であったりする．記号 $chevron.l ... chevron.r$ を#keyword[ピュア演算子]と呼ぶ．#footnote[Haskellでは ```haskell pure f``` と書く．]
 
 
 // 一度Haskell標準に提案され，却下された書き方がある．それは次のようなものであった．#footnote[現在のHaskellでは `z = liftA2 f x y` と書くことで代用されている．元の提案は `z = [|g x y|]` であった．]
