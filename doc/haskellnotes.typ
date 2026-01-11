@@ -1910,6 +1910,7 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.print s } \
   haskell.main = haskell.print haskell.bind haskell.getLine $
 
 #sourcecode[```python
+# Python
 import sys
 def main():
   s = sys.stdin.readline()
