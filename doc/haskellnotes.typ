@@ -853,9 +853,9 @@ xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 複数の型の要素が混在してもよい配列のことを#keyword[ヘテロジニアスな配列]と呼び，ホモジニアスな配列とは区別する．
 
-今後，リストを指す変数は，リストであることを忘れないように変数名に $"s"$ をつけて
+今後，リストを指す変数は，リストであることを忘れないように変数名に $"s"$ を付けて
 #par-equation($ x_"s" = [0, 1, ..., 9] $)
-と書くことにする．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．なおピリオドの数に注意しよう．]
+と書くことにする．今後 $square.stroked.dotted_"s"$ の形をした変数名が出てきたら，それはリスト変数である．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．なおピリオドの数に注意しよう．]
 
 #pb
 
@@ -1602,7 +1602,12 @@ $ z_* = f convolve.o x_* $
   -> haskell.fb $)
 もし変数 $x_*$ の型がリストであれば $convolve.o = *$ であると解釈する．
 
-=== 関手則
+=== 関手と関手則
+<functor-and-functor-laws>
+
+#tk 関手の例
+
+
 
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次のふたつの規則を満たす必要がある．
 
@@ -1632,7 +1637,7 @@ $ z_* = f convolve.o x_* $
 
 #tk アプリカティブ関手
 
-マップ演算子をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子]である．
+関手のマップ演算子 $(convolve.o)$ をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子]である．
 
 いま1変数を取る関数 $f colon.double haskell.a -> haskell.a$ があり，リスト変数 $x_"s" colon.double [haskell.a]$ があるとする．型 $haskell.a$ は任意の型である．リスト変数 $x_"s"$ の各要素に関数 $f$ を適用した結果をリスト変数 $z_"s"$ とする．このことを我々は関手マップ演算子 $(convolve.o)$ を用いて次のように書いた．
 
@@ -1651,14 +1656,14 @@ $ z_"s" = [g x y | x in x_"s", y in y_"s"] $<application-of-g>
 $ g' &= [g x | x in x_"s"] \
   &= g convolve.o x_"s" $<partial-application-of-g>
 
-つまり関数 $g'$ はリストである．いま我々が欲しいのは，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子である．なお @partial-application-of-g の2行目の通り，関数リスト $g'$ は $g convolve.o x_"s"$ と同じである．さて，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子を $haskell.amap$ とする．そうすると @application-of-g は次のように書ける．
+式の右辺がリストであることから分かる通り，関数 $g'$ はリストである．いま我々が欲しいのは，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子である．なお @partial-application-of-g の2行目の通り，関数リスト $g'$ は $g convolve.o x_"s"$ と同じである．さて，関数リスト $g'$ をリスト変数 $y_"s"$ の各要素に適用する演算子を $haskell.amap$ とする．そうすると @application-of-g は次のように書ける．
 
 $ z_"s" &= g' haskell.amap y_"s" \
   &= g convolve.o x_"s" haskell.amap y_"s" $<applicative-map>
 
 この演算子 $haskell.amap$ を#keyword[アプリカティブマップ演算子]と呼ぶ．アプリカティブマップ演算子は関手マップ演算子よりも汎用的である．なぜならば
 #par-equation($ f convolve.o x_* = chevron.l f chevron.r haskell.amap x_* $)
-であり，関手マップ演算子 $(convolve.o)$ はアプリカティブマップ演算子 $(haskell.amap)$ から導出できるからである．ここに $chevron.l f chevron.r$ は文脈に応じて $[f]$ であったり $haskell.Just(f)$ であったりする．記号 $chevron.l ... chevron.r$ を#keyword[ピュア演算子]と呼ぶ．#footnote[Haskellでは ```haskell pure f``` と書く．]
+であり，関手マップ演算子 $(convolve.o)$ はアプリカティブマップ演算子 $(haskell.amap)$ から導出できるからである．ここに $chevron.l f chevron.r$ は文脈に応じて $[f]$ であったり $haskell.Just(f)$ であったりする．記号 $chevron.l square.stroked.dotted chevron.r$ を#keyword[ピュア演算子]と呼ぶ．#footnote[Haskellでは ```haskell pure f``` と書く．]
 
 なおピュア演算子の名称は「純粋（pure）」であるが，意味合いはむしろ「不純（impure）」のほうが近い．
 
@@ -1673,6 +1678,8 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．
 
+#tk アプリカティブ関手の規則
+
 
 #theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
 1. 恒等射の存在：アプリカティブ関手は恒等射 $id$ ただし $chevron.l id chevron.r haskell.amap x_* = x_*$ を持つ．
@@ -1686,31 +1693,26 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 #tk 関数と関手
 
-Function laws.
-
-$ id compose f &= f \
-  (h compose g) compose f &= h compose (g compose f) $
-
-Functor laws.
-
-$ id convolve.o f &= f\
-  (h compose g) convolve.o f &= (h convolve.o) compose (g convolve.o f) $
-
-#tk リライト
-
-
-関数は関手である．関手とはマップ演算子を持つ型クラスのことであった．そこで，関数がどのようなマップ演算子を持つのか考えてみる．
+関数は関手である．関手とはマップ演算子 $(convolve.o)$ を持つ型クラスのことであった．関数が関手であるならば，関数もマップ演算子を持っていないといけない．そこで，関数のマップ演算子とは何かを考えてみる．
 
 いま関数 $f$ が $f colon.double haskell.r -> haskell.q$ という型を持っているとする．この式は $->$ を二項演算子，すなわち2引数関数とみなせば $f colon.double (->)haskell.r haskell.q$ と等価である．全く形式的に，$((->)haskell.r)$ なる型コンストラクタがあるとして
 #par-equation($ haskell.r -> haskell.q = ((->)haskell.r)_haskell.q $)
 であると考えてみる．型 $haskell.q$ から型コンストラクタ $((->)haskell.r)$ によって型 $(haskell.r -> haskell.q)$ が作られると考えるのだ．#footnote[Haskellでは $((->)haskell.r)$ を ```haskell ((->)r)``` と書く．]
 
-マップ演算子の型．
+#tk マップ演算子の型．
 
 関数のマップ演算子 $(convolve.o_(((->)haskell.r)))$ と関数の合成演算子 $(compose)$ は同じ型を持つ．
 
-幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして第〜〜〜章で述べる#keyword[関手則]さえ守っていれば）自由に選べる．そこで
-$ convolve.o_(((->)haskell.r)) = compose $
+#tk なぜなら
+
+$ (convolve.o) &colon.double haskell.Functor supset haskell.f arrow.r.stroked (haskell.a -> haskell.b) -> haskell.fa -> haskell.fb \
+  (convolve.o_(((->)haskell.r))) &colon.double (haskell.a -> haskell.b) -> haskell.typeconstructor1(((->)haskell.r), haskell.a) -> haskell.typeconstructor1(((->)haskell.r), haskell.b) \
+  &= (haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $
+
+$ (compose) &colon.double (haskell.a -> haskell.b) -> (haskell.t -> haskell.a) -> (haskell.t -> haskell.b) $
+
+幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして @functor-and-functor-laws で述べる関手則さえ守っていれば）自由に選べる．そこで
+#par-equation($ convolve.o_(((->)haskell.r)) = compose $)
 としておこう．これがHaskellにおける関数のマップ演算子の定義である．
 
 #pb
