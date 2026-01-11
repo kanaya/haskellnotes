@@ -742,7 +742,7 @@ Haskellでは，どのような関数であれ引数は1個しかとらない．
 #par-equation($ g colon.double haskell.Int -> (haskell.Int -> haskell.Int) $)
 と同じ意味である．上式は
 #par-equation($ g colon.double underbrace(haskell.Int, x) -> underbrace(overbrace(haskell.Int, y) -> overbrace(haskell.Int, (g x)y), g x) $)
-のようにイメージすると良い．自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $haskell.typeconstructor2((->), haskell.a, haskell.b)$ の別名であり，型コンストラクタ $(->)$ に引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
+のようにイメージすると良い．自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $haskell.typeconstructor2((->), haskell.a, haskell.b)$ の別名であり，型コンストラクタ $(->)$ に型引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
 
 #pb
 
@@ -798,7 +798,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 
 型 $haskell.a$ が型クラス $haskell.Real$ 及び型クラス$haskell.Enum$ に属しているとき，かつそのときに限り，型 $haskell.a$ は型クラス $haskell.Integral$ にも属する．
 
-便利な型変換演算子をひとつ紹介しておこう．型変換演関数 $haskell.fromIntegral$ は
+便利な#keyword[型変換演算子]をひとつ紹介しておこう．型変換演関数 $haskell.fromIntegral$ は
 #par-equation($ haskell.fromIntegral colon.double haskell.Integral supset haskell.a
   arrow.r.stroked haskell.a -> haskell.b $)
 という型を持ち，$haskell.Integral$ 型クラスの型の変数を任意の型へ変換する．例えば，
@@ -814,6 +814,20 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
 
 #tk 型に対する演算
+
+#figure(
+  caption: "型・型クラス・種",
+  table(
+    columns: (auto, auto, auto, auto),
+    inset: 10pt,
+    table.header([抽象度], [名称], [具体例], [要素の宣言]),
+    [低], [変数，関数], $x, f$, [---],
+    [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
+    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.Int$,
+    [至高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
+  )
+)
+
 
 === この章のまとめ
 
