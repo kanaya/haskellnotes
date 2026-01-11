@@ -1202,6 +1202,8 @@ $ haskell.quicksort emptyset &= emptyset\
   &= haskell.quicksort l_"s" smash [x] smash haskell.quicksort r_"s"  \
   & space.nobreak haskell.kwwhere { l_"s" = [l | l in x_"s", l < x ]; r_"s" = [r | r in x_"s", r >= x ] } $
 
+#pb
+
 リストを引数にとる関数はいつでも $f (x : x_"s") = ...$ という風にパタンマッチを行えるが，式の右辺でリスト全体すなわち $(x : x_"s")$ を参照したい場合もあるであろう．そのような場合は
 #par-equation($ f a_"s" haskell.at (x : x_"s") = ... $)
 として，変数 $a_"s"$ でリスト全体を参照することも可能である．このような記法を#keyword[asパタン]と呼ぶ．#footnote[Haskellでは ```haskell f as @ (x : xs) = ...``` と書く．]
