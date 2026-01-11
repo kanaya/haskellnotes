@@ -1611,14 +1611,12 @@ $ z_* = f convolve.o x_* $
 
 
 
-関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次のふたつの規則を満たす必要がある．
+関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次の#keyword[関手則]を満たす必要がある．
 
 #theorem-box(title: "関手の規則", outlined: false)[
 1. 恒等射の保存：マップ演算子 $(convolve.o)$ は $id convolve.o = id$ を満たす．
 2. 関数合成の保存：マップ演算子 $(convolve.o)$ は $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ を満たす．
 ]
-
-このふたつをまとめて#keyword[関手則]と呼ぶ．
 
 まず関数 $id$ を定義しておくと，これは引数をそのまま返す関数で
 #par-equation($ id x = x $)
@@ -1627,13 +1625,13 @@ $ z_* = f convolve.o x_* $
   &= backslash x |-> x $)
 と書いたほうがわかり良いかもしれない．
 
-恒等射の存在 $id convolve.o x_* = x_*$ とは $id convolve.o x_* = id x_*$ ということであるから，両辺の $x_*$ を削除して
-#par-equation($ id convolve.o = id $)
-となる．一言で言うと，関数 $id convolve.o$ は関数 $id$ と同じで，引数をそのまま返す．
+恒等射の保存はリストを考えると簡単に理解できる．リスト変数 $x_"s"$ の各要素に恒等関数 $id$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ そのものである．
 
+$ id * x_"s" &= [id x | x in x_"s"] \
+  &= id [x | x in x_"s"] \
+  &= id x_"s" $
 
-#tk 関手則の説明
-
+関数合成の保存についても，リストを考えると理解しやすい．リスト変数 $x_"s"$ の各要素に関数 $f$ と関数 $g$ を合成した関数 $g compose f$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ の各要素に関数 $f$ を適用した結果に関数 $g$ を適用した結果である．
 
 $ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
   &= [g(f x) | x in x_"s"] \
@@ -1641,9 +1639,9 @@ $ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
   &= g * (f * x_"s") \
   &= g * (f * lozenge.stroked.medium) x_"s" \
   &= (g * lozenge.stroked.medium) compose (f * lozenge.stroked.medium) x_"s" \
-  &= (g*) compose (f*) x_"s"$
+  &= (g*) compose (f*) x_"s" $
 
-
+#tk 一般化
 
 === アプリカティブ関手
 
