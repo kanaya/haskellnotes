@@ -823,7 +823,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
     table.header([抽象度], [名称], [具体例], [要素の宣言]),
     [低], [変数，関数], $x, f$, [---],
     [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
-    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.Int$,
+    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.a arrow.r.stroked x colon.double haskell.a$,
     [高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
   )
 )
