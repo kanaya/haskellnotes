@@ -762,7 +762,7 @@ $ z colon.double paren.l.stroked haskell.Int, haskell.Int paren.r.stroked $
 
 $ x colon.double haskell.Unit $
 
-ユニット型の変数が取れる唯一の値は $nothing.rev$ である．
+ユニット型の変数が取れる唯一の値はユニット $(nothing.rev)$ である．
 
 === 多相型と型クラス
 
@@ -1090,11 +1090,11 @@ $ haskell.main
 1. 入力全体を $haskell.getContents$ で読み込む．
 2. 読み込んだ入力を $haskell.lines$ でリストに変換する．
 3. 1行毎 $(*)$ のリストを $haskell.words$ で空白で区切ったリストに変換する．
-4. 各行について $(*)$ 空白で区切ったリストを1単語ずつ $(*)$ を $haskell.readDouble$ で浮動小数点数に変換する．
+4. 各行について $(*)$ 空白で区切ったリストの1単語ずつ $(*)$ を $haskell.readDouble$ で浮動小数点数に変換する．
 5. 各行について $(*)$ 浮動小数点数のリストのノルムを $norm$ で計算する．
 6. ノルムのリストを $haskell.print$ で出力する．
 
-@io-survival-kit-2 をHaskellコードで書くと次のようになる．
+@io-survival-kit-2 をHaskellコードで書くと次のようになる．Haskellでは，我々のマップ演算子 $(*)$ を ```haskell <$>``` と書き，我々の左バインド演算子 $(haskell.bind)$ を ```haskell =<<``` と書く．
 
 #sourcecode[```haskell
 -- Haskell
@@ -1614,8 +1614,8 @@ $ z_* = f convolve.o x_* $
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次のふたつの規則を満たす必要がある．
 
 #theorem-box(title: "関手の規則", outlined: false)[
-1. 恒等射の存在：関手は恒等射 $(id convolve.o)$ ただし $id convolve.o x_* = x_*$ を持つ．
-2. 結合則：マップ演算子 $(convolve.o)$ は結合則 $(g compose f) convolve.o x_* = (g convolve.o) compose (f convolve.o) x_*$ を満たす．
+1. 恒等射の保存：マップ演算子 $(convolve.o)$ は $id convolve.o = id$ を満たす．
+2. 関数合成の保存：マップ演算子 $(convolve.o)$ は $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ を満たす．
 ]
 
 このふたつをまとめて#keyword[関手則]と呼ぶ．
@@ -1629,9 +1629,19 @@ $ z_* = f convolve.o x_* $
 
 恒等射の存在 $id convolve.o x_* = x_*$ とは $id convolve.o x_* = id x_*$ ということであるから，両辺の $x_*$ を削除して
 #par-equation($ id convolve.o = id $)
-となる．一言で言うと，関数 $id convolve.o$ は関数 $id$ と同じで，引数をそのまま返す．この法則は任意の型クラス $haskell.f$ について $haskell.Functor supset haskell.f$ であるならば，任意の型 $haskell.f_haskell.a$ に対して $(id convolve.o) colon.double $...
+となる．一言で言うと，関数 $id convolve.o$ は関数 $id$ と同じで，引数をそのまま返す．
+
 
 #tk 関手則の説明
+
+
+$ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
+  &= [g(f x) | x in x_"s"] \
+  &= g * [f x | x in x_"s"] \
+  &= g * (f * x_"s") \
+  &= g * (f * lozenge.stroked.medium) x_"s" \
+  &= (g * lozenge.stroked.medium) compose (f * lozenge.stroked.medium) x_"s" \
+  &= (g*) compose (f*) x_"s"$
 
 
 
