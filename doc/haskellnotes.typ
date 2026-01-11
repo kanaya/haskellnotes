@@ -673,7 +673,7 @@ $ stack run < input.txt
 == 型
 <types>
 
-Haskellの変数，関数にはすべて型がある．プログラマの言う型とは，数学者の言う集合のことである．本章では，Haskellが扱う基本的な型であるデータ型と，パラメトリックな型である多相型，および型の型である型クラスについて述べる．また関数のカリー化についても述べる．
+Haskellの変数，関数にはすべて型がある．プログラマの言う型とは，数学者の言う集合のことである．本章ではHaskellが扱う基本的な型であるデータ型と，パラメトリックな型である多相型，および型の型である型クラスについて述べる．また関数のカリー化についても述べる．
 
 === データ型
 
@@ -688,9 +688,11 @@ Haskellのすべての変数，関数には#keyword[型]がある．代表的な
 
 Haskellはコンパイラが型推論を行うことで，型が自明の場合は型を省略することができる．#footnote[C23およびC++11以降は```c auto```キーワードを導入し，Haskellと同様の型推論を行うようになった．]
 
+#pb
+
 Haskellにはよく使う型が予め用意されている．
 
-Haskellには2種類の整数型があり，ひとつは#keyword[固定長整数型]で，もうひとつは#keyword[多倍長整数型]である．Haskellでは前者を `Int` で，後者を `Integer` で表す．多倍長整数型はメモリの許す限り巨大な整数を扱えるので，整数全体の集合に近いのであるが，本書では主に固定長整数型を用いる．この $haskell.Int$ はCの ```c int``` と似た「計算機にとって都合の良い整数」である．計算機にとって都合の良い整数とは，例えば64ビット計算機の場合 $-2^(63)$ から $2^(63)-1$ の間の整数という意味である．#footnote[Haskellでは $haskell.Int$ を ```haskell Int``` で表す．]
+Haskellには2種類の整数型があり，ひとつは#keyword[固定長整数型]で，もうひとつは#keyword[多倍長整数型]である．Haskellでは前者を ```haskell Int``` で，後者を ```haskell Integer``` で表す．多倍長整数型はメモリの許す限り巨大な整数を扱えるので，整数全体の集合に近いのであるが，本書では主に固定長整数型を用いる．この $haskell.Int$ はCの ```c int``` と似た「計算機にとって都合の良い整数」である．計算機にとって都合の良い整数とは，例えば64ビット計算機の場合 $-2^(63)$ から $2^(63)-1$ の間の整数という意味である．#footnote[Haskellでは $haskell.Int$ を ```haskell Int``` で表す．]
 
 変数 $x$ の型が $haskell.Int$のとき，以下のように#keyword[型注釈]を書く．#footnote[Haskellでは `x :: Int` と書く．]
 $ x colon.double haskell.Int $
@@ -718,22 +720,11 @@ $ x colon.double haskell.Int $
 のようにイメージすると良い．これは関数 $f$ が集合 $haskell.Int$ から集合 $haskell.Int$ への#keyword[写像]であると読む．#footnote[Haskellでは ```haskell f :: Int -> Int``` と書く．なお正確には矢印記号 $(->)$ は型コンストラクタである．無名の型引数を $lozenge.filled.medium$ で表すと $->$ は $chevron.l lozenge.filled.medium -> lozenge.filled.medium chevron.r$ という，ふたつの型引数を取る型コンストラクタである．
 ]
 
-2引数関数の型は次のように注釈できる．#footnote[Haskellでは `f :: Int -> Int -> Int` と書く．]
-$ f colon.double haskell.Int -> haskell.Int -> haskell.Int $
-
-ここで関数 $f$ は整数型の引数をふたつとり，整数型の値を返す．型 $haskell.Int -> haskell.Int -> haskell.Int$ は $haskell.Int -> (haskell.Int -> haskell.Int)$ と解釈される．
-
-$(haskell.Int -> haskell.Int)$ 型の関数を受け取り $(haskell.Int -> haskell.Int)$ 型の関数を返す関数は次の型を持つ．#footnote[Haskellでは `f :: (Int -> Int) -> (Int -> Int)` と書く．]
-$ f colon.double (haskell.Int -> haskell.Int) -> (haskell.Int -> haskell.Int) $
-
-なお後半の括弧は省略可能なので次のように書いても良い．
-$ f colon.double (haskell.Int -> haskell.Int) -> haskell.Int -> haskell.Int $
-
 Haskellではすべての変数，関数に型があり，型はコンパイル時に決定されていなければならない．ただし，式から#keyword[型推論]が行える場合は型注釈を省略できる．
 
 === カリー化
 
-Haskellでは，どのような関数であれ引数は1個しかとらない．引数が2個あるように見える関数として，例えば $g x y$ があったとしよう．ここに $g$ は関数，$x$ と $y$ は変数である．関数適用は左結合であるから，これは　$(g x)y$ である．ここに $(g x)$ は引数 $y$ をとる関数であると見ることができる．つまり，関数 $g$ とは引数 $x$ をとり「引数 $y$ をとって値を返す関数 $(g x)$ を返す」関数であると言える．
+Haskellでは，どのような関数であれ引数は1個しかとらない．引数が2個あるように見える関数として，例えば $g x y$ があったとしよう．ここに $g$ は関数，$x$ と $y$ は変数である．関数適用は左結合であるから，これは $(g x)y$ である．ここに $(g x)$ は引数 $y$ をとる関数であると見ることができる．つまり，関数 $g$ とは引数 $x$ をとり「引数 $y$ をとって値を返す関数 $(g x)$ を返す」関数であると言える．
 
 二項演算 $x + y$ は $(+)x y$ とも書けたことを思い出そう．これも左結合を思い出すと $(+)x y = ((+)x)y$ であるから，$y$ という引数を $((+)x)$ という関数に食わせていると解釈できる．
 
@@ -751,9 +742,7 @@ Haskellでは，どのような関数であれ引数は1個しかとらない．
 #par-equation($ g colon.double haskell.Int -> (haskell.Int -> haskell.Int) $)
 と同じ意味である．上式は
 #par-equation($ g colon.double underbrace(haskell.Int, x) -> underbrace(overbrace(haskell.Int, y) -> overbrace(haskell.Int, (g x)y), g x) $)
-のようにイメージすると良い．
-
-自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $(->)haskell.a haskell.b$ の別名であり，型コンストラクタ $(->)$ に引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
+のようにイメージすると良い．自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $haskell.typeconstructor2((->), haskell.a, haskell.b)$ の別名であり，型コンストラクタ $(->)$ に引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
 
 #pb
 
