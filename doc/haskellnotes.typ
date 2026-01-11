@@ -1589,7 +1589,8 @@ $ z_"s" = f * x_"s" $
 
 $ z_? = f convolve.o_? x_? $
 
-リストもMaybeも元の型 $haskell.a$ から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手]という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを $haskell.Functor$ で表す．関手型クラスの $haskell.a$ 型の変数を次のように型注釈する．#footnote[Haskellでは `xm :: Functor f => f a` と書く．]
+リストもMaybeも元の型 $haskell.a$ から派生しており，関数適用のための特別な演算子を持つことになる．そこで，リストやMaybeは#keyword[関手]という型クラスに属する，型パラメタを伴う型であるとする．関手の型クラスを $haskell.Functor$ で表す．関手型クラスの $haskell.a$ 型の変数を次のように型注釈する．#footnote[Haskellでは ```haskell xm :: Functor f => f a``` と書く．]
+
 $ x_* colon.double haskell.Functor supset haskell.f arrow.r.stroked haskell.typeconstructor1(haskell.f, haskell.a) $
 
 型 $haskell.typeconstructor1([space.thin], haskell.a)$ や型 $haskell.MaybeType(haskell.a)$ は型 $haskell.a$ のところに $haskell.Int$ や $haskell.Double$ を代入すると具体的な型となる抽象的な型であった．今度は $[space.thin]$ や $haskell.Maybe$ のほうも $haskell.f$ と抽象化するのである．この $haskell.f$ は#keyword[型コンストラクタ]と呼ぶ．型コンストラクタには，具体的な引数，例えば $haskell.Int$ や $haskell.Double$ を与えると具体的な型になる．
@@ -1625,7 +1626,7 @@ $ z_* = f convolve.o x_* $
   &= backslash x |-> x $)
 と書いたほうがわかり良いかもしれない．
 
-恒等射の保存はリストを考えると簡単に理解できる．リスト変数 $x_"s"$ の各要素に恒等関数 $id$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ そのものである．
+恒等射の保存はリストを考えると簡単に理解できる．リスト変数 $x_"s"$ の各要素に恒等関数 $id$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ そのものである．#footnote[任意の関数 $f$ と任意の値コンストラクタ $chevron.l.closed square.stroked.dotted chevron.r.closed$ について $f convolve.o chevron.l.closed x chevron.r.closed = chevron.l.closed f x chevron.r.closed$ が成り立つことをマップ演算子 $(convolve.o)$ の準同型性と呼ぶ．Haskellでは関手の準同型性を規則にしていないが，後に述べるアプリカティブ関手のマップ演算子 $(haskell.amap)$ では準同型性を要求する．]
 
 $ id * x_"s" &= [id x | x in x_"s"] \
   &= id [x | x in x_"s"] \
