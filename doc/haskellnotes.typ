@@ -234,7 +234,7 @@ $ f_1 &= "tr"_([A...Z]->[a...z])\
 そして $x$ から $y$ を得るために
 #par-equation($ y = f_6(f_5(f_4(f_3(f_2(f_1(x)))))) $)
 という計算を行った．括弧が多すぎるので，この式を
-#par-equation($ y = f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1(x) $)
+#par-equation($ y = (f_6 compose f_5 compose f_4 compose f_3 compose f_2 compose f_1)(x) $)
 と書き直そう．ここに演算子 $compose$ は「#keyword[関数合成演算子]」だ．
 
 関数合成演算子を使うと，プログラム $f$ を
@@ -365,7 +365,7 @@ $ x = 1 $<binding>
 
 整数 $x$ に $1$ を足す#keyword[関数] $f$ は次のように定義できる．
 #par-equation($ f x = x + 1 $)
-ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．#footnote[Haskellでは `f x = x + 1` と書く．]
+ここに $x$ は関数 $f$ の#keyword[引数]である．引数は括弧でくるまない．このような書き方を本書では「カリー風」と呼ぶことにする．#footnote[Haskellでは `f x = x + 1` と書く．]
 
 Pythonや一般的な数学書では引数 $x$ をとる関数 $f$ を $f(x)$ と書くが，括弧は冗長なので今後は $f x$ と書くことにする．#footnote[Haskell では関数 ```haskell f``` に引数 ```haskell x``` を適用させることを ```haskell f x``` と書く．数学や物理学では $x$ をパラメタとする関数を $f(x)$ と書く場合もあるし，$f$ のようにパラメタを省略する場合もある．数学や物理学でパラメタを省略した場合は，$f(x_0)$ の意味で $f|_(x=x_0)$ と書くことがある．]
 
@@ -379,15 +379,7 @@ $ z = f x $
 
 #pb
 
-複数引数をとる関数をPythonや一般的な数学の教科書では $g(x, y)$ と書くが，これも括弧が冗長なので今後は $g x y$ と書く．この場合式 $g x y$ は左を優先して結合する．つまり $g x y = (g x) y$ である．これは引数 $y$ に関数 $(g x)$ が左から作用していると解釈する．関数 $(g x)$ は引数 $x$ に関数 $g$ を作用させて作った関数である．引数に「飢えた」関数 $(g x)$ を#keyword[部分適用]された関数と呼ぶ．
-
-関数 $f$ が引数をふたつ取る場合は，次のように書く．#footnote[Haskellでは `z = f x y` と書く．]
-
-$ z = f x y $
-
-なお $f x y$ は $(f x)y$ と解釈される．前半の $(f x)$ は1引数の関数とみなせる．2引数関数を連続した1引数関数の適用とみなす考え方を，関数の#keyword[カリー化]と呼ぶ．
-
-このように式の左側を優先的に演算していくことを#keyword[左結合]と呼ぶ．Haskellの場合，関数適用はいつも左結合である．
+複数引数をとる関数をPythonや一般的な数学の教科書では $g(x, y)$ と書くが，これも括弧が冗長なので今後は $g x y$ と書く．この場合式 $g x y$ は左を優先して結合する．つまり $g x y = (g x) y$ である．これは引数 $y$ に関数 $(g x)$ が左から作用していると解釈する．関数 $(g x)$ は引数 $x$ に関数 $g$ を作用させて作った関数である．引数に「飢えた」関数 $(g x)$ を#keyword[部分適用]された関数と呼ぶ．このように式の左側を優先的に演算していくことを#keyword[左結合]と呼ぶ．Haskellの場合，関数適用はいつも左結合である．
 
 部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を ```haskell max x y``` と書く．なお関数 $(max x)$ のことを $max_x$ と書く教科書も多い．関数引数を添え字で表す記法は，本書でも後に採用する．]
 
@@ -395,18 +387,16 @@ $ z = f x y $
 
 関数の正体は#keyword[ラムダ式]である．ラムダ式とは，仮の引数をとり，その値をもとになにがしかの演算を行い，その結果を返す式である．ラムダ式は名前のない関数のようなものだ．それゆえ，無名関数と呼ばれることもある．
 
-例えば引数 $x$ をとり値 $1+x$ を返すラムダ式をPythonでは次のように書く．
+例えば引数 $x$ をとり値 $1+x$ を返すラムダ式を変数 $f$ に代入したい場合，Pythonでは次のように書く．
 
 #sourcecode[```python
 # Python
-lambda x: 1 + x
+f = lambda x: 1 + x
 ```]
 
 一方，我々はより簡潔に
-#par-equation($ backslash x |-> 1 + x $)
-と書くことにする．
-
-この式は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $(.)$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
+#par-equation($ f = backslash x |-> 1 + x $)
+と書くことにする．この式の右辺 $backslash x |-> 1 + x$ は多くの書物で $lambda x class("binary", .) 1 + x$ と記述されるところである．しかし我々はすべてのギリシア文字を変数名のために予約しておきたいのと，ピリオド記号 $(.)$ が今後登場する二項演算子と紛らわしいため，上述の記法を用いる．#footnote[Haskellではラムダ式 $backslash x |-> 1 + x$ を ```haskell \x -> 1 + x``` と書く．ラムダ式は元々は $hat(x) class("binary", .) 1 + x$ のように書かれていた．これが次第に $hat x class("binary", .) 1 + x$ となり，$Lambda x class("binary", .) 1 + x$ そして $lambda x class("binary", .) 1 + x$ に変化していったと言われている．Haskell が $lambda$ の代わりに $backslash$ 記号を使うのは，その形が似ているからである．]
 
 ラムダ式は関数である．ラムダ式を適用するには，ラムダ式を括弧で包む必要がある．例を挙げる．
 #par-equation($ (backslash x |-> 1 + x) space 2 $)
@@ -458,7 +448,7 @@ rect.stroked.h arrow.r.dotted 2 times x) $
 
 $ f'' x&|_(x < 0) = 0 \
   &|_(x equiv 0) = 1 \
-  &|_haskell.otherwise = 2 * x $
+  &|_haskell.otherwise = 2 times x $
 
 ガードは上から順にマッチされる．
 
@@ -468,16 +458,16 @@ $ f'' x&|_(x < 0) = 0 \
 
 #sourcecode[```python
 # Python
-def fppp(x):
-  if x == 0:
-    return 1
+def f(x):
+  if x == 0.0:
+    return 1.0
   else:
     return sin(x) / x
 ```]
 
 一方，我々は値を持つ#keyword[条件式]を考える．我々の条件式とは 
-#par-equation($ f''' x = haskell.kwif x equiv 0 haskell.kwthen 1 haskell.kwelse frac(sin x, x, style: "skewed") $)
-のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0 haskell.kwthen 0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0 then 1 else (sin x) / x``` と書く．]
+#par-equation($ f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac(sin x, x, style: "skewed") $)
+のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0.0 then 1.0 else (sin x) / x``` と書く．]
 
 === この章のまとめ
 
@@ -538,7 +528,9 @@ z = g(f(x))
 
 このコードを本書の記法で書けば $z = g(f x)$ である．この式から括弧を省略して $z = g f x$ としてしまうと，関数適用は左結合するから $z = (g f) x$ の意味になってしまう．関数 $g$ が引数に関数を取るので無い限り $(g f)$ は無意味なので，$ z = g(f x)$ の括弧は省略できない．
 
-ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って $g compose f = g(f lozenge.stroked.medium)$ と定義できる．関数合成演算子 $compose$ は関数適用よりも優先順位が高く，$(g compose f)x$ は単に $g compose f x$ と書いても良い．この記法は括弧の数を減らすためにしばしば用いられる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g.f``` である．式 $z = g compose f x$ は ```haskell z = g.f x``` と書く．]
+ここで，引数のことは忘れて，関数 $f$ と関数 $g$ を先に#keyword[合成]しておきたいとしよう．その合成を $g compose f$ と書く．演算子 $compose$ は#keyword[関数合成演算子]と呼ぶ．合成はラムダ式を使って
+#par-equation($ g compose f = g(f lozenge.stroked.medium) $)
+と定義できる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g . f``` である．式 $z = (g compose f) x$ は ```haskell z = (g . f) x``` と書く．]
 
 関数合成演算子は，連続して用いることができる．関数合成演算子は左結合するので，関数 $f, g, h$ について $h compose g compose f = (h compose g) compose f$ であるが，これを展開すると以下のようになる．
 $ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \

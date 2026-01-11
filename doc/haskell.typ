@@ -168,7 +168,7 @@
 // Infix.
 #let infix(x) = {
   let xx = x
-  $class("binary", quote.l.single xx quote.r.single)$
+  $class("binary", grave(xx))$
 }
 
 // Unit type.
