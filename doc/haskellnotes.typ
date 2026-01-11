@@ -1017,6 +1017,10 @@ ys = map(f, xs)
 #par-equation($ f * [x_0, x_1, ..., x_n] = [f x_0, f x_1, ..., f x_n] $)
 であると定義する．この演算子 $*$ をリストの#keyword[マップ演算子]と呼ぶ．#footnote[Haskellでは ```haskell map f xs``` または ```haskell f <$> xs``` と書く．演算子 ```haskell <$>``` は ```haskell fmap``` 演算子の中置バージョンである．]
 
+リストのマップ演算子はリスト内包表記を使って次のようにも書ける．
+#par-equation($ f * x_"s" = [f x | x in x_"s"] $)
+しかし，マップは演算子として定義しておいたほうが見通しが良くなる．
+
 リストのマップ演算子の型は
 #par-equation($ (*) colon.double (haskell.a -> haskell.b) -> [haskell.a] -> [haskell.b] $)
 である．矢印 $->$ は右結合なので，これは
@@ -1024,9 +1028,7 @@ ys = map(f, xs)
 の意味でもある．念のため上式に注釈を加えると
 #par-equation($ (*) colon.double underbrace((haskell.a -> haskell.b), f)
   -> (underbrace([haskell.a], [x_0, x_1, ..., x_n]) -> underbrace([haskell.b], [f x_0, f x_1, ..., f x_n])) $)
-である．
-
-ここで $f$ と $(f*)$ の型を並べてみると
+である．ここで $f$ と $(f*)$ の型を並べてみると
 #par-equation($ f &colon.double haskell.a -> haskell.b \
   (f *) &colon.double [haskell.a] -> [haskell.b] $)
 となり，マップ演算子が何をしているのか一目瞭然になる．
@@ -1044,7 +1046,7 @@ ys = map(f, xs)
 1.0 2.0 3.0
 4.5 5.5 6.5
 ```]
-このようなファイル形式は計算機科学者にとって見慣れたものである．
+このようなファイル形式は計算機科学者にとって見慣れたものである．#footnote[本物の計算機科学者はこのようなファイルに欠損がないか，あらかじめスクリプトを走らせて検査しておくものである．]
 
 各行つまり各ベクトルごとに，そのノルムを計算して出力するプログラムを書きたいとしよう．まず数列を受け取ってそのノルムを返す関数 $haskell.norm$ を次のように定義する．
 
