@@ -1062,8 +1062,8 @@ $ &haskell.norm colon.double [haskell.Double] -> haskell.Double\
 
 入力ファイルを1行毎のリストにするには関数 $haskell.lines$ を用いる．関数 $haskell.lines$ の型は
 #par-equation($ haskell.lines colon.double haskell.String -> [haskell.String] $)
-である．関数 $haskell.lines$ を用いると，入力
-```haskell "1.0 2.0 3.0\n 4.5 5.5 6.5"```が ```haskell ["1.0 2.0 3.0", "4.5 5.5 6.5"]``` になる．
+である．関数 $haskell.lines$ を用いると，入力 
+```haskell "1.0 2.0 3.0\n4.5 5.5 6.5"``` が ```haskell ["1.0 2.0 3.0", "4.5 5.5 6.5"]``` になる．
 
 各行を空白で区切ってリストに格納するには関数 $haskell.words$ を用いる．関数 $haskell.words$ の型は
 #par-equation($ haskell.words colon.double haskell.String -> [haskell.String] $)
@@ -1112,7 +1112,7 @@ main = print
          =<< getContents
 ```]
 
-@io-survival-kit-2 において，アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では ```haskell printEach xs = print `mapM` xs``` と書く．]
+@io-survival-kit-2 において，アクション $haskell.print$ に代えて次の $haskell.printEach$ を用いると，入力と出力を同じ形式にできる．#footnote[Haskell では ```haskell printEach xs = print `mapM_` xs``` と書く．]
 #par-equation($ haskell.printEach x_"s" = haskell.print *_"M" x_"s" $)
 演算子 $*_"M"$ はアクション版のマップ演算子である．
 
