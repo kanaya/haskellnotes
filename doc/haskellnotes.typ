@@ -1086,10 +1086,10 @@ $ haskell.main
 
 @io-survival-kit-2 は，右辺の右端から次のように読むことが出来る．
 1. 入力全体を $haskell.getContents$ で読み込む．
-2. 読み込んだ入力を $haskell.lines$ で1行毎のリストに変換する．
-3. 1行毎のリストを $haskell.words$ で空白で区切ったリストに変換する．
-4. 空白で区切ったリストを $haskell.readDouble$ で浮動小数点数に変換する．
-5. 浮動小数点数のリストのノルムを $norm$ で計算する．
+2. 読み込んだ入力を $haskell.lines$ でリストに変換する．
+3. 1行毎 $(*)$ のリストを $haskell.words$ で空白で区切ったリストに変換する．
+4. 各行について $(*)$ 空白で区切ったリストを1単語ずつ $(*)$ を $haskell.readDouble$ で浮動小数点数に変換する．
+5. 各行について $(*)$ 浮動小数点数のリストのノルムを $norm$ で計算する．
 6. ノルムのリストを $haskell.print$ で出力する．
 
 @io-survival-kit-2 をHaskellコードで書くと次のようになる．
