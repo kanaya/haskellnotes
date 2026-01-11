@@ -1883,7 +1883,7 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
 #tk
 
 #sourcecode[```python
--- Python
+# Python
 import sys
 def main():
   s = sys.stdin.readline()
