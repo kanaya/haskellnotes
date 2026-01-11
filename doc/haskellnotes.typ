@@ -72,7 +72,7 @@
     table.header([*種類*], [*字体・表記法*], [*例*]),
     [変数・関数], [イタリック（1文字）], $x, f$,
     [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, id, haskell.otherwise$,
-    [文脈に入れる関数（アクション）], [ギリシア文字（1文字）], $alpha, phi$,
+    [文脈に入れる関数（アクション）], [], $tilde(f)$,
     [有名なアクション], [ボールド・小文字], $haskell.main, haskell.print$,
     [リスト変数], [変数名にsをつける], $x_"s"$,
     [Maybe変数], [変数名に $?$ をつける], $x_?$,
@@ -315,6 +315,12 @@ someFunc = putStrLn "Hello, World!"
 #sourcecode[```shell-unix-generic
 $ stack build
 $ stack run
+```]
+
+画面に次のように表示されたら成功である．
+
+#sourcecode[```shell-unix-generic
+Hello, World!
 ```]
 
 
