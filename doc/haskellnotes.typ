@@ -559,12 +559,14 @@ $ id compose f = f $<composition-with-identity-function>
 
 #pb
 
-関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
+関数合成演算子は演算子の中で優先順位がもっとも高く，関数適用の次に優先される．一方，関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
 $ f haskell.apply x = f x $
 
-演算子 $haskell.apply$ の優先順位は関数適用も含めあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
+演算子 $haskell.apply$ の優先順位はあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
 
-関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(lozenge.stroked.medium haskell.apply x)$ を用いると $(lozenge.stroked.medium haskell.apply x)f = f haskell.apply x$ であるから，関数適用演算子を用いて引数を関数に渡すことができる．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を ```haskell ($x)f``` と書く．]
+関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(haskell.apply x)$ を用いると
+#par-equation($ (haskell.apply x)f = (lozenge.stroked.medium haskell.apply x)f = f haskell.apply x $)
+であるから，関数適用演算子を関数と引数の順序を逆に書ける．#footnote[Haskell では $(lozenge.stroked.medium haskell.apply x)f$ を ```haskell ($x)f``` と書く．]
 
 === 高階関数
 
