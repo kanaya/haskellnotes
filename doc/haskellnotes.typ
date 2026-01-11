@@ -533,17 +533,26 @@ z = g(f(x))
 と定義できる．#footnote[Haskellでは関数 ```haskell g``` と関数 ```haskell f``` の合成は ```haskell g . f``` である．式 $z = (g compose f) x$ は ```haskell z = (g . f) x``` と書く．]
 
 関数合成演算子は，連続して用いることができる．関数合成演算子は左結合するので，関数 $f, g, h$ について $h compose g compose f = (h compose g) compose f$ であるが，これを展開すると以下のようになる．
-$ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
+#par-equation($ (h compose g) compose f &= (h compose g)(f lozenge.stroked.medium) \
   &= h(g(f lozenge.stroked.medium)) \
-  &= h compose (g compose f) $
+  &= h compose (g compose f) $)
+そのため関数合成は順序に依存せず，次の関係が成り立つ．
 
-そのため $h compose g compose f = h compose (g compose f)$ である．つまり，関数合成は順序に依存しない．
+$ h compose g compose f = h compose (g compose f) $<composition-associativity>
 
 #pb
 
-#tk 関数合成則
+Haskellには「何もしない」関数 $id$ が用意されている．関数 $id$ は引数をそのまま返す関数で，
+#par-equation($ id x = x $)
+と定義される．関数 $id$ は#keyword[恒等関数]と呼ばれる．
 
-#theorem-box(title: "関数の規則", outlined: false)[
+恒等関数は何もしない関数なので，任意の関数 $f$ に対して以下の等式が成り立つ．
+
+$ id compose f = f $<composition-with-identity-function>
+
+@composition-with-identity-function と @composition-associativity をまとめて#keyword[関数の合成則]と呼ぶ．そこで，関数の合成則を箱に入れて掲載しておこう．
+
+#theorem-box(title: "関数の合成則", outlined: false)[
 1. 恒等関数の存在：任意の関数 $f$ に対して恒等関数 $id$ ただし $id compose f = f$ が存在する．
 2. 結合則：任意の関数 $f, g, h$ について $(h compose g) compose f = h compose (g compose f)$ が成り立つ．
 ]
