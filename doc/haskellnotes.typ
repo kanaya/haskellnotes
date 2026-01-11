@@ -824,7 +824,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
     [低], [変数，関数], $x, f$, [---],
     [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
     [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.Int$,
-    [至高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
+    [高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
   )
 )
 
