@@ -1814,10 +1814,10 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
   (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
-#theorem-box(title: "モナドの法則", outlined: false)[
-1. $phi haskell.bind chevron.l x chevron.r = phi x$
-2. $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-3. 結合則：$phi haskell.bind (psi haskell.bind x_*) = (backslash y |-> phi haskell.bind (psi y)) haskell.bind x_*$
+#theorem-box(title: "モナドの規則", outlined: false)[
+1. 左単位元の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
+2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$
+2. 結合則： $tilde(g) haskell.bind (tilde(f) haskell.bind x_*) = (tilde(g) haskell.bind (tilde(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
 
 
