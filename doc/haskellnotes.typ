@@ -1816,7 +1816,7 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
 
 #theorem-box(title: "モナドの規則", outlined: false)[
 1. 左単位元の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$
+2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$  // 定義?
 2. 結合則： $tilde(g) haskell.bind (tilde(f) haskell.bind x_*) = (tilde(g) haskell.bind (tilde(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
 
