@@ -1692,10 +1692,10 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 
 #theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
-1. 恒等射の存在：アプリカティブ関手は恒等射 $id$ ただし $chevron.l id chevron.r haskell.amap x_* = x_*$ を持つ．
-2. 結合則：$h_* haskell.amap (g_* haskell.amap f_*) = chevron.l lozenge.stroked.medium compose lozenge.stroked.medium chevron.r haskell.amap h_* haskell.amap g_* haskell.amap f_*$
-3. 交換則：$chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l lozenge.stroked.medium dollar x chevron.r haskell.amap f$
-4. $chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
+1. 恒等射の保存： $chevron.l id chevron.r haskell.amap = id$
+2. 準同型性： $f haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
+3. 交換則： $f haskell.amap chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r haskell.amap f$
+4. 結合則： $chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f = h haskell.amap (g haskell.amap f)$
 ]
 
 
