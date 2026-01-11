@@ -1923,7 +1923,7 @@ main()
 #sourcecode[```haskell
 --Haskell
 -- f :: String -> String
-main = do { s <- getLine; let t = f s in print t}
+main = do { s <- getLine; let t = f s in print t }
 ```]
 
 #sourcecode[```haskell
