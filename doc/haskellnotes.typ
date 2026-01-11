@@ -762,6 +762,8 @@ $ z colon.double paren.l.stroked haskell.Int, haskell.Int paren.r.stroked $
 
 $ x colon.double haskell.Unit $
 
+ユニット型の変数が取れる唯一の値は $nothing.rev$ である．
+
 === 多相型と型クラス
 
 整数型 $(haskell.Int)$ と浮動小数点型 $(haskell.Float)$ はよく似ている．どちらも値同士を比較可能で，それ故どちらにも等値演算子が定義されている．
