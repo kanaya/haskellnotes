@@ -966,7 +966,7 @@ ls = [0, 1, 2, 3, 4, 5]
 s = reduce(lambda x, y: x + y, ls, 0)
 ```]
 
-この ```python reduce``` 関数はPythonバージョン3では非推奨になっているが，Rubyには受け継がれていて，Rubyでは次のように書ける．
+この ```python reduce``` 関数はPythonバージョン3では外部モジュールに移されてしまったが，Rubyには標準関数 ```ruby inject``` として受け継がれている．Rubyでは次のように書ける．
 
 #sourcecode[```ruby
 # Ruby
@@ -974,9 +974,7 @@ ls = [0, 1, 2, 3, 4, 5]
 s = ls.inject(0) { |x, y| x + y }
 ```]
 
-#pb
-
-リストの総和をとる演算子 $sum$ は
+リストの総和をとる演算子 $sum$ は畳み込み演算子 $haskell.fold$ を用いて
 #par-equation($ sum x_"s" = haskell.fold_0^+ x_"s" $)
 とすれば得られる．この式は両辺の $x_"s"$ を省略して
 #par-equation($ sum = haskell.fold_0^+ $)
@@ -986,8 +984,8 @@ s = ls.inject(0) { |x, y| x + y }
 #par-equation($ product = haskell.fold_1^times $)
 とすれば得られる．
 
-畳み込み演算子は第1（上）引数に $haskell.a$ 型と $haskell.b$ 型の引数を取り $haskell.a$ 型の戻り値を返す二項演算子，第2（下）引数に $haskell.a$ 型，第3（右）引数に $haskell.b$ 型のリストすなわち $[haskell.b]$ 型を取り，$haskell.a$ 型の値を返す．従って畳み込み演算子の型は
-#par-equation($ haskell.fold colon.double (haskell.a -> haskell.b -> haskell.a
+畳み込み演算子は第1（上）引数に「$haskell.a$ 型と $haskell.b$ 型の引数を取り $haskell.a$ 型の戻り値を返す」二項演算子，第2（下）引数に「$haskell.a$ 型」の初期値，第3（右）引数に「$haskell.b$ 型のリスト」すなわち $[haskell.b]$ 型の変数を取り，$haskell.a$ 型の値を返す．従って畳み込み演算子の型は
+#par-equation($ haskell.fold colon.double (haskell.a -> haskell.b -> haskell.a)
   -> haskell.a -> [haskell.b] -> haskell.a $)
 である．
 
@@ -1000,7 +998,7 @@ s = ls.inject(0) { |x, y| x + y }
 #par-equation($ haskell.fold_emptyset^smash [[0, 1, 2], [3, 4, 5], ...] = [0, 1, 2, 3, 4, 5, ...] $)
 であるから，演算子 $haskell.fold_emptyset^smash$ はリストを平坦化する#keyword[平坦化演算子]である．平坦化演算子はconcat演算子とも呼ばれることもあるが，基本的な演算子であるため特別な記号をつけておこう．我々は
 #par-equation($ haskell.flat = haskell.fold_emptyset^smash $)
-と定義することにする．#footnote[Haskellでは演算子 $haskell.flat$ の代わりに ```haskell concat``` 関数（または ```haskell join``` 関数）を使う．]
+と定義することにする．#footnote[Haskellでは演算子 $haskell.flat$ の代わりに ```haskell concat``` 関数を使う．]
 
 === マップ
 
