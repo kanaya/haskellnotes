@@ -1536,7 +1536,7 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
 
 #pb
 
-Haskellではマップ演算子が定義された型を関手型と呼ぶ．具体的には，マップ演算子が定義されたすべての型は $haskell.Functor$ 型クラスのインスタンスであるとする．つまり $haskell.Functor$ 型クラスには一般化されたマップ演算子が定義されており，そのインスタンスであるリストやMaybeは独自のマップ演算子を定義しなければならないということである．
+Haskellではマップ演算子が定義された型を#keyword[関手型クラス]と呼ぶ．具体的には，マップ演算子が定義されたすべての型は $haskell.Functor$ 型クラスのインスタンスであるとする．つまり $haskell.Functor$ 型クラスには一般化されたマップ演算子が定義されており，そのインスタンスであるリストやMaybeは独自のマップ演算子を定義しなければならないということである．
 
 一般化されたマップ演算子を $convolve.o$ で表そう．この $convolve.o$ 演算子は
 #par-equation($ (convolve.o) colon.double haskell.Functor supset haskell.f arrow.r.stroked haskell.f_haskell.a -> haskell.f_haskell.b $)
