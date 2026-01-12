@@ -807,9 +807,19 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談
+=== 余談：全称量化子
 
-#tk 余談
+型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
+#par-equation($ f colon.double haskell.a -> haskell.a $)
+であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
+#par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
+ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
+
+例えば
+#par-equation($ f colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
+は，本来は
+#par-equation($ f colon.double forall haskell.a |=> haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
+と書くべきところである．#footnote[Haskellでは ```haskell f :: forall a . Num a => a -> a``` と書く．]
 
 === この章のまとめ
 
@@ -1695,21 +1705,7 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 #tk アプリカティブスタイル
 
-=== 余談：全称量化子と種
-
-型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
-#par-equation($ f colon.double haskell.a -> haskell.a $)
-であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
-#par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
-ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
-
-例えば
-#par-equation($ f colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
-は，本来は
-#par-equation($ f colon.double forall haskell.a |=> haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
-と書くべきところである．#footnote[Haskellでは ```haskell f :: forall a . Num a => a -> a``` と書く．]
-
-#pb
+=== 余談：種
 
 型クラスは型を一段抽象化したものであった．型を抽象化したものとして，Haskellには#keyword[種]という概念もある．$haskell.Int$ や $haskell.Double$ のような具体的な型はすべて $haskell.Type$ という種に属する．一方 @list で述べるように，Haskellには型から型を作る機能がある．このように型から作られる型は $haskell.Type ~> haskell.Type$ という種に属する．これらの関係を @types-and-kinds に掲げる．
 
