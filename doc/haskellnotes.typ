@@ -1615,8 +1615,8 @@ $ z_* = f convolve.o x_* $
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次の#keyword[関手則]を満たす必要がある．
 
 #theorem-box(title: "関手の規則", outlined: false)[
-1. 恒等射の保存：マップ演算子 $(convolve.o)$ は $id convolve.o = id$ を満たす．
-2. 関数合成の保存：マップ演算子 $(convolve.o)$ は $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ を満たす．
+1. 恒等射の存在：マップ演算子 $(convolve.o)$ は $id convolve.o x_* = id x_*$ を満たす．
+2. 結合則：マップ演算子 $(convolve.o)$ は $g convolve.o (f convolve.o x_*) = (g compose f) convolve.o x_*$ /* $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ */ を満たす．
 ]
 
 まず関数 $id$ を定義しておくと，これは引数をそのまま返す関数で
