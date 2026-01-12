@@ -1694,10 +1694,11 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 #theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
 1. 恒等射の保存： $chevron.l id chevron.r haskell.amap = id$
+2. 結合則： $chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f = h haskell.amap (g haskell.amap f)$
+]
+
 2. 準同型性： $f haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
 3. 交換則： $f haskell.amap chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r haskell.amap f$
-4. 結合則： $chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f = h haskell.amap (g haskell.amap f)$
-]
 
 
 === 余談：関数と関手
@@ -1817,9 +1818,10 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
 
 #theorem-box(title: "モナドの規則", outlined: false)[
 1. 左単位元の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$  // 定義?
 2. 結合則： $tilde(g) haskell.bind (tilde(f) haskell.bind x_*) = (tilde(g) haskell.bind (tilde(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
+
+2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$ // 準同型
 
 
 === モノイド
