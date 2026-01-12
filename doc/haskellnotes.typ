@@ -1719,16 +1719,16 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 しかしながら，アプリカティブスタイルでは変数に文脈を与えるタイミングがコンテナ変数を作るときのそれぞれ1回に限られている．そこで，任意のタイミングで変数に文脈を与えられるように，別な方法で一般マップ演算子を分解してみよう．
 
-Maybeの例を思い出そう．Maybe型の変数 $x_?$ はラップされた値 $haskell.Just(x)$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $g$ を考えよう．この関数 $g$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
-#par-equation($ g x &|_(x != 0) = haskell.Just(x) \
+Maybeの例を思い出そう．Maybe型の変数 $x_?$ はラップされた値 $haskell.Just(x)$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $phi$ を考えよう．この関数 $phi$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
+#par-equation($ phi x &|_(x != 0) = haskell.Just(x) \
   &|_haskell.otherwise = haskell.Nothing $)
-といった関数 $g colon.double haskell.a -> haskell.MaybeType(haskell.a)$ が考えられる．変数 $x$ は文脈を持っていないが，関数 $g$ を適用した結果である $g x$ は文脈を持っていることに注意しよう．いま $g x$ はMaybeという文脈を持っているから，我々は
-#par-equation($ z_? = g x $)
-という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y = f x$ や $y_* = f convolve.o x_*$ の関係とは異なることに注意しよう．
+といった関数 $phi colon.double haskell.a -> haskell.MaybeType(haskell.a)$ が考えられる．変数 $x$ は文脈を持っていないが，関数 $phi$ を適用した結果である $phi x$ は文脈を持っていることに注意しよう．いま $phi x$ はMaybeという文脈を持っているから，我々は
+#par-equation($ z_? = phi x $)
+という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y = f x$ や $y_* = f convolve.o x_*$ ただし $f colon.double haskell.a -> haskell.a$ の関係とは異なることに注意しよう．
 
-関数 $g$ のように「文脈に入れる」関数を普通の変数に適用するのは造作ないことであるが，問題はすでに文脈に入っている変数，つまりコンテナ変数に適用する場合である．コンテナ変数 $x_*$ が与えられたとき，関数 $g$ を直接適用できないので
-#par-equation($ z_* = g haskell.bind x_* $)
-という演算子 $haskell.bind$ を用いる．この演算子 $haskell.bind$ を#keyword[バインド演算子]あるいは#keyword[左バインド演算子]と呼ぶ．#footnote[Haskellでは ```haskell zm = g =<< xm``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= g``` という書き方を好む．]
+関数 $phi$ のように「文脈に入れる」関数を普通の変数に適用するのは造作ないことであるが，問題はすでに文脈に入っている変数，つまりコンテナ変数に適用する場合である．コンテナ変数 $x_*$ が与えられたとき，関数 $phi$ を直接適用できないので
+#par-equation($ z_* = phi haskell.bind x_* $)
+という演算子 $haskell.bind$ を用いる．この演算子 $haskell.bind$ を#keyword[バインド演算子]あるいは#keyword[左バインド演算子]と呼ぶ．#footnote[Haskellでは ```haskell zm = phi =<< xm``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi``` という書き方を好む．]
 
 #tk
 
