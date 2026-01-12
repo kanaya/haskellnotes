@@ -1711,6 +1711,10 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 4. 交換則： $f haskell.amap chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r haskell.amap f$
 ]
 
+#pb
+
+#tk アプリカティブスタイル
+
 === 余談：関数と関手
 
 #tk 関数と関手
