@@ -1793,6 +1793,8 @@ $ id compose f = id compose f = f \
 == モナド
 <monad>
 
+#tk モナド
+
 === バインド演算子
 
 #tk バインド演算子
