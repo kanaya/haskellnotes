@@ -1834,6 +1834,8 @@ $ haskell.kwdo {x <- x_*; haskell.kwdo {y <- f x}; g y} $
 
 $ haskell.kwdo {x <- x_*; y <- f x; g y} $
 
+// https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+
 === モノイド
 
 #tk
