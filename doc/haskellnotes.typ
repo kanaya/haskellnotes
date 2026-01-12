@@ -1762,11 +1762,6 @@ $(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイド
 
 式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
 
-関数 $psi$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $phi^star.filled = (phi haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ phi^star.filled chevron.l x chevron.r &= phi x \
-  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
-  psi^star.filled (phi^star.filled x_*) &= (psi^star.filled (phi lozenge.stroked.medium))^star.filled x_* $
-
 
 結合則の右辺
 
@@ -1997,6 +1992,15 @@ $ f_2 compose f_1 = f_2 convolve.o f_1 $
 
 $ id compose f = id compose f = f \
   (h compose g) compose f = h compose (g compose f) $
+
+=== クライスリスター
+
+
+関数 $psi$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $phi^star.filled = (phi haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
+$ phi^star.filled chevron.l x chevron.r &= phi x \
+  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
+  psi^star.filled (phi^star.filled x_*) &= (psi^star.filled (phi lozenge.stroked.medium))^star.filled x_* $
+
 
 == 型と種
 
