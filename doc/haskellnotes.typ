@@ -1748,21 +1748,25 @@ $ mu haskell.bind chevron.l x chevron.r &= mu x \
 
 $(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
 
-関数 $mu$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $mu^star.filled = (mu haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ mu^star.filled chevron.l x chevron.r &= mu x \
-  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
-  (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
 #theorem-box(title: "モナド則", outlined: false)[
 1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-2. 結合則： $caron(g) haskell.bind (caron(f) haskell.bind x_*) = (caron(g) haskell.bind (caron(f) lozenge.stroked.medium)) haskell.bind x_*$
+2. 結合則： $psi haskell.bind (phi haskell.bind x_*) = (psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$
 ]
+
+
 
 2. 右単位元の存在； $caron(f) haskell.bind chevron.l x chevron.r = caron(f) x$ // 準同型
 
 
 式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
+
+関数 $psi$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $phi^star.filled = (phi haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
+$ phi^star.filled chevron.l x chevron.r &= phi x \
+  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
+  psi^star.filled (phi^star.filled x_*) &= (psi^star.filled (phi lozenge.stroked.medium))^star.filled x_* $
+
 
 結合則の右辺
 
