@@ -1626,7 +1626,7 @@ $ z_* = f convolve.o x_* $
   &= backslash x |-> x $)
 と書いたほうがわかり良いかもしれない．
 
-恒等射の保存はリストを考えると簡単に理解できる．リスト変数 $x_"s"$ の各要素に恒等関数 $id$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ そのものである．#footnote[任意の関数 $f$ と任意の値コンストラクタ $chevron.l.closed square.stroked.dotted chevron.r.closed$ について $f convolve.o chevron.l.closed x chevron.r.closed = chevron.l.closed f x chevron.r.closed$ が成り立つことをマップ演算子 $(convolve.o)$ の準同型性と呼ぶ．Haskellでは関手の準同型性を規則にしていないが，後に述べるアプリカティブ関手のマップ演算子 $(haskell.amap)$ では準同型性を要求する．]
+恒等射の保存はリストを考えると簡単に理解できる．リスト変数 $x_"s"$ の各要素に恒等関数 $id$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ そのものである．#footnote[任意の関数 $f$ と任意の値コンストラクタ $chevron.l.closed square.stroked.dotted chevron.r.closed$ について $f convolve.o chevron.l.closed x chevron.r.closed = chevron.l.closed f x chevron.r.closed$ が成り立つことをマップ演算子 $(convolve.o)$ の準同型性と呼ぶ．Haskellでは関手の準同型性を規則にしていないが，後に述べるアプリカティブ関手のインスタンスについては準同型性を要求する．]
 
 $ id * x_"s" &= [id x | x in x_"s"] \
   &= id [x | x in x_"s"] \
@@ -1693,13 +1693,11 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 
 #theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
-1. 恒等射の保存： $chevron.l id chevron.r haskell.amap = id$
-2. 結合則： $chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f = h haskell.amap (g haskell.amap f)$
+1. 恒等射の存在： $chevron.l id chevron.r haskell.amap x_* = id x_*$
+2. 結合則： $h haskell.amap (g haskell.amap f) = chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f$
+3. 準同型性： $chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$ または $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$
+4. 交換則： $f haskell.amap chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r haskell.amap f$
 ]
-
-2. 準同型性： $f haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$
-3. 交換則： $f haskell.amap chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r haskell.amap f$
-
 
 === 余談：関数と関手
 
