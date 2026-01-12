@@ -1815,12 +1815,14 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
 
 
 #theorem-box(title: "モナドの規則", outlined: false)[
-1. 左単位元の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
+1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
 2. 結合則： $tilde(g) haskell.bind (tilde(f) haskell.bind x_*) = (tilde(g) haskell.bind (tilde(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
 
 2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$ // 準同型
 
+
+式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
 
 === モノイド
 
