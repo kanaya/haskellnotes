@@ -1614,8 +1614,8 @@ $ z_* = f convolve.o x_* $
 
 関手すなわち $haskell.Functor$ 型クラスに求められるのは，マップ演算子 $(convolve.o)$ を持つことだけではない．関手のマップ演算子は，次の#keyword[関手則]を満たす必要がある．
 
-#theorem-box(title: "関手の規則", outlined: false)[
-1. 恒等射の存在：マップ演算子 $(convolve.o)$ は $id convolve.o x_* = id x_*$ を満たす．
+#theorem-box(title: "関手則", outlined: false)[
+1. 恒等射の存在（保存）：マップ演算子 $(convolve.o)$ は $id convolve.o x_* = id x_*$ を満たす．
 2. 結合則：マップ演算子 $(convolve.o)$ は $g convolve.o (f convolve.o x_*) = (g compose f) convolve.o x_*$ /* $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ */ を満たす．
 ]
 
@@ -1632,6 +1632,12 @@ $ id * x_"s" &= [id x | x in x_"s"] \
   &= id [x | x in x_"s"] \
   &= id x_"s" $
 
+同じことをMaybeについてもやってみると，次のようになる．
+
+$ id convolve.o_? x_? &= cases(haskell.Just(id x) "if" x_? equiv haskell.Just(x), haskell.Nothing "otherwise") $
+
+ここで $x_? equiv haskell.Nothing$ でれば $id convolve.o_? x_?$ も $haskell.Nothing$ となるので，常に $id convolve.o_? x_? = id x_?$ が成立する．
+
 関数合成の保存についても，リストを考えると理解しやすい．リスト変数 $x_"s"$ の各要素に関数 $f$ と関数 $g$ を合成した関数 $g compose f$ を適用した結果は，次の式の通りリスト変数 $x_"s"$ の各要素に関数 $f$ を適用した結果に関数 $g$ を適用した結果である．
 
 $ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
@@ -1642,7 +1648,7 @@ $ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
   &= (g * lozenge.stroked.medium) compose (f * lozenge.stroked.medium) x_"s" \
   &= (g*) compose (f*) x_"s" $
 
-#tk 一般化
+このような関手則は $haskell.Functor$ 型クラスに求められる規則である．Haskellは $haskell.Functor$ 型クラスに属する型が関手則を満たしているかチェックしないが，Haskellプログラマは $haskell.Functor$ 型クラスの方が関手則を満たすことを期待する．
 
 === アプリカティブ関手
 
