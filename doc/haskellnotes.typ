@@ -1708,7 +1708,7 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 #tk アプリカティブ関手の規則
 
 
-#theorem-box(title: "アプリカティブ関手の規則", outlined: false)[
+#theorem-box(title: "アプリカティブ関手則", outlined: false)[
 1. 恒等射の存在： $chevron.l id chevron.r haskell.amap x_* = id x_*$
 2. 結合則： $h haskell.amap (g haskell.amap f) = chevron.l compose chevron.r haskell.amap h haskell.amap g haskell.amap f$
 3. 準同型性： $chevron.l f chevron.r haskell.amap chevron.l x chevron.r = chevron.l f x chevron.r$ または $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$
@@ -1830,7 +1830,7 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
   (nu^star.filled mu)^star.filled x_* &= nu^star.filled (mu^star.filled x_*) $
 
 
-#theorem-box(title: "モナドの規則", outlined: false)[
+#theorem-box(title: "モナド則", outlined: false)[
 1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
 2. 結合則： $caron(g) haskell.bind (caron(f) haskell.bind x_*) = (caron(g) haskell.bind (caron(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
