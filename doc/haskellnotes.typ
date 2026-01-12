@@ -1506,19 +1506,19 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
 #par-equation($ y = f x $)
 であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．この世界では，関数 $f$ は値 $x$ を値 $y$ に変換する．
 
-同様に $haskell.MaybeType(haskell.a)$ 型の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $phi colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり
-#par-equation($ v_? = phi u_? $)
-であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $phi$ は値 $u_?$ を値 $v_?$ に変換する．
+同様に $haskell.MaybeType(haskell.a)$ 型の変数 $u_?, v_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $g colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり
+#par-equation($ v_? = g u_? $)
+であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $g$ は値 $u_?$ を値 $v_?$ に変換する．
 
 ここで，変数 $x, y$ とMaybe変数 $u_?, v_?$ は値コンストラクタによって
 #par-equation($ u_? &= haskell.Just(x) \
   v_? &= haskell.Just(y) $)
 の関係にあるとしよう．値コンストラクタは値を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせる機能を持っている．
 
-他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_? = haskell.Just(x), v_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $phi$ は無関係ではなく
-#par-equation($ v_? = phi u_? = f convolve.o_? u_? $)
+他に $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．いま $u_? = haskell.Just(x), v_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $g$ は無関係ではなく
+#par-equation($ v_? = g u_? = f convolve.o_? u_? $)
 であり，
-#par-equation($ phi = f convolve.o_? $)
+#par-equation($ g = f convolve.o_? $)
 である．つまりマップ演算子 $convolve.o_?$ が関数 $f$ を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせているのである．ジャンプを次の表で波矢印 $(~~>)$ で表した．
 
 #figure(
@@ -1528,7 +1528,7 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
     inset: 10pt,
     table.header([世界（圏）], [値（対象）], [写像（射）], [値のジャンプ], [関数のジャンプ]),
     [$haskell.a$ 世界], $x, y$, $y = f x$, [], [],
-    [$haskell.MaybeType(haskell.a)$ 世界], $u_?, v_?$, $v_? = phi u_?$, $x ~~> u_?, y ~~> v_?$, $f ~~> phi$,
+    [$haskell.MaybeType(haskell.a)$ 世界], $u_?, v_?$, $v_? = g u_?$, $x ~~> u_?, y ~~> v_?$, $f ~~> g$,
   )
 )
 
