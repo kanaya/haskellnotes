@@ -1643,10 +1643,20 @@ $ id convolve.o_? x_? &= cases(haskell.Just(id x) "if" x_? equiv haskell.Just(x)
 $ (g compose f) * x_"s" &= [(g compose f) x | x in x_"s"] \
   &= [g(f x) | x in x_"s"] \
   &= g * [f x | x in x_"s"] \
-  &= g * (f * x_"s") \
+  &= g * (f * x_"s") $
+
+なお $g * (f * x_"s")$ をさらに次のように変形することも可能である．
+
+$ g * (f * x_"s")
   &= g * (f * lozenge.stroked.medium) x_"s" \
   &= (g * lozenge.stroked.medium) compose (f * lozenge.stroked.medium) x_"s" \
-  &= (g*) compose (f*) x_"s" $
+  &= (g*) compose (f*) x_"s" $<functor-law-composition>
+
+@functor-law-composition より，一般性を損なうこと無く
+#par-equation($ g convolve.o (f convolve.o) = (g convolve.o) compose (f convolve.o) $)
+の関係が得られるから，関手の結合則は
+#par-equation($ (g convolve.o) compose (f convolve.o) = (g compose f) convolve.o $)
+とも書かれる．#footnote[Haskellではしばしば ```haskell (fmap g) . (fmap f) = fmap (g . f)``` と表現される．]
 
 このような関手則は $haskell.Functor$ 型クラスに求められる規則である．Haskellは $haskell.Functor$ 型クラスに属する型が関手則を満たしているかチェックしないが，Haskellプログラマは $haskell.Functor$ 型クラスの方が関手則を満たすことを期待する．
 
