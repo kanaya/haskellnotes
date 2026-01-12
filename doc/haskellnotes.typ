@@ -1532,7 +1532,7 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
   )
 )
 
-いま「世界」と呼んだものを，数学者は#keyword[圏]と呼ぶ．圏とは#keyword[対象]と#keyword[射]の組み合わせである．本書では「対象」とは変数のことであり，射とは関数だと思えば良い．そして，圏から圏へとジャンプさせるもの $(~~>)$ を#keyword[関手]と呼ぶ．この例で言えば値コンストラク $haskell.Just(x)$ とマップ演算子 $convolve.o_?$ が関手である．値コンストラクタ $haskell.Just(x)$ は $haskell.a -> haskell.MaybeType(haskell.a)$ という型を持ち，マップ演算子 $convolve.o_?$ は $(haskell.a -> haskell.b) -> (haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b))$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，C++の関数オブジェクト （function object）もかつてはファンクター（functor）と呼ばれていた．C++のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．]
+いま「世界」と呼んだものを，数学者は#keyword[圏]と呼ぶ．圏とは#keyword[対象]と#keyword[射]の組み合わせである．本書では「対象」とは変数のことであり，射とは関数だと思えば良い．そして，圏から圏へとジャンプさせるもの $(~~>)$ を#keyword[関手]と呼ぶ．この例で言えば値コンストラク $[x], haskell.Just(x)$ とマップ演算子 $*, convolve.o_?$ が関手である．値コンストラクタ $haskell.Just(x)$ は $haskell.a -> haskell.MaybeType(haskell.a)$ という型を持ち，マップ演算子 $convolve.o_?$ は $(haskell.a -> haskell.b) -> (haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.b))$ という型を持つ．#footnote[関手は英語でファンクター(functor)と言うが，C++の関数オブジェクト （function object）もかつてはファンクター（functor）と呼ばれていた．C++のファンクターとはクロージャの代用品のことで，本書で述べる関手とは異なる概念である．混同しないように注意しよう．]
 
 #pb
 
