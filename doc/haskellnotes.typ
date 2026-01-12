@@ -72,7 +72,7 @@
     table.header([*種類*], [*字体・表記法*], [*例*]),
     [変数・関数], [イタリック（1文字）], $x, f$,
     [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, id, haskell.otherwise$,
-    [文脈に入れる関数（アクション）], [], $caron(f)$,
+    // [文脈に入れる関数（アクション）], [], $caron(f)$,
     [有名なアクション], [ボールド・小文字], $haskell.main, haskell.print$,
     [リスト変数], [変数名にsをつける], $x_"s"$,
     [Maybe変数], [変数名に $?$ をつける], $x_?$,
@@ -807,29 +807,9 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ x colon.double haskell.Double = haskell.fromIntegral 1 colon.double haskell.Int $)
 とすることで，$haskell.Double$ 型の変数 $x$ に $haskell.Int$ 型の定数を代入できる．#footnote[Haskellでは ```haskell x :: Double = fromIntegral 1 :: Int``` と書く．]
 
-=== 余談：全称量化子
+=== 余談
 
-型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
-#par-equation($ f colon.double haskell.a -> haskell.a $)
-であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
-#par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
-ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
-
-#tk 型に対する演算
-
-#figure(
-  caption: "型・型クラス・種",
-  table(
-    columns: (auto, auto, auto, auto),
-    inset: 10pt,
-    table.header([抽象度], [名称], [具体例], [要素の宣言]),
-    [低], [変数，関数], $x, f$, [---],
-    [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
-    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.a arrow.r.stroked x colon.double haskell.a$,
-    [高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
-  )
-)
-
+#tk 余談
 
 === この章のまとめ
 
@@ -1715,75 +1695,41 @@ $ z_* = [| g x_* y_* |] ... "採用されなかった文法" $
 
 #tk アプリカティブスタイル
 
-=== 余談：関数と関手
+=== 余談：全称量化子と種
 
-#tk 関数と関手
+型 $haskell.a$ の変数を引数に取り，型 $haskell.a$ の戻り値を返す関数 $f$ の型注釈は
+#par-equation($ f colon.double haskell.a -> haskell.a $)
+であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
+#par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
+ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．
 
-関数は関手である．関手とはマップ演算子 $(convolve.o)$ を持つ型クラスのことであった．関数が関手であるならば，関数もマップ演算子を持っていないといけない．そこで，関数のマップ演算子とは何かを考えてみる．
-
-いま関数 $f$ が $f colon.double haskell.r -> haskell.q$ という型を持っているとする．この式は $->$ を二項演算子，すなわち2引数関数とみなせば $f colon.double (->)haskell.r haskell.q$ と等価である．全く形式的に，$((->)haskell.r)$ なる型コンストラクタがあるとして
-#par-equation($ haskell.r -> haskell.q = ((->)haskell.r)_haskell.q $)
-であると考えてみる．型 $haskell.q$ から型コンストラクタ $((->)haskell.r)$ によって型 $(haskell.r -> haskell.q)$ が作られると考えるのだ．#footnote[Haskellでは $((->)haskell.r)$ を ```haskell ((->)r)``` と書く．]
-
-#tk マップ演算子の型．
-
-関数のマップ演算子 $(convolve.o_(((->)haskell.r)))$ と関数の合成演算子 $(compose)$ は同じ型を持つ．
-
-#tk なぜなら
-
-$ (convolve.o) &colon.double haskell.Functor supset haskell.f arrow.r.stroked (haskell.a -> haskell.b) -> haskell.fa -> haskell.fb \
-  (convolve.o_(((->)haskell.r))) &colon.double (haskell.a -> haskell.b) -> haskell.typeconstructor1(((->)haskell.r), haskell.a) -> haskell.typeconstructor1(((->)haskell.r), haskell.b) \
-  &= (haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $
-
-$ (compose) &colon.double (haskell.a -> haskell.b) -> (haskell.t -> haskell.a) -> (haskell.t -> haskell.b) $
-
-幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして @functor-and-functor-laws で述べる関手則さえ守っていれば）自由に選べる．そこで
-#par-equation($ convolve.o_(((->)haskell.r)) = compose $)
-としておこう．これがHaskellにおける関数のマップ演算子の定義である．
+例えば
+#par-equation($ f colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
+は，本来は
+#par-equation($ f colon.double forall haskell.a |=> haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
+と書くべきところである．#footnote[Haskellでは ```haskell f :: forall a . Num a => a -> a``` と書く．]
 
 #pb
 
-関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とし，関数版のピュア演算子を $chevron.l x chevron.r_(((->)haskell.r))$ と書くことにしよう．
+型クラスは型を一段抽象化したものであった．型を抽象化したものとして，Haskellには#keyword[種]という概念もある．$haskell.Int$ や $haskell.Double$ のような具体的な型はすべて $haskell.Type$ という種に属する．一方 @list で述べるように，Haskellには型から型を作る機能がある．このように型から作られる型は $haskell.Type ~> haskell.Type$ という種に属する．これらの関係を @types-and-kinds に掲げる．
 
-ピュア演算子は $haskell.q -> (haskell.r -> haskell.q)$ 型を持たなければならない．従って関数版のピュア演算子は変数から関数を作るとも考えられる．我々は関数版のピュア演算子として
-#par-equation($ chevron.l x chevron.r_(((->)haskell.r)) = backslash rect.stroked.h |-> x $)
-を採用する．このラムダ式には特別に $haskell.const$ と呼ばれているので，次のように書いても良い．#footnote[Haskellでは $chevron.l x chevron.r_(((->)haskell.r))$ を ```haskell const x``` と書く．]
+#figure(
+  caption: "型・型クラス・種",
+  table(
+    columns: (auto, auto, auto, auto),
+    inset: 10pt,
+    table.header([抽象度], [名称], [具体例], [要素の宣言]),
+    [低], [変数，関数], $x, f$, [---],
+    [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
+    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.a arrow.r.stroked x colon.double haskell.a$,
+    [高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
+  )
+)
+<types-and-kinds>
 
-$ chevron.l x chevron.r_(((->)haskell.r)) = haskell.const x $
+#tk 型に対する演算
 
-#pb
 
-関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とすると，その型は
-#par-equation($ ast.square_(((->)haskell.r)) colon.double ((->)haskell.r)_(haskell.a -> haskell.b) -> ((->)haskell.r)_haskell.a -> ((->)haskell.r)_haskell.b $)
-つまり
-#par-equation($ ast.square_(((->)haskell.r)) = (haskell.r -> haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $)
-である．
-
-我々は関数版アプリカティブマップ演算子として
-#par-equation($ g ast.square_(((->)haskell.r)) f = backslash x |-> g x (f x) $)
-とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $f convolve.o x_* = chevron.l f chevron.r ast.square x_*$ から導かれる．すなわち
-#par-equation($ chevron.l g chevron.r ast.square f &= backslash x |-> chevron.l g chevron.r x (f x) \
-  &= backslash x |-> (backslash rect.stroked.h |-> g) x (f x) \
-  &= backslash x |-> g (f x) \
-  &= g compose f $)
-であるからである．
-
-#tk マージ
-
-$ f colon.double haskell.r -> haskell.q $
-
-$ f colon.double chevron.l haskell.r -> lozenge.filled.medium chevron.r_haskell.q $
-
-$ f colon.double chevron.l (->) haskell.r lozenge.filled.medium chevron.r_haskell.q $
-
-```haskell
-f :: ((->) r) q
-```
-
-$ f_2 compose f_1 = f_2 convolve.o f_1 $
-
-$ id compose f = id compose f = f \
-  (h compose g) compose f = h compose (g compose f) $
 
 
 === この章のまとめ
@@ -2007,6 +1953,78 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.d
 == Yコンビネータ
 
 = Haskellの深い部分
+
+== 関数・関手・アプリカティブ関手・モナド
+
+=== 関数と関手
+
+#tk 関数と関手
+
+関数は関手である．関手とはマップ演算子 $(convolve.o)$ を持つ型クラスのことであった．関数が関手であるならば，関数もマップ演算子を持っていないといけない．そこで，関数のマップ演算子とは何かを考えてみる．
+
+いま関数 $f$ が $f colon.double haskell.r -> haskell.q$ という型を持っているとする．この式は $->$ を二項演算子，すなわち2引数関数とみなせば $f colon.double (->)haskell.r haskell.q$ と等価である．全く形式的に，$((->)haskell.r)$ なる型コンストラクタがあるとして
+#par-equation($ haskell.r -> haskell.q = ((->)haskell.r)_haskell.q $)
+であると考えてみる．型 $haskell.q$ から型コンストラクタ $((->)haskell.r)$ によって型 $(haskell.r -> haskell.q)$ が作られると考えるのだ．#footnote[Haskellでは $((->)haskell.r)$ を ```haskell ((->)r)``` と書く．]
+
+#tk マップ演算子の型．
+
+関数のマップ演算子 $(convolve.o_(((->)haskell.r)))$ と関数の合成演算子 $(compose)$ は同じ型を持つ．
+
+#tk なぜなら
+
+$ (convolve.o) &colon.double haskell.Functor supset haskell.f arrow.r.stroked (haskell.a -> haskell.b) -> haskell.fa -> haskell.fb \
+  (convolve.o_(((->)haskell.r))) &colon.double (haskell.a -> haskell.b) -> haskell.typeconstructor1(((->)haskell.r), haskell.a) -> haskell.typeconstructor1(((->)haskell.r), haskell.b) \
+  &= (haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $
+
+$ (compose) &colon.double (haskell.a -> haskell.b) -> (haskell.t -> haskell.a) -> (haskell.t -> haskell.b) $
+
+幸い，我々は関数のマップ演算子の実装に関しては，型さえ守っていれば（そして @functor-and-functor-laws で述べる関手則さえ守っていれば）自由に選べる．そこで
+#par-equation($ convolve.o_(((->)haskell.r)) = compose $)
+としておこう．これがHaskellにおける関数のマップ演算子の定義である．
+
+#pb
+
+関数はアプリカティブ関手でもある．アプリカティブ関手には，アプリカティブマップ演算子とピュア演算子が定義されるのであった．そこで，関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とし，関数版のピュア演算子を $chevron.l x chevron.r_(((->)haskell.r))$ と書くことにしよう．
+
+ピュア演算子は $haskell.q -> (haskell.r -> haskell.q)$ 型を持たなければならない．従って関数版のピュア演算子は変数から関数を作るとも考えられる．我々は関数版のピュア演算子として
+#par-equation($ chevron.l x chevron.r_(((->)haskell.r)) = backslash rect.stroked.h |-> x $)
+を採用する．このラムダ式には特別に $haskell.const$ と呼ばれているので，次のように書いても良い．#footnote[Haskellでは $chevron.l x chevron.r_(((->)haskell.r))$ を ```haskell const x``` と書く．]
+
+$ chevron.l x chevron.r_(((->)haskell.r)) = haskell.const x $
+
+#pb
+
+関数版のアプリカティブマップ演算子を $ast.square_(((->)haskell.r))$ とすると，その型は
+#par-equation($ ast.square_(((->)haskell.r)) colon.double ((->)haskell.r)_(haskell.a -> haskell.b) -> ((->)haskell.r)_haskell.a -> ((->)haskell.r)_haskell.b $)
+つまり
+#par-equation($ ast.square_(((->)haskell.r)) = (haskell.r -> haskell.a -> haskell.b) -> (haskell.r -> haskell.a) -> (haskell.r -> haskell.b) $)
+である．
+
+我々は関数版アプリカティブマップ演算子として
+#par-equation($ g ast.square_(((->)haskell.r)) f = backslash x |-> g x (f x) $)
+とする．これは，関数版のピュア演算子の定義と，一般マップ演算子と一般アプリカティブマップ演算子の関係 $f convolve.o x_* = chevron.l f chevron.r ast.square x_*$ から導かれる．すなわち
+#par-equation($ chevron.l g chevron.r ast.square f &= backslash x |-> chevron.l g chevron.r x (f x) \
+  &= backslash x |-> (backslash rect.stroked.h |-> g) x (f x) \
+  &= backslash x |-> g (f x) \
+  &= g compose f $)
+であるからである．
+
+#tk マージ
+
+$ f colon.double haskell.r -> haskell.q $
+
+$ f colon.double chevron.l haskell.r -> lozenge.filled.medium chevron.r_haskell.q $
+
+$ f colon.double chevron.l (->) haskell.r lozenge.filled.medium chevron.r_haskell.q $
+
+```haskell
+f :: ((->) r) q
+```
+
+$ f_2 compose f_1 = f_2 convolve.o f_1 $
+
+$ id compose f = id compose f = f \
+  (h compose g) compose f = h compose (g compose f) $
 
 == 型と種
 
