@@ -94,7 +94,7 @@
 
 #let EitherType(x, y) = typeconstructor2(Either, x, y)
 #let MaybeType(x) = typeconstructor1(Maybe, x)
-#let ListType(x) = typeconstructor1([space.thin], x)
+#let ListType(x) = typeconstructor1($[space.thin]$, x)
 
 // Type class.
 #let typeclass(x) = math.sans(x)
