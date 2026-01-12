@@ -1824,6 +1824,16 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
 
 式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
 
+結合則の右辺
+
+$ haskell.kwdo {y <- haskell.kwdo { x <- x_*; f x}; g y} $
+
+結合則の左辺
+
+$ haskell.kwdo {x <- x_*; haskell.kwdo {y <- f x}; g y} $
+
+$ haskell.kwdo {x <- x_*; y <- f x; g y} $
+
 === モノイド
 
 #tk
