@@ -72,7 +72,7 @@
     table.header([*種類*], [*字体・表記法*], [*例*]),
     [変数・関数], [イタリック（1文字）], $x, f$,
     [有名な変数・関数・定数], [ローマン・小文字], $haskell.first, id, haskell.otherwise$,
-    [文脈に入れる関数（アクション）], [], $tilde(f)$,
+    [文脈に入れる関数（アクション）], [], $breve(f)$,
     [有名なアクション], [ボールド・小文字], $haskell.main, haskell.print$,
     [リスト変数], [変数名にsをつける], $x_"s"$,
     [Maybe変数], [変数名に $?$ をつける], $x_?$,
@@ -140,7 +140,7 @@ print("Hello, world.")
 
 一部の章でどうしても型に触れないといけない部分がある．Pythonは動的型付け言語であり，型の説明には不適切であるため，この部分だけ理解の助けとしてC++によるコードを例示した．この部分はコードを読まなくても先に進める．
 
-ところで，プログラムのソースコードは現代でもASCII文字セットの範囲で書くことが標準的である．Unicodeを利用したり，まして文字にカラーを指定したり，書体や装飾を指定することは一般的ではない．たとえば変数 `a` のことを $a$ と書いたり $bold(a)$ と書いたり $tilde(a)$ と書いたりして区別することはない．
+ところで，プログラムのソースコードは現代でもASCII文字セットの範囲で書くことが標準的である．Unicodeを利用したり，まして文字にカラーを指定したり，書体や装飾を指定することは一般的ではない．たとえば変数 `a` のことを $a$ と書いたり $bold(a)$ と書いたり $breve(a)$ と書いたりして区別することはない．
 
 Haskellプログラマもまた，多くの異なる概念を同じ貧弱な文字セットで表現しなければならない．これは，はじめてHaskellコードを読むときに大きな問題になりえる．たとえばHaskellでは ```haskell [a]``` という表記をよく扱う．この ```haskell [a]``` は ```haskell a``` という変数1要素からなるリストのこともあるし，```haskell a``` 型という仮の型から作ったリスト型の場合もあるが，字面からでは判断できない．もし変数はイタリック体，型はボールドイタリック体と決まっていれば，それぞれ $[a]$ および $[haskell.typeparameter(a)]$ と区別できたところである．
 
@@ -1832,10 +1832,10 @@ $ mu^star.filled chevron.l x chevron.r &= mu x \
 
 #theorem-box(title: "モナドの規則", outlined: false)[
 1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-2. 結合則： $tilde(g) haskell.bind (tilde(f) haskell.bind x_*) = (tilde(g) haskell.bind (tilde(f) lozenge.stroked.medium)) haskell.bind x_*$
+2. 結合則： $breve(g) haskell.bind (breve(f) haskell.bind x_*) = (breve(g) haskell.bind (breve(f) lozenge.stroked.medium)) haskell.bind x_*$
 ]
 
-2. 右単位元の存在； $tilde(f) haskell.bind chevron.l x chevron.r = tilde(f) x$ // 準同型
+2. 右単位元の存在； $breve(f) haskell.bind chevron.l x chevron.r = breve(f) x$ // 準同型
 
 
 式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
