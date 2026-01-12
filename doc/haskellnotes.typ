@@ -1738,7 +1738,7 @@ $  u_* &= f x \
 
 関数 $phi$ と $psi$ は普通の関数合成演算子 $(compose)$ で合成できない．というのも，関数 $psi$ は $haskell.a$ 型の引数を受け取るが，関数 $phi$ の戻り値すなわち変数 $y_?$ は $haskell.MaybeType(haskell.a)$ 型であるからだ．そこで，もし変数 $y_?$ が $haskell.Just(y)$ であれば，関数 $psi$ を適用するバインド演算子 $(haskell.bind)$ を用いて，次のように関数を合成する．
 
-$ z_? = (phi haskell.bind psi) x_? $
+$ z_? = (psi haskell.bind phi) x_? $
 
 #tk
 
