@@ -1729,6 +1729,19 @@ $  u_* &= f x \
 #par-equation($ z = (h compose g compose f) x $)
 は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[バインド演算子]または#keyword[左バインド演算子]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
 
+関数 $f, g, h$ただし
+#par-equation($ f, g, h colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
+があるとする．
+
+$ u_* &= f x \
+  v_* &= cases(g u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
+  w_* &= cases(h v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") \
+  z_* &= cases(i w "if" w_* equiv haskell.Just(w), haskell.Nothing "otherwise") $
+
+
+
+#tk
+
 関数 $phi$ ただし
 #par-equation($ phi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
 があるとする．変数 $x_? colon.double haskell.MaybeType(haskell.a)$ が与えられたとき，バインド演算子 $(haskell.bind)$ は次のように作用する．
