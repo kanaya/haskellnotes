@@ -1734,15 +1734,19 @@ $  u_* &= phi x \
 があるとする．
 
 $ u_* &= phi x \
-  v_* &= psi u "if" u "exists and" u_* equiv haskell.Just(u) \
-  w_* &= omega v "if" v "exists and" v_* equiv haskell.Just(v) $
+  v_* &= psi u "if" u "exists and" u_* equiv haskell.Just(u); haskell.Nothing "otherwise" \
+  w_* &= omega v "if" v "exists and" v_* equiv haskell.Just(v); haskell.Nothing "otherwise" $
 
-もしまとめるとこうなる．  // uはどこから？
+もしまとめるとこうなる．
 
-$ w_* = cases(haskell.kwlet v_* eq.delta cases(g u "if" u_* equiv haskell.Just(u),
-  haskell.Nothing "otherwise")
-  haskell.kwin cases(h v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise"), 
+$ w_* = cases(omega v "if" v "exsits and" v_* equiv haskell.Just(v)
+    "where" v_* eq.delta cases(phi u "if" u "exists and" u_* equiv haskell.Just(u)
+      "where" u_* eq.delta phi x,
+    haskell.Nothing "otherwise"),
   haskell.Nothing "otherwise") $
+  
+  
+  
 
 
 #tk
