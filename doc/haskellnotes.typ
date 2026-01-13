@@ -1729,7 +1729,7 @@ $  u_* &= f x \
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，式
 #par-equation($ z = (h compose g compose f) x $)
-は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[バインド演算子]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
+は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[バインド演算子]または#keyword[左バインド演算子]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
 
 関数 $phi$ ただし
 #par-equation($ phi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
@@ -1746,28 +1746,7 @@ $ z_? = psi haskell.bind (phi haskell.bind x_?) $<bind-composition>
 
 バインド演算子 $(haskell.bind)$ は右結合し，かつ関数適用よりも優先順位が低いため @bind-composition は
 #par-equation($ z_? = psi haskell.bind phi haskell.bind x_? $)
-と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．]
-
-
-#tk
-
-
-しかしながら，アプリカティブスタイルでは変数に文脈を与えるタイミングがコンテナ変数を作るときのそれぞれ1回に限られている．そこで，任意のタイミングで変数に文脈を与えられるように，別な方法で一般マップ演算子を分解してみよう．
-
-Maybeの例を思い出そう．Maybe型の変数 $x_?$ はラップされた値 $haskell.Just(x)$ を持つのか，エラーを表す $haskell.Nothing$ を持つのかを選べる．そこで，引数 $x$ をとり何らかの計算をする関数 $phi$ を考えよう．この関数 $phi$ は引数 $x$ の値次第ではエラーを表す $haskell.Nothing$ を返す．例えば
-#par-equation($ phi x &|_(x != 0) = haskell.Just(x) \
-  &|_haskell.otherwise = haskell.Nothing $)
-といった関数 $phi colon.double haskell.a -> haskell.MaybeType(haskell.a)$ が考えられる．変数 $x$ は文脈を持っていないが，関数 $phi$ を適用した結果である $phi x$ は文脈を持っていることに注意しよう．いま $phi x$ はMaybeという文脈を持っているから，我々は
-#par-equation($ z_? = phi x $)
-という風に結果をMaybe変数に保存しなければならない．今まで見てきた $y = f x$ や $y_* = f convolve.o x_*$ ただし $f colon.double haskell.a -> haskell.a$ の関係とは異なることに注意しよう．
-
-関数 $phi$ のように「文脈に入れる」関数を普通の変数に適用するのは造作ないことであるが，問題はすでに文脈に入っている変数，つまりコンテナ変数に適用する場合である．コンテナ変数 $x_*$ が与えられたとき，関数 $phi$ を直接適用できないので
-#par-equation($ z_* = phi haskell.bind x_* $)
-という演算子 $haskell.bind$ を用いる．この演算子 $haskell.bind$ を#keyword[バインド演算子]あるいは#keyword[左バインド演算子]と呼ぶ．#footnote[Haskellでは ```haskell zm = phi =<< xm``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi``` という書き方を好む．]
-
-#tk
-
-
+と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi``` という書き方を好む．]
 
 === モナド則
 
