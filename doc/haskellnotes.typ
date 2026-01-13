@@ -1734,8 +1734,8 @@ $  u_* &= phi x \
 があるとする．
 
 $ u_* &= phi x \
-  v_* &= psi u "if" exists u "and" u_* equiv haskell.Just(u) \
-  w_* &= omega v "if" exists v "and" v_* equiv haskell.Just(v) $
+  v_* &= psi u "if" u "exists and" u_* equiv haskell.Just(u) \
+  w_* &= omega v "if" v "exists and" v_* equiv haskell.Just(v) $
 
 もしまとめるとこうなる．  // uはどこから？
 
