@@ -1720,10 +1720,11 @@ $  u_* &= f x \
 
 $  u_* &= f x \
   v_* &= g y \
-  w_* &= h z \
-  z_* &= i convolve.o u_* ast.square v_* ast.square w_* $
+  w_* &= h convolve.o u_* ast.square v_* $
 
-コンテナ変数 $u_*, v_*, w_*$ のいずれかが $nothing.rev$ であれば式全体の値が $nothing.rev$ になる．これは3個の計算を並列に行って，その結果をそれぞれ $u_*, v_*, w_*$ に入れておき，最後に関数 $i$ に投げるという#keyword[計算構造]を具現化したものである．
+コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であれば式全体の値が $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておき，最後に関数 $h$ に投げるという#keyword[計算構造]を具現化したものである．
+
+// 交換則
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，式
 #par-equation($ z = (h compose g compose f) x $)
@@ -1735,9 +1736,14 @@ $  u_* &= f x \
 
 $ u_* &= f x \
   v_* &= cases(g u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
-  w_* &= cases(h v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") \
-  z_* &= cases(i w "if" w_* equiv haskell.Just(w), haskell.Nothing "otherwise") $
+  w_* &= cases(h v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
 
+もしまとめるとこうなる．  // uはどこから？
+
+$ w_* = cases(haskell.kwlet v_* eq.delta cases(g u "if" u_* equiv haskell.Just(u),
+  haskell.Nothing "otherwise")
+  haskell.kwin cases(h v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise"), 
+  haskell.Nothing "otherwise") $
 
 
 #tk
