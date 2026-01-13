@@ -125,7 +125,6 @@
 #let bangbang = math.class("binary", math.excl.double)
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.dollar)
-#let amap = math.ast.square
 #let mapM = math.class("binary", math.ast.triple)
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
@@ -209,9 +208,11 @@
 #let y = $typename(y)$
 #let z = $typename(z)$
 
-#let fa = $typeconstructor1(typename(f), typename(a))$
-#let fb = $typeconstructor1(typename(f), typename(b))$
-#let fc = $typeconstructor1(typename(f), typename(c))$
+#let fa = $typeconstructor1(f, a)$
+#let fb = $typeconstructor1(f, b)$
+#let fc = $typeconstructor1(f, c)$
 
+#let MaybeA = MaybeType(a)
+#let MaybeB = MaybeType(b)
 
 
