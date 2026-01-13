@@ -1754,7 +1754,7 @@ try:
   v = psi(u)
   w = omega(v)
 except Exception as e:
-  print("Something went wrong: {e}")
+  print(f"Something went wrong: {e}")
 ```]
   
 
