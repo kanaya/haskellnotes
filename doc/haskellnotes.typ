@@ -1734,8 +1734,8 @@ $  u_* &= phi x \
 があるとする．
 
 $ u_* &= phi x \
-  v_* &= psi u "if" u "exists and" u_* equiv haskell.Just(u); haskell.Nothing "otherwise" \
-  w_* &= omega v "if" v "exists and" v_* equiv haskell.Just(v); haskell.Nothing "otherwise" $
+  v_* &= cases(psi u "if" u "exists and" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
+  w_* &= cases(omega v "if" v "exists and" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
 
 もしまとめるとこうなる．
 
