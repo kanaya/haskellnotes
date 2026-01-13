@@ -1731,7 +1731,7 @@ $  u_* &= phi x \
 
 関数 $phi, psi, omega$ ただし
 #par-equation($ phi, psi, omega colon.double haskell.a -> haskell.MaybeA $)
-があるとする．
+があるとする．変数 $x$ に関数 $phi, psi, omega$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi x \
   v_* &= cases(psi u "if" u "exists and" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
