@@ -1731,6 +1731,25 @@ $  u_* &= f x \
 #par-equation($ z = (h compose g compose f) x $)
 は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[バインド演算子]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
 
+関数 $phi$ ただし
+#par-equation($ phi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
+があるとする．変数 $x_? colon.double haskell.MaybeType(haskell.a)$ が与えられたとき，バインド演算子 $(haskell.bind)$ は次のように作用する．
+
+$ phi haskell.bind x_? &|_(x_? = haskell.Just(x)) = phi x \
+  &|_haskell.otherwise = haskell.Nothing $
+
+このバインド演算子 $(haskell.bind)$ を使うと，もう一つの関数 $psi$ ただし
+#par-equation($ psi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
+があるとき，次のように関数を合成することができる．
+
+$ z_? = psi haskell.bind (phi haskell.bind x_?) $<bind-composition>
+
+バインド演算子 $(haskell.bind)$ は右結合し，かつ関数適用よりも優先順位が低いため @bind-composition は
+#par-equation($ z_? = psi haskell.bind phi haskell.bind x_? $)
+と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．]
+
+#tk
+
 いま，関数 $phi$ があり，その型が
 #par-equation($ phi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
 であるとする．また
@@ -1741,7 +1760,7 @@ $  u_* &= f x \
 #par-equation($ psi colon.double haskell.a -> haskell.MaybeType(haskell.a) $)
 であるとする．
 
-関数 $phi$ と $psi$ は普通の関数合成演算子 $(compose)$ で合成できない．というのも，関数 $psi$ は $haskell.a$ 型の引数を受け取るが，関数 $phi$ の戻り値すなわち変数 $y_?$ は $haskell.MaybeType(haskell.a)$ 型であるからだ．そこで，もし変数 $y_?$ が $haskell.Just(y)$ であれば，関数 $psi$ を適用するバインド演算子 $(haskell.bind)$ を用いて，次のように関数を合成する．
+関数 $phi$ と $psi$ は普通の関数合成演算子 $(compose)$ で合成できない．というのも，関数 $psi$ は $haskell.a$ 型の引数を受け取るが，関数 $phi$ の戻り値すなわち変数 $y_?$ は $haskell.MaybeType(haskell.a)$ 型であるからだ．そこで，次のような場合分けが必要になる．もし変数 $y_?$ が $haskell.Just(y)$ であれば，関数 $psi$ を適用するバインド演算子 $(haskell.bind)$ を用いて，次のように関数を合成する．
 
 $ z_? = psi haskell.bind phi x_? $<bind>
 
