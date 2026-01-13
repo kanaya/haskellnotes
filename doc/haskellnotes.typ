@@ -1744,7 +1744,7 @@ $ phi haskell.bind x_? &|_(x_? = haskell.Just(x)) = phi x \
 
 $ z_? = psi haskell.bind (phi haskell.bind x_?) $<bind-composition>
 
-バインド演算子 $(haskell.bind)$ は右結合し，かつ関数適用よりも優先順位が低いため @bind-composition は
+バインド演算子 $(haskell.bind)$ は右結合するため @bind-composition は
 #par-equation($ z_? = psi haskell.bind phi haskell.bind x_? $)
 と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi >>= psi``` という書き方を好む．]
 
