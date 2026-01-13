@@ -1746,7 +1746,16 @@ $ w_* = cases(omega v "if" v "exsits and" v_* equiv haskell.Just(v)
   haskell.Nothing "otherwise") $
 
 // Pythonならば
-  
+
+#sourcecode[```python
+# Python
+try:
+  u = phi(x)
+  v = psi(u)
+  w = omega(v)
+except Exception as e:
+  print("Something went wrong: {e}")
+```]
   
 
 
