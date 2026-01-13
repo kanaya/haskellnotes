@@ -1496,26 +1496,26 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
 #par-equation($ y = f x $)
 であるとしよう．このように型 $haskell.a$ で閉じた世界を仮に $haskell.a$ 世界と呼ぶことにする．この世界では，関数 $f$ は値 $x$ を値 $y$ に変換する．
 
-同様に $[haskell.a]$ 型の変数 $x_s, y_s colon.double [haskell.a]$ について，関数 $g colon.double [haskell.a] -> [haskell.a]$ があり
-#par-equation($ y_s = g x_s $)
-であるとしよう．このように型 $[haskell.a]$ で閉じた世界を仮に $[haskell.a]$ 世界と呼ぶことにする．この世界では，関数 $g$ はリスト変数 $x_s$ をリスト変数 $y_s$ に変換する．
+同様に $[haskell.a]$ 型の変数 $u_s, v_s colon.double [haskell.a]$ について，関数 $g colon.double [haskell.a] -> [haskell.a]$ があり
+#par-equation($ v_s = g u_s $)
+であるとしよう．このように型 $[haskell.a]$ で閉じた世界を仮に $[haskell.a]$ 世界と呼ぶことにする．この世界では，関数 $g$ はリスト変数 $u_s$ をリスト変数 $v_s$ に変換する．
 
-今度は $haskell.MaybeType(haskell.a)$ 型の変数 $x_?, y_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $h colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり
-#par-equation($ y_? = h x_? $)
-であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $h$ は値 $x_?$ を値 $y_?$ に変換する．
+今度は $haskell.MaybeType(haskell.a)$ 型の変数 $s_?, t_? colon.double haskell.MaybeType(haskell.a)$ について，関数 $h colon.double haskell.MaybeType(haskell.a) -> haskell.MaybeType(haskell.a)$ があり
+#par-equation($ t_? = h s_? $)
+であるとしよう．このように型 $haskell.MaybeType(haskell.a)$ で閉じた世界を仮に $haskell.MaybeType(haskell.a)$ 世界と呼ぶことにする．この世界では，関数 $h$ は値 $s_?$ を値 $t_?$ に変換する．
 
-ここで，変数 $x, y$ と変数 $x_"s", y_"s"$ はリスト値コンストラクタによって
-#par-equation($ x_"s" &= [x]; y_"s" &= [y] $)
-の関係にあるとしよう．リスト値コンストラクタは値を $haskell.a$ 世界から $[haskell.a]$ 世界へとジャンプさせる機能を持っている．また変数 $x, y$ とMaybe変数 $x_?, y_?$ はMaybe値コンストラクタによって
-#par-equation($ x_? &= haskell.Just(x); y_? = haskell.Just(y) $)
+ここで，変数 $x, y$ と変数 $u_"s", v_"s"$ はリスト値コンストラクタによって
+#par-equation($ u_"s" &= [x]; v_"s" &= [y] $)
+の関係にあるとしよう．リスト値コンストラクタは値を $haskell.a$ 世界から $[haskell.a]$ 世界へとジャンプさせる機能を持っている．また変数 $x, y$ とMaybe変数 $s_?, t_?$ はMaybe値コンストラクタによって
+#par-equation($ s_? &= haskell.Just(x); t_? = haskell.Just(y) $)
 の関係にあるとしよう．Maybe値コンストラクタは値を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせる機能を持っている．
 
-他に $haskell.a$ 世界から $[haskell.a]$ 世界や $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．なぜなら $x_"s" = [x], y_"s" = [y]$ なのだから $haskell.a$ 世界の関数 $f$ と $[haskell.a]$ 世界の関数 $g$ は無関係ではなく
-#par-equation($ y_"s" = g x_"s" = f * x_"s" $)
+他に $haskell.a$ 世界から $[haskell.a]$ 世界や $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせるものがあるだろうか．よく考えてみると，マップ演算子もそうである．なぜなら $u_"s" = [x], v_"s" = [y]$ なのだから $haskell.a$ 世界の関数 $f$ と $[haskell.a]$ 世界の関数 $g$ は無関係ではなく
+#par-equation($ v_"s" = g u_"s" = f * u_"s" $)
 なのであるから
 #par-equation($ g = f * $)
-が言える．同様に $x_? = haskell.Just(x), y_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $h$ は無関係ではなく
-#par-equation($ y_? = h x_? = f convolve.o_? x_? $)
+が言える．同様に $s_? = haskell.Just(x), t_? = haskell.Just(y)$ なのだから，$haskell.a$ 世界の関数 $f$ と $haskell.MaybeType(haskell.a)$ 世界の関数 $h$ は無関係ではなく
+#par-equation($ t_? = h s_? = f convolve.o_? s_? $)
 であり，
 #par-equation($ h = f convolve.o_? $)
 である．つまりリストのマップ演算子 $*$ が関数 $f$ を $[haskell.a]$ 世界から $[haskell.b]$ 世界へとジャンプさせ，Maybeのマップ演算子 $convolve.o_?$ が関数 $f$ を $haskell.a$ 世界から $haskell.MaybeType(haskell.a)$ 世界へとジャンプさせているのである．ジャンプを波矢印 $(~~>)$ で表すと，次の表のようになる．
@@ -1527,8 +1527,8 @@ $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f 
     inset: 10pt,
     table.header([世界（圏）], [値（対象）], [写像（射）], [値のジャンプ], [関数のジャンプ]),
     [$haskell.a$ 世界], $x, y$, $y = f x$, [], [],
-    [$[haskell.a]$ 世界], $x_"s", y_"s"$, $y_"s" = g x_"s"$, $x ~~> x_"s", y ~~> y_"s"$, $f ~~> g$,
-    [$haskell.MaybeType(haskell.a)$ 世界], $x_?, y_?$, $y_? = h x_?$, $x ~~> x_?, y ~~> y_?$, $f ~~> h$,
+    [$[haskell.a]$ 世界], $u_"s", v_"s"$, $v_"s" = g u_"s"$, $x ~~> u_"s", y ~~> v_"s"$, $f ~~> g$,
+    [$haskell.MaybeType(haskell.a)$ 世界], $s_?, t_?$, $t_? = h s_?$, $x ~~> s_?, y ~~> t_?$, $f ~~> h$,
   )
 )
 
@@ -1619,8 +1619,6 @@ $ g * (f * x_"s")
 このような関手則は $haskell.Functor$ 型クラスに求められる規則である．Haskellは $haskell.Functor$ 型クラスに属する型が関手則を満たしているかチェックしないが，Haskellプログラマは $haskell.Functor$ 型クラスの方が関手則を満たすことを期待する．
 
 === アプリカティブ関手
-
-#tk アプリカティブ関手
 
 関手のマップ演算子 $(convolve.o)$ をさらに汎用性のあるものにするために新しく考え出された演算子が#keyword[アプリカティブマップ演算子]である．
 
