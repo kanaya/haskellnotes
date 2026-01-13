@@ -1744,7 +1744,8 @@ $ w_* = cases(omega v "if" v "exsits and" v_* equiv haskell.Just(v)
       "where" u_* eq.delta phi x,
     haskell.Nothing "otherwise"),
   haskell.Nothing "otherwise") $
-  
+
+// Pythonならば
   
   
 
