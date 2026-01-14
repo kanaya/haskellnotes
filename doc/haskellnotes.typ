@@ -1734,13 +1734,13 @@ $  u_* &= phi x \
 があるとする．変数 $x$ に関数 $phi, psi, omega$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi x \
-  v_* &= cases(psi u "if" u "exists and" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
-  w_* &= cases(omega v "if" v "exists and" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
+  v_* &= cases(psi u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
+  w_* &= cases(omega v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
 
 もしまとめるとこうなる．
 
-$ w_* = cases(omega v "if" v "exsits and" v_* equiv haskell.Just(v)
-    "where" v_* eq.delta cases(phi u "if" u "exists and" u_* equiv haskell.Just(u)
+$ w_* = cases(omega v "if" v_* equiv haskell.Just(v)
+    "where" v_* eq.delta cases(phi u "if" u_* equiv haskell.Just(u)
       "where" u_* eq.delta phi x,
     haskell.Nothing "otherwise"),
   haskell.Nothing "otherwise") $
