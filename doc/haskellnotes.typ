@@ -1739,11 +1739,10 @@ $ u_* &= phi x \
 
 もしまとめるとこうなる．
 
-$ w_* = cases(omega v "if" v_* equiv haskell.Just(v)
-    "where" v_* eq.delta cases(phi u "if" u_* equiv haskell.Just(u)
-      "where" u_* eq.delta phi x,
-    haskell.Nothing "otherwise"),
-  haskell.Nothing "otherwise") $
+$ w_* = cases(omega v "if" v_* equiv haskell.Just(v),
+  haskell.Nothing "otherwise")
+  "where" v_* eq.delta cases(phi u "if" u_* equiv haskell.Just(u),
+    haskell.Nothing "otherwise") "where" u_* eq.delta phi x $
 
 // Pythonならば
 
