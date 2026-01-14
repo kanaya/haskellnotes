@@ -1721,6 +1721,10 @@ $  u_* &= phi x \
   v_* &= psi y \
   w_* &= omega convolve.o u_* ast.square v_* $
 
+上式をまとめて書くと次のようになる．
+
+$ w_* = omega convolve.o (psi y) ast.square (phi x) $
+
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であれば式全体の値が $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておき，最後に関数 $omega$ に投げるという#keyword[計算構造]を具現化したものである．
 
 アプリカティブ関手には交換則があるため $omega convolve.o u_* ast.square v_* = omega convolve.o v_* ast.square u_*$ が成り立つ．これは $u_*$ と $v_*$ の計算の順序を入れ替えても計算結果が変わらないことを意味する．
