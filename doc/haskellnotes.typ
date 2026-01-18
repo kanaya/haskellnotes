@@ -1874,15 +1874,12 @@ $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 // https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
 
 
-#tk モナド則
-
 // https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
-$ mu haskell.bind chevron.l x chevron.r &= mu x \
-  chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*
-  &= x_* \
-  nu haskell.bind mu haskell.bind x_*
-  &= nu haskell.bind (mu haskell.bind x_*) $
+結合則のもうひとつの表現．
+
+$ psi haskell.bind phi haskell.bind x_*
+  = psi haskell.bind (phi haskell.bind x_*) $
 
 
 
