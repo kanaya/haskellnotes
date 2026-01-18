@@ -1686,15 +1686,15 @@ $ z' = [| g x y |] ... "採用されなかった文法" $
 
 #pb
 
-アプリカティブマップ演算子を用いると#keyword[アプリカティブスタイル]という記法が使える．関数 $f, g$ が引数を文脈に入れる関数，例えば
-#par-equation($ f, g colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa $)
-であるとしよう．また関数 $h$ が2引数を取り
-#par-equation($ h colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa -> haskell.fa -> haskell.fa $)
+アプリカティブマップ演算子を用いると#keyword[アプリカティブスタイル]という記法が使える．関数 $phi, psi$ が引数を文脈に入れる関数，例えば
+#par-equation($ phi, psi colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa $)
+であるとしよう．また関数 $omega$ が2引数を取り
+#par-equation($ omega colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa -> haskell.fa -> haskell.fa $)
 だとしよう．すると，次のようにコンテナ変数 $u_*, v_*$ を作っておいて，関数 $h$ を適用させることができる．
 
-$  u_* &= f x \
-  v_* &= g y \
-  w_* &= h convolve.o u_* ast.square v_* $
+$  u_* &= phi x \
+  v_* &= psi y \
+  w_* &= omega convolve.o u_* ast.square v_* $
 
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．
 
@@ -1732,7 +1732,7 @@ $  u_* &= f x \
 
 === バインド演算子
 
-一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．いま変数 $x, y colon.double haskell.a$ があり，引数を文脈に入れる関数 $phi, psi, omega colon.double haskell.a -> haskell.MaybeA$ があるとしよう．すると，アプリカティブスタイルでは次のようにコンテナ変数 $u_*, v_*$ に関数 $omega$ を適用させることができる．
+一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．いま変数 $x, y colon.double haskell.a$ があり，引数を文脈に入れる関数 $phi, psi colon.double haskell.a -> haskell.MaybeA$ および $omega colon.double haskell.MaybeA -> haskell.MaybeA -> haskell.MaybeA$ があるとしよう．すると，アプリカティブスタイルでは次のようにコンテナ変数 $u_*, v_*$ に関数 $omega$ を適用させることができる．
 
 $  u_* &= phi x \
   v_* &= psi y \
@@ -1750,22 +1750,22 @@ $ w_* = omega convolve.o (psi y) ast.square (phi x) $
 #par-equation($ z = (h compose g compose f) x $)
 は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[バインド演算子]または#keyword[左バインド演算子]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
 
-関数 $phi, psi, omega$ ただし
-#par-equation($ phi, psi, omega colon.double haskell.a -> haskell.MaybeA $)
-があるとする．変数 $x$ に関数 $phi, psi, omega$ を連続して適用しようとすると，次のようになる．
+関数 $phi', psi', omega'$ ただし
+#par-equation($ phi', psi', omega' colon.double haskell.a -> haskell.MaybeA $)
+があるとする．変数 $x$ に関数 $phi', psi', omega'$ を連続して適用しようとすると，次のようになる．
 
-$ u_* &= phi x \
-  v_* &= cases(psi u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
-  w_* &= cases(omega v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
+$ u_* &= phi' x \
+  v_* &= cases(psi' u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
+  w_* &= cases(omega' v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
 
 もしまとめるとこうなる．
 
-$ w_* = cases(omega v "if" v_* equiv haskell.Just(v),
+$ w_* = cases(omega' v "if" v_* equiv haskell.Just(v),
   haskell.Nothing "otherwise")
-  "where" v_* eq.delta cases(phi u "if" u_* equiv haskell.Just(u),
-    haskell.Nothing "otherwise") "where" u_* eq.delta phi x $
+  "where" v_* eq.delta cases(phi' u "if" u_* equiv haskell.Just(u),
+    haskell.Nothing "otherwise") "where" u_* eq.delta phi' x $
 
-// Pythonならば
+やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書ける．
 
 #sourcecode[```python
 # Python
@@ -1776,27 +1776,32 @@ try:
 except Exception as e:
   print(f"Something went wrong: {e}")
 ```]
-  
 
-
-#tk
+このような簡潔さを手に入れるために，我々は新しい演算子を導入する．
 
 関数 $phi$ ただし
 #par-equation($ phi colon.double haskell.a -> haskell.MaybeA $)
-があるとする．変数 $x_? colon.double haskell.MaybeA$ が与えられたとき，バインド演算子 $(haskell.bind)$ は次のように作用する．
+があるとする．変数 $x_? colon.double haskell.MaybeA$ が与えられたとき，Maybeの#keyword[バインド演算子] $(haskell.bind_?)$ は次のように作用する．
 
-$ phi haskell.bind x_? &|_(x_? = haskell.Just(x)) = phi x \
-  &|_haskell.otherwise = haskell.Nothing $
+$ phi haskell.bind_? x_? &|_(x_? = haskell.Just(x)) = phi x \
+  &|_haskell.otherwise = haskell.Nothing $<bind-op-of-maybe>
 
-このバインド演算子 $(haskell.bind)$ を使うと，もう一つの関数 $psi$ ただし
+Maybeのバインド演算子 $(haskell.bind_?)$ を使うと，もう一つの関数 $psi$ ただし
 #par-equation($ psi colon.double haskell.a -> haskell.MaybeA $)
 があるとき，次のように関数を合成することができる．
 
-$ z_? = psi haskell.bind (phi haskell.bind x_?) $<bind-composition>
+$ z_? = psi haskell.bind_? (phi haskell.bind_? x_?) $<bind-composition>
 
 バインド演算子 $(haskell.bind)$ は右結合するため @bind-composition は
-#par-equation($ z_? = psi haskell.bind phi haskell.bind x_? $)
+#par-equation($ z_? = psi haskell.bind_? phi haskell.bind_? x_? $)
 と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi >>= psi``` という書き方を好む．]
+
+バインド演算子をMaybeに縛り付けておく理由はない．@bind-op-of-maybe をより一般化すると次のようになる．
+
+$ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
+  &|_haskell.otherwise = nothing.rev $<bind-op>
+
+
 
 === モナド則
 
