@@ -1675,11 +1675,12 @@ $ z' = [| g x y |] ... "採用されなかった文法" $
 
 ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．アプリカティブ関手は関手を拡張したものであり，次のアプリカティブ関手則を持つものとする．
 
+
 #theorem-box(title: "アプリカティブ関手則", outlined: false)[
-1. 恒等射の存在： $chevron.l id chevron.r ast.square x_* = id x_*$
-2. 結合則： $h ast.square (g ast.square f) = chevron.l compose chevron.r ast.square h ast.square g ast.square f$
-3. 準同型性： $chevron.l f chevron.r ast.square chevron.l x chevron.r = chevron.l f x chevron.r$ または $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$
-4. 交換則： $f ast.square chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r ast.square f$
+1. 恒等射の存在：アプリカティブマップ演算子 $(ast.square)$ は $chevron.l id chevron.r ast.square x_* = id x_*$ を満たす．
+2. 結合則：アプリカティブマップ演算子 $(ast.square)$ は $h ast.square (g ast.square f) = chevron.l compose chevron.r ast.square h ast.square g ast.square f$ を満たす．
+3. 準同型性： $chevron.l f chevron.r ast.square chevron.l x chevron.r = chevron.l f x chevron.r$ または同じことであるが $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$ である．
+4. 交換則： $f ast.square chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r ast.square f$ が成り立つ．
 ]
 
 これらの規則のうち「恒等射の存在」と「結合則」は関手則から導かれる．
@@ -1820,6 +1821,10 @@ $ cat x | phi | psi > z
 
 $ haskell.Functor subset haskell.Applicative subset haskell.Monad $
 
+関手，アプリカティブ関手のように，型 $haskell.a$ をモナドに「入れた」ものを次のように書く．
+
+$ haskell.Monad supset haskell.m arrow.r.stroked haskell.ma $
+
 関手はマップ演算子 $(convolve.o)$ を持つ型クラスであった．アプリカティブ関手はアプリ化ティブマップ演算子 $(ast.square)$ とピュア演算子 $(chevron.l square.filled chevron.r)$ を持つ．ピュア演算子を直接使うことはないが，アプリカティブ関手のインスタンスとなる型ではそれぞれ独自の実装を持つ．例えばリスト型は $[square.filled]$ というピュア演算子を持つし，Maybe型は $haskell.Just(square.filled)$ というピュア演算子を持つ．
 
 モナドのインスタンスは追加でバインド演算子 $(haskell.bind)$ を持つことになる．歴史的な理由で，モナドのピュア演算子のことをリターン（return）演算子と呼ぶが，本質は同じものである．そこで本書では一貫してピュア演算子と呼び続けることにする．
@@ -1834,25 +1839,29 @@ $ haskell.Functor subset haskell.Applicative subset haskell.Monad $
 アプリカティブ関手則は次のようなものである．
 
 #theorem-box(title: "アプリカティブ関手則", outlined: false)[
-1. 恒等射の存在： $chevron.l id chevron.r ast.square x_* = id x_*$
-2. 結合則： $h ast.square (g ast.square f) = chevron.l compose chevron.r ast.square h ast.square g ast.square f$
-3. 準同型性： $chevron.l f chevron.r ast.square chevron.l x chevron.r = chevron.l f x chevron.r$ または $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$
-4. 交換則： $f ast.square chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r ast.square f$
+1. 恒等射の存在：アプリカティブマップ演算子 $(ast.square)$ は $chevron.l id chevron.r ast.square x_* = id x_*$ を満たす．
+2. 結合則：アプリカティブマップ演算子 $(ast.square)$ は $h ast.square (g ast.square f) = chevron.l compose chevron.r ast.square h ast.square g ast.square f$ を満たす．
+3. 準同型性： $chevron.l f chevron.r ast.square chevron.l x chevron.r = chevron.l f x chevron.r$ または同じことであるが $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$ である．
+4. 交換則： $f ast.square chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r ast.square f$ が成り立つ．
 ]
+
+アプリカティブ関手は，アプリカティブ関手則のみならず，関手則も満たす．そして，モナドは次節で述べるモナド則と，アプリカティブ関手則，関手則を満たす．
 
 === モナド則
 
+モナドは次のモナド則を満たす．ただし $x_* colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.ma$ かつ $phi, psi colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.a -> haskell.ma$ である．
+
 #theorem-box(title: "モナド則", outlined: false)[
-1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
-2. 結合則： $psi haskell.bind (phi haskell.bind x_*) = (psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$
+1. 恒等射（左単位元）の存在：バインド演算子 $(haskell.bind)$ は $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$ を満たす．
+2. 結合則：バインド演算子 $(haskell.bind)$ は $psi haskell.bind (phi haskell.bind x_*) = (psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$ を満たす．
+3. 準同型性（右単位元の存在）：バインド演算子 $(haskell.bind)$ は $phi haskell.bind chevron.l x chevron.r = phi x$ を満たす．
 ]
 
 
 
-2. 右単位元の存在； $caron(f) haskell.bind chevron.l x chevron.r = caron(f) x$ // 準同型
 
 
-式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell xm >>= return``` と書くからである．
+式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell x >>= return = x``` と書くからである．
 
 
 結合則の右辺

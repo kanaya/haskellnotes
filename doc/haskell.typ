@@ -218,6 +218,10 @@
 #let fb = $typeconstructor1(f, b)$
 #let fc = $typeconstructor1(f, c)$
 
+#let ma = $typeconstructor1(m, a)$
+#let mb = $typeconstructor1(m, b)$
+#let mc = $typeconstructor1(m, c)$
+
 #let MaybeA = MaybeType(a)
 #let MaybeB = MaybeType(b)
 
