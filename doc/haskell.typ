@@ -21,6 +21,10 @@
 #let kwtype = keyword("type")
 #let kwwhere = keyword("where")
 
+// Special constant.
+
+#let unit = math.class("normal", math.ellipse.stroked.h)
+
 // Constant.
 
 #let constantstring(x) = { "\"" + math.mono(x) + "\"" }

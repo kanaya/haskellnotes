@@ -770,7 +770,7 @@ $ z colon.double paren.l.stroked haskell.Int, haskell.Int paren.r.stroked $
 
 $ x colon.double haskell.Unit $
 
-ユニット型の変数が取れる唯一の値は#keyword[ユニット] $(nothing.bar)$ である．
+ユニット型の変数が取れる唯一の値は#keyword[ユニット] $(haskell.unit)$ である．#footnote[Haskellではユニットを ```haskell ()``` と書く．ユニットはユニット型の定数である．]
 
 === 多相型と型クラス
 
@@ -821,7 +821,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ f colon.double haskell.a -> haskell.a $)
 であった．この記法は実はシンタックスシュガーで，本来は次のように書くべきものである．#footnote[Haskellでは ```haskell f :: forall a . a -> a``` と書く．記号 $forall$ が ```haskell forall``` であり，記号 $|=>$ が ```haskell .``` である．]
 #par-equation($ f colon.double forall haskell.a |=> haskell.a -> haskell.a $)
-ここに $forall$ は#keyword[全称量化子]という記号で，型の世界でのラムダ $(backslash)$ に相当する．Haskellは小文字で始まる型名を型パラメタとみなすため，全称量化子を省略しても型を正しく推論できるのである．
+ここに $forall$ は#keyword[全称量化子]という記号で，ラムダ式のラムダ記号 $(backslash)$ に相当する．Haskellは小文字で始まる型名を型パラメタとみなすため，全称量化子を省略しても型を正しく推論できるのである．
 
 例えば
 #par-equation($ f colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
@@ -836,11 +836,11 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 == リスト
 <list>
 
-型から作る型を#keyword[コンテナ型]と呼ぶ．代表的なコンテナはある型のホモジニアスな配列である#keyword[リスト]である．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
+型から作る型を#keyword[コンテナ型]と呼ぶ．代表的なコンテナはある型の#keyword[ホモジニアスな配列]である#keyword[リスト]である．この章ではリストと，リストに対する重要な演算である畳み込み，マップを取り扱う．
 
 === リスト
 
-同じ型の値を一列に並べたもの，つまり#keyword[ホモジニアスな配列]のことをリストと呼ぶ．Pythonではリスト ```python xs``` を次のように定義できる．
+同じ型の値を一列に並べたもの，つまりホモジニアスな配列のことをリストと呼ぶ．Pythonではリスト ```python xs``` を次のように定義できる．
 
 #sourcecode[```python
 # Python
@@ -853,9 +853,25 @@ xs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 複数の型の要素が混在してもよい配列のことを#keyword[ヘテロジニアスな配列]と呼び，ホモジニアスな配列とは区別する．
 
-今後，リストを指す変数は，リストであることを忘れないように変数名に $"s"$ を付けて
+リストを指す変数は，リストであることを忘れないように変数名に $"s"$ を付けて
 #par-equation($ x_"s" = [0, 1, ..., 9] $)
 と書くことにする．今後 $square.stroked.dotted_"s"$ の形をした変数名が出てきたら，それはリスト変数である．なお，変数 $x$ とリスト変数 $x_"s"$ は異なる変数であるとする．#footnote[Haskellでは `s` を変数名にくっつけて ```haskell xs = [0, 1..9]``` のように書く習慣がある．なおピリオドの数に注意しよう．]
+
+#pb
+
+リストの型名は，元の型名をブラケットで包むことで表現する．整数型 $(haskell.Int)$ のリストは $[haskell.Int]$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $[haskell.a]$ と書く．仮の型である $haskell.a$ は型パラメタである．#footnote[Haskellではリスト型 $[haskell.a]$ を ```haskell [a]``` と書く．型 $[haskell.a]$ は正しくは $forall haskell.a |=> [haskell.a]$ のことである．]
+
+型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[space.thin]$ と書く．型 $[haskell.a]$ は $haskell.ListType(haskell.a)$ のシンタックスシュガーである．#footnote[Haskellでは $haskell.ListType(haskell.a)$ を ```haskell [] a``` と書く．これは ```haskell [a]``` と同じことである．]
+
+型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++のクラステンプレートが相当する．
+
+$[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは 
+#par-equation($ x_"s" = [x] $)
+と書く．#footnote[Haskellでは ```haskell xs = [x]``` と書く．]
+
+リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールドイタリック体ならばリスト型，中身がイタリック体ならリスト値である．
+
+ある型を包み込んだ別の型を一般にコンテナ型と呼ぶ．コンテナ型は多相型の一種である．また，コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．
 
 #pb
 
@@ -890,24 +906,6 @@ xs = [x * 2 for x in range(0, 10)]
 # Python
 xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 ```]
-
-#pb
-
-整数型 $(haskell.Int)$ のリストは $[haskell.Int]$ と書き，整数のリスト型と呼ぶ．一般に $haskell.a$ 型のリストを $[haskell.a]$ と書く．仮の型である $haskell.a$ は型パラメタである．#footnote[Haskellではリスト型 $[haskell.a]$ を ```haskell [a]``` と書く．型 $[haskell.a]$ は正しくは $forall haskell.a |=> [haskell.a]$ のことである．]
-
-型 $haskell.a$ から型 $[haskell.a]$ を生成する演算子を#keyword[リスト型コンストラクタ]と呼んで $[space.thin]$ と書く．型 $[haskell.a]$ は $haskell.ListType(haskell.a)$ のシンタックスシュガーである．#footnote[Haskellでは $haskell.ListType(haskell.a)$ を ```haskell [] a``` と書く．これは ```haskell [a]``` と同じことである．]
-
-型コンストラクタの概念はPythonには無い（必要無い）が，静的型付け言語であるC++のクラステンプレートが相当する．
-
-#pb
-
-$[x]$ のように $haskell.a$ 型の変数 $x$ を入れた $[haskell.a]$ 型の変数を作る演算子を#keyword[リスト値コンストラクタ]と呼ぶ．$[haskell.a]$ 型の変数のことを#keyword[リスト変数]とも呼ぶ．$haskell.a$ 型の変数 $x$ からリスト値コンストラクタを使ってリスト$x_"s"$ を作ることは 
-#par-equation($ x_"s" = [x] $)
-と書く．#footnote[Haskellでは ```haskell xs = [x]``` と書く．]
-
-リスト型を表す $[haskell.a]$ と，1要素のリストである $[x]$ の違いにはいつも気をつけておこう．本書では中身がボールドイタリック体ならばリスト型，中身がイタリック体ならリスト値である．
-
-ある型を包み込んだ別の型を一般にコンテナと呼ぶのであった．コンテナ型は多相型の一種である．また，コンテナ型の変数を#keyword[コンテナ変数]と呼ぶ．
 
 #pb
 
