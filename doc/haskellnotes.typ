@@ -1809,7 +1809,13 @@ $ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevro
 
 $ z = x haskell.bindRight phi haskell.bindRight psi $
 
-実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．
+実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．これはUnixシェルで次のようにすることと似ているからかもしれない．
+
+```shell-unix-generic
+$ cat x | phi | psi > z
+```
+
+上記のコマンドは，ファイル `x` の中身を書き出し（`cat`），プログラム $phi$（`phi`）が処理をして書き出し，続いてプログラム $psi$（`psi`）が処理をして，ファイル `z` に書き出すことを意味する．もしプログラム `phi` または `psi` が異常終了すれば，この一連のパイプラインも異常終了する．
 
 #pb
 
