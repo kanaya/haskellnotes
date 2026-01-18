@@ -107,6 +107,7 @@
 #let Eq = typeclass("Eq")
 #let Functor = typeclass("Functor")
 #let Integral = typeclass("Integral")
+#let Monad = typeclass("Monad")
 #let Num = typeclass("Num")
 #let Ord = typeclass("Ord")
 #let Real = typeclass("Real")

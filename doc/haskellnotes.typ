@@ -1801,6 +1801,22 @@ $ z_? = psi haskell.bind_? (phi haskell.bind_? x_?) $<bind-composition>
 $ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
   &|_haskell.otherwise = nothing.rev $<bind-op>
 
+この一般化されたバインド演算子 $(haskell.bind)$ も @bind-composition のように，文脈に入れる関数を合成することができる．
+
+#pb
+
+我々のバインド演算子は#keyword[左バインド演算子]とも言う．というのは，他に#keyword[右バインド演算子] $(haskell.bindRight)$ もあるからである．右バインド演算子は左バインド演算子の左右を入れ替えたもので，左結合する．式 $z = psi haskell.bind phi haskell.bind x$ は「変数 $x$ に関数 $phi$ を作用させて，さらに関数 $psi$ を作用させたものを $z$ とする」と読めるが，右バインド演算子を使うと次のようにより自然言語に近い順序になる．
+
+$ z = x haskell.bindRight phi haskell.bindRight psi $
+
+実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．
+
+#pb
+
+バインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．モナドはアプリカティブ関手を拡張したもので，次の関係が成り立つ．
+
+$ haskell.Functor subset haskell.Applicative subset haskell.Monad $
+
 
 
 === モナド則
