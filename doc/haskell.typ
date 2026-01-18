@@ -125,6 +125,7 @@
 #let bangbang = math.class("binary", math.excl.double)
 #let compose = math.bullet.op
 #let apply = math.class("binary", math.dollar)
+#let makeComplex = math.class("binary", ":+")
 #let mapM = math.class("binary", math.ast.triple)
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
