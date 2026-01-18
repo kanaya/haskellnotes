@@ -84,8 +84,8 @@
 #let Maybe = typeconstructor("Maybe")
 
 #let typeconstructor1(x, y) = {
-  let xx = x
-  let yy = y
+  let xx = typename(x)
+  let yy = typename(y)
   $xx_yy$
 }
 
@@ -165,11 +165,6 @@
 #let Right(x) = constructor1("Right", x)
 
 // Type constructor with one argument.
-#let typename1(x, y) = {
-  let xx = typename(x)
-  let yy = typename(y)
-  $xx_yy$
-}
 
 // Infix.
 #let infix(x) = {

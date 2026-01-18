@@ -84,7 +84,7 @@
     [有名な値コンストラクタ2], [特別な括弧で包む], $[x], chevron.l y chevron.r, paren.l.stroked u, v paren.r.stroked$,
     [有名な値コンストラクタ3], [コロン $(:)$ を含む記号], $x : x_"s"$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
-    [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typename1(m, a)$,
+    [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typeconstructor1(m, a)$,
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
     [ユニット型], [括弧], $haskell.unittype$,
@@ -1673,8 +1673,7 @@ $ z' = [| g x y |] ... "採用されなかった文法" $
 
 #pb
 
-ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．アプリカティブ関手は関手を拡張したものであり，次のアプリカティブ関手則を持つものとする．
-
+ピュア演算子とアプリカティブマップ演算子を必ず持つ関手のことを#keyword[アプリカティブ関手]と呼び，型クラス $haskell.Applicative$ に属するものとする．アプリカティブ関手は関手を拡張したものであり，次のアプリカティブ関手則を持つものとする．ただし $x_* colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa$ とする．
 
 #theorem-box(title: "アプリカティブ関手則", outlined: false)[
 1. 恒等射の存在：アプリカティブマップ演算子 $(ast.square)$ は $chevron.l id chevron.r ast.square x_* = id x_*$ を満たす．
@@ -1857,22 +1856,20 @@ $ haskell.Monad supset haskell.m arrow.r.stroked haskell.ma $
 3. 準同型性（右単位元の存在）：バインド演算子 $(haskell.bind)$ は $phi haskell.bind chevron.l x chevron.r = phi x$ を満たす．
 ]
 
+恒等射の存在における式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ の左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell x >>= return = x``` と書くからである．
 
 
+結合則の右辺 $(psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$ を $haskell.kwdo$ 記法で書くと次のようになる．
 
+$ haskell.kwdo {y <- haskell.kwdo { x <- x_*; phi x}; psi y} $
 
-式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ における左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell x >>= return = x``` と書くからである．
+結合則の左辺 $psi haskell.bind (phi haskell.bind x_*)$ を $haskell.kwdo$ 記法で書くと次のようになる．
 
+$ haskell.kwdo {x <- x_*; haskell.kwdo {y <- phi x}; psi y} $
 
-結合則の右辺
+上式は次のように縮約できる．
 
-$ haskell.kwdo {y <- haskell.kwdo { x <- x_*; f x}; g y} $
-
-結合則の左辺
-
-$ haskell.kwdo {x <- x_*; haskell.kwdo {y <- f x}; g y} $
-
-$ haskell.kwdo {x <- x_*; y <- f x; g y} $
+$ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 
 // https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
 
