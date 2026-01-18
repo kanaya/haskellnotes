@@ -1729,7 +1729,7 @@ $  u_* &= phi x \
 
 === バインド演算子
 
-一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．いま変数 $x, y colon.double haskell.a$ があり，引数を文脈に入れる関数 $phi, psi colon.double haskell.a -> haskell.MaybeA$ および $omega colon.double haskell.MaybeA -> haskell.MaybeA -> haskell.MaybeA$ があるとしよう．すると，アプリカティブスタイルでは次のようにコンテナ変数 $u_*, v_*$ に関数 $omega$ を適用させることができる．
+一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．いま変数 $x, y colon.double haskell.a$ があり，引数を文脈に入れる関数 $phi, psi colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa$ および $omega colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa -> haskell.fa -> haskell.fa$ があるとしよう．すると，アプリカティブスタイルでは次のようにコンテナ変数 $u_*, v_*$ に関数 $omega$ を適用させることができる．
 
 $  u_* &= phi x \
   v_* &= psi y \
@@ -1752,15 +1752,14 @@ $ w_* = omega convolve.o (psi y) ast.square (phi x) $
 があるとする．変数 $x$ に関数 $phi', psi', omega'$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi' x \
-  v_* &= cases(psi' u "if" u_* equiv haskell.Just(u), haskell.Nothing "otherwise") \
-  w_* &= cases(omega' v "if" v_* equiv haskell.Just(v), haskell.Nothing "otherwise") $
+  v_* &= haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+  w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
 
-もしまとめるとこうなる．
+ひとつの式にまとめるとこうなる．
 
-$ w_* = cases(omega' v "if" v_* equiv haskell.Just(v),
-  haskell.Nothing "otherwise")
-  "where" v_* eq.delta cases(phi' u "if" u_* equiv haskell.Just(u),
-    haskell.Nothing "otherwise") "where" u_* eq.delta phi' x $
+$ w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
+  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+  &haskell.kwwhere u_* eq.delta phi' x $
 
 やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書ける．
 
