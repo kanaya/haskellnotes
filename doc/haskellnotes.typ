@@ -1718,9 +1718,6 @@ $  u_* &= phi x \
 
 #tk 型に対する演算
 
-
-
-
 === この章のまとめ
 
 #tk この章のまとめ．
@@ -1823,23 +1820,27 @@ $ cat x | phi | psi > z
 
 $ haskell.Functor subset haskell.Applicative subset haskell.Monad $
 
+関手はマップ演算子 $(convolve.o)$ を持つ型クラスであった．アプリカティブ関手はアプリ化ティブマップ演算子 $(ast.square)$ とピュア演算子 $(chevron.l square.filled chevron.r)$ を持つ．ピュア演算子を直接使うことはないが，アプリカティブ関手のインスタンスとなる型ではそれぞれ独自の実装を持つ．例えばリスト型は $[square.filled]$ というピュア演算子を持つし，Maybe型は $haskell.Just(square.filled)$ というピュア演算子を持つ．
 
+モナドのインスタンスは追加でバインド演算子 $(haskell.bind)$ を持つことになる．歴史的な理由で，モナドのピュア演算子のことをリターン（return）演算子と呼ぶが，本質は同じものである．そこで本書では一貫してピュア演算子と呼び続けることにする．
+
+関手は関手則，アプリカティブ関手はアプリカティブ関手則に従う．両方を再掲しておこう．関手則は次のようなものである．
+
+#theorem-box(title: "関手則", outlined: false)[
+1. 恒等射の存在（保存）：マップ演算子 $(convolve.o)$ は $id convolve.o x_* = id x_*$ を満たす．
+2. 結合則：マップ演算子 $(convolve.o)$ は $g convolve.o (f convolve.o x_*) = (g compose f) convolve.o x_*$ /* $(g compose f) convolve.o = (g convolve.o) compose (f convolve.o)$ */ を満たす．
+]
+
+アプリカティブ関手則は次のようなものである．
+
+#theorem-box(title: "アプリカティブ関手則", outlined: false)[
+1. 恒等射の存在： $chevron.l id chevron.r ast.square x_* = id x_*$
+2. 結合則： $h ast.square (g ast.square f) = chevron.l compose chevron.r ast.square h ast.square g ast.square f$
+3. 準同型性： $chevron.l f chevron.r ast.square chevron.l x chevron.r = chevron.l f x chevron.r$ または $f convolve.o chevron.l x chevron.r = chevron.l f x chevron.r$
+4. 交換則： $f ast.square chevron.l x chevron.r = chevron.l (lozenge.stroked.medium haskell.apply x) chevron.r ast.square f$
+]
 
 === モナド則
-
-#tk モナド則
-
-// https://qiita.com/mandel59/items/87aebbd964ca82f74904
-
-$ mu haskell.bind chevron.l x chevron.r &= mu x \
-  chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*
-  &= x_* \
-  nu haskell.bind mu haskell.bind x_*
-  &= nu haskell.bind (mu haskell.bind x_*) $
-
-$(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
-
-
 
 #theorem-box(title: "モナド則", outlined: false)[
 1. 恒等射（左単位元）の存在： $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$
@@ -1865,6 +1866,20 @@ $ haskell.kwdo {x <- x_*; haskell.kwdo {y <- f x}; g y} $
 $ haskell.kwdo {x <- x_*; y <- f x; g y} $
 
 // https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+
+
+#tk モナド則
+
+// https://qiita.com/mandel59/items/87aebbd964ca82f74904
+
+$ mu haskell.bind chevron.l x chevron.r &= mu x \
+  chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*
+  &= x_* \
+  nu haskell.bind mu haskell.bind x_*
+  &= nu haskell.bind (mu haskell.bind x_*) $
+
+
+
 
 === モノイド
 
@@ -2010,7 +2025,12 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.d
 
 == Yコンビネータ
 
+== モノイド
+
+$(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
+
 == 直積と直和
+
 
 
 = Haskellの深い部分
