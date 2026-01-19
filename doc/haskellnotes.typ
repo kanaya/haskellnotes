@@ -1883,7 +1883,7 @@ $ psi haskell.bind phi haskell.bind x_*
 
 
 
-== なにか
+=== なにか
 
 === 余談：IOサバイバルキット3
 
