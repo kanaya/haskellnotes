@@ -932,7 +932,7 @@ xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 #pb
 
 #keyword[文字列]は $haskell.Char$ 型のリストである．実際 $haskell.String$ 型は
-#par-equation($ haskell.kwtype haskell.String = [haskell.Char] $)
+#par-equation($ haskell.kwtype haskell.String eq.def [haskell.Char] $)
 と定義されている．#footnote[Haskellでは ```haskell type String = [Char]``` と書く．]
 
 ここにキーワード $haskell.kwtype$ はデータ型の別名，つまり#keyword[型シノニム]を定義するためのキーワードである．
@@ -1895,7 +1895,7 @@ $ psi haskell.bind phi haskell.bind x_*
 
 型シノニム．
 
-$ haskell.kwtype haskell.String = [haskell.Char] $
+$ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 型の定義．
 
