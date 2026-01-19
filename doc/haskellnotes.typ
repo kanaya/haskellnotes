@@ -1899,13 +1899,20 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 型の定義．
 
-$ haskell.kwdata "Rect" eq.def "Rect" haskell.Double haskell.Double $
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect" haskell.Double haskell.Double $
 
 $ x = "Rect" 10.0 space 20.0 $
 
-$ haskell.kwdata "Rect" eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
 
 $ x = "Rect" { "width" = 10.0, "height" = 20.0 } $
+
+$ haskell.kwdata haskell.typename("Ratio") eq.def haskell.Int ":/" haskell.Int $
+
+$ "ratioToDouble" &colon.double haskell.typename("Ratio") -> haskell.Double \
+  "ratioToDouble" (x ":/" y) &= (haskell.fromIntegral x) / (haskell.fromIntegral y) $
+
+$ z = "ratioToDouble" (3 ":/" 2) $
 
 直和．
 
