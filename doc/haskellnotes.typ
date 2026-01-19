@@ -1901,9 +1901,10 @@ $ haskell.kwtype haskell.String = [haskell.Char] $
 
 $ haskell.kwdata "Rect" eq.def "Rect" haskell.Double haskell.Double $
 
+$ haskell.kwdata "Rect" eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
+
 $ haskell.kwdata "Shape" eq.def "Rect" haskell.Double haskell.Double xor "Circle" haskell.Double $
 
-$ haskell.kwdata "Rect" eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
 
 === 余談：IOサバイバルキット3
 
