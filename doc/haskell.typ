@@ -69,6 +69,7 @@
 #let typename(x) = math.bold(x)
 #let Bool = typename("Bool")
 #let Char = typename("Char")
+#let Cool = typename("Cool")
 #let Double = typename("Double")
 #let Float = typename("Float")
 #let Int = typename("Int")

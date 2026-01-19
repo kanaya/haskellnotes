@@ -1708,6 +1708,17 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 型の定義．
 
+$ haskell.kwdata haskell.Cool eq.def "Yes" xor "No" xor "Dunno" haskell.kwderiving (haskell.Eq) $
+
+$ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
+  &"Yes" equiv "Yes" = haskell.True \
+  &"Yes" equiv "Dunno" = haskell.True \
+  &"No" equiv "No" = haskell.True \
+  &"No" equiv "Dunno" = haskell.True \
+  &"Dunno" equiv "Yes" = haskell.True \
+  &"Dunno" equiv "No" = haskell.True \
+  &"Dunno" equiv "Dunno" = haskell.True $
+
 $ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
 
 $ x = "Rect"_(10.0 space 20.0) $
