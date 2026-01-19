@@ -1899,13 +1899,13 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 型の定義．
 
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect" haskell.Double haskell.Double $
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
 
-$ x = "Rect" 10.0 space 20.0 $
+$ x = "Rect"_(10.0 space 20.0) $
 
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_({ "width" colon.double haskell.Double, "height" colon.double haskell.Double }) $
 
-$ x = "Rect" { "width" = 10.0, "height" = 20.0 } $
+$ x = "Rect"_({ "width" = 10.0, "height" = 20.0 }) $
 
 $ haskell.kwdata haskell.typename("Ratio") eq.def haskell.Int ":/" haskell.Int $
 
@@ -1916,8 +1916,8 @@ $ z = "ratioToDouble" (3 ":/" 2) $
 
 直和．
 
-$ haskell.kwdata haskell.typename("Shape") eq.def "Circle" haskell.Double 
-  xor "Triangle" haskell.Double haskell.Double $
+$ haskell.kwdata haskell.typename("Shape") eq.def "Circle"_haskell.Double 
+  xor "Triangle"_(haskell.Double haskell.Double) $
 
 
 === 余談：IOサバイバルキット3
