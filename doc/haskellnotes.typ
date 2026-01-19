@@ -1716,7 +1716,9 @@ $  u_* &= phi x \
 )
 <types-and-kinds>
 
-#tk 型に対する演算
+// プログラミング言語によっては，型に対する演算を行う機能がある．これを#keyword[型レベルプログラミング]と呼ぶ．Haskellでは型コンストラクタを使ってコンテナ型から新しい型を作ることができるほか，コンテナ型を作ることも出来る．
+
+// https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/preface
 
 === この章のまとめ
 
@@ -1880,10 +1882,7 @@ $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 $ psi haskell.bind phi haskell.bind x_*
   = psi haskell.bind (phi haskell.bind x_*) $
 
-
-
-
-=== なにか
+=== 新しい型を作る
 
 === 余談：IOサバイバルキット3
 
