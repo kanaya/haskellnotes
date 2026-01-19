@@ -1916,7 +1916,8 @@ $ z = "ratioToDouble" (3 ":/" 2) $
 
 直和．
 
-$ haskell.kwdata "Shape" eq.def "Rect" haskell.Double haskell.Double xor "Circle" haskell.Double $
+$ haskell.kwdata haskell.typename("Shape") eq.def "Circle" haskell.Double 
+  xor "Triangle" haskell.Double haskell.Double $
 
 
 === 余談：IOサバイバルキット3
