@@ -1698,7 +1698,36 @@ $  u_* &= phi x \
 
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．
 
-=== 余談：型クラスと種
+=== 余談：型をつくる
+
+// https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
+
+型シノニム．
+
+$ haskell.kwtype haskell.String eq.def [haskell.Char] $
+
+型の定義．
+
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
+
+$ x = "Rect"_(10.0 space 20.0) $
+
+$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_({ "width" colon.double haskell.Double, "height" colon.double haskell.Double }) $
+
+$ x = "Rect"_({ "width" = 10.0, "height" = 20.0 }) $
+
+$ haskell.kwdata haskell.typename("Ratio") eq.def haskell.Int ":/" haskell.Int $
+
+$ "ratioToDouble" &colon.double haskell.typename("Ratio") -> haskell.Double \
+  "ratioToDouble" (x ":/" y) &= (haskell.fromIntegral x) / (haskell.fromIntegral y) $
+
+$ z = "ratioToDouble" (3 ":/" 2) $
+
+直和．
+
+$ haskell.kwdata haskell.typename("Shape") eq.def "Circle"_haskell.Double 
+  xor "Triangle"_(haskell.Double haskell.Double) $
+
 
 #tk インスタンス
 
@@ -1889,36 +1918,7 @@ $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 $ psi haskell.bind phi haskell.bind x_*
   = psi haskell.bind (phi haskell.bind x_*) $
 
-=== 新しい型を作る
-
-// https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
-
-型シノニム．
-
-$ haskell.kwtype haskell.String eq.def [haskell.Char] $
-
-型の定義．
-
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
-
-$ x = "Rect"_(10.0 space 20.0) $
-
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_({ "width" colon.double haskell.Double, "height" colon.double haskell.Double }) $
-
-$ x = "Rect"_({ "width" = 10.0, "height" = 20.0 }) $
-
-$ haskell.kwdata haskell.typename("Ratio") eq.def haskell.Int ":/" haskell.Int $
-
-$ "ratioToDouble" &colon.double haskell.typename("Ratio") -> haskell.Double \
-  "ratioToDouble" (x ":/" y) &= (haskell.fromIntegral x) / (haskell.fromIntegral y) $
-
-$ z = "ratioToDouble" (3 ":/" 2) $
-
-直和．
-
-$ haskell.kwdata haskell.typename("Shape") eq.def "Circle"_haskell.Double 
-  xor "Triangle"_(haskell.Double haskell.Double) $
-
+=== モナドで出来ること
 
 === 余談：IOサバイバルキット3
 
