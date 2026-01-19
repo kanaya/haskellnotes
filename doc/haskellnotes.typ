@@ -1668,7 +1668,7 @@ $ z'_* = chevron.l g chevron.r ast.square x_* ast.square y_* $<applicative-style
 
 $ z' = chevron.l g chevron.r ast.square x ast.square  y $<applicative-style-2>
 
-そこで，我々も誤解を招く恐れがない場合は添字 $*$ を省略することにする．ところで @applicative-style-2 はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 g x y` と書くことで代用されている．元の提案は `z = [|f x y|]` であった．]
+そこで，我々も誤解を招く恐れがない場合は添字 $*$ を省略することにする．ところで @applicative-style-2 はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 g x y` と書くことで代用されている．元の提案は `z = [|g x y|]` であった．]
 $ z' = [| g x y |] ... "採用されなかった文法" $
 
 #pb
