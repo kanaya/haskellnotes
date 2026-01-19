@@ -1698,7 +1698,14 @@ $  u_* &= phi x \
 
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．
 
-=== 余談：種
+=== 余談：型クラスと種
+
+#tk インスタンス
+
+$ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
+  &(equiv), (equiv.not) colon.double haskell.a -> haskell.a -> haskell.Bool \
+  &x equiv y = not (x equiv.not y) \
+  &x equiv.not y = not (x equiv y) $
 
 型クラスは型を一段抽象化したものであった．型を抽象化したものとして，Haskellには#keyword[種]という概念もある．$haskell.Int$ や $haskell.Double$ のような具体的な型はすべて $haskell.Type$ という種に属する．一方 @list で述べるように，Haskellには型から型を作る機能がある．このように型から作られる型は $haskell.Type ~> haskell.Type$ という種に属する．これらの関係を @types-and-kinds に掲げる．
 
@@ -1883,6 +1890,18 @@ $ psi haskell.bind phi haskell.bind x_*
   = psi haskell.bind (phi haskell.bind x_*) $
 
 === 新しい型を作る
+
+// https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
+
+型シノニム．
+
+$ haskell.kwtype haskell.String = [haskell.Char] $
+
+型の定義．
+
+$ haskell.kwdata "Rect" eq.def "Rect" haskell.Double haskell.Double $
+
+$ haskell.kwdata "Shape" eq.def "Rect" haskell.Double haskell.Double xor "Circle" haskell.Double $
 
 === 余談：IOサバイバルキット3
 
