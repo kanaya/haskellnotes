@@ -1903,6 +1903,8 @@ $ haskell.kwdata "Rect" eq.def "Rect" haskell.Double haskell.Double $
 
 $ haskell.kwdata "Shape" eq.def "Rect" haskell.Double haskell.Double xor "Circle" haskell.Double $
 
+$ haskell.kwdata "Rect" eq.def "Rect" { "width" colon.double haskell.Double, "height" colon.double haskell.Double } $
+
 === 余談：IOサバイバルキット3
 
 === この章のまとめ
@@ -2188,7 +2190,7 @@ $ haskell.kwclass &haskell.Eq supset haskell.a haskell.kwwhere \
 
 $ haskell.kwdata "TrafficLight" = "Red" or.curly "Yellow" or.curly "Green" $
 
-$ haskell.instance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
+$ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
   &"Red" equiv "Red" = haskell.True \
   &"Yellow" equiv "Yellow" = haskell.True \
   &"Green" equiv "Green" = haskell.True \
