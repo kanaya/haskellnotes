@@ -1931,7 +1931,7 @@ $ cat x | phi | psi > z
 
 バインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．モナドはアプリカティブ関手を拡張したもので，次の関係が成り立つ．
 
-$ haskell.Functor subset haskell.Applicative subset haskell.Monad $
+$ haskell.Monad subset haskell.Applicative subset haskell.Functor $
 
 関手，アプリカティブ関手のように，型 $haskell.a$ をモナドに「入れた」ものを次のように書く．
 
