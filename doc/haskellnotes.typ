@@ -2002,19 +2002,24 @@ $ psi haskell.bind phi haskell.bind x_*
 
 破壊的代入を許すような変数は，バインド演算子でしかアクセスできない．
 
-$ m = (backslash x' |-> f x') haskell.bind penta.filled_x $
+$ m &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
+  m &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-$ m colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) $
+$x$ を $y$ で書き換える．
 
-$ m = (backslash x' |-> x' eq.star f) haskell.bind penta.filled_x $
+$ m = (backslash x |-> underline(x eq.star y) haskell.kwwhere y eq.delta 2) haskell.bind penta.filled_1 $
 
-$x'$ が $f x'$ に書き換えられる．
+$x$ を $f x$ に書き換える．
 
-$star x'$ で $x'$ の値を取り出す．
+$ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+)) haskell.bind penta.filled_1 $
 
-$ m = (backslash x' |-> x' eq.star f >> star x') haskell.bind penta.filled_x $
+$x$ の値を取り出す．
+
+$ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+) >> star.stroked x) haskell.bind penta.filled_1 $
 
 $note.eighth.alt m$ で破壊的代入を行う関数から，結果だけを取り出す．
+
+$ z = note.eighth.alt m $
 
 // https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
 
@@ -2034,13 +2039,13 @@ main = print $ sum'' [1..100]
 ```
 
 $ sum' x_"s" = note.eighth.alt haskell.apply
-  (backslash a |-> ((backslash i |-> (+i) star.op a) *_"M" x_"s") >> haskell.readSTRefOp a) 
+  (backslash a |-> ((backslash i |-> underline((+i) star.filled a)) *_"M" x_"s") >> haskell.readSTRefOp a) 
   haskell.bind penta.filled_0 $
 
 $ penta.filled_x &= haskell.newSTRef(x) \
   haskell.readSTRefOp x &= haskell.readSTRef x \
-  f star.filled x &= haskell.modifySTRef x f \
-  x eq.star y &= haskell.writeSTRef x y \
+  underline(f star.filled x) &= haskell.modifySTRef x f \
+  underline(x eq.star y) &= haskell.writeSTRef x y \
   note.eighth.alt &= haskell.runST $
 
 === 余談：IOサバイバルキット3
