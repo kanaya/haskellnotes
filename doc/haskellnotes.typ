@@ -1996,6 +1996,24 @@ $ psi haskell.bind phi haskell.bind x_*
 
 === 破壊的代入を隠すモナド
 
+モナドは破壊的代入をプログラムの他の部分から隠すことができる．その代表的なものがState Transformerモナド，略してSTモナドである．
+
+まず破壊的代入を許すような変数を生成する値コンストラクタを導入しよう．このコンストラクタを我々は $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
+
+破壊的代入を許すような変数は，バインド演算子でしかアクセスできない．
+
+$ (backslash x' |-> f x') haskell.bind penta.filled_x $
+
+$ (backslash x' |-> x' eq.star f) haskell.bind penta.filled_x $
+
+$x'$ が $f x'$ に書き換えられる．
+
+$ star x' $
+
+で $x'$ の値を取り出す．
+
+$ (backslash x' |-> x' eq.star f >> star x') haskell.bind penta.filled_x $
+
 // https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
 
 ```haskell 
@@ -2008,11 +2026,9 @@ sum' xs = runST $ do
     forM_ xs (\i -> modifySTRef a (+ i))
     readSTRef v
     
-sum'' xs = runST $ (newSTRef 0) >>= (\a -> mapM_ (\i -> modifySTRef a (+ i)) xs >> readSTRef a)
+sum'' xs = runST $ (\a -> ((\i -> a `modifySTRef` (+ i)) `mapM_` xs) >> readSTRef a) =<< newSTRef 0
 
-sum''' xs = runST $ (\a -> ((\i -> a `modifySTRef` (+i)) `mapM_` xs) >> readSTRef a) =<< newSTRef 0
-
-main = print $ sum''' [1..100]
+main = print $ sum'' [1..100]
 ```
 
 $ sum' x_"s" = note.eighth.alt haskell.apply
