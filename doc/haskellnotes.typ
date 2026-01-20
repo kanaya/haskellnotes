@@ -1715,27 +1715,35 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 $ haskell.kwdata "型名" eq.def "値コンストラクタ" $
 
 簡単な具体例は次のようなものである．
-#par-equation($ haskell.kwdata haskell.typename("Zero") eq.def "Zero" $)
-ここで左辺の $haskell.typename("Zero")$ は新しい型名であり，右辺の $"Zero"$ は新しい値コンストラクタの名前である．この $haskell.typename("Zero")$ 型は唯一の値 $"Zero"$ しか持てないので，それほど面白みのある型ではない．それでも
-#par-equation($ haskell.kwdata haskell.typename("Zero") eq.def "Zero" haskell.kwderiving haskell.Show $)
+#par-equation($ haskell.kwdata haskell.Zero eq.def "Zero" $)
+ここで左辺の $haskell.Zero$ は新しい型名であり，右辺の $"Zero"$ は新しい値コンストラクタの名前である．この $haskell.Zero$ 型は唯一の値 $"Zero"$ しか持てないので，それほど面白みのある型ではない．それでも
+#par-equation($ haskell.kwdata haskell.Zero eq.def "Zero" haskell.kwderiving haskell.Show $)
 というふうに型クラス $haskell.Show$ のインスタンスであることを明示すると，Haskellは値 $"Zero"$ を文字列に変換する関数 $haskell.showfunc$ を自動で定義してくれる．そこで
 #par-equation($ z = "Zero" $)
 として
 #par-equation($ s = haskell.showfunc z $)
 とすると，$s$ には文字列 $haskell.constantstring("Zero")$ が入る．
 
-#tk
+#pb
 
+より興味深い型を作るには2種類の方向性がある．ひとつは値コンストラクタに引数を与える方法である．例えば2個の浮動小数点数を組み合わせた型 $haskell.XY$ は次のように定義できる．#footnote[Haskellでは ```haskell type XY = XY Double Double deriving Show``` と書く．]
 
-より興味深い型を作るには2種類の方向性がある．ひとつは値コンストラクタに引数を与える方法である．例えば2個の浮動小数点数を組み合わせた型 $haskell.typename("XY")$ は次のように定義される．#footnote[Haskellでは ```haskell type XY = XY Double Double``` と書く．]
+$ haskell.kwdata haskell.XY eq.def "XY"_(haskell.Double haskell.Double) haskell.kwderiving haskell.Show $
 
-$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) $
+値 $(1.0, 2.0)$ を作り出すには
+#par-equation($ v = "XY"_(1.0 space 2.0) $)
+とする．値 $v$ は $haskell.XY$ 型の値である．
 
-$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) haskell.kwderiving haskell.Show $
+関数 $haskell.addXY$ を次のように定義してみよう．
 
+$ &haskell.addXY colon.double haskell.XY -> haskell.XY -> haskell.XY \
+  &haskell.addXY (haskell.XY x y) (haskell.XY x' y') = "XY"_(x + x' space y + y') $
 
-$ v = "XY"_(1.0 space 2.0) $
-
+こうすると
+#par-equation($ v &= "XY"_(1.0 space 2.0) \
+  v' &= "XY"_(3.0 space 4.0) \
+  w &= haskell.addXY v v' $)
+とすることで $w$ には $"XY"_(4.0 space 6.0)$ が入る．
 
 #tk
 

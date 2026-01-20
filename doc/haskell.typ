@@ -38,6 +38,7 @@
 
 // Function.
 #let longfunction(x) = math.serif(x)
+#let addXY = longfunction("addXY")
 #let const = longfunction("const")
 #let curry = longfunction("curry")
 #let even = longfunction("even")
@@ -79,6 +80,8 @@
 #let List = typename("[]")
 #let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
+#let XY = typename("XY")
+#let Zero = typename("Zero")
 
 // Type constructor.
 #let typeconstructor(x) = math.bold(x)
