@@ -1996,27 +1996,33 @@ $ psi haskell.bind phi haskell.bind x_*
 
 === 破壊的代入を隠すモナド
 
+// https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
+
 ```haskell 
 import Control.Monad
 import Control.Monad.ST
 import Data.STRef
 
 sum' xs = runST $ do
-    v <- newSTRef 0
-    forM_ xs (\i -> modifySTRef v (+ i))
+    a <- newSTRef 0
+    forM_ xs (\i -> modifySTRef a (+ i))
     readSTRef v
     
-sum'' xs = runST $ (newSTRef 0) >>= (\v -> mapM_ (\i -> modifySTRef v (+ i)) xs >> readSTRef v)
+sum'' xs = runST $ (newSTRef 0) >>= (\a -> mapM_ (\i -> modifySTRef a (+ i)) xs >> readSTRef a)
 
-sum''' xs = runST $ (\v -> (\i -> modifySTRef v (+i)) `mapM_` xs >> readSTRef v) =<< (newSTRef 0)
+sum''' xs = runST $ (\a -> ((\i -> a `modifySTRef` (+i)) `mapM_` xs) >> readSTRef a) =<< newSTRef 0
 
 main = print $ sum''' [1..100]
 ```
 
-$ sum' x_"s" = haskell.runST \
-  &haskell.apply
-  (backslash v |-> (backslash i |-> haskell.modifySTRef v space (+i)) *_"M" x_"s" gt.double haskell.readSTRef v) \
-  &haskell.bind (haskell.newSTRef 0) $
+$ sum' x_"s" = note.eighth.alt haskell.apply
+  (backslash a |-> ((backslash i |-> a eq.star (+i)) *_"M" x_"s") >> star.filled a) 
+  haskell.bind penta.filled_0 $
+
+$ penta.filled_x &= haskell.newSTRef(x) \
+  star.filled x &= haskell.readSTRef x \
+  (eq.star) x f &= haskell.modifySTRef x f \
+  note.eighth.alt &= haskell.runST $
 
 === 余談：IOサバイバルキット3
 

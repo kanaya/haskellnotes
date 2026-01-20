@@ -129,7 +129,6 @@
 
 #let runST = action("runST")
 #let modifySTRef = action("modifySTRef")
-#let newSTRef = action("newSTRef")
 #let readSTRef = action("readSTRef")
 
 // Unary operator
@@ -178,6 +177,8 @@
 #let Left(x) = constructor1("Left", x)
 #let Just(x) = constructor1("Just", x)
 #let Right(x) = constructor1("Right", x)
+
+#let newSTRef(x) = constructor1("newSTRef", x)
 
 // Type constructor with one argument.
 
