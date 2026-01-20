@@ -1716,7 +1716,16 @@ $ haskell.kwdata "型名" eq.def "値コンストラクタ" $
 
 簡単な具体例は次のようなものである．
 #par-equation($ haskell.kwdata haskell.typename("Zero") eq.def "Zero" $)
-ここで左辺の $haskell.typename("Zero")$ は新しい型名であり，右辺の $"Zero"$ は新しい値コンストラクタの名前である．この $haskell.typename("Zero")$ 型は唯一の値 $"Zero"$ しか持てないので，それほど面白みのある型ではない．
+ここで左辺の $haskell.typename("Zero")$ は新しい型名であり，右辺の $"Zero"$ は新しい値コンストラクタの名前である．この $haskell.typename("Zero")$ 型は唯一の値 $"Zero"$ しか持てないので，それほど面白みのある型ではない．それでも
+#par-equation($ haskell.kwdata haskell.typename("Zero") eq.def "Zero" haskell.kwderiving haskell.Show $)
+というふうに型クラス $haskell.Show$ のインスタンスであることを明示すると，Haskellは値 $"Zero"$ を文字列に変換する関数 $haskell.showfunc$ を自動で定義してくれる．そこで
+#par-equation($ z = "Zero" colon.double haskell.typename("Zero") $)
+として
+#par-equation($ s = haskell.showfunc z $)
+とすると，$s$ には文字列 $haskell.constantstring("Zero")$ が入る．
+
+#tk
+
 
 より興味深い型を作るには2種類の方向性がある．ひとつは値コンストラクタに引数を与える方法である．例えば2個の浮動小数点数を組み合わせた型 $haskell.typename("XY")$ は次のように定義される．#footnote[Haskellでは ```haskell type XY = XY Double Double``` と書く．]
 

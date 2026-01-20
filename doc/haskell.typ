@@ -55,6 +55,7 @@
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
 #let rest = longfunction("rest")
+#let showfunc = longfunction("show")
 #let sqrt = longfunction("sqrt")
 #let succ = longfunction("succ")
 #let take = longfunction("take")
