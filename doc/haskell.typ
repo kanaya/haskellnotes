@@ -78,6 +78,7 @@
 #let Integer = typename("Integer")
 #let IO = typename("IO")
 #let List = typename("[]")
+#let ST = typename("ST")
 #let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
 #let XY = typename("XY")

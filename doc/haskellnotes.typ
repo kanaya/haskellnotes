@@ -2002,17 +2002,19 @@ $ psi haskell.bind phi haskell.bind x_*
 
 破壊的代入を許すような変数は，バインド演算子でしかアクセスできない．
 
-$ (backslash x' |-> f x') haskell.bind penta.filled_x $
+$ m = (backslash x' |-> f x') haskell.bind penta.filled_x $
 
-$ (backslash x' |-> x' eq.star f) haskell.bind penta.filled_x $
+$ m colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) $
+
+$ m = (backslash x' |-> x' eq.star f) haskell.bind penta.filled_x $
 
 $x'$ が $f x'$ に書き換えられる．
 
-$ star x' $
+$star x'$ で $x'$ の値を取り出す．
 
-で $x'$ の値を取り出す．
+$ m = (backslash x' |-> x' eq.star f >> star x') haskell.bind penta.filled_x $
 
-$ (backslash x' |-> x' eq.star f >> star x') haskell.bind penta.filled_x $
+$note.eighth.alt m$ で破壊的代入を行う関数から，結果だけを取り出す．
 
 // https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
 
