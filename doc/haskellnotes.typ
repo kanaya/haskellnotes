@@ -1745,26 +1745,36 @@ $ &haskell.addXY colon.double haskell.XY -> haskell.XY -> haskell.XY \
   w &= haskell.addXY v v' $)
 とすることで $w$ には $"XY"_(4.0 space 6.0)$ が入る．
 
-#tk
+このように，値コンストラクタに引数をとる新しい型を作ることができる．その構文は次のようなものである．
 
 $ haskell.kwdata "型名" eq.def "値コンストラクタ"_"引数の型" $
 
+#pb
 
-// データ型の話．
+もう一つの方向性は#keyword[直和]を使う方法である．直和とは，複数の型を組み合わせた型である．例えば，我々の $haskell.Bool$ 型は値コンストラクタ $haskell.True$ と $haskell.False$ からなる直和である．実際 $haskell.Bool$ 型は次のように定義されている．
 
-型の定義．
+$ haskell.kwdata haskell.Bool eq.def haskell.True xor haskell.False $
 
-$ haskell.kwdata haskell.Cool eq.def "Yes" xor "No" xor "Dunno" haskell.kwderiving (haskell.Eq) $
+そこで $haskell.Bool$ 型とよく似た我々独自の型として $haskell.Cool$ 型を作ってみよう．この $haskell.Cool$ 型は $haskell.True, haskell.False$ の代わりに $haskell.Yes, haskell.No, haskell.Dunno$ という3種類の値コンストラクタからなる直和である．また型クラス  $haskell.Show$ のインスタンスであることを明示して関数 $haskell.showfunc$ のデフォルト実装を自動で定義してくれるようにすると同時に，型クラス $haskell.Eq$ のインスタンスであることを明示して値コンストラクタを比較する比較演算子 $(equiv)$ も持つことを保証しよう．ただし比較演算子 $(equiv)$ のデフォルト実装は使えないため，自前で定義することにする．
+
+型の定義は次のようになる．#footnote[Haskellでは ```haskell data Cool = Yes | No | Dunno deriving (Eq, Show)``` と書く．]
+
+$ haskell.kwdata haskell.Cool eq.def haskell.Yes xor haskell.No xor haskell.Dunno haskell.kwderiving (haskell.Eq, haskell.Show) $
+
+比較演算子 $(equiv)$ の定義はキーワード $haskell.kwinstance$ を使って次のように書く．
 
 $ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
-  &"Yes" equiv "Yes" = haskell.True \
-  &"Yes" equiv "Dunno" = haskell.True \
-  &"No" equiv "No" = haskell.True \
-  &"No" equiv "Dunno" = haskell.True \
-  &"Dunno" equiv "Yes" = haskell.True \
-  &"Dunno" equiv "No" = haskell.True \
-  &"Dunno" equiv "Dunno" = haskell.True $
+  &haskell.Yes equiv haskell.Yes = haskell.True \
+  &haskell.Yes equiv haskell.Dunno = haskell.True \
+  &haskell.No equiv haskell.No = haskell.True \
+  &haskell.No equiv haskell.Dunno = haskell.True \
+  &haskell.Dunno equiv haskell.Yes = haskell.True \
+  &haskell.Dunno equiv haskell.No = haskell.True \
+  &haskell.Dunno equiv haskell.Dunno = haskell.True $
 
+否定の比較演算子 $(equiv.not)$ は型クラス $haskell.Eq$ のデフォルト実装が用いられるため，自前で定義する必要はない．
+
+/*
 $ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
 
 $ x = "Rect"_(10.0 space 20.0) $
@@ -1808,6 +1818,8 @@ $ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
   )
 )
 <types-and-kinds>
+
+*/
 
 // プログラミング言語によっては，型に対する演算を行う機能がある．これを#keyword[型レベルプログラミング]と呼ぶ．Haskellでは型コンストラクタを使ってコンテナ型から新しい型を作ることができるほか，コンテナ型を作ることも出来る．
 

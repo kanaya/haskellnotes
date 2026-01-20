@@ -156,9 +156,12 @@
 
 // Value constructor.
 #let constructor(x) = math.serif(x)
+#let Dunno = constructor("Dunno")
 #let False = constructor("False")
+#let No = constructor("No")
 #let Nothing = constructor("Nothing")
 #let True = constructor("True")
+#let Yes = constructor("Yes")
 
 // Value constructor with one argument.
 #let constructor1(x, y) = {
