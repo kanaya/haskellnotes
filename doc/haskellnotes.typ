@@ -2050,6 +2050,8 @@ $ penta.filled_x &= haskell.newSTRef(x) \
 
 === 余談：IOサバイバルキット3
 
+単語を数える．
+
 === この章のまとめ
 
 == IO
