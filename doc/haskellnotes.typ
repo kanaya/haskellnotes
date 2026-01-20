@@ -1696,15 +1696,28 @@ $  u_* &= phi x \
   v_* &= psi y \
   w_* &= omega convolve.o u_* ast.square v_* $
 
-コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．
+コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．#footnote[Haskellでは ```haskell w = omega <$> (phi x) <*> (psi y)``` と書く．これは ```haskell w = do { u <- phi x; v <- psi y; return (omega u v) }``` と書くのと同じである．]
+
+// https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
 === 余談：型をつくる
 
 // https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
 
-型シノニム．
+我々はすでにある型に別名を与える方法を見てきた．型シノニムである．例えば $haskell.String$ 型は $haskell.Char$ 型のリストとして定義されていて，次のように書かれている．
 
 $ haskell.kwtype haskell.String eq.def [haskell.Char] $
+
+キーワード $haskell.kwtype$ は型シノニム（#underline[type] synonym）を定義するキーワードである．型シノニムは既存の型に別名を与えるだけなので，真に新しい型を作り出しているわけではない．
+
+新しい型を作り出すにはキーワード $haskell.kwdata$ を使う．我々が今まで型（type）と呼んできたものは，実はデータ型（#underline[data] type）と呼ぶのが正式である．そこで，新しい方を作り出すキーワードも $haskell.kwdata$ なのである．
+
+$ haskell.kwdata "型名" eq.def "値コンストラクタ" $
+
+$ haskell.kwdata "型名" eq.def "値コンストラクタ"_"引数の型" $
+
+
+// データ型の話．
 
 型の定義．
 
@@ -1789,8 +1802,6 @@ $  u_* &= phi x \
 $ w_* = omega convolve.o (psi y) ast.square (phi x) $
 
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であれば式全体の値が $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておき，最後に関数 $omega$ に投げるという#keyword[計算構造]を具現化したものである．
-
-アプリカティブ関手には交換則があるため $omega convolve.o u_* ast.square v_* = omega convolve.o v_* ast.square u_*$ が成り立つ．これは $u_*$ と $v_*$ の計算の順序を入れ替えても計算結果が変わらないことを意味する．
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，関数 $f, g, h colon.double haskell.a -> haskell.a$ があるとき，式
 #par-equation($ z = (h compose g compose f) x $)
@@ -1948,6 +1959,9 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
 === IOモナド
 
 === 制御構造
+
+
+// https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
 === 余談：do記法
 
