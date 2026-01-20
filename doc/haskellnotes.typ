@@ -2034,12 +2034,13 @@ main = print $ sum'' [1..100]
 ```
 
 $ sum' x_"s" = note.eighth.alt haskell.apply
-  (backslash a |-> ((backslash i |-> a eq.star (+i)) *_"M" x_"s") >> star.filled a) 
+  (backslash a |-> ((backslash i |-> (+i) star.op a) *_"M" x_"s") >> haskell.readSTRefOp a) 
   haskell.bind penta.filled_0 $
 
 $ penta.filled_x &= haskell.newSTRef(x) \
-  star.filled x &= haskell.readSTRef x \
-  (eq.star) x f &= haskell.modifySTRef x f \
+  haskell.readSTRefOp x &= haskell.readSTRef x \
+  f star.filled x &= haskell.modifySTRef x f \
+  x eq.star y &= haskell.writeSTRef x y \
   note.eighth.alt &= haskell.runST $
 
 === 余談：IOサバイバルキット3
@@ -2274,10 +2275,10 @@ $ id compose f = id compose f = f \
 === クライスリスター
 
 
-関数 $psi$ に作用する#keyword[クライスリスター]演算子 $star.filled$ を $phi^star.filled = (phi haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
-$ phi^star.filled chevron.l x chevron.r &= phi x \
-  chevron.l lozenge.stroked.medium chevron.r^star.filled x_* &= x_* \
-  psi^star.filled (phi^star.filled x_*) &= (psi^star.filled (phi lozenge.stroked.medium))^star.filled x_* $
+関数 $phi$ に作用する#keyword[クライスリスター]演算子 $star.op$ を $phi^star.op = (phi haskell.bind lozenge.stroked.medium)$ と定義する．クライスリスターを用いると，モナド則は次のように書き直せる．
+$ phi^star.op chevron.l x chevron.r &= phi x \
+  chevron.l lozenge.stroked.medium chevron.r^star.op x_* &= x_* \
+  psi^star.op (phi^star.op x_*) &= (psi^star.op (phi lozenge.stroked.medium))^star.op x_* $
 
 
 == 型と種
