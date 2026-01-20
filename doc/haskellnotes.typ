@@ -1714,6 +1714,8 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 $ haskell.kwdata "型名" eq.def "値コンストラクタ" $
 
+$ haskell.kwdata haskell.typename("Zero") eq.def "Zero" $
+
 $ haskell.kwdata "型名" eq.def "値コンストラクタ"_"引数の型" $
 
 
