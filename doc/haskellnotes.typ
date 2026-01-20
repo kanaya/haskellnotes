@@ -1996,6 +1996,28 @@ $ psi haskell.bind phi haskell.bind x_*
 
 === 破壊的代入を隠すモナド
 
+```haskell 
+import Control.Monad
+import Control.Monad.ST
+import Data.STRef
+
+sum' xs = runST $ do
+    v <- newSTRef 0
+    forM_ xs (\i -> modifySTRef v (+ i))
+    readSTRef v
+    
+sum'' xs = runST $ (newSTRef 0) >>= (\v -> mapM_ (\i -> modifySTRef v (+ i)) xs >> readSTRef v)
+
+sum''' xs = runST $ (\v -> (\i -> modifySTRef v (+i)) `mapM_` xs >> readSTRef v) =<< (newSTRef 0)
+
+main = print $ sum''' [1..100]
+```
+
+$ sum' x_"s" = haskell.runST \
+  &haskell.apply
+  (backslash v |-> (backslash i |-> haskell.modifySTRef v space (+i)) *_"M" x_"s" gt.double haskell.readSTRef v) \
+  &haskell.bind (haskell.newSTRef 0) $
+
 === 余談：IOサバイバルキット3
 
 === この章のまとめ

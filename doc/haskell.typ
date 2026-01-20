@@ -127,6 +127,11 @@
 #let print = action("print")
 #let printEach = action("printEach")
 
+#let runST = action("runST")
+#let modifySTRef = action("modifySTRef")
+#let newSTRef = action("newSTRef")
+#let readSTRef = action("readSTRef")
+
 // Unary operator
 
 #let flat = math.class("unary", math.flat)
