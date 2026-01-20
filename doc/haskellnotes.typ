@@ -1774,6 +1774,10 @@ $ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
 
 否定の比較演算子 $(equiv.not)$ は型クラス $haskell.Eq$ のデフォルト実装が用いられるため，自前で定義する必要はない．
 
+#pb
+
+実際には，引数付きの値コンストラクタを使う方法と，直和を使う方法の2種類は組み合わせて用いられる．
+
 /*
 $ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
 
