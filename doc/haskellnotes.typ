@@ -2000,9 +2000,12 @@ $ psi haskell.bind phi haskell.bind x_*
 
 まず破壊的代入を許すような変数を生成する値コンストラクタを導入しよう．このコンストラクタを我々は $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
 
-破壊的代入を許すような変数は，バインド演算子でしかアクセスできない．
+破壊的代入を許すような変数は，バインド演算子 $(haskell.bind)$ でしかアクセスできない．
 
-$ m &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
+$ f &colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a \
+  f x &= x + 1 $
+
+$  m &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
   m &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
 $x$ を $y$ で書き換える．
