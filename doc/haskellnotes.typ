@@ -1994,7 +1994,7 @@ $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 $ psi haskell.bind phi haskell.bind x_*
   = psi haskell.bind (phi haskell.bind x_*) $
 
-=== モナドで出来ること
+=== 破壊的代入を隠すモナド
 
 === 余談：IOサバイバルキット3
 
