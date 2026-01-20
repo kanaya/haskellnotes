@@ -1776,7 +1776,7 @@ $ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
 
 #pb
 
-実際には，引数付きの値コンストラクタを使う方法と，直和を使う方法の2種類は組み合わせて用いられる．
+引数付きの値コンストラクタを使う方法と，直和を使う方法の2種類は組み合わせて用いることができる．
 
 /*
 $ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
@@ -1861,16 +1861,16 @@ $ w_* = omega convolve.o (psi y) ast.square (phi x) $
 があるとする．変数 $x$ に関数 $phi', psi', omega'$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi' x \
-  v_* &= haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+  v_* &= haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
   w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
 
 ひとつの式にまとめるとこうなる．
 
 $ w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
   &haskell.kwwhere u_* eq.delta phi' x $
 
-やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書ける．
+やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書くところだ．
 
 #sourcecode[```python
 # Python
@@ -1882,26 +1882,31 @@ except Exception as e:
   print(f"Something went wrong: {e}")
 ```]
 
-このような簡潔さを手に入れるために，我々は新しい演算子を導入する．
+このような簡潔さを手に入れるために，我々はバインド演算子 $(haskell.bind)$ を導入するのである．
 
 関数 $phi$ ただし
-#par-equation($ phi colon.double haskell.a -> haskell.MaybeA $)
-があるとする．変数 $x_? colon.double haskell.MaybeA$ が与えられたとき，Maybeの#keyword[バインド演算子] $(haskell.bind_?)$ は次のように作用する．
+#par-equation($ phi colon.double haskell.a -> haskell.ma $)
+があるとする．変数 $x_* colon.double haskell.ma$ が与えられたとき，バインド演算子 $(haskell.bind)$ は次のように作用する．
 
-$ phi haskell.bind_? x_? &|_(x_? = haskell.Just(x)) = phi x \
-  &|_haskell.otherwise = haskell.Nothing $<bind-op-of-maybe>
+$ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
+  &|_haskell.otherwise = nothing.rev $<bind-op>
 
-Maybeのバインド演算子 $(haskell.bind_?)$ を使うと，もう一つの関数 $psi$ ただし
-#par-equation($ psi colon.double haskell.a -> haskell.MaybeA $)
+もう一つの関数 $psi$ ただし
+#par-equation($ psi colon.double haskell.a -> haskell.ma $)
 があるとき，次のように関数を合成することができる．
 
-$ z_? = psi haskell.bind_? (phi haskell.bind_? x_?) $<bind-composition>
+$ z_* = psi haskell.bind (phi haskell.bind x_*) $<bind-composition>
 
 バインド演算子 $(haskell.bind)$ は右結合するため @bind-composition は
-#par-equation($ z_? = psi haskell.bind_? phi haskell.bind_? x_? $)
-と書ける．この式は「変数 $x_?$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell zm = psi =<< phi =<< xm ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell zm = xm >>= phi >>= psi``` という書き方を好む．]
+#par-equation($ z_* = psi haskell.bind phi haskell.bind x_* $)
+と書ける．この式は「変数 $x_*$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell z = psi =<< phi =<< x ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell z = x >>= phi >>= psi``` という書き方を好む．]
 
-バインド演算子をMaybeに縛り付けておく理由はない．@bind-op-of-maybe をより一般化すると次のようになる．
+このようなバインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．すべてのアプリカティブ関手はモナドである．そのためリストバージョンのバインド演算子やMaybeバージョンのバインド演算子も定義されている．Maibeバージョンのバインド演算子 $(haskell.bind_?)$ は次のようになる．
+
+$ phi haskell.bind_? x_? &|_(x_? = haskell.Just(x)) = haskell.Just(phi x) \
+  &|_haskell.otherwise = haskell.Nothing $
+
+#tk
 
 $ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
   &|_haskell.otherwise = nothing.rev $<bind-op>
