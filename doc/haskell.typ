@@ -113,6 +113,7 @@
 #let Num = typeclass("Num")
 #let Ord = typeclass("Ord")
 #let Real = typeclass("Real")
+#let Show = typeclass("Show")
 
 // Action.
 #let action(x) = math.bold(x)

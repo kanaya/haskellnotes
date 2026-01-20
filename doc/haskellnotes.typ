@@ -1710,11 +1710,25 @@ $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
 キーワード $haskell.kwtype$ は型シノニム（#underline[type] synonym）を定義するキーワードである．型シノニムは既存の型に別名を与えるだけなので，真に新しい型を作り出しているわけではない．
 
-新しい型を作り出すにはキーワード $haskell.kwdata$ を使う．我々が今まで型（type）と呼んできたものは，実はデータ型（#underline[data] type）と呼ぶのが正式である．そこで，新しい方を作り出すキーワードも $haskell.kwdata$ なのである．
+新しい型を作り出すにはキーワード $haskell.kwdata$ を使う．我々が今まで型（type）と呼んできたものは，実はデータ型（#underline[data] type）と呼ぶのが正式である．そこで，新しい型を作り出すキーワードも $haskell.kwdata$ なのである．型シノニムの定義には新しい型名（例えば $haskell.String$）と，元になる型名（例えば $[haskell.Char]$）をイコール $(eq.def)$ の両辺に書いた．新しい型を作り出す場合は，次式のようにイコールの左辺に新しい型名を書き，右辺に新しい値コンストラクタの名前を書く．
 
 $ haskell.kwdata "型名" eq.def "値コンストラクタ" $
 
-$ haskell.kwdata haskell.typename("Zero") eq.def "Zero" $
+簡単な具体例は次のようなものである．
+#par-equation($ haskell.kwdata haskell.typename("Zero") eq.def "Zero" $)
+ここで左辺の $haskell.typename("Zero")$ は新しい型名であり，右辺の $"Zero"$ は新しい値コンストラクタの名前である．この $haskell.typename("Zero")$ 型は唯一の値 $"Zero"$ しか持てないので，それほど面白みのある型ではない．
+
+より興味深い型を作るには2種類の方向性がある．ひとつは値コンストラクタに引数を与える方法である．例えば2個の浮動小数点数を組み合わせた型 $haskell.typename("XY")$ は次のように定義される．#footnote[Haskellでは ```haskell type XY = XY Double Double``` と書く．]
+
+$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) $
+
+$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) haskell.kwderiving (haskell.Show) $
+
+
+$ v = "XY"_(1.0 space 2.0) $
+
+
+#tk
 
 $ haskell.kwdata "型名" eq.def "値コンストラクタ"_"引数の型" $
 
