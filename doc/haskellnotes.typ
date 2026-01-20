@@ -1722,7 +1722,7 @@ $ haskell.kwdata "型名" eq.def "値コンストラクタ" $
 
 $ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) $
 
-$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) haskell.kwderiving (haskell.Show) $
+$ haskell.kwdata haskell.typename("XY") eq.def "XY"_(haskell.Double haskell.Double) haskell.kwderiving haskell.Show $
 
 
 $ v = "XY"_(1.0 space 2.0) $
