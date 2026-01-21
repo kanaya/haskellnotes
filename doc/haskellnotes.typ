@@ -1998,7 +1998,7 @@ $ psi haskell.bind phi haskell.bind x_*
 
 モナドは破壊的代入をプログラムの他の部分から隠すことができる．その代表的なものがState Transformerモナド，略してSTモナドである．
 
-まず破壊的代入を許すような変数を生成する値コンストラクタを導入しよう．このコンストラクタを我々は $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
+まず破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
 
 破壊的代入を許すような変数は，バインド演算子 $(haskell.bind)$ でしかアクセスできない．
 
