@@ -2009,28 +2009,28 @@ $ f &colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> hask
 
 $ (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-なおこの時点では $penta.filled_1$ で作られた変数は破壊されていない．ただ元の値 $(1)$ が関数 $f$ の引数として渡されただけである．なお式全体の値を $m$ で表すことができ，次のように書ける．
+なおこの時点では $penta.filled_1$ で作られた変数は破壊されていない．ただ元の値 $(1)$ が関数 $f$ の引数として渡されただけである．なお式全体の値を $mu$ で表すことができ，次のように書ける．
 
-$  m &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
-  m &= (backslash x |-> f x) haskell.bind penta.filled_1 $
+$  mu &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
+  mu &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-ここに $m$ はSTモナド型の変数であるが，特別に#keyword[アクション]と呼ぶ．
+ここに $mu$ はSTモナド型の変数であるが，特別に#keyword[アクション]と呼ぶ．
 
 破壊的代入が許されている変数には，いくつかの特別な演算子が用意されている．次の式で使われる演算子 $underline(x eq.star y)$ は $x$ を $y$ で書き換える．
 
-$ m = (backslash x |-> underline(x eq.star y) haskell.kwwhere y eq.delta 2) haskell.bind penta.filled_1 $
+$ mu = (backslash x |-> underline(x eq.star y) haskell.kwwhere y eq.delta 2) haskell.bind penta.filled_1 $
 
 次の式で使われる演算子 $underline(f star.filled x)$ は関数 $f$ を $x$ に適用する．
 
-$ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+)) haskell.bind penta.filled_1 $
+$ mu = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+)) haskell.bind penta.filled_1 $
 
 次の式で使われる演算子 $star.stroked x$ は $x$ の値を取り出す．
 
-$ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+) >> star.stroked x) haskell.bind penta.filled_1 $
+$ mu = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+) >> star.stroked x) haskell.bind penta.filled_1 $
 
 そして演算子 $note.eighth.alt$ は破壊的代入を行う関数から，結果だけを取り出す．
 
-$ z = note.eighth.alt m $
+$ z = note.eighth.alt mu $
 
 // https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
 
