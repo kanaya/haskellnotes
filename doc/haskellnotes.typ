@@ -1996,7 +1996,9 @@ $ psi haskell.bind phi haskell.bind x_*
 
 === 破壊的代入を隠すモナド
 
-モナドは破壊的代入をプログラムの他の部分から隠すことができる．その代表的なものが状態トランスフォーマー（State Transformer）モナド，略してSTモナドである．
+Haskellは一般的に破壊的代入を許さないが，ある条件では許す．それは関数の参照透過性を保つことである．関数の参照透過性とは，関数に同じ引数を与えた場合，同じ値がいつも返ることをいう．つまり，関数は内部に一時変数を持ってもよく，その一時変数に破壊的代入を行っても，関数の参照透過性を破らない限りは許されるということである．
+
+このような機構をサポートする仕組みが状態トランスフォーマー（State Transformer）モナド，略して#keyword[STモナド]である．
 
 まず破壊的代入を許すような変数を生成する必要がある．そこで，破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
 
@@ -2005,7 +2007,12 @@ $ psi haskell.bind phi haskell.bind x_*
 $ f &colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a \
   f x &= x + 1 $
 
-この関数 $f$ に破壊的代入が可能な変数を引き渡すには，次のようなラムダ式を使う．#footnote[Haskellでは ```haskell (\x -> f x) =<< newSTRef 1``` と書く．]
+この関数 $f$ に破壊的代入が可能な変数を引き渡すにはバインド演算子 $(haskell.bind)$ を使う．
+
+$ f haskell.bind penta.filled_1 $
+
+
+次のようなラムダ式を使う．#footnote[Haskellでは ```haskell (\x -> f x) =<< newSTRef 1``` と書く．]
 
 $ (backslash x |-> f x) haskell.bind penta.filled_1 $
 
@@ -2014,7 +2021,7 @@ $ (backslash x |-> f x) haskell.bind penta.filled_1 $
 $  mu &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
   mu &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-ここに $mu$ はSTモナド型の変数であるが，特別に#keyword[アクション]と呼ぶ．
+ここに $mu$ はSTモナド型の変数であるが，特別に#keyword[STアクション]と呼ぶ．
 
 破壊的代入が許されている変数には，いくつかの特別な演算子が用意されている．次の式で使われる演算子 $underline(x eq.star y)$ は $x$ を $y$ で書き換える．#footnote[Haskellでは ```haskell mu = (\x -> writeSTRef x y where y = 2) =<< newSTRef 1``` と書く．]
 
