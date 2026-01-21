@@ -1998,29 +1998,37 @@ $ psi haskell.bind phi haskell.bind x_*
 
 モナドは破壊的代入をプログラムの他の部分から隠すことができる．その代表的なものが状態トランスフォーマー（State Transformer）モナド，略してSTモナドである．
 
-まず破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
+まず破壊的代入を許すような変数を生成する必要がある．そこで，破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
 
-破壊的代入を許すような変数は，バインド演算子 $(haskell.bind)$ でしかアクセスできない．
+破壊的代入を許すような変数は，バインド演算子 $(haskell.bind)$ で合成された関数からしかアクセスできない．いま関数 $f$ が次のように定義されているとする．
 
 $ f &colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a \
   f x &= x + 1 $
 
+この関数 $f$ に破壊的代入が可能な変数を引き渡すには，次のようなラムダ式を使う．
+
+$ (backslash x |-> f x) haskell.bind penta.filled_1 $
+
+なおこの時点では $penta.filled_1$ で作られた変数は破壊されていない．ただ元の値 $(1)$ が関数 $f$ の引数として渡されただけである．なお式全体の値を $m$ で表すことができ，次のように書ける．
+
 $  m &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
   m &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-$x$ を $y$ で書き換える．
+ここに $m$ はSTモナド型の変数であるが，特別に#keyword[アクション]と呼ぶ．
+
+破壊的代入が許されている変数には，いくつかの特別な演算子が用意されている．次の式で使われる演算子 $underline(x eq.star y)$ は $x$ を $y$ で書き換える．
 
 $ m = (backslash x |-> underline(x eq.star y) haskell.kwwhere y eq.delta 2) haskell.bind penta.filled_1 $
 
-$x$ を $f x$ に書き換える．
+次の式で使われる演算子 $underline(f star.filled x)$ は関数 $f$ を $x$ に適用する．
 
 $ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+)) haskell.bind penta.filled_1 $
 
-$x$ の値を取り出す．
+次の式で使われる演算子 $star.stroked x$ は $x$ の値を取り出す．
 
 $ m = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+) >> star.stroked x) haskell.bind penta.filled_1 $
 
-$note.eighth.alt m$ で破壊的代入を行う関数から，結果だけを取り出す．
+そして演算子 $note.eighth.alt$ は破壊的代入を行う関数から，結果だけを取り出す．
 
 $ z = note.eighth.alt m $
 
