@@ -1998,11 +1998,27 @@ $ psi haskell.bind phi haskell.bind x_*
 
 Haskellは一般的に破壊的代入を許さないが，ある条件では許す．一例は関数の参照透過性を保つ場合である．関数の参照透過性とは，関数に同じ引数を与えた場合，同じ値がいつも返ることをいう．つまり，関数は内部に一時変数を持ってもよく，その一時変数に破壊的代入を行っても，関数の参照透過性を破らない限りは許されるということである．C言語で言えば関数内で ```c for``` ループを持つ場合，Pythonで言えば関数内でイテレータを使ってループを回す場合がそれにあたる．
 
-このような機構をサポートする仕組みが状態トランスフォーマー（State Transformer）モナド，略して#keyword[STモナド]である．
+このように破壊的代入される変数を関数内に隠す機構をサポートする仕組みが状態トランスフォーマー（State Transformer）モナド，略して#keyword[STモナド]である．
+
+まず破壊的代入を許すような変数を生成する必要がある．そこで，破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
+
+次に，破壊的代入を許す変数から値を取り出す演算子を導入しよう．我々はこの演算子を $star.stroked$ で表す．#footnote[Haskellでは ```haskell readSTRef``` と書く．]
+
+値を取り出す演算子 $(star.stroked)$ は「抜き身」では使えず，必ずバインド演算子 $(haskell.bind)$ を通して次のように使う．
+
+$ mu = star.stroked haskell.bind penta.filled_x $
+
+ここに結果 $mu$ はSTモナド型の変数で，破壊的代入を許す変数の値ではなく「初期値 $x$ を持つ破壊的代入を許す無名の変数から値を取り出す」行動を意味する．そのため $mu$ のことを#keyword[STアクション]と呼ぶ．
+
+STアクション $mu$ を評価する演算子を導入しよう．我々はこの演算子を $note.eighth.alt$ で表す．#footnote[Haskellでは ```haskell runST``` と書く．]
+
+次のプログラムはSTモナドを使って破壊的代入を許す変数を生成し，その値を取り出す例である．
+
+$ x &= 1 \
+  mu &= star.stroked haskell.bind penta.filled_x \
+  haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
 
 #tk
-
-$ mu = star.stroked haskell.bind penta.filled_1 $
 
 $ mu = (backslash x |-> star.stroked x)haskell.bind penta.filled_1 $
 
@@ -2029,7 +2045,6 @@ main = print $ runST m'
 
 #tk
 
-まず破壊的代入を許すような変数を生成する必要がある．そこで，破壊的代入を許すような変数を生成する演算子を導入しよう．この変数の初期値を $x$ とするとき，我々はこの演算子を $penta.filled_x$ で表す．#footnote[Haskellでは ```haskell newSTRef x``` と書く．]
 
 破壊的代入を許すような変数は，バインド演算子 $(haskell.bind)$ で合成された関数からしかアクセスできない．いま関数 $f$ が次のように定義されているとする．
 
