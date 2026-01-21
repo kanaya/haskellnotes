@@ -2020,10 +2020,14 @@ $ x &= 1 \
 
 #tk
 
-$ mu = (backslash x |-> star.stroked x)haskell.bind penta.filled_1 $
+$ mu = (backslash y |-> star.stroked y) haskell.bind penta.filled_x $
+
+$ mu = (backslash y |-> underline(y eq.star x') >> star.stroked y) haskell.bind penta.filled_x $
+
+// mu = (\v -> writeSTRef v 2 >> readSTRef v) =<< newSTRef x
 
 
-$ mu = (backslash x |-> underline(f star.filled x) >> star.stroked x) haskell.bind penta.filled_1 $
+$ mu = (backslash y |-> underline(f star.filled y) >> star.stroked y) haskell.bind penta.filled_x $
 
 ```haskell
 import Control.Monad
