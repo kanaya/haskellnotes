@@ -2018,17 +2018,20 @@ $ x &= 1 \
   mu &= star.stroked haskell.bind penta.filled_x \
   haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
 
-もちろんこれはつまらないプログラムである．いま $star.stroked$ が $(backslash y |-> star.stroked y)$ であるから，@new-and-read は次のように書き換えられる．
+もちろんこれはつまらないプログラムである．いま $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
 
-$ mu = (backslash y |-> star.stroked y) haskell.bind penta.filled_x $
+$ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $
 
-ここで $star.stroked y$ の直前に変数 $y$ に対する破壊的代入を行うことが出来る．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\y -> writeSTRef y x' >> readSTRef v) =<< newSTRef x``` と書く．]
+ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うことが出来る．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
 
-$ mu = (backslash y |-> underline(y eq.star x') >> star.stroked y) haskell.bind penta.filled_x $
+$ mu = (backslash v |-> underline(v eq.star x') >> star.stroked v) haskell.bind penta.filled_x $
 
-ふたつめの方法は次のようなものである．
+演算子 $>>$ は「何か（第1引数）を行って，その結果を捨てて，次の何か（第2引数）の値を返す」という意味である．
 
-$ mu = (backslash y |-> underline(f star.filled y) >> star.stroked y) haskell.bind penta.filled_x $
+
+ふたつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef x``` と書く．]
+
+$ mu = (backslash v |-> underline(f star.filled v) >> star.stroked v) haskell.bind penta.filled_x $
 
 #tk
 
