@@ -2005,30 +2005,30 @@ $ psi haskell.bind phi haskell.bind x_*
 $ f &colon.double haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a \
   f x &= x + 1 $
 
-この関数 $f$ に破壊的代入が可能な変数を引き渡すには，次のようなラムダ式を使う．
+この関数 $f$ に破壊的代入が可能な変数を引き渡すには，次のようなラムダ式を使う．#footnote[Haskellでは ```haskell (\x -> f x) =<< newSTRef 1``` と書く．]
 
 $ (backslash x |-> f x) haskell.bind penta.filled_1 $
 
-なおこの時点では $penta.filled_1$ で作られた変数は破壊されていない．ただ元の値 $(1)$ が関数 $f$ の引数として渡されただけである．なお式全体の値を $mu$ で表すことができ，次のように書ける．
+なおこの時点では $penta.filled_1$ で作られた変数は破壊されていない．ただ元の値 $(1)$ が関数 $f$ の引数として渡されただけである．なお式全体の値を $mu$ で表すことができ，次のように書ける．#footnote[Haskellでは2行目を ```haskell mu = (\x -> f x) =<< newSTRef 1``` と書く．1行目は省略できるが，書くとすると ```haskell mu :: forall s . ST s a``` となる．]
 
 $  mu &colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) \
   mu &= (backslash x |-> f x) haskell.bind penta.filled_1 $
 
 ここに $mu$ はSTモナド型の変数であるが，特別に#keyword[アクション]と呼ぶ．
 
-破壊的代入が許されている変数には，いくつかの特別な演算子が用意されている．次の式で使われる演算子 $underline(x eq.star y)$ は $x$ を $y$ で書き換える．
+破壊的代入が許されている変数には，いくつかの特別な演算子が用意されている．次の式で使われる演算子 $underline(x eq.star y)$ は $x$ を $y$ で書き換える．#footnote[Haskellでは ```haskell mu = (\x -> writeSTRef x y where y = 2) =<< newSTRef 1``` と書く．]
 
 $ mu = (backslash x |-> underline(x eq.star y) haskell.kwwhere y eq.delta 2) haskell.bind penta.filled_1 $
 
-次の式で使われる演算子 $underline(f star.filled x)$ は関数 $f$ を $x$ に適用する．
+次の式で使われる演算子 $underline(f star.filled x)$ は関数 $f$ を $x$ に適用する．#footnote[Haskellでは ```haskell mu = (\x -> modifySTRef x f where f = (2+)) =<< newSTRef 1``` と書く．]
 
 $ mu = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+)) haskell.bind penta.filled_1 $
 
-次の式で使われる演算子 $star.stroked x$ は $x$ の値を取り出す．
+次の式で使われる演算子 $star.stroked x$ は $x$ の値を取り出す．#footnote[Haskellでは ```haskell mu = (\x -> modifySTRef x f where f = (2+) >> readSTRef x) =<< newSTRef 1``` と書く．]
 
 $ mu = (backslash x |-> underline(f star.filled x) haskell.kwwhere f eq.delta (2+) >> star.stroked x) haskell.bind penta.filled_1 $
 
-そして演算子 $note.eighth.alt$ は破壊的代入を行う関数から，結果だけを取り出す．
+そして演算子 $note.eighth.alt$ は破壊的代入を行う関数から，結果だけを取り出す．#footnote[Haskellでは ```haskell z = runST mu``` と書く．]
 
 $ z = note.eighth.alt mu $
 
