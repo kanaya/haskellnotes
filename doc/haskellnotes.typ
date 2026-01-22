@@ -2012,17 +2012,17 @@ $ mu = star.stroked haskell.bind penta.filled_x $<new-and-read>
 
 STアクション $mu$ を評価する演算子を導入しよう．我々はこの演算子を $note.eighth.alt$ で表す．#footnote[Haskellでは ```haskell runST``` と書く．]
 
-次のプログラムはSTモナドを使って破壊的代入を許す変数を生成し，その値を取り出す例である．
+次のプログラムは演算子 $penta.filled$ を使って破壊的代入を許す変数を生成し，その値を取り出す例である．
 
 $ x &= 1 \
   mu &= star.stroked haskell.bind penta.filled_x \
   haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
 
-もちろんこれはつまらないプログラムである．いま $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
+もちろんこれはつまらないプログラムである．ここで $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
 
 $ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $
 
-ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うことが出来る．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
+この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(v eq.star x') >> star.stroked v) haskell.bind penta.filled_x $
 
