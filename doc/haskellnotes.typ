@@ -2014,18 +2014,19 @@ $ x &= 1 \
   mu &= star.stroked haskell.bind penta.filled_x \
   haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
 
-もちろんこれはつまらないプログラムである．ここで $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
+もちろんこれはつまらないプログラムである．ここで $star.stroked = backslash v |-> star.stroked v$ であるから，@new-and-read は次のように書き換えられる．
 #par-equation($ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $)
-この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなものである．ここでは $underline(v eq.star x')$ で破壊的代入が可能な変数を指し示す変数 $v$ に値 $x'$ を代入している．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
+この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．そこで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなもので，ここでは $underline(v eq.star x')$ で破壊的代入が可能な変数を指し示す変数 $v$ に値 $x'$ を代入している．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(v eq.star x') >> star.stroked v) haskell.bind penta.filled_x $
 
-演算子 $>>$ は「何か（第1引数）を行って，その結果を捨てて，次の何か（第2引数）の値を返す」という意味である．
-
+演算子 $>>$ は「何か（第1引数）を行って，その結果を捨てて，次の何か（第2引数）の値を返す」という意味である．式 $underline(v eq.star x')$ は「変数 $v$ が指し示す破壊的代入が可能な変数に値 $x'$ を破壊的に代入する」という意味で，我々は式の値には興味がないので捨ててしまうのである．
 
 ふたつめの方法は次のようなものである．ここでは $underline(f star.filled v)$ で破壊的代入が可能な変数を指し示す変数 $v$ に関数 $f$ を適用し，その結果で $v$ を書き換える．#footnote[Haskellでは ```haskell mu = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(f star.filled v) >> star.stroked v) haskell.bind penta.filled_x $
+
+演算子 $star.filled$ はC++における引数の「参照渡し」を実現するものと思えば良い．式 $underline(f star.filled v)$ は値 $f v$ を使って変数 $v$ が指し示す破壊的代入が可能な変数を書き換える．C++との違いは，破壊的代入がこの $v$ に関するラムダ式の中，あるいは同じことであるがSTモナド型の変数 $mu$ の中でしか行えないことである．変数 $v$ で示されている変数をSTモナド $mu$ の外側からアクセスすることはできない．
 
 #tk
 
