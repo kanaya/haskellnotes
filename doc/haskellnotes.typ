@@ -2015,9 +2015,7 @@ $ x &= 1 \
   haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
 
 もちろんこれはつまらないプログラムである．ここで $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
-
-$ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $
-
+#par-equation($ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $)
 この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(v eq.star x') >> star.stroked v) haskell.bind penta.filled_x $
