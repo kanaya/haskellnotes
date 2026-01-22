@@ -2016,14 +2016,14 @@ $ x &= 1 \
 
 もちろんこれはつまらないプログラムである．ここで $star.stroked$ は $(backslash v |-> star.stroked v)$ であるから，@new-and-read は次のように書き換えられる．
 #par-equation($ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $)
-この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
+この書き換えによって，演算子 $star.stroked$ の引数を陽に表すことが出来る．ここで $star.stroked v$ の直前に変数 $v$ に対する破壊的代入を行うこととする．その方法は2通りある．ひとつめの方法は次のようなものである．ここでは $underline(v eq.star x')$ で破壊的代入が可能な変数を指し示す変数 $v$ に値 $x'$ を代入している．#footnote[Haskellでは ```haskell mu = (\v -> writeSTRef v x' >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(v eq.star x') >> star.stroked v) haskell.bind penta.filled_x $
 
 演算子 $>>$ は「何か（第1引数）を行って，その結果を捨てて，次の何か（第2引数）の値を返す」という意味である．
 
 
-ふたつめの方法は次のようなものである．#footnote[Haskellでは ```haskell mu = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef x``` と書く．]
+ふたつめの方法は次のようなものである．ここでは $underline(f star.filled v)$ で破壊的代入が可能な変数を指し示す変数 $v$ に関数 $f$ を適用し，その結果で $v$ を書き換える．#footnote[Haskellでは ```haskell mu = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef x``` と書く．]
 
 $ mu = (backslash v |-> underline(f star.filled v) >> star.stroked v) haskell.bind penta.filled_x $
 
