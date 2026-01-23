@@ -2120,7 +2120,7 @@ $ penta.filled_x &= haskell.newSTRef(x) \
 
 単語を数える．
 
-$ s = haskell.constantstring("Hello, world. And may the force be with you. You and you.") $
+$ s = haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") $
 
 // $ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
 
@@ -2162,7 +2162,7 @@ import Data.List
 import Data.Function
 
 s :: String
-s = "Hello, world. And may the force be with you. You and you."
+s = "Hello, world! Hello, once again, to you and you and you."
 
 cleanUp :: String -> String
 cleanUp "" = ""
@@ -2201,6 +2201,16 @@ z :: String
 z = form y
 
 main = putStrLn z
+```]
+
+#sourcecode[```txt
+3 you
+2 and
+2 hello
+1 again
+1 once
+1 to
+1 world
 ```]
 
 === この章のまとめ
