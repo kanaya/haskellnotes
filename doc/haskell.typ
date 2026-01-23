@@ -92,6 +92,7 @@
 #let IO = typename("IO")
 #let List = typename("[]")
 #let Rect = typename("Rect")
+#let Ordering = typename("Ordering")
 #let ST = typename("ST")
 #let String = typename("String")
 #let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)

@@ -2124,7 +2124,8 @@ $ s = haskell.constantstring("Hello, world. And may the force be with you. You a
 
 // $ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
 
-$ haskell.cleanUp emptyset &= emptyset \
+$ haskell.cleanUp &colon.double haskell.String -> haskell.String \
+  haskell.cleanUp emptyset &= emptyset \
   haskell.cleanUp (x : x_"s") &= (haskell.kwif haskell.isAlpha x haskell.kwthen haskell.toLower x haskell.kwelse haskell.constantchar(" ")) : haskell.cleanUp x_"s" $
 
 $ t = haskell.cleanUp s $
@@ -2135,16 +2136,19 @@ $ v = haskell.sort u $
 
 $ w = haskell.group v $
 
-$ haskell.countUp emptyset &= emptyset \
+$ haskell.countUp &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
+  haskell.countUp emptyset &= emptyset \
   haskell.countUp (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.countUp x_"ss" $
 
 $ x = haskell.countUp w $
 
-$ haskell.compWith paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked = haskell.compare b a $
+$ haskell.compWith &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compWith paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $
 
 $ y = haskell.sortBy haskell.compWith x $
 
-$ haskell.form emptyset &= haskell.constantstring("") \
+$ haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
+  haskell.form emptyset &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\n") smash haskell.form x_"s" $
 
 $ z = haskell.form y $
