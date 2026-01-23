@@ -1,6 +1,7 @@
 // Typst
 #import "@preview/in-dexter:0.7.2": *
 #import "@preview/codelst:2.0.2": sourcecode
+#import "@preview/showybox:2.0.4": showybox
 
 #import "@preview/theorion:0.4.1": *
 #import cosmos.fancy: *
@@ -332,6 +333,8 @@ Hello, World!
 === この章のまとめ
 
 #tk この章のまとめ．
+
+#showybox(title: "コラム")[#tk ここにポエムを書く．]
 
 == カリー風な書き方
 <curry-style>
@@ -2031,7 +2034,7 @@ $ mu = (backslash v |-> underline(f star.filled v) >> star.stroked v) haskell.bi
 #tk
 
 
-
+#sourcecode[
 ```haskell
 import Control.Monad
 import Control.Monad.ST
@@ -2048,7 +2051,7 @@ m = do
 m' = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef 1
 
 main = print $ runST m'
-```
+```]
 
 #tk
 
