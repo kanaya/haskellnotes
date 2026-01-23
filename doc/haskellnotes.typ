@@ -2120,35 +2120,70 @@ $ penta.filled_x &= haskell.newSTRef(x) \
 
 単語を数える．
 
+$ s = haskell.constantstring("Hello, world. And may the force be with you. You and you.") $
+
+$ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
+
+$ v = haskell.words u $
+
+$ w = haskell.group (haskell.sort v) $
+
+$ haskell.countUp emptyset &= emptyset \
+  haskell.countUp (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.countUp x_"ss" $
+
+$ x = haskell.countUp w $
+
+$ haskell.compWith paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked = haskell.compare b a $
+
+$ y = haskell.sortBy haskell.compWith x $
+
+$ haskell.form emptyset &= haskell.constantstring("") \
+  haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\n") smash haskell.form x_"s" $
+
+$ z = haskell.form y $
+
+$ haskell.main = haskell.putStrLn z $
+
+#sourcecode[
 ```haskell 
 import Data.Char
 import Data.List
 import Data.Function
 
-xs :: String
-xs = "Hello, world. And may the force be with you. You and you."
+s :: String
+s = "Hello, world. And may the force be with you. You and you."
 
-ys :: String
-ys = [y | x <- xs, let y = if isAlpha x then toLower x else ' ']
+u :: String
+u = [t | c <- s, let t = if isAlpha c then toLower c else ' ']
 
-zs :: [String]
-zs = words ys
+v :: [String]
+v = words u
 
-us = group $ sort zs
+w :: [[String]]
+w = group $ sort v
 
 countUp :: [[String]] -> [(Int, String)]
 countUp [] = []
-countUp (xs:xss) = [(length xs, xs !! 0)] ++ countUp xss
+countUp (xs:xss) = [(length xs, haskell.head xs)] ++ countUp xss
 
-vs = countUp us
+x :: [(Int, String)]
+x = countUp w
 
 compWith :: (Int, String) -> (Int, String) -> Ordering
 compWith (a, _) (b, _) = compare b a
 
-ws = sortBy compWith vs
+y :: [(Int, String)]
+y = sortBy compWith x
 
-main = print $ ws
-```
+form :: [(Int, String)] -> String
+form [] = ""
+form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
+
+z :: String
+z = form y
+
+main = putStrLn z
+```]
 
 === この章のまとめ
 

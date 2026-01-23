@@ -29,6 +29,7 @@
 // Constant.
 
 #let constantstring(x) = { "\"" + math.mono(x) + "\"" }
+#let constantchar(x) = { "'" + math.mono(x) + "'" }
 
 // Parameter.
 #let parameter(x) = x
@@ -39,16 +40,23 @@
 // Function.
 #let longfunction(x) = math.serif(x)
 #let addXY = longfunction("addXY")
+#let compare = longfunction("compare")
+#let compWith = longfunction("compWith")
 #let const = longfunction("const")
+#let countUp = longfunction("countUp")
 #let curry = longfunction("curry")
 #let even = longfunction("even")
 #let fact = longfunction("fact")
 #let filter = longfunction("filter")
 #let first = longfunction("first")
 #let fib = longfunction("fib")
+#let form = longfunction("form")
+#let group = longfunction("group")
 #let head = longfunction("head")
+#let isAlpha = longfunction("isAlpha")
 #let fromIntegral = longfunction("fromIntegral")
 #let lines = longfunction("lines")
+#let length = longfunction("length")
 #let norm = longfunction("norm")
 #let null = longfunction("null")
 #let pred = longfunction("pred")
@@ -57,10 +65,13 @@
 #let readDouble = longfunction("readDouble")
 #let rest = longfunction("rest")
 #let showfunc = longfunction("show")
+#let sort = longfunction("sort")
+#let sortBy = longfunction("sortBy")
 #let sqrt = longfunction("sqrt")
 #let succ = longfunction("succ")
 #let take = longfunction("take")
 #let tail = longfunction("tail")
+#let toLower = longfunction("toLower")
 #let uncurry = longfunction("uncurry")
 #let words = longfunction("words")
 
@@ -127,6 +138,7 @@
 #let main = action("main")
 #let getContents = action("getContents")
 #let getLine = action("getLine")
+#let putStrLn = action("putStrLn")
 #let print = action("print")
 #let printEach = action("printEach")
 
