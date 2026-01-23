@@ -1738,10 +1738,8 @@ $ haskell.kwdata haskell.XY eq.def "XY"_(haskell.Double haskell.Double) haskell.
 とする．値 $v$ は $haskell.XY$ 型の値である．
 
 関数 $haskell.addXY$ を次のように定義してみよう．
-
-$ &haskell.addXY colon.double haskell.XY -> haskell.XY -> haskell.XY \
-  &haskell.addXY (haskell.XY x y) (haskell.XY x' y') = "XY"_(x + x' space y + y') $
-
+#par-equation($ &haskell.addXY colon.double haskell.XY -> haskell.XY -> haskell.XY \
+  &haskell.addXY (haskell.XY x y) (haskell.XY x' y') = "XY"_(x + x' space y + y') $)
 こうすると
 #par-equation($ v &= "XY"_(1.0 space 2.0) \
   v' &= "XY"_(3.0 space 4.0) \
