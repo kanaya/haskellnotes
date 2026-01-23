@@ -1744,13 +1744,9 @@ $ haskell.kwdata haskell.XY eq.def "XY"_(haskell.Double haskell.Double) haskell.
 #par-equation($ v &= "XY"_(1.0 space 2.0) \
   v' &= "XY"_(3.0 space 4.0) \
   w &= haskell.addXY v v' $)
-とすることで $w$ には $"XY"_(4.0 space 6.0)$ が入る．
-
-このように，値コンストラクタに引数をとる新しい型を作ることができる．その構文は次のようなものである．
+とすることで $w$ には $"XY"_(4.0 space 6.0)$ が入る．このように，値コンストラクタに引数をとる新しい型を作ることができる．その構文は次のようなものである．
 
 $ haskell.kwdata "型名" eq.def "値コンストラクタ"_"引数の型" $
-
-#pb
 
 もう一つの方向性は#keyword[直和]を使う方法である．直和とは，複数の型を組み合わせた型である．例えば，我々の $haskell.Bool$ 型は値コンストラクタ $haskell.True$ と $haskell.False$ からなる直和である．実際 $haskell.Bool$ 型は次のように定義されている．
 
