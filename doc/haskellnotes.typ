@@ -2122,11 +2122,18 @@ $ penta.filled_x &= haskell.newSTRef(x) \
 
 $ s = haskell.constantstring("Hello, world. And may the force be with you. You and you.") $
 
-$ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
+// $ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
 
-$ v = haskell.words u $
+$ haskell.cleanUp emptyset &= emptyset \
+  haskell.cleanUp (x : x_"s") &= (haskell.kwif haskell.isAlpha x haskell.kwthen haskell.toLower x haskell.kwelse haskell.constantchar(" ")) : haskell.cleanUp x_"s" $
 
-$ w = haskell.group (haskell.sort v) $
+$ t = haskell.cleanUp s $
+
+$ u = haskell.words t $
+
+$ v = haskell.sort u$
+
+$ w = haskell.group v $
 
 $ haskell.countUp emptyset &= emptyset \
   haskell.countUp (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.countUp x_"ss" $
@@ -2153,18 +2160,25 @@ import Data.Function
 s :: String
 s = "Hello, world. And may the force be with you. You and you."
 
-u :: String
-u = [t | c <- s, let t = if isAlpha c then toLower c else ' ']
+cleanUp :: String -> String
+cleanUp "" = ""
+cleanUp (x:xs) = (if isAlpha x then toLower x else ' ') : cleanUp xs
+
+t :: String
+t = cleanUp s
+
+u :: [String]
+u = words t
 
 v :: [String]
-v = words u
+v = sort u
 
 w :: [[String]]
-w = group $ sort v
+w = group v
 
 countUp :: [[String]] -> [(Int, String)]
 countUp [] = []
-countUp (xs:xss) = [(length xs, haskell.head xs)] ++ countUp xss
+countUp (xs:xss) = [(length xs, head xs)] ++ countUp xss
 
 x :: [(Int, String)]
 x = countUp w

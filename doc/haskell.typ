@@ -44,6 +44,7 @@
 #let compWith = longfunction("compWith")
 #let const = longfunction("const")
 #let countUp = longfunction("countUp")
+#let cleanUp = longfunction("cleanUp")
 #let curry = longfunction("curry")
 #let even = longfunction("even")
 #let fact = longfunction("fact")
