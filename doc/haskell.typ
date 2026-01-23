@@ -46,6 +46,7 @@
 #let countUp = longfunction("countUp")
 #let cleanUp = longfunction("cleanUp")
 #let curry = longfunction("curry")
+#let doEverything = longfunction("doEverything")
 #let even = longfunction("even")
 #let fact = longfunction("fact")
 #let filter = longfunction("filter")
@@ -255,4 +256,4 @@
 #let MaybeA = MaybeType(a)
 #let MaybeB = MaybeType(b)
 
-
+#let IOString = $typeconstructor1(IO, String)$

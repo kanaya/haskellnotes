@@ -2155,6 +2155,11 @@ $ z = haskell.form y $
 
 $ haskell.main = haskell.putStrLn z $
 
+$ haskell.doEverything &colon.double haskell.String -> haskell.String \
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compWith) haskell.apply haskell.countUp haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.cleanUp x $
+
+$ z' = haskell.doEverything s $
+
 #sourcecode[
 ```haskell 
 import Data.Char
@@ -2200,6 +2205,10 @@ form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
 z :: String
 z = form y
 
+-- doEverything :: String -> String
+-- doEverything x = form $ (sortBy compWith) $ countUp $ group $ sort $ words $ cleanUp x
+-- z' = doEverything s
+
 main = putStrLn z
 ```]
 
@@ -2211,6 +2220,23 @@ main = putStrLn z
 1 once
 1 to
 1 world
+```]
+
+$ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
+  haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $
+
+$ z' = haskell.doEverything' haskell.bind haskell.getContents $
+
+$ haskell.main = haskell.putStrLn haskell.bind z' $
+
+
+#sourcecode[```haskell 
+doEverything' :: String -> IO String
+doEverything' x = pure (doEverything x)
+
+z' = doEverything' =<< getContents
+
+main = putStrLn =<< z'
 ```]
 
 === この章のまとめ
