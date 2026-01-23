@@ -1773,7 +1773,9 @@ $ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
 
 #pb
 
-引数付きの値コンストラクタを使う方法と，直和を使う方法の2種類は組み合わせて用いることができる．
+引数付きの値コンストラクタを使う方法と，直和を使う方法の2種類は組み合わせて用いることができる．例えば，次のような型クラスを作ることも可能である．
+
+$ haskell.kwdata haskell.typename("Shape") eq.def haskell.Circle_haskell.Double xor haskell.Rect_(haskell.Double haskell.Double) $
 
 /*
 $ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
