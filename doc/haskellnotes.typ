@@ -2131,7 +2131,7 @@ $ t = haskell.cleanUp s $
 
 $ u = haskell.words t $
 
-$ v = haskell.sort u$
+$ v = haskell.sort u $
 
 $ w = haskell.group v $
 
