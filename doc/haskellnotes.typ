@@ -112,6 +112,7 @@
 
 
 = Haskell入門
+<introduction-to-haskell>
 
 本書はプログラミング言語Haskellの入門書である．それと同時に，本書はプログラミング言語を用いた代数構造の入門書でもある．プログラミングと代数構造の間には密接な関係があるが，とくに#keyword[関数型プログラミング]を実践する時にはその関係を意識する必要が出てくる．本書はその両者を同時に解説することを試みる．
 
@@ -2268,6 +2269,8 @@ $ stack run < input.txt
 
 == IO
 <io>
+
+Haskellでは入出力（IO）をモナドで表現する．
 
 $ haskell.main &colon.double haskell.IO_haskell.Int \
   haskell.main &= chevron.l 0 chevron.r $
