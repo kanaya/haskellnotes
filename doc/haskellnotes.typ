@@ -1984,30 +1984,26 @@ $ cat x | phi | psi > z
 3. 準同型性（右単位元の存在）：バインド演算子 $(haskell.bind)$ は $phi haskell.bind chevron.l x chevron.r = phi x$ を満たす．
 ]
 
-恒等射の存在における式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ の左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて同式を  ```haskell x >>= return = x``` と書くからである．
+恒等射の存在における式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ の左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$ を  ```haskell x >>= return = x``` と書くからである．
+
+モナドの結合則は $ psi haskell.bind phi haskell.bind x_*
+  = psi haskell.bind (phi haskell.bind x_*)$ のようにも表現出来る．
 
 
-結合則の右辺 $(psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$ を $haskell.kwdo$ 記法で書くと次のようになる．
 
-$ haskell.kwdo {y <- haskell.kwdo { x <- x_*; phi x}; psi y} $
+// 結合則の右辺 $(psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$ を $haskell.kwdo$ 記法で書くと次のようになる．
+// $ haskell.kwdo {y <- haskell.kwdo { x <- x_*; phi x}; psi y} $
 
-結合則の左辺 $psi haskell.bind (phi haskell.bind x_*)$ を $haskell.kwdo$ 記法で書くと次のようになる．
-
-$ haskell.kwdo {x <- x_*; haskell.kwdo {y <- phi x}; psi y} $
-
-上式は次のように縮約できる．
-
-$ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
+// 結合則の左辺 $psi haskell.bind (phi haskell.bind x_*)$ を $haskell.kwdo$ 記法で書くと次のようになる．
+// $ haskell.kwdo {x <- x_*; haskell.kwdo {y <- phi x}; psi y} $
+// 上式は次のように縮約できる．
+// $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 
 // https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
 
 
 // https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
-結合則のもうひとつの表現．
-
-$ psi haskell.bind phi haskell.bind x_*
-  = psi haskell.bind (phi haskell.bind x_*) $
 
 === 破壊的代入を隠すモナド
 
