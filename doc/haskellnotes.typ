@@ -1157,7 +1157,7 @@ $ haskell.fib 0 &= 0 \
 二つの自然数の最大公約数（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．
 
 $ haskell.greatestCommonDivisor &colon.double haskell.Int -> haskell.Int -> haskell.Int \
-  haskell.greatestCommonDivisor 0 space y &= x \
+  haskell.greatestCommonDivisor 0 space y &= y \
   haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x grave(mod) y) x $
 
 #tk 他の例
