@@ -1152,6 +1152,14 @@ $ haskell.fib 0 &= 0 \
   haskell.fib 1 &= 1 \
   haskell.fib n &= haskell.fib (n-1) + haskell.fib (n-2) $
 
+#pb
+
+二つの自然数の最大公約数（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．
+
+$ haskell.greatestCommonDivisor &colon.double haskell.Int -> haskell.Int -> haskell.Int \
+  haskell.greatestCommonDivisor 0 space y &= x \
+  haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x grave(mod) y) x $
+
 #tk 他の例
 
 === リストと再帰 #tk
@@ -2213,7 +2221,7 @@ haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r
   haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a \
   haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
   haskell.form emptyset &= haskell.constantstring("") \
-  haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\n") smash haskell.form x_"s" \
+  haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\\n") smash haskell.form x_"s" \
 haskell.doEverything &colon.double haskell.String -> haskell.String \
   haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
 s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") \
@@ -2228,9 +2236,6 @@ z &= haskell.doEverything s \
 ```haskell 
 import Data.Char
 import Data.List
-
-s :: String
-s = "Hello, world! Hello, once again, to you and you and you."
 
 clean :: String -> String
 clean "" = ""
@@ -2249,6 +2254,9 @@ form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
 
 doEverything :: String -> String
 doEverything x = form $ (sortBy compIS) $ count $ group $ sort $ words $ clean x
+
+s :: String
+s = "Hello, world! Hello, once again, to you and you and you."
 
 z :: String
 z = doEverything s

@@ -53,6 +53,7 @@
 #let first = longfunction("first")
 #let fib = longfunction("fib")
 #let form = longfunction("form")
+#let greatestCommonDivisor = longfunction("greatestCommonDivisor")
 #let group = longfunction("group")
 #let head = longfunction("head")
 #let isAlpha = longfunction("isAlpha")
