@@ -4,29 +4,34 @@ module Lib
 
 import Data.Char
 import Data.List
-import Data.Function
 
-xs :: String
-xs = "Hello, world. And may the force be with you. You and you."
+-- s :: String
+-- s = "Hello, world! Hello, once again, to you and you and you."
 
-ys :: String
-ys = [y | x <- xs, let y = if isAlpha x then toLower x else ' ']
-
-zs :: [String]
-zs = words ys
-
-us = group $ sort zs
+cleanUp :: String -> String
+cleanUp "" = ""
+cleanUp (x:xs) = (if isAlpha x then toLower x else ' ') : cleanUp xs
 
 countUp :: [[String]] -> [(Int, String)]
 countUp [] = []
-countUp (xs:xss) = [(length xs, xs !! 0)] ++ countUp xss
-
-vs = countUp us
+countUp (xs:xss) = [(length xs, head xs)] ++ countUp xss
 
 compWith :: (Int, String) -> (Int, String) -> Ordering
 compWith (a, _) (b, _) = compare b a
 
-ws = sortBy compWith vs
+form :: [(Int, String)] -> String
+form [] = ""
+form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
+
+doEverything :: String -> String
+doEverything x = form $ (sortBy compWith) $ countUp $ group $ sort $ words $ cleanUp x
+
+doEverything' :: String -> IO String
+doEverything' x = pure (doEverything x)
+
+-- z = doEverything s
+z' :: IO String
+z' = doEverything' =<< getContents
 
 someFunc :: IO ()
-someFunc = print ws
+someFunc = putStrLn =<< z'
