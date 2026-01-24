@@ -2157,10 +2157,8 @@ $ t = haskell.clean s $
 これで変数 $x$ は単語とその出現頻度のペアを収めたリストとなっている．
 
 今度は，リスト $x$ を出現頻度順にソートする必要がある．関数 $haskell.sort$ は順序が定義された型のリストだけをソート対象とするので，任意の型のリストをソート出来る $haskell.sortBy$ 関数を使う．この $haskell.sortBy$ 関数は，2つの要素を比較する関数を受け取り，その比較結果に従ってリストをソートする．この比較関数を $haskell.compIS$ としよう．関数 $haskell.compIS$ を次のように定義する．
-
-$ haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $
-
+#par-equation($ haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $)
 関数 $haskell.compare$ は二つの要素を比較して，結果を $haskell.Ordering$ 型で返す．引数の順序を入れ替えているのは，出現頻度順にソートするためである．
 
 ソートされた結果を次のようにリスト $y$ とする．
