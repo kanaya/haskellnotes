@@ -2118,63 +2118,98 @@ $ penta.filled_x &= haskell.newSTRef(x) \
 
 === 余談：IOサバイバルキット3
 
-単語を数える．
+本書冒頭の例に戻って，単語を数えるプログラムを考えよう．まずは話を簡単にするために，文字列を仮に次のように定義しておこう．
 
 $ s = haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") $
 
+あとでファイル入力を扱えるようにするが，一旦は文字列 $s$ を入力とする．いま解きたい問題は，文字列 $s$ に含まれる単語を数えることである．まずは文字列 $s$ からアルファベット以外の文字を取り除く．これにはリストの内包表記を使ったほうが簡単であるが，ここでは内包表記を使わずに関数 $haskell.clean$ を次のように定義しておこう．
+
 // $ u = [t | c in s, haskell.kwlet t eq.delta haskell.kwif haskell.isAlpha c haskell.kwthen haskell.toLower c haskell.kwelse haskell.constantchar(" ")] $
 
-$ haskell.cleanUp &colon.double haskell.String -> haskell.String \
-  haskell.cleanUp emptyset &= emptyset \
-  haskell.cleanUp (x : x_"s") &= (haskell.kwif haskell.isAlpha x haskell.kwthen haskell.toLower x haskell.kwelse haskell.constantchar(" ")) : haskell.cleanUp x_"s" $
+$ haskell.clean &colon.double haskell.String -> haskell.String \
+  haskell.clean emptyset &= emptyset \
+  haskell.clean (x : x_"s") &= (haskell.kwif haskell.isAlpha x haskell.kwthen haskell.toLower x haskell.kwelse haskell.constantchar(" ")) : haskell.clean x_"s" $
 
-$ t = haskell.cleanUp s $
+関数 $haskell.clean$ を文字列 $s$ に適用して文字列 $t$ を得ておく．
 
-$ u = haskell.words t $
+$ t = haskell.clean s $
 
-$ v = haskell.sort u $
+文字列 $t$ には小文字アルファベットと空白のみが含まれている．これを $haskell.words$ 関数でリストにしよう．
+#par-equation($ u = haskell.words t $)
+ここで変数 $u$ は $haskell.String$ のリスト，つまり $[haskell.String]$ 型である．
 
-$ w = haskell.group v $
+単語のリスト $u$ を $haskell.sort$ 関数でソートして $v$ とする．
+#par-equation($ v = haskell.sort u $)
+変数 $v$ はソートされた単語リストである．リスト $v$ を $haskell.group$ 関数でグループ化して $w$ とする．
+#par-equation($ w = haskell.group v $)
+この $haskell.group$ 関数は，リスト $v$ をグループ化してリストのリスト，つまり $[[haskell.String]]$ 型のリストを返す．
 
-$ haskell.countUp &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
-  haskell.countUp emptyset &= emptyset \
-  haskell.countUp (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.countUp x_"ss" $
+リストのリスト $w$ を $haskell.count$ 関数で単語の出現頻度を計算して $x$ とする．
+#par-equation($ x = haskell.count w $)
+この $haskell.count$ 関数は，リストのリストを受け取り，その中の各リストの要素数とリストの先頭要素からなるタプルのリストを返すように，我々自身が定義する必要がある．そこで，次の定義を用いよう．
 
-$ x = haskell.countUp w $
+$ haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
+  haskell.count emptyset &= emptyset \
+  haskell.count (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.count x_"ss" $
 
-$ haskell.compWith &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compWith paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $
+関数 $haskell.head$ の使用は非推奨であるが，単純化のために使うことにする．
 
-$ y = haskell.sortBy haskell.compWith x $
+リストのリスト $w$ から単語の出現頻度を計算したリスト $x$ を次のように得る．
+#par-equation($ x = haskell.count w $)
+これで変数 $x$ は単語とその出現頻度のペアを収めたリストとなっている．
+
+今度は，リスト $x$ を出現頻度順にソートする必要がある．関数 $haskell.sort$ は順序が定義された型のリストだけをソート対象とするので，任意の型のリストをソート出来る $haskell.sortBy$ 関数を使う．この $haskell.sortBy$ 関数は，2つの要素を比較する関数を受け取り，その比較結果に従ってリストをソートする．この比較関数を $haskell.compIS$ としよう．関数 $haskell.compIS$ を次のように定義する．
+
+$ haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $
+
+関数 $haskell.compare$ は二つの要素を比較して，結果を $haskell.Ordering$ 型で返す．引数の順序を入れ替えているのは，出現頻度順にソートするためである．
+
+ソートされた結果を次のようにリスト $y$ とする．
+
+$ y = haskell.sortBy haskell.compIS x $
+
+最後に，印字しやすいように体裁を整える関数 $haskell.form$ を定義する．
 
 $ haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
   haskell.form emptyset &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\n") smash haskell.form x_"s" $
 
+関数 $haskell.form$ を使ってリスト $y$ を文字列 $z$ に変換する．
+
 $ z = haskell.form y $
+
+印字には文字列をそのまま書き出すアクション $haskell.putStrLn$ を用いることとし，これを $haskell.main$ アクションとする．
 
 $ haskell.main = haskell.putStrLn z $
 
-$ haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compWith) haskell.apply haskell.countUp haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.cleanUp x $
+これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
 
-$ z' = haskell.doEverything s $
+$ haskell.doEverything &colon.double haskell.String -> haskell.String \
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $
+
+この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z'$ を得ておき，印字することにしよう．
+
+$ z' &= haskell.doEverything s \
+  haskell.main &= haskell.putStrLn z' $
+
+こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．
+
 
 #sourcecode[
 ```haskell 
 import Data.Char
 import Data.List
-import Data.Function
 
 s :: String
 s = "Hello, world! Hello, once again, to you and you and you."
 
-cleanUp :: String -> String
-cleanUp "" = ""
-cleanUp (x:xs) = (if isAlpha x then toLower x else ' ') : cleanUp xs
+clean :: String -> String
+clean "" = ""
+clean (x:xs) = (if isAlpha x then toLower x else ' ') : clean xs
 
 t :: String
-t = cleanUp s
+t = clean s
 
 u :: [String]
 u = words t
@@ -2185,18 +2220,18 @@ v = sort u
 w :: [[String]]
 w = group v
 
-countUp :: [[String]] -> [(Int, String)]
-countUp [] = []
-countUp (xs:xss) = [(length xs, head xs)] ++ countUp xss
+count :: [[String]] -> [(Int, String)]
+count [] = []
+count (xs:xss) = [(length xs, head xs)] ++ count xss
 
 x :: [(Int, String)]
-x = countUp w
+x = count w
 
-compWith :: (Int, String) -> (Int, String) -> Ordering
-compWith (a, _) (b, _) = compare b a
+compIS :: (Int, String) -> (Int, String) -> Ordering
+compIS (a, _) (b, _) = compare b a
 
 y :: [(Int, String)]
-y = sortBy compWith x
+y = sortBy compIS x
 
 form :: [(Int, String)] -> String
 form [] = ""
@@ -2204,10 +2239,6 @@ form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
 
 z :: String
 z = form y
-
--- doEverything :: String -> String
--- doEverything x = form $ (sortBy compWith) $ countUp $ group $ sort $ words $ cleanUp x
--- z' = doEverything s
 
 main = putStrLn z
 ```]
@@ -2225,7 +2256,8 @@ main = putStrLn z
 $ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
   haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $
 
-$ z' = haskell.doEverything' haskell.bind haskell.getContents $
+$ z' &colon.double haskell.IOString \
+  z' &= haskell.doEverything' haskell.bind haskell.getContents $
 
 $ haskell.main = haskell.putStrLn haskell.bind z' $
 
@@ -2234,6 +2266,7 @@ $ haskell.main = haskell.putStrLn haskell.bind z' $
 doEverything' :: String -> IO String
 doEverything' x = pure (doEverything x)
 
+z' :: IO String
 z' = doEverything' =<< getContents
 
 main = putStrLn =<< z'
