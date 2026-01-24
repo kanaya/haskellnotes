@@ -1128,7 +1128,7 @@ main = print
 
 #tk 再帰
 
-=== 関数の再帰適用 #tk
+=== 関数の再帰適用
 
 自然数 $n$ の#keyword[階乗]は次のように定義される．
 #par-equation($ n! = n times (n - 1) times ... times 1 $)
@@ -1154,19 +1154,19 @@ $ haskell.fib 0 &= 0 \
 
 #pb
 
-二つの自然数の最大公約数（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．
+二つの自然数の最大公約数（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．次の例では関数の型定義も一緒に行うことにした．また中置演算子 $percent$ は剰余を表す．
 
 $ haskell.greatestCommonDivisor &colon.double haskell.Int -> haskell.Int -> haskell.Int \
   haskell.greatestCommonDivisor 0 space y &= y \
-  haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x grave(mod) y) x $
+  haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x class("binary", percent) y) x $
 
-#tk 他の例
+このように関数 $haskell.greatestCommonDivisor$ が定義されていると
+#par-equation($ n = haskell.greatestCommonDivisor 10 space 15 $)
+とすれば $n = 5$ を得る．
 
-=== リストと再帰 #tk
+=== リストと再帰
 
 数学におけるリストは自由に考えることが出来るが，計算機上ではその実装も考えておかねばならない．我々はリストをLispにおけるリスト構造と同じ構造を持つものとする．Lispにおけるリストとは，変数 $haskell.first$ と 変数 $haskell.rest$ からなるペアの集合である．変数 $haskell.first$ がリストの要素を参照し，変数 $haskell.rest$ が次のペアを参照する．リストの最後のペアの $haskell.rest$ は空リストを参照する．
-
-#tk 図
 
 リストのための特別な表現
 #par-equation($ haskell.first : haskell.rest $)
@@ -1895,12 +1895,10 @@ $ u_* &= phi' x \
   v_* &= haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
   w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
 
-ひとつの式にまとめるとこうなる．
-
-$ w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
+ひとつの式にまとめても，あまり冴えない．
+#par-equation($ w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
   &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere u_* eq.delta phi' x $
-
+  &haskell.kwwhere u_* eq.delta phi' x $)
 やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書くところだ．
 
 #sourcecode[```python
@@ -1913,14 +1911,14 @@ except Exception as e:
   print(f"Something went wrong: {e}")
 ```]
 
-このような簡潔さを手に入れるために，我々はバインド演算子 $(haskell.bind)$ を導入するのである．
-
-関数 $phi$ ただし
+このような簡潔さを手に入れるために，我々はバインド演算子 $(haskell.bind)$ を導入するのである．関数 $phi$ ただし
 #par-equation($ phi colon.double haskell.a -> haskell.ma $)
 があるとする．変数 $x_* colon.double haskell.ma$ が与えられたとき，バインド演算子 $(haskell.bind)$ は次のように作用する．
 
 $ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
   &|_haskell.otherwise = nothing.rev $<bind-op>
+
+ここに $chevron.l square.filled chevron.r$ はピュア演算子である．また $nothing.rev$ は抽象化された空で，型に応じて $emptyset$ または $haskell.Nothing$ となる．
 
 もう一つの関数 $psi$ ただし
 #par-equation($ psi colon.double haskell.a -> haskell.ma $)
@@ -1932,45 +1930,31 @@ $ z_* = psi haskell.bind (phi haskell.bind x_*) $<bind-composition>
 #par-equation($ z_* = psi haskell.bind phi haskell.bind x_* $)
 と書ける．この式は「変数 $x_*$ に関数 $phi$ を適用し，その結果に関数 $psi$ を適用する」と読める．#footnote[Haskellでは ```haskell z = psi =<< phi =<< x ``` と書く．なおHaskellプログラマは演算子の左右を入れ替えた ```haskell z = x >>= phi >>= psi``` という書き方を好む．]
 
-このようなバインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．すべてのアプリカティブ関手はモナドである．そのためリストバージョンのバインド演算子やMaybeバージョンのバインド演算子も定義されている．Maibeバージョンのバインド演算子 $(haskell.bind_?)$ は次のようになる．
-
-$ phi haskell.bind_? x_? &|_(x_? = haskell.Just(x)) = haskell.Just(phi x) \
-  &|_haskell.otherwise = haskell.Nothing $
-
-#tk
-
-$ phi haskell.bind x_* &|_(x_* = chevron.l x chevron.r) = chevron.l phi x chevron.r \
-  &|_haskell.otherwise = nothing.rev $<bind-op>
-
-この一般化されたバインド演算子 $(haskell.bind)$ も @bind-composition のように，文脈に入れる関数を合成することができる．
+このようなバインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．すべてのアプリカティブ関手はモナドである．
 
 #pb
 
-我々のバインド演算子は#keyword[左バインド演算子]とも言う．というのは，他に#keyword[右バインド演算子] $(haskell.bindRight)$ もあるからである．右バインド演算子は左バインド演算子の左右を入れ替えたもので，左結合する．式 $z = psi haskell.bind phi haskell.bind x$ は「変数 $x$ に関数 $phi$ を作用させて，さらに関数 $psi$ を作用させたものを $z$ とする」と読めるが，右バインド演算子を使うと次のようにより自然言語に近い順序になる．
+我々のバインド演算子は左バインド演算子とも言う．というのは，他に#keyword[右バインド演算子] $(haskell.bindRight)$ もあるからである．右バインド演算子は左バインド演算子の左右を入れ替えたもので，左結合する．式 $z = psi haskell.bind phi haskell.bind x$ は「変数 $x$ に関数 $phi$ を作用させて，さらに関数 $psi$ を作用させたものを $z$ とする」と読めるが，右バインド演算子を使うと次のようにより自然言語に近い順序になる．
 
 $ z = x haskell.bindRight phi haskell.bindRight psi $
 
 実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．これはUnixシェルで次のようにすることと似ているからかもしれない．
 
-```shell-unix-generic
+#sourcecode[```shell-unix-generic
 $ cat x | phi | psi > z
-```
+```]
 
 上記のコマンドは，ファイル `x` の中身を書き出し（`cat`），プログラム $phi$（`phi`）が処理をして書き出し，続いてプログラム $psi$（`psi`）が処理をして，ファイル `z` に書き出すことを意味する．もしプログラム `phi` または `psi` が異常終了すれば，この一連のパイプラインも異常終了する．
 
 #pb
 
-バインド演算子が定義された型クラスのことを#keyword[モナド]と呼び $haskell.Monad$ で表す．モナドはアプリカティブ関手を拡張したもので，次の関係が成り立つ．
-
-$ haskell.Monad subset haskell.Applicative subset haskell.Functor $
-
+モナドはアプリカティブ関手を拡張したもので，次の関係が成り立つ．
+#par-equation($ haskell.Monad subset haskell.Applicative subset haskell.Functor $)
 関手，アプリカティブ関手のように，型 $haskell.a$ をモナドに「入れた」ものを次のように書く．
+#par-equation($ haskell.Monad supset haskell.m arrow.r.stroked haskell.ma $)
+関手はマップ演算子 $(convolve.o)$ を持つ型クラスであった．アプリカティブ関手はアプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $(chevron.l square.filled chevron.r)$ を持つ．ピュア演算子を直接使うことはないが，アプリカティブ関手のインスタンスとなる型ではそれぞれ独自の実装を持つ．例えばリスト型は $[square.filled]$ というピュア演算子を持つし，Maybe型は $haskell.Just(square.filled)$ というピュア演算子を持つ．
 
-$ haskell.Monad supset haskell.m arrow.r.stroked haskell.ma $
-
-関手はマップ演算子 $(convolve.o)$ を持つ型クラスであった．アプリカティブ関手はアプリ化ティブマップ演算子 $(ast.square)$ とピュア演算子 $(chevron.l square.filled chevron.r)$ を持つ．ピュア演算子を直接使うことはないが，アプリカティブ関手のインスタンスとなる型ではそれぞれ独自の実装を持つ．例えばリスト型は $[square.filled]$ というピュア演算子を持つし，Maybe型は $haskell.Just(square.filled)$ というピュア演算子を持つ．
-
-モナドのインスタンスは追加でバインド演算子 $(haskell.bind)$ を持つことになる．歴史的な理由で，モナドのピュア演算子のことをリターン（return）演算子と呼ぶが，本質は同じものである．そこで本書では一貫してピュア演算子と呼び続けることにする．
+モナドのインスタンスは追加でバインド演算子 $(haskell.bind)$ を持つことになる．歴史的な理由で，モナドのピュア演算子のことをリターン（return）演算子と呼ぶが，本質は同じものである．そこで本書では一貫してピュア演算子と呼び続けることにする．#footnote[歴史的理由とは，アプリカティブ関手とモナドがそれぞれ独立して関手の拡張として定義されたことである．そのため，どちらも独立のピュア演算子を持つことになり，モナドがアプリカティブの派生として再定義された現代でも名目上は別の名前が与えられている．]
 
 関手は関手則，アプリカティブ関手はアプリカティブ関手則に従う．両方を再掲しておこう．関手則は次のようなものである．
 
