@@ -2272,13 +2272,21 @@ $ stack run < input.txt
 
 実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナドで表現する．IOという「破壊活動」をモナド型クラスの中に閉じ込めて，プログラムの他の部分と分離するのである．
 
-=== IOモナド #tk
+=== 入力 #tk
 
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
 
-// 入力
+#pb
 
-// 出力
+#tk
+
+// https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+入力と似た概念に#keyword[疑似乱数]がある．
+
+
+
+=== 出力 #tk
 
 === mainアクション #tk
 
@@ -2288,7 +2296,7 @@ $ haskell.main &colon.double haskell.IO_haskell.Int \
   haskell.main &= chevron.l 0 chevron.r $
 
 
-=== 制御構造 #tk
+
 
 // https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
