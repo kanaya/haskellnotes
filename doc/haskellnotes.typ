@@ -2200,9 +2200,26 @@ $ z = haskell.form y $
 これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
 #par-equation($ haskell.doEverything &colon.double haskell.String -> haskell.String \
   haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
-この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z'$ を得ておき，印字することにしよう．
-#par-equation($ z' &= haskell.doEverything s \
-  haskell.main &= haskell.putStrLn z' $)
+この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z$ を得ておき，印字することにしよう．これまでの経過をまとめると次のように出来る．
+
+$ 
+haskell.clean &colon.double haskell.String -> haskell.String \
+  haskell.clean emptyset &= emptyset \
+  haskell.clean (x : x_"s") &= (haskell.kwif haskell.isAlpha x haskell.kwthen haskell.toLower x haskell.kwelse haskell.constantchar(" ")) : haskell.clean x_"s" \
+  haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
+  haskell.count emptyset &= emptyset \
+  haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"s" paren.r.stroked : haskell.count x_"ss" \
+haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a \
+  haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
+  haskell.form emptyset &= haskell.constantstring("") \
+  haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\n") smash haskell.form x_"s" \
+haskell.doEverything &colon.double haskell.String -> haskell.String \
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
+s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") \
+z &= haskell.doEverything s \
+  haskell.main &= haskell.putStrLn z $
+
 こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．
 
 以上の式をHaskellで書くと次のようになる．
@@ -2256,21 +2273,21 @@ main = putStrLn z
   haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $)
 関数 $haskell.doEverything'$ は元の関数 $haskell.doEverything$ をピュア演算子でラップして，戻り値をIO文字列にするだけである．
 
-ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doEverything'$ にバインドして，次のようにIO文字列 $z''$ を得ておこう．
-#par-equation($ z'' &colon.double haskell.IOString \
-  z'' &= haskell.doEverything' haskell.bind haskell.getContents $)
-IO文字列 $z''$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z''$ の中身を印字することができる．
-#par-equation($ haskell.main = haskell.putStrLn haskell.bind z'' $)
+ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doEverything'$ にバインドして，次のようにIO文字列 $z'$ を得ておこう．
+#par-equation($ z' &colon.double haskell.IOString \
+  z' &= haskell.doEverything' haskell.bind haskell.getContents $)
+IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
+#par-equation($ haskell.main = haskell.putStrLn haskell.bind z' $)
 以上でプログラムが完成した．関数 ```haskell doEverything``` が定義されているとして，残りをHaskellで書くと次のようになる．
 
 #sourcecode[```haskell 
 doEverything' :: String -> IO String
 doEverything' x = pure (doEverything x)
 
-z'' :: IO String
-z'' = doEverything' =<< getContents
+z' :: IO String
+z' = doEverything' =<< getContents
 
-main = putStrLn =<< z''
+main = putStrLn =<< z'
 ```]
 
 Haskell Stackを使っている場合，このプログラムを ```io-survival-kit-three``` というプロジェクト名で保存すると，次のように実行できる．
