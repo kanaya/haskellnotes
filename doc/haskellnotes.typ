@@ -2282,9 +2282,17 @@ $ stack run < input.txt
 
 // https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
 
-入力と似た概念に#keyword[疑似乱数]がある．
+入力と似た概念に#keyword[疑似乱数]がある．疑似乱数は計算機が擬似的に発生させる乱数で，事前に値がわからない点がユーザからの入力と共通する．疑似乱数は計算機の状態に依存するので，参照透過性を持たない．次の例は変数 $r$ に疑似乱数を代入するものである．
 
+$ r = haskell.randomIO colon.double haskell.IOFloat $
 
+この変数 $r$ の値はプログラム実行時にランダムに定まる「汚染された」値である．そのため，プログラム中の他の参照透過性を持つ変数と混ぜて扱うことが出来ない．変数 $r$ はIOモナドに包まれているので，バインド演算子 $(haskell.bind)$ を使って，文脈に入れる関数の中で使うことが出来る．一例は $haskell.print$ アクションで，次の式は疑似乱数を印字するものである．
+
+$ haskell.main = haskell.print haskell.bind r $
+
+Haskellは指定された範囲の疑似乱数を生成するアクション $haskell.randomRIO$ も提供している．次の例は6面体のサイコロを振るものである．
+
+$ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $
 
 === 出力 #tk
 

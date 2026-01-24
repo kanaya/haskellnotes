@@ -145,11 +145,13 @@
 #let putStrLn = action("putStrLn")
 #let print = action("print")
 #let printEach = action("printEach")
+#let randomIO = action("randomIO")
+#let randomRIO = action("randomRIO")
+#let readSTRefOp = math.class("unary", math.star.stroked)
 
 // #let runST = action("runST")
 // #let modifySTRef = action("modifySTRef")
 // #let readSTRef = action("readSTRef")
-#let readSTRefOp = math.class("unary", math.star.stroked)
 // #let writeSTRef = action("writeSTRef")
 
 // Unary operator
@@ -258,3 +260,4 @@
 #let MaybeB = MaybeType(b)
 
 #let IOString = $typeconstructor1(IO, String)$
+#let IOFloat = $typeconstructor1(IO, Float)$
