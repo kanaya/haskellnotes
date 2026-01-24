@@ -2178,10 +2178,8 @@ $ z = haskell.form y $
 印字には文字列をそのまま書き出すアクション $haskell.putStrLn$ を用いることとし，これを $haskell.main$ アクションとする．
 #par-equation($ haskell.main = haskell.putStrLn z $)
 これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
-
-$ haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $
-
+#par-equation($ haskell.doEverything &colon.double haskell.String -> haskell.String \
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
 この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z'$ を得ておき，印字することにしよう．
 
 $ z' &= haskell.doEverything s \
