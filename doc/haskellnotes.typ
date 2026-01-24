@@ -1274,9 +1274,9 @@ prime n = factors n == [1, n]
 ps :: [Int]
 ps = [x | x <- [2..], prime x]
 
-ps5 = take 5 ps
+ps500 = take 500 ps
 
-main = print ps5
+main = print ps500
 ```]
 
 
