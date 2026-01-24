@@ -146,11 +146,11 @@
 #let print = action("print")
 #let printEach = action("printEach")
 
-#let runST = action("runST")
-#let modifySTRef = action("modifySTRef")
-#let readSTRef = action("readSTRef")
+// #let runST = action("runST")
+// #let modifySTRef = action("modifySTRef")
+// #let readSTRef = action("readSTRef")
 #let readSTRefOp = math.class("unary", math.star.stroked)
-#let writeSTRef = action("writeSTRef")
+// #let writeSTRef = action("writeSTRef")
 
 // Unary operator
 
