@@ -160,15 +160,15 @@
 
 // Binary operator.
 #let anyop = math.class("binary", math.circle.dotted)
+#let apply = math.class("binary", math.dollar)
 #let at = math.class("binary", math.at)
 #let bangbang = math.class("binary", math.excl.double)
-#let compose = math.bullet.op
-#let apply = math.class("binary", math.dollar)
-#let makeComplex = math.class("binary", ":+")
-#let mapM = math.class("binary", math.ast.triple)
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
-#let leteq = math.equiv
+#let compose = math.bullet.op
+#let makeComplex = math.class("binary", ":+")
+#let mapM = math.class("binary", math.ast.triple)
+#let replicate = math.class("binary", math.arrow.ccw)
 
 // Big operator
 #let fold = math.union.big
