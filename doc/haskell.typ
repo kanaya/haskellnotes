@@ -147,6 +147,7 @@
 #let printEach = action("printEach")
 #let randomIO = action("randomIO")
 #let randomRIO = action("randomRIO")
+#let readFile = action("readFile")
 #let readSTRefOp = math.class("unary", math.star.stroked)
 
 // #let runST = action("runST")

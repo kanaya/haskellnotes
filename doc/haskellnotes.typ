@@ -2276,9 +2276,29 @@ $ stack run < input.txt
 
 実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナドで表現する．IOという「破壊活動」をモナド型クラスの中に閉じ込めて，プログラムの他の部分と分離するのである．
 
-=== 入力 #tk
+=== 入力
 
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
+
+ファイルを丸ごと読み込むアクションは $haskell.getContents$ である．アクション $haskell.getContents$ の型は
+#par-equation($ haskell.getContents colon.double haskell.IOString $)
+である．アクション $haskell.getContents$ をバインド $(haskell.bind)$ すると，ファイルの内容を文字列として得ることができる．例を挙げる．
+
+$ f &colon.double haskell.String -> haskell.String \
+  f x &= haskell.constantstring("My mother said: ") smash x \
+  f' &colon.double haskell.String -> haskell.IOString \
+  f'x &= chevron.l f x chevron.r \
+  s &colon.double haskell.IOString \
+  s &= f' haskell.bind haskell.getContents $<my-mother-said>
+
+@my-mother-said はファイル内容の先頭に一言付け加えて変数 $s$ に代入するプログラムである．関数 $f$ は文字列を受け取って文字列を返す参照透過性のある関数である．このような関数は「ピュアすぎて」アクションとバインド $(haskell.bind)$ することが出来ない．そこで，関数 $f$ をピュア演算子でラップして，戻り値をIO文字列にする関数 $f'$ を定義している．
+
+アクション $haskell.getContents$ は標準入力から内容を受け取るが，任意のファイルから内容を読むにはアクション $haskell.readFile$ を用いる．アクション $haskell.readFile$ は
+#par-equation($ s' &colon.double haskell.IOString \
+  s' &= haskell.readFile haskell.constantstring("input.txt") $)
+のように使う．
+
+// https://minegishirei.hatenablog.com/entry/2023/12/15/093109
 
 #pb
 
