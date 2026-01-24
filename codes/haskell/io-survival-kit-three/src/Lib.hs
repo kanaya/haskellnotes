@@ -14,7 +14,7 @@ clean (x:xs) = (if isAlpha x then toLower x else ' ') : clean xs
 
 count :: [[String]] -> [(Int, String)]
 count [] = []
-count (xs:xss) = [(length xs, head xs)] ++ count xss
+count (xs:xss) = (length xs, head xs) : count xss
 
 compIS :: (Int, String) -> (Int, String) -> Ordering
 compIS (a, _) (b, _) = compare b a

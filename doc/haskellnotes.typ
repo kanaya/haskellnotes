@@ -2150,7 +2150,7 @@ $ t = haskell.clean s $
 
 $ haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
   haskell.count emptyset &= emptyset \
-  haskell.count (x_"s" : x_"ss") &= [paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked] smash haskell.count x_"ss" $
+  haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked : haskell.count x_"ss" $
 
 関数 $haskell.head$ の使用は非推奨であるが，単純化のために使うことにする．
 
@@ -2222,7 +2222,7 @@ w = group v
 
 count :: [[String]] -> [(Int, String)]
 count [] = []
-count (xs:xss) = [(length xs, head xs)] ++ count xss
+count (xs:xss) = (length xs, head xs) : count xss
 
 x :: [(Int, String)]
 x = count w
