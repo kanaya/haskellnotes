@@ -2071,6 +2071,8 @@ $ sum' x_"s" = note.eighth.alt haskell.apply
   (backslash a |-> ((backslash i |-> underline((+i) star.filled a)) *_"M" x_"s") >> haskell.readSTRefOp a) 
   haskell.bind penta.filled_0 $<sum-by-st-monad>
 
+@sum-by-st-monad では，初期値 $0$ を持つ破壊的代入が可能な変数 $penta.filled_0$ を作り，変数 $a$ で受け，それに変数 $i$ で取り出したリスト $x_"s"$ の各要素を足して $(+i)$ いき，その結果 $(star.stroked a)$ を評価 $(note.eighth.alt)$ している．
+
 @sum-by-st-monad を含むHaskellプログラムは次のようになる．
 
 #sourcecode[```haskell 
@@ -2084,7 +2086,7 @@ sum' xs = runST $ (\a -> ((\i -> a `modifySTRef` (+ i)) `mapM_` xs) >> readSTRef
 main = print $ sum' [1..100]
 ```]
 
-なお，まったく同じプログラムであるが，次のような「do記法」を使うことも出来る．こちらのほうが，手続き型プログラミングに慣れたプログラマーには読みやすいかもしれない．
+なお，まったく同じプログラムであるが，次のような#keyword[do記法]を使うことも出来る．こちらのほうが，手続き型プログラミングに慣れたプログラマーには読みやすいかもしれない．
 
 #sourcecode[```haskell
 -- Haskell
@@ -2094,12 +2096,13 @@ import Data.STRef
 
 sum' xs = runST $ do
     a <- newSTRef 0
-    forM_ xs (\i -> modifySTRef a (+ i))
+    mapM_ (\i -> modifySTRef a (+ i)) xs
     readSTRef v
 
 main = print $ sum' [1..100]
 ```]    
 
+ここで用いたdo記法については後述する．
 
 === 余談：IOサバイバルキット3
 
