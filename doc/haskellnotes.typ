@@ -2147,11 +2147,9 @@ $ t = haskell.clean s $
 リストのリスト $w$ を $haskell.count$ 関数で単語の出現頻度を計算して $x$ とする．
 #par-equation($ x = haskell.count w $)
 この $haskell.count$ 関数は，リストのリストを受け取り，その中の各リストの要素数とリストの先頭要素からなるタプルのリストを返すように，我々自身が定義する必要がある．そこで，次の定義を用いよう．
-
-$ haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
+#par-equation($ haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
   haskell.count emptyset &= emptyset \
-  haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked : haskell.count x_"ss" $
-
+  haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"ss" paren.r.stroked : haskell.count x_"ss" $)
 関数 $haskell.head$ の使用は非推奨であるが，単純化のために使うことにする．
 
 リストのリスト $w$ から単語の出現頻度を計算したリスト $x$ を次のように得る．
