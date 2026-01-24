@@ -2253,14 +2253,23 @@ main = putStrLn z
 1 world
 ```]
 
+最後の仕上げは，関数 $haskell.doEverything$ をファイルからの入力に適用することである．と言っても，難しいことはなにもない．関数 $haskell.doEverything$ は文字列 $(haskell.String)$ を受け取るのだが，ファイルからの入力は参照透過性を持たないので，戻り値を文字列ではなく，IO文字列 $(haskell.IOString)$ とする必要があるだけである．そこで，関数 $haskell.doEverything'$ という名前のラッパー関数を次のように定義する．
+
 $ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
   haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $
+
+関数 $haskell.doEverything'$ は元の関数 $haskell.doEverything$ をピュア演算子でラップして，戻り値をIO文字列にするだけである．
+
+ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doEverything'$ にバインドして，次のようにIO文字列 $z'$ を得ておこう．
 
 $ z' &colon.double haskell.IOString \
   z' &= haskell.doEverything' haskell.bind haskell.getContents $
 
+IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
+
 $ haskell.main = haskell.putStrLn haskell.bind z' $
 
+以上でプログラムが完成した．
 
 #sourcecode[```haskell 
 doEverything' :: String -> IO String
