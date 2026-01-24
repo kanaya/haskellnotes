@@ -2185,6 +2185,7 @@ $ z = haskell.form y $
   haskell.main &= haskell.putStrLn z' $)
 こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．
 
+以上の式をHaskellで書くと次のようになる．
 
 #sourcecode[
 ```haskell 
@@ -2198,40 +2199,27 @@ clean :: String -> String
 clean "" = ""
 clean (x:xs) = (if isAlpha x then toLower x else ' ') : clean xs
 
-t :: String
-t = clean s
-
-u :: [String]
-u = words t
-
-v :: [String]
-v = sort u
-
-w :: [[String]]
-w = group v
-
 count :: [[String]] -> [(Int, String)]
 count [] = []
 count (xs:xss) = (length xs, head xs) : count xss
 
-x :: [(Int, String)]
-x = count w
-
 compIS :: (Int, String) -> (Int, String) -> Ordering
 compIS (a, _) (b, _) = compare b a
-
-y :: [(Int, String)]
-y = sortBy compIS x
 
 form :: [(Int, String)] -> String
 form [] = ""
 form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
 
+doEverything :: String -> String
+doEverything x = form $ (sortBy compIS) $ count $ group $ sort $ words $ clean x
+
 z :: String
-z = form y
+z = doEverything s
 
 main = putStrLn z
 ```]
+
+次のように出力されれば，プログラムは正しく動いている．
 
 #sourcecode[```txt
 3 you
@@ -2243,23 +2231,17 @@ main = putStrLn z
 1 world
 ```]
 
-最後の仕上げは，関数 $haskell.doEverything$ をファイルからの入力に適用することである．と言っても，難しいことはなにもない．関数 $haskell.doEverything$ は文字列 $(haskell.String)$ を受け取るのだが，ファイルからの入力は参照透過性を持たないので，戻り値を文字列ではなく，IO文字列 $(haskell.IOString)$ とする必要があるだけである．そこで，関数 $haskell.doEverything'$ という名前のラッパー関数を次のように定義する．
-
-$ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
-  haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $
-
+最後の仕上げは，関数 $haskell.doEverything$ をファイルからの入力に適用することである．と言っても，難しいことはなにもない．関数 $haskell.doEverything$ は文字列 $(haskell.String)$ を受け取るのだが，ファイルからの入力は参照透過性を持たないので，戻り値を文字列ではなく，#keyword[IO文字列] $(haskell.IOString)$ とする必要があるだけである．IO文字列については続く節で説明する．そこで，関数 $haskell.doEverything'$ という名前のラッパー関数を次のように定義する．
+#par-equation($ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
+  haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $)
 関数 $haskell.doEverything'$ は元の関数 $haskell.doEverything$ をピュア演算子でラップして，戻り値をIO文字列にするだけである．
 
 ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doEverything'$ にバインドして，次のようにIO文字列 $z'$ を得ておこう．
-
-$ z' &colon.double haskell.IOString \
-  z' &= haskell.doEverything' haskell.bind haskell.getContents $
-
+#par-equation($ z' &colon.double haskell.IOString \
+  z' &= haskell.doEverything' haskell.bind haskell.getContents $)
 IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
-
-$ haskell.main = haskell.putStrLn haskell.bind z' $
-
-以上でプログラムが完成した．
+#par-equation($ haskell.main = haskell.putStrLn haskell.bind z' $)
+以上でプログラムが完成した．これをHaskellで書くと次のようになる．
 
 #sourcecode[```haskell 
 doEverything' :: String -> IO String
