@@ -2181,10 +2181,8 @@ $ z = haskell.form y $
 #par-equation($ haskell.doEverything &colon.double haskell.String -> haskell.String \
   haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
 この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z'$ を得ておき，印字することにしよう．
-
-$ z' &= haskell.doEverything s \
-  haskell.main &= haskell.putStrLn z' $
-
+#par-equation($ z' &= haskell.doEverything s \
+  haskell.main &= haskell.putStrLn z' $)
 こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．
 
 
