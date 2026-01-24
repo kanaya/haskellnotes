@@ -1869,7 +1869,7 @@ $ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
 
 #tk モナド
 
-=== バインド演算子 #tk
+=== バインド演算子
 
 一般マップ演算子をピュア演算子と一般アプリカティブマップ演算子に分解することで，式の見通しを良くすることができるアプリカティブスタイルという記法を採用できた．いま変数 $x, y colon.double haskell.a$ があり，引数を文脈に入れる関数 $phi, psi colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa$ および $omega colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa -> haskell.fa -> haskell.fa$ があるとしよう．すると，アプリカティブスタイルでは次のようにコンテナ変数 $u_*, v_*$ に関数 $omega$ を適用させることができる．
 
