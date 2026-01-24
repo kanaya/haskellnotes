@@ -1974,7 +1974,7 @@ $ cat x | phi | psi > z
 
 アプリカティブ関手は，アプリカティブ関手則のみならず，関手則も満たす．そして，モナドは次節で述べるモナド則と，アプリカティブ関手則，関手則を満たす．
 
-=== モナド則 #tk
+=== モナド則
 
 モナドは次のモナド則を満たす．ただし $x_* colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.ma$ かつ $phi, psi colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.a -> haskell.ma$ である．
 
@@ -1983,6 +1983,12 @@ $ cat x | phi | psi > z
 2. 結合則：バインド演算子 $(haskell.bind)$ は $psi haskell.bind (phi haskell.bind x_*) = (psi haskell.bind (phi lozenge.stroked.medium)) haskell.bind x_*$ を満たす．
 3. 準同型性（右単位元の存在）：バインド演算子 $(haskell.bind)$ は $phi haskell.bind chevron.l x chevron.r = phi x$ を満たす．
 ]
+
+Haskellには，型クラス $haskell.Monad$ が上記のモナド則を満たすことを強制する仕組みはない．しかし，多くのプログラマーがこれらのモナド則を満たすようにモナドを実装する．モナド型クラスがモナド則を満たすことで，多くの有益なテクニックが使えるようになるからである．
+
+モナド則の有益性については @programming-and-algebraic-structures で述べる．
+
+#pb
 
 恒等射の存在における式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_*$ の左単位元 $(chevron.l lozenge.stroked.medium chevron.r haskell.bind)$ は多くの文献で「右単位元」と書かれている．これはHaskellにおいて式 $chevron.l lozenge.stroked.medium chevron.r haskell.bind x_* = x_*$ を  ```haskell x >>= return = x``` と書くからである．
 
@@ -2342,6 +2348,7 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.d
 = Haskellプログラミング
 
 = プログラミングと代数構造
+<programming-and-algebraic-structures>
 
 == 整数
 
