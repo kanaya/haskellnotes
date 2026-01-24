@@ -2176,9 +2176,7 @@ $ haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.
 $ z = haskell.form y $
 
 印字には文字列をそのまま書き出すアクション $haskell.putStrLn$ を用いることとし，これを $haskell.main$ アクションとする．
-
-$ haskell.main = haskell.putStrLn z $
-
+#par-equation($ haskell.main = haskell.putStrLn z $)
 これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
 
 $ haskell.doEverything &colon.double haskell.String -> haskell.String \
