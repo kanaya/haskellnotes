@@ -2324,7 +2324,9 @@ $ r_"s" = 5 haskell.replicate_M haskell.randomRIO paren.l.stroked 1, 6 colon.dou
 
 出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
 #par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IO haskell.unittype $)
-である．アクション $haskell.putStrLn$ をバインド $(haskell.bind)$ すると，文字列を印字することができる．例を挙げる．
+である．アクション $haskell.putStrLn$ をバインド $(haskell.bind)$ すると，文字列を印字することができる．
+
+// print
 
 // show 型クラス
 
