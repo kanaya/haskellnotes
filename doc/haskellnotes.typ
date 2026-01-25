@@ -1685,9 +1685,29 @@ $ g * (f * x_"s")
   &= g convolve.o (f convolve.o x_"s") $)
 であるから，結合則も成り立っている．
 
-Maybe型も関手則に従うことを確認しておこう．
+Maybe型も関手則に従うことを確認しておこう．Maybe型の変数 $x_? colon.double haskell.MaybeA$ について
+#par-equation($ id convolve.o x_? 
+  &|_(x_? equiv haskell.Just(x)) = haskell.Just(id x) = id x_? \
+  &|_haskell.otherwise = haskell.Nothing = id x_? $)
+なので，恒等射が存在する．
 
-#tk
+次に関数の結合則が成り立っていることも確認しよう．任意の関数 $f, g colon.double haskell.a -> haskell.a$ について
+#par-equation($ (g compose f) convolve.o x_?
+  &= haskell.kwcase x_?
+  haskell.kwof cases(x_? equiv haskell.Just(x) arrow.r.dotted haskell.Just((g compose f) x),
+  haskell.otherwise arrow.r.dotted haskell.Nothing) \
+  &= haskell.kwcase x_?
+  haskell.kwof cases(x_? equiv haskell.Just(x) arrow.r.dotted haskell.Just(g (f x)),
+  haskell.otherwise arrow.r.dotted haskell.Nothing) \
+  &= haskell.kwcase x_?
+  haskell.kwof cases(x_? equiv haskell.Just(x) arrow.r.dotted g convolve.o haskell.Just(f x),
+  haskell.otherwise arrow.r.dotted haskell.Nothing) \
+  &= haskell.kwcase x_?
+  haskell.kwof cases(x_? equiv haskell.Just(x) arrow.r.dotted g convolve.o (f convolve.o x),
+  haskell.otherwise arrow.r.dotted haskell.Nothing) \
+  &= g convolve.o (f convolve.o x)
+$)
+であるから，結合則も成り立っている．
 
 === アプリカティブ関手 #tk
 
@@ -2327,7 +2347,7 @@ $ stack run < input.txt
     columns: (auto, auto),
     inset: 10pt,
     table.header([型クラス], [特徴]),
-    [関手], [マップ演算子 $(convolve.o)$ を持つ],
+    [関手], [関手マップ演算子 $(convolve.o)$ を持つ],
     [アプリカティブ関手], [関手の特徴に加えて…… \ アプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ],
     [モナド], [アプリカティブ関手の特徴に加えて…… \ バインド演算子 $(haskell.bind)$ を持つ],
   )
