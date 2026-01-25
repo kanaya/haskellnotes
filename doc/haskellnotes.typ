@@ -2287,12 +2287,13 @@ $ stack run < input.txt
     inset: 10pt,
     table.header([型クラス], [特徴]),
     [関手], [マップ演算子 $(convolve.o)$ を持つ],
-    [アプリカティブ関手], [アプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ],
-    [モナド], [バインド演算子 $(haskell.bind)$ を持つ],
+    [アプリカティブ関手], [関手の特徴に加えて…… \ アプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ],
+    [モナド], [アプリカティブ関手の特徴に加えて…… \ バインド演算子 $(haskell.bind)$ を持つ],
   )
 )
 <functor-applicative-monad>
 
+#tk
 
 === IOと擬似乱数
 
