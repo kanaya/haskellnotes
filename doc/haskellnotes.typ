@@ -2314,11 +2314,14 @@ $ r = haskell.randomIO colon.double haskell.IOFloat $
 
 $ haskell.main = haskell.print haskell.bind r $
 
+繰り返し演算子の文脈ありバージョン $haskell.replicate_M$ を用いると次のように#keyword[擬似乱数列]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
+
+$ r_"s" = 5 haskell.replicate_M (haskell.randomIO colon.double haskell.IOFloat) $
+
 Haskellは指定された範囲の疑似乱数を生成するアクション $haskell.randomRIO$ も提供している．次の例は6面体のサイコロを振るものである．
 #par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
-このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．サイコロを5回振りたいときは，繰り返し演算子の文脈ありバージョン $haskell.replicate_M$ を用いて次のように書く．#footnote[Haskellでは ```haskell rs = n `replicateM` (1, 6 :: Int)``` と書く．]
+このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
 
-$ r_"s" = 5 haskell.replicate_M haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $
 
 #pb
 

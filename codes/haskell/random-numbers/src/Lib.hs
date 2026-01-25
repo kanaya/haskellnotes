@@ -6,4 +6,4 @@ import System.Random
 import Control.Monad (replicateM)
 
 someFunc :: IO ()
-someFunc = print =<< (replicateM 10 (randomRIO (1, 6 :: Int)))
+someFunc = print =<< (5 `replicateM` (randomIO :: IO Float))
