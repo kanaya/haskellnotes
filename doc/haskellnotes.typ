@@ -2191,9 +2191,7 @@ s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and
 z &= haskell.doEverything s \
   haskell.main &= haskell.putStrLn z $
 
-こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．
-
-以上の式をHaskellで書くと次のようになる．
+こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．以上の式をHaskellで書くと次のようになる．
 
 #sourcecode[
 ```haskell 
@@ -2277,6 +2275,24 @@ $ stack run < input.txt
 実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナドで表現する．IOという「破壊活動」をモナド型クラスの中に閉じ込めて，プログラムの他の部分と分離するのである．
 
 === IOモナド #tk
+
+今後，モナド型クラスに属する型の変数のことを単に「モナド」と呼ぶ．またモナド型クラスではない型の変数を受け取ってモナドを返す関数を「文脈に入れる関数」と呼ぶ．モナド型クラスに属する型はバインド演算子 $(haskell.bind)$ を持つので，モナドに対してバインド演算子を用いて文脈に入れる関数を適用することができる．
+
+ここで改めて概念を整理しておこう．@functor-applicative-monad に示すように，関手型クラス $(haskell.Functor)$ に属する型はマップ演算子 $(convolve.o)$ を持つ．アプリカティブ関手型クラス $(haskell.Applicative)$ に属する型はマップ演算子に加えてアプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ．モナド型クラス $(haskell.Monad)$ に属する型は，マップ演算子，アプリカティブマップ演算子，ピュア演算子に加えて，バインド演算子 $(haskell.bind)$ を持つ．
+
+#figure(
+  caption: "関手・アプリカティブ関手・モナド",
+  table(
+    columns: (auto, auto),
+    inset: 10pt,
+    table.header([型クラス], [特徴]),
+    [関手], [マップ演算子 $(convolve.o)$ を持つ],
+    [アプリカティブ関手], [アプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ],
+    [モナド], [バインド演算子 $(haskell.bind)$ を持つ],
+  )
+)
+<functor-applicative-monad>
+
 
 === IOと擬似乱数
 
