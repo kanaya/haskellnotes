@@ -2276,7 +2276,9 @@ $ stack run < input.txt
 
 実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナドで表現する．IOという「破壊活動」をモナド型クラスの中に閉じ込めて，プログラムの他の部分と分離するのである．
 
-=== 入力
+=== IOモナド #tk
+
+=== IOと擬似乱数 #tk
 
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
 
@@ -2318,12 +2320,18 @@ Haskellは指定された範囲の疑似乱数を生成するアクション $ha
 
 $ r_"s" = 5 haskell.replicate_M haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $
 
+#pb
 
-=== 出力 #tk
+出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
+#par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IO haskell.unittype $)
+である．アクション $haskell.putStrLn$ をバインド $(haskell.bind)$ すると，文字列を印字することができる．例を挙げる．
+
+// show 型クラス
+
 
 === mainアクション #tk
 
-
+// 戻り値
 
 $ haskell.main &colon.double haskell.IO_haskell.Int \
   haskell.main &= chevron.l 0 chevron.r $
