@@ -262,3 +262,4 @@
 
 #let IOString = $typeconstructor1(IO, String)$
 #let IOFloat = $typeconstructor1(IO, Float)$
+#let IOunit = $typeconstructor1(IO, unittype)$

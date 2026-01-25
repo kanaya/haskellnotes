@@ -2278,7 +2278,7 @@ $ stack run < input.txt
 
 === IOモナド #tk
 
-=== IOと擬似乱数 #tk
+=== IOと擬似乱数
 
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
 
@@ -2314,7 +2314,7 @@ $ r = haskell.randomIO colon.double haskell.IOFloat $
 
 $ haskell.main = haskell.print haskell.bind r $
 
-繰り返し演算子の文脈ありバージョン $haskell.replicate_M$ を用いると次のように#keyword[擬似乱数列]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
+繰り返し演算子の文脈ありバージョン $(haskell.replicate_M)$ を用いると次のように#keyword[擬似乱数列]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
 
 $ r_"s" = 5 haskell.replicate_M (haskell.randomIO colon.double haskell.IOFloat) $
 
@@ -2322,17 +2322,24 @@ Haskellは指定された範囲の疑似乱数を生成するアクション $ha
 #par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
 このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
 
-
 #pb
 
 出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
-#par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IO haskell.unittype $)
-である．アクション $haskell.putStrLn$ をバインド $(haskell.bind)$ すると，文字列を印字することができる．
+#par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IOunit $)
+である．これはアクション $haskell.putStrLn$ が文字列 $(haskell.String)$ を受け取って，何らかの破壊的操作を行って，空っぽのIOアクション $(haskell.IOunit)$ を返すことを意味する．
 
-// print
+アクション $haskell.putStrLn$ に文字列を渡すと，その文字列を標準出力へ印字する．例を挙げる．
+#par-equation($ haskell.main = haskell.putStrLn haskell.constantstring("Hello, world!") $)
+ここで文字列型 $(haskell.String)$ をIOモナドに包んで返す関数 $phi$ があるとしよう．例えば，$phi$ が次のような関数であるとする．
+#par-equation($ phi s = chevron.l haskell.constantstring("I said: ") smash s chevron.r $)
+ここに $chevron.l square.filled chevron.r$ はピュア演算子である．このような関数でも，バインド演算子 $(haskell.bind)$ を用いて，文字列を印字することができる．例を挙げる．
+#par-equation($ haskell.main = haskell.putStrLn haskell.bind (phi haskell.constantstring("Hello, world!")) $)
+このように，IOモナドに包まれた関数をバインド $(haskell.bind)$ すると，文字列を印字することができる．
 
-// show 型クラス
-
+型クラス $haskell.Show$ に属する型は，値を文字列に変換する関数 $haskell.showfunc$ を提供する．アクション $haskell.print$ は，型クラス $haskell.Show$ に属する型の値を受け取って，その値を文字列に変換して，標準出力へ印字する．例を挙げる．
+#par-equation($ x colon.double haskell.Int = 1 \
+  haskell.main = haskell.print x $)
+この例では，型 $haskell.Int$ が型クラス $haskell.Show$ のインスタンスなので，アクション $haskell.print$ に直接渡すことができる．
 
 === mainアクション #tk
 
