@@ -728,7 +728,7 @@ $ x :: haskell.Int = 1 $
 関数にも型がある．例えば整数引数を一つ取り，整数を返す関数 $f$ は
 #par-equation($ f colon.double haskell.Int -> haskell.Int $)
 という型を持つ．この型は
-#par-equation($ f colon.double underbrace(haskell.Int, x) -> underbrace(haskell.Int, f x) $)
+#par-equation($ f colon.double underparen(haskell.Int, x) -> underparen(haskell.Int, f x) $)
 のようにイメージすると良い．これは関数 $f$ が集合 $haskell.Int$ から集合 $haskell.Int$ への#keyword[写像]であると読む．#footnote[Haskellでは ```haskell f :: Int -> Int``` と書く．なお正確には矢印記号 $(->)$ は型コンストラクタである．無名の型引数を $lozenge.filled.medium$ で表すと $->$ は $chevron.l lozenge.filled.medium -> lozenge.filled.medium chevron.r$ という，ふたつの型引数を取る型コンストラクタである．
 ]
 
@@ -753,7 +753,7 @@ Haskellでは，どのような関数であれ引数は1個しかとらない．
 という型を持つ．写像の矢印記号は右結合するので，これは
 #par-equation($ g colon.double haskell.Int -> (haskell.Int -> haskell.Int) $)
 と同じ意味である．上式は
-#par-equation($ g colon.double underbrace(haskell.Int, x) -> underbrace(overbrace(haskell.Int, y) -> overbrace(haskell.Int, (g x)y), g x) $)
+#par-equation($ g colon.double underparen(haskell.Int, x) -> underparen(overparen(haskell.Int, y) -> overparen(haskell.Int, (g x)y), g x) $)
 のようにイメージすると良い．自然言語で考えると $haskell.Int$ 型の引数を一つ取り，$haskell.Int$ 型の引数を一つ取って $haskell.Int$ 型の値を返す関数を返す，と読める．#footnote[関数の型に出てくる $->$ は2引数をとる型コンストラクタである．型コンストラクタに関しては〜〜〜で詳しく述べる．例えば $haskell.a -> haskell.b$ という型は $haskell.typeconstructor2((->), haskell.a, haskell.b)$ の別名であり，型コンストラクタ $(->)$ に型引数 $haskell.a$ と $haskell.b$ を与えたものと読む．]
 
 #pb
