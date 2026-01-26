@@ -2672,6 +2672,8 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
 
 = 執筆ノート
 
+- オブジェクト指向プログラミングとの関係
+
 #figure(
   caption: "メモ",
   table(
