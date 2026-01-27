@@ -2029,7 +2029,7 @@ $ cat x | phi | psi > z
 
 アプリカティブ関手は，アプリカティブ関手則のみならず，関手則も満たす．そして，モナドは次節で述べるモナド則と，アプリカティブ関手則，関手則を満たす．
 
-=== モナド則 #tk
+=== モナド則
 
 モナドは次のモナド則を満たす．ただし $x_* colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.ma$ かつ $phi, psi colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.a -> haskell.ma$ である．
 
