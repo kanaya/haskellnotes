@@ -1919,6 +1919,8 @@ $ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
 
 この章のまとめ．
 
+// 関手型クラスが数学での圏にだいたい相当するということ．
+
 == モナド
 <monad>
 
