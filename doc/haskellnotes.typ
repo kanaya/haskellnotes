@@ -2718,3 +2718,10 @@ $ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
   // UFO演算子の定義
 
 
+#figure[
+  #image("fig/category-math.svg")
+]
+
+#figure[
+  #image("fig/functor-haskell.svg")
+]
