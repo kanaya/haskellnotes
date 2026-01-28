@@ -2725,3 +2725,7 @@ $ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
 #figure[
   #image("fig/functor-haskell.svg")
 ]
+
+#figure[
+  #image("fig/monad-haskell.svg")
+]
