@@ -1961,12 +1961,12 @@ $ w_* = omega ast.op.o (psi y) ast.square (phi x) $
 があるとする．変数 $x$ に関数 $phi', psi', omega'$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi' x \
-  v_* &= haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
-  w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
+  v_* &= haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+  w_* &= haskell.kwcase v_* haskell.kwof cases(haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
 
 ひとつの式にまとめても，あまり冴えない．
-#par-equation($ w_* &= haskell.kwcase v_* haskell.kwof cases(v_* equiv haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(u_* equiv haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
+#par-equation($ w_* &= haskell.kwcase v_* haskell.kwof cases(haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
+  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, square.stroked.dotted arrow.r.dotted haskell.Nothing) \
   &haskell.kwwhere u_* eq.delta phi' x $)
 やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書くところだ．
 
