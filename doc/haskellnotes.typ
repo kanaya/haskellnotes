@@ -2730,14 +2730,17 @@ $ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
   // UFO演算子の定義
 
 
-#figure[
-  #image("fig/category-math.svg")
-]
+#figure(
+  image("fig/category-math.svg"),
+  caption: [数学における圏（Category）と関手（Functor）]
+)
 
-#figure[
-  #image("fig/functor-haskell.svg")
-]
+#figure(
+  image("fig/functor-haskell.svg"),
+  caption: [Haskellの関手型クラス（Functor Type Class）とそのインスタンス]
+)
 
-#figure[
-  #image("fig/monad-haskell.svg")
-]
+#figure(
+  image("fig/monad-haskell.svg"),
+  caption: [Haskellのバインド演算子とモナド型クラスのインスタンス]
+)
