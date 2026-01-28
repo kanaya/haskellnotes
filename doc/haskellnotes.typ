@@ -1921,6 +1921,14 @@ $ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
 
 // 関手型クラスが数学での圏にだいたい相当するということ．
 
+#showybox(title: "Haskellの関手と数学の関手")[
+Haskellの教科書では「関手」と言った場合，次のような意味を保つ場合がある．
+- 関手型クラス $(haskell.Functor)$
+- 関手型クラスのインスタンスである型（例：リストやMaybe）
+- 関手型クラスのインスタンスである型の変数
+- 数学での圏論における関手
+]
+
 == モナド
 <monad>
 
