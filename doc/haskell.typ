@@ -24,6 +24,7 @@
 
 // Special constant.
 
+#let emptylist = math.class("normal", math.cancel(math.square.stroked.medium))
 #let unit = math.class("normal", math.ellipse.stroked.h)
 
 // Constant.
