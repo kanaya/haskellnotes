@@ -1766,8 +1766,8 @@ $ z' = [| g x y |] ... "採用されなかった文法" $
 アプリカティブマップ演算子を用いると#keyword[アプリカティブスタイル]という記法が使える．関数 $phi, psi$ が引数を文脈に入れる関数，例えば
 #par-equation($ phi, psi colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa $)
 であるとしよう．また関数 $omega$ が2引数を取り
-#par-equation($ omega colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.fa -> haskell.fa -> haskell.fa $)
-だとしよう．すると，次のようにコンテナ変数 $u_*, v_*$ を作っておいて，関数 $h$ を適用させることができる．
+#par-equation($ omega colon.double haskell.a -> haskell.a -> haskell.a $)
+だとしよう．すると，次のようにコンテナ変数 $u_*, v_*$ を作っておいて，関数 $omega$ を適用させることができる．
 
 $  u_* &= phi x \
   v_* &= psi y \
