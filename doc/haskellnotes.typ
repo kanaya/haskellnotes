@@ -1735,8 +1735,7 @@ $ z'_* = chevron.l g chevron.r ast.square x_* ast.square y_* $<applicative-style
 
 $ z' = chevron.l g chevron.r ast.square x ast.square  y $<applicative-style-2>
 
-そこで，我々も誤解を招く恐れがない場合は添字 $*$ を省略することにする．ところで @applicative-style-2 はかつて次のように書くことが提案されたが，却下された．#footnote[現在のHaskellでは `z = liftA2 g x y` と書くことで代用されている．元の提案は `z = [|g x y|]` であった．]
-$ z' = [| g x y |] ... "採用されなかった文法" $
+そこで，我々も誤解を招く恐れがない場合は添字 $*$ を省略することにする．
 
 #pb
 
@@ -1761,8 +1760,6 @@ $ z' = [| g x y |] ... "採用されなかった文法" $
 
 #pb
 
-#tk check
-
 アプリカティブマップ演算子を用いると#keyword[アプリカティブスタイル]という記法が使える．関数 $phi, psi$ が引数を文脈に入れる関数，例えば
 #par-equation($ phi, psi colon.double haskell.Applicative supset haskell.f arrow.r.stroked haskell.a -> haskell.fa $)
 であるとしよう．また関数 $omega$ が2引数を取り
@@ -1774,6 +1771,10 @@ $  u_* &= phi x \
   w_* &= omega ast.op.o u_* ast.square v_* $
 
 コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．#footnote[Haskellでは ```haskell w = omega <$> (phi x) <*> (psi y)``` と書く．これは ```haskell w = do { u <- phi x; v <- psi y; return (omega u v) }``` と書くのと同じである．]
+
+アプリカティブスタイルは，関数 $omega$ を変数 $u_*, v_*$ にあたかも適用したかのように見える．実際，アプリカティブスタイルはかつて次のように書くことが提案された．#footnote[現在のHaskellでは ```haskell w = liftA2 omega u v``` と書くことで代用されている．元の提案は `w = [|omega u v|]` であった．]
+
+$ w = [| omega u v |] ... "採用されなかった文法" $
 
 // https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
