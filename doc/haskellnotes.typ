@@ -2235,10 +2235,10 @@ $ z = haskell.form y $
 
 印字には文字列をそのまま書き出すアクション $haskell.putStrLn$ を用いることとし，これを $haskell.main$ アクションとする．
 #par-equation($ haskell.main = haskell.putStrLn z $)
-これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
-#par-equation($ haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
-この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z$ を得ておき，印字することにしよう．これまでの経過をまとめると次のように出来る．
+これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doIt$ という名前の関数にまとめておこう．
+#par-equation($ haskell.doIt &colon.double haskell.String -> haskell.String \
+  haskell.doIt x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
+この「全部入り」関数 $haskell.doIt$ を文字列 $s$ に適用して文字列 $z$ を得ておき，印字することにしよう．これまでの経過をまとめると次のように出来る．
 
 $ 
 haskell.clean &colon.double haskell.String -> haskell.String \
@@ -2252,10 +2252,10 @@ haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.
   haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
   haskell.form haskell.emptylist &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\\n") smash haskell.form x_"s" \
-haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
+haskell.doIt &colon.double haskell.String -> haskell.String \
+  haskell.doIt x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
 s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") \
-z &= haskell.doEverything s \
+z &= haskell.doIt s \
   haskell.main &= haskell.putStrLn z $
 
 こうしておけば，中間変数 $t, u, v, w, x, y$ を使わずにプログラムを書くことができる．以上の式をHaskellで書くと次のようになる．
@@ -2273,21 +2273,21 @@ count :: [[String]] -> [(Int, String)]
 count [] = []
 count (xs:xss) = (length xs, head xs) : count xss
 
-compIS :: (Int, String) -> (Int, String) -> Ordering
-compIS (a, _) (b, _) = compare b a
+compFst :: (Int, String) -> (Int, String) -> Ordering
+compFst (a, _) (b, _) = compare b a
 
 form :: [(Int, String)] -> String
 form [] = ""
 form (x:xs) = (let (a, b) = x in show a ++ " " ++ b) ++ "\n" ++ form xs
 
-doEverything :: String -> String
-doEverything x = form $ (sortBy compIS) $ count $ group $ sort $ words $ clean x
+doIt :: String -> String
+doIt x = form $ (sortBy compFst) $ count $ group $ sort $ words $ clean x
 
 s :: String
 s = "Hello, world! Hello, once again, to you and you and you."
 
 z :: String
-z = doEverything s
+z = doIt s
 
 main = putStrLn z
 ```]
@@ -2304,24 +2304,24 @@ main = putStrLn z
 1 world
 ```]
 
-最後の仕上げは，関数 $haskell.doEverything$ をファイルからの入力に適用することである．と言っても，難しいことはなにもない．関数 $haskell.doEverything$ は文字列 $(haskell.String)$ を受け取るのだが，ファイルからの入力は参照透過性を持たないので，戻り値を文字列ではなく，#keyword[IO文字列] $(haskell.IOString)$ とする必要があるだけである．IO文字列については続く節で説明する．そこで，関数 $haskell.doEverything'$ という名前のラッパー関数を次のように定義する．
-#par-equation($ haskell.doEverything' &colon.double haskell.String -> haskell.IOString \
-  haskell.doEverything' x &= chevron.l haskell.doEverything x chevron.r $)
-関数 $haskell.doEverything'$ は元の関数 $haskell.doEverything$ をピュア演算子でラップして，戻り値をIO文字列にするだけである．
+最後の仕上げは，関数 $haskell.doIt$ をファイルからの入力に適用することである．と言っても，難しいことはなにもない．関数 $haskell.doIt$ は文字列 $(haskell.String)$ を受け取るのだが，ファイルからの入力は参照透過性を持たないので，戻り値を文字列ではなく，#keyword[IO文字列] $(haskell.IOString)$ とする必要があるだけである．IO文字列については続く節で説明する．そこで，関数 $haskell.doIt'$ という名前のラッパー関数を次のように定義する．
+#par-equation($ haskell.doIt' &colon.double haskell.String -> haskell.IOString \
+  haskell.doIt' x &= chevron.l haskell.doIt x chevron.r $)
+関数 $haskell.doIt'$ は元の関数 $haskell.doIt$ をピュア演算子でラップして，戻り値をIO文字列にするだけである．
 
-ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doEverything'$ にバインドして，次のようにIO文字列 $z'$ を得ておこう．
+ファイルからの入力にはアクション $haskell.getContents$ を用いる．このアクションはファイルからの入力を文字列として返す．アクション $haskell.getContents$ を我々の $haskell.doIt'$ にバインドして，次のようにIO文字列 $z'$ を得ておこう．
 #par-equation($ z' &colon.double haskell.IOString \
-  z' &= haskell.doEverything' haskell.bind haskell.getContents $)
+  z' &= haskell.doIt' haskell.bind haskell.getContents $)
 IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
 #par-equation($ haskell.main = haskell.putStrLn haskell.bind z' $)
 以上でプログラムが完成した．関数 ```haskell doEverything``` が定義されているとして，残りをHaskellで書くと次のようになる．
 
 #sourcecode[```haskell 
-doEverything' :: String -> IO String
-doEverything' x = pure (doEverything x)
+doIt' :: String -> IO String
+doIt' x = pure (doEverything x)
 
 z' :: IO String
-z' = doEverything' =<< getContents
+z' = doIt' =<< getContents
 
 main = putStrLn =<< z'
 ```]
@@ -2529,6 +2529,13 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.d
 
 
 = Haskellプログラミング
+
+== main
+=== コマンドライン引数と環境変数
+=== 戻り値
+=== 異常終了
+
+// https://qiita.com/minarai/items/b2f036008bc68b23871c
 
 = プログラミングと代数構造
 <programming-and-algebraic-structures>
