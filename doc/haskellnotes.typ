@@ -2609,6 +2609,14 @@ Haskellプログラムでdo記法を採用するかどうかは
 // https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
 
 
+#showybox(title: "作用と副作用")[
+関数 $z = f x $ の参照透過性を保ったまま，関数 $f$ に副作用を持たせるには次のように定義すると良い．
+$ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked $
+
+引数 $x$ に注目すると $z = f x$ の関係性は保たれており，一方で $w$ で表現される内部状態は関数 $f$ の実行後に $w'$ に変化するものと理解することが出来る．
+]
+
+
 = Haskellプログラミング
 
 == main
