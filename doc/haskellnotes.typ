@@ -2214,14 +2214,14 @@ $ t = haskell.clean s $
   haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"s" paren.r.stroked : haskell.count x_"ss" $)
 関数 $haskell.head$ の使用は非推奨であるが，単純化のために使うことにする．これで変数 $x$ は単語とその出現頻度のペアを収めたリストとなっている．
 
-今度は，リスト $x$ を出現頻度順にソートする必要がある．関数 $haskell.sort$ は順序が定義された型のリストだけをソート対象とするので，任意の型のリストをソート出来る $haskell.sortBy$ 関数を使う．この $haskell.sortBy$ 関数は，二つの要素を比較する関数を受け取り，その比較結果に従ってリストをソートする．この比較関数を $haskell.compIS$ としよう．関数 $haskell.compIS$ を次のように定義する．
-#par-equation($ haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $)
+今度は，リスト $x$ を出現頻度順にソートする必要がある．関数 $haskell.sort$ は順序が定義された型のリストだけをソート対象とするので，任意の型のリストをソート出来る $haskell.sortBy$ 関数を使う．この $haskell.sortBy$ 関数は，二つの要素を比較する関数を受け取り，その比較結果に従ってリストをソートする．この比較関数を $haskell.compFst$ としよう．関数 $haskell.compFst$ を次のように定義する．
+#par-equation($ haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compFst paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a $)
 関数 $haskell.compare$ は二つの要素を比較して，結果を $haskell.Ordering$ 型で返す．引数の順序を入れ替えているのは，出現頻度順にソートするためである．
 
 ソートされた結果を次のようにリスト $y$ とする．
 
-$ y = haskell.sortBy haskell.compIS x $
+$ y = haskell.sortBy haskell.compFst x $
 
 最後に，印字しやすいように体裁を整える関数 $haskell.form$ を定義する．
 
@@ -2237,7 +2237,7 @@ $ z = haskell.form y $
 #par-equation($ haskell.main = haskell.putStrLn z $)
 これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doEverything$ という名前の関数にまとめておこう．
 #par-equation($ haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x $)
 この「全部入り」関数 $haskell.doEverything$ を文字列 $s$ に適用して文字列 $z$ を得ておき，印字することにしよう．これまでの経過をまとめると次のように出来る．
 
 $ 
@@ -2247,13 +2247,13 @@ haskell.clean &colon.double haskell.String -> haskell.String \
   haskell.count &colon.double [[haskell.String]] ->[paren.l.stroked haskell.Int, haskell.String paren.r.stroked] \
   haskell.count haskell.emptylist &= haskell.emptylist \
   haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"s" paren.r.stroked : haskell.count x_"ss" \
-haskell.compIS &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compIS paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a \
+haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
+  haskell.compFst paren.l.stroked a, square.stroked.dotted paren.r.stroked paren.l.stroked b, square.stroked.dotted paren.r.stroked &= haskell.compare b a \
   haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
   haskell.form haskell.emptylist &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\\n") smash haskell.form x_"s" \
 haskell.doEverything &colon.double haskell.String -> haskell.String \
-  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compIS) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
+  haskell.doEverything x &= haskell.form haskell.apply (haskell.sortBy haskell.compFst) haskell.apply haskell.count haskell.apply haskell.group haskell.apply haskell.sort haskell.apply haskell.words haskell.apply haskell.clean x \
 s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") \
 z &= haskell.doEverything s \
   haskell.main &= haskell.putStrLn z $
@@ -2326,7 +2326,7 @@ z' = doEverything' =<< getContents
 main = putStrLn =<< z'
 ```]
 
-Haskell Stackを使っている場合，このプログラムを ```io-survival-kit-three``` というプロジェクト名で保存すると，次のように実行できる．
+Haskell Stackを使っている場合，次のように実行できる．
 
 #sourcecode[```shell-unix-generic
 $ stack run < input.txt
