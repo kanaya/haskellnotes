@@ -1389,9 +1389,7 @@ $ x_? colon.double haskell.MaybeType(haskell.Int) = haskell.Just(1) $
 
 Maybe変数が値を持たない場合は $x_? = haskell.Nothing$ のように書く．#footnote[Haskellでは ```haskell xm = Nothing``` と書く．]
 
-// []に入れるという方法もある．
-
-ここで変数 $z_?$ が取り得る値は正しく計算された値をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．
+ここで変数 $z_?$ が取り得る値は正しく計算された値をラップしたものか，あるいはエラーを表す値 $haskell.Nothing$ である．このように計算結果に「意味付け」をすることを#keyword[文脈]に入れると言う．#footnote[Maybeを使う方法以外に，リストに入れるという方法もある．正しい計算が出来た場合は $[frac(y, x, style: "skewed")]$ を，そうでない場合は $haskell.emptylist$ を返す関数を作る方法はある．ただし，計算の失敗を表現する場合はその目的のために設計されたMaybeのほうが相応しい．]
 
 一度Maybeになった変数を非Maybeに戻すことは出来ない．変数 $z$ が一度ゼロ除算の危険性に「汚染」された場合，その後ずっとMaybe変数に入れ続けなければいけない．そこで，普通の変数を引数にとる関数 $f$ にMaybe変数 $z_?$ を食わせるには，リストの時と同じようなマップ演算子が必要になる．具体的には，変数 $x$ が $haskell.Int$ 型として，Maybe変数 $x_?=haskell.Just(x)$ が与えられたとき
 #par-equation($ f ast.op.o_? x_? = haskell.Just(f x) $)
@@ -2486,7 +2484,7 @@ main()
 
 Haskellには構文糖として逐次処理記法が導入されている．それが#keyword[do記法]である．標準入力から1行を読み取って変数 $s$ に代入し，それを標準出力に書き出すHaskellプログラムを我々はこれまで
 #par-equation($ haskell.main = (backslash s |-> haskell.putStrLn s) haskell.bind haskell.getLine $)
-と書くことにしてきた．ここに変数 $s$ はアクション $haskell.getLine$ から得られる文字列を陽に示すためにラムダ式のパラメタとして書き出したものである．この式を，キーワード $haskell.kwdo$ を用いて次のように書き直すことが出来る．
+と書くことにしてきた．ここに変数 $s$ はアクション $haskell.getLine$ から得られる文字列を陽に示すためにラムダ式のパラメタとして書き出したものである．この式を，キーワード $haskell.kwdo$ を用いて次のように書き直すことが出来る．この記法は「まず $haskell.getLine$ の結果を $s$ に代入し，その結果の $s$ を $haskell.putStrLn$ する」と読める．
 
 $ haskell.main = haskell.kwdo {s <- haskell.getLine; haskell.putStrLn s} $<do-notation>
 
