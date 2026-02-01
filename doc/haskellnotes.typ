@@ -2606,6 +2606,7 @@ Haskellプログラムでdo記法を採用するかどうかは
 - 関数型言語でも現実的な入出力はモナド（IO型）を通じて安全かつ明示的に扱われる．
 - 型アノテーション（`:: String -> String`など）を書くことで関数や変数の型安全性をさらに高められる．
 
+// https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
 
 
 = Haskellプログラミング
