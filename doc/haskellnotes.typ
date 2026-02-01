@@ -2339,7 +2339,7 @@ $ stack run < input.txt
 == IO
 <io>
 
-実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナドで表現する．IOという「破壊活動」をモナド型クラスの中に閉じ込めて，プログラムの他の部分と分離するのである．
+実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナド型クラスで表現する．IOという「破壊活動」をモナド型クラスのインスタンスの変数に閉じ込めて，プログラムの他の部分と分離するのである．#footnote[Haskellでは「型クラス（type class）のインスタンス（instance）」は型（type）のことである．C++やJavaではインスタンスがオブジェクト（object）を意味するので，混同しないように気をつけよう．]
 
 === IOモナド #tk
 
@@ -2363,8 +2363,6 @@ $ stack run < input.txt
 これまで，マップ演算子がループを，アプリカティブマップ演算子が並列な計算を，バインド演算子が直列な計算を表現できることを見てきた．またバインド演算子を用いて，破壊的代入をモナドの中に隠す方法を見てきた．
 
 #tk
-
-=== IOと擬似乱数
 
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
 
@@ -2390,24 +2388,6 @@ $ f &colon.double haskell.String -> haskell.String \
 
 #pb
 
-// https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
-
-入力と似た概念に#keyword[疑似乱数]がある．疑似乱数は計算機が擬似的に発生させる乱数で，事前に値がわからない点がユーザからの入力と共通する．疑似乱数は計算機の状態に依存するので，参照透過性を持たない．次の例は変数 $r$ に疑似乱数を代入するものである．
-
-$ r = haskell.randomIO colon.double haskell.IOFloat $
-
-この変数 $r$ の値はプログラム実行時にランダムに定まる「汚染された」値である．そのため，プログラム中の他の参照透過性を持つ変数と混ぜて扱うことが出来ない．変数 $r$ はIOモナドに包まれているので，バインド演算子 $(haskell.bind)$ を使って，文脈に入れる関数の中で使うことが出来る．一例は $haskell.print$ アクションで，次の式は疑似乱数を印字するものである．
-
-$ haskell.main = haskell.print haskell.bind r $
-
-繰り返し演算子の文脈ありバージョン $(haskell.replicate_M)$ を用いると次のように#keyword[擬似乱数列]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
-
-$ r_"s" = 5 haskell.replicate_M (haskell.randomIO colon.double haskell.IOFloat) $
-
-Haskellは指定された範囲の疑似乱数を生成するアクション $haskell.randomRIO$ も提供している．次の例は6面体のサイコロを振るものである．
-#par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
-このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
-
 #pb
 
 出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
@@ -2426,6 +2406,30 @@ Haskellは指定された範囲の疑似乱数を生成するアクション $ha
 #par-equation($ x colon.double haskell.Int = 1 \
   haskell.main = haskell.print x $)
 この例では，型 $haskell.Int$ が型クラス $haskell.Show$ のインスタンスなので，アクション $haskell.print$ に直接渡すことができる．
+
+
+=== 疑似乱数
+
+
+// https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+入力と似た概念に#keyword[疑似乱数]がある．疑似乱数は計算機が擬似的に発生させる乱数で，事前に値がわからない点がユーザからの入力と共通する．疑似乱数は計算機の状態に依存するので，参照透過性を持たない．次の例は変数 $r$ に疑似乱数を代入するものである．
+
+$ r = haskell.randomIO colon.double haskell.IOFloat $
+
+この変数 $r$ の値はプログラム実行時にランダムに定まる「汚染された」値である．そのため，プログラム中の他の参照透過性を持つ変数と混ぜて扱うことが出来ない．変数 $r$ はIOモナドに包まれているので，バインド演算子 $(haskell.bind)$ を使って，文脈に入れる関数の中で使うことが出来る．一例は $haskell.print$ アクションで，次の式は疑似乱数を印字するものである．
+
+$ haskell.main = haskell.print haskell.bind r $
+
+繰り返し演算子の文脈ありバージョン $(haskell.replicate_M)$ を用いると次のように#keyword[擬似乱数列]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
+
+$ r_"s" = 5 haskell.replicate_M (haskell.randomIO colon.double haskell.IOFloat) $
+
+Haskellは指定された範囲の疑似乱数を生成するアクション $haskell.randomRIO$ も提供している．次の例は6面体のサイコロを振るものである．
+#par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
+このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
+
+
 
 === mainアクション #tk
 
@@ -2503,6 +2507,8 @@ $ haskell.main = haskell.kwdo { s <- haskell.getLine; space haskell.kwlet t eq.d
   haskell.main = (backslash s |-> haskell.print haskell.bind f s) haskell.bind haskell.getLine $
 
 === この章のまとめ #tk
+
+
 
 = Haskellプログラミング
 
