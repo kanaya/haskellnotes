@@ -2341,7 +2341,7 @@ $ stack run < input.txt
 
 実用的なプログラムには必ず入出力（IO）がある．ところがIOとは参照透過性を持たない行動であり，関数型プログラミングの世界観とは相容れない．そこで，HaskellではIOをモナド型クラスで表現する．IOという「破壊活動」をモナド型クラスのインスタンスの変数に閉じ込めて，プログラムの他の部分と分離するのである．#footnote[Haskellでは「型クラス（type class）のインスタンス（instance）」は型（type）のことである．C++やJavaではインスタンスがオブジェクト（object）を意味するので，混同しないように気をつけよう．]
 
-=== IOモナド #tk
+=== IOモナド
 
 今後，モナド型クラスに属する型の変数のことを単に「モナド」と呼ぶ．またモナド型クラスではない型の変数を受け取ってモナドを返す関数を「文脈に入れる関数」と呼ぶ．モナド型クラスに属する型はバインド演算子 $(haskell.bind)$ を持つので，モナドに対してバインド演算子を用いて文脈に入れる関数を適用することができる．
 
@@ -2386,11 +2386,9 @@ $ f &colon.double haskell.String -> haskell.String \
   s' &= haskell.readFile haskell.constantstring("input.txt") $)
 のように使う．
 
+#pb
+
 // https://minegishirei.hatenablog.com/entry/2023/12/15/093109
-
-#pb
-
-#pb
 
 出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
 #par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IOunit $)
