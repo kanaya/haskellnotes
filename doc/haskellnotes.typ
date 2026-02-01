@@ -88,7 +88,7 @@
     [型（引数あり）], [ボールドイタリック（1文字）], $haskell.typeconstructor1(m, a)$,
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
-    [ユニット型], [括弧], $haskell.unittype$,
+    [ユニット型], [括弧], $haskell.Unit$,
     [型クラス], [サンセリフ], $haskell.Num$,
     [カインド], [星，フラクチュール], $star.stroked, haskell.Type, haskell.kk$,
     [キーワード], [固定幅], $haskell.kwlet$,
@@ -768,13 +768,13 @@ $ z colon.double paren.l.stroked haskell.Int, haskell.Int paren.r.stroked $
 
 逆に，カリー化された関数 $f' x y = x + y$ に関しては $(haskell.uncurry f')paren.l.stroked x, y paren.r.stroked$ のように#keyword[アンカリー化]することで，タプルに適用することができる．
 
-タプルの中身の個数は0個または2個以上でなければならず，上限は処理系によって定められている．2個の変数からなるタプルを特別にペア，3個の変数からなるタプルを特別にトリプルと呼ぶ．中身が0個のタプルを $haskell.unit$ で表し，特別に#keyword[ユニット]と呼ぶ．#footnote[GHC v8.2.1 は最大62個の変数からなるタプルまで生成できる．]
+タプルの中身の個数は0個または2個以上でなければならず，上限は処理系によって定められている．2個の変数からなるタプルを特別にペア，3個の変数からなるタプルを特別にトリプルと呼ぶ．中身が0個のタプルを $emptyset$ で表し，特別に#keyword[ユニット]と呼ぶ．#footnote[GHC v8.2.1 は最大62個の変数からなるタプルまで生成できる．]
 
-ユニット $haskell.unit$ の型は#keyword[ユニット型]で，変数 $x$ がユニット型の場合は次のように書く．#footnote[Haskellでは ```haskell x :: ()``` と書く．]
+ユニット $emptyset$ の型は#keyword[ユニット型]で，変数 $x$ がユニット型の場合は次のように書く．#footnote[Haskellでは ```haskell x :: ()``` と書く．]
 
 $ x colon.double haskell.Unit $
 
-ユニット型の変数が取れる唯一の値は#keyword[ユニット] $(haskell.unit)$ である．#footnote[Haskellではユニットを ```haskell ()``` と書く．ユニットはユニット型の定数である．]
+ユニット型の変数が取れる唯一の値は#keyword[ユニット] $(emptyset)$ である．#footnote[Haskellではユニットを ```haskell ()``` と書く．ユニットはユニット型の定数である．]
 
 === 多相型と型クラス
 
@@ -2429,14 +2429,22 @@ Haskellは指定された範囲の疑似乱数を生成するアクション $ha
 #par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
 このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
 
-
-
 === mainアクション #tk
+
+Haskellでは関数はすべて参照透過性を持つことが期待されている．そこで $haskell.putStrLn$ のようなアクションをどのように解釈するか，改めて触れておく．アクション $haskell.putStrLn$ の型は
+#par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IOunit $)
+である．これはアクション $haskell.putStrLn$ が文字列 $(haskell.String)$ を受け取って，何らかの動作を行う「命令書」すなわちIOアクションと，付随する戻り値があることを意味する．ただし付随する戻り値のほうはユニット型 $(haskell.Unit)$ で，ユニット型の唯一の値がユニット $(emptyset)$ であるため，事実上戻り値は無いことになる．また「命令書」はプログラム実行時に「破壊活動」を行うのであるが，命令書自体は変化しないため，参照透過性を持つ．
+
+#tk
+
+
+-- 入出力（IO）を行う関数は，IOモナド型クラスのインスタンスを返す必要があり，またバインド演算子 $(haskell.bind)$ に対応していなければならない．つまりは
+#par-equation($ phi colon.double haskell.Monad supset haskell.m arrow.r.stroked haskell.a -> haskell.ma $)
 
 // 戻り値
 
-$ haskell.main &colon.double haskell.IO_haskell.Int \
-  haskell.main &= chevron.l 0 chevron.r $
+$ haskell.main &colon.double haskell.IO_haskell.Unit \
+  haskell.main &= chevron.l emptyset chevron.r $
 
 
 

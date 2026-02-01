@@ -25,7 +25,7 @@
 // Special constant.
 
 #let emptylist = math.class("normal", math.cancel(math.square.stroked.medium))
-#let unit = math.class("normal", math.ellipse.stroked.h)
+// #let unit = math.class("normal", math.cancel(math.ellipse.stroked.h))
 
 // Constant.
 
@@ -213,9 +213,6 @@
   $class("binary", grave(xx))$
 }
 
-// Unit type.
-#let unittype = $class("normal", bold(paren.l.closed paren.r.closed))$
-
 // Kind
 #let kind(x) = math.frak(x)
 #let Type = kind("Type")
@@ -263,4 +260,4 @@
 
 #let IOString = $typeconstructor1(IO, String)$
 #let IOFloat = $typeconstructor1(IO, Float)$
-#let IOunit = $typeconstructor1(IO, unittype)$
+#let IOunit = $typeconstructor1(IO, Unit)$
