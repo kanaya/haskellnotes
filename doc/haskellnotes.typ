@@ -702,7 +702,7 @@ $ stack run < input.txt
 - 一連の処理は関数合成によって１行で簡潔に記述できる．
 - 標準入力・出力を用いることで，Haskellプログラムをシェルと組み合わせて活用できる．
 
-#showybox(title: "コラム")[]
+#showybox(title: "コラム")[#tk]
 
 == 型
 <types>
@@ -871,7 +871,7 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 - 型変換演算子 $haskell.fromIntegral$ などを使うことで，型をまたいだ計算ができる．
 - Haskellでは多相型・型クラスを駆使して柔軟かつ安全な型付けを実現している．
 
-#showybox(title: "コラム")[]
+#showybox(title: "コラム")[#tk]
 
 == リスト
 <list>
@@ -1345,7 +1345,7 @@ main = print ps500
 - 無限リストやリスト内包表記を使い，宣言的に複雑なデータ列や操作も表記できる．
 - まとめとして，Haskellの評価戦略・再帰・リスト操作・効率化手法（遅延評価制御や末尾再帰）が重要な設計思想となっている．
 
-#showybox(title: "コラム")[]
+#showybox(title: "コラム")[#tk]
 
 == Maybe
 <maybe>
@@ -2404,7 +2404,7 @@ $ stack run < input.txt
 - 完成したプログラムは `main` から標準入力を読み取り，処理（例：単語頻度の集計）を経て，結果を標準出力へ書き出す形になる．
 - Haskell Stack や GHC で容易に実行でき，入力データに対して柔軟なパイプライン処理が可能となる．
 
-#showybox(title: "コラム")[]
+#showybox(title: "コラム")[#tk]
 
 == IO
 <io>
