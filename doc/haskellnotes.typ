@@ -2366,6 +2366,14 @@ $ stack run < input.txt
 
 #pb
 
+まずIO型 $(haskell.IO)$ を導入する．IO型はモナド型クラスのインスタンスである．HaskellではIO型がモナド型クラスのインスタンスであることを次のように宣言する．#footnote[Haskellでは ```haskell instance Monad IO``` と表現される．]
+
+$ haskell.kwinstance haskell.Monad supset haskell.IO $
+
+IO型はモナド型クラスのインスタンスであるので，ピュア演算子とバインド演算子を引き継いでいる．またIO型はリスト型と同じく型パラメタを必要とし $haskell.IO_haskell.a$ のような形で使われる．
+
+#pb
+
 入出力（IO）は参照透過性を持たない．入力は毎回異なるし，出力は状態の書き換えであるからだ．そこで，IOをプログラムの他の部分から切り離して，他の参照透過性のある部分から触れられないようにしておく必要がある．そのためには，IOをモナドで表現する必要がある．
 
 ファイルを丸ごと読み込むアクションは $haskell.getContents$ である．アクション $haskell.getContents$ の型は
