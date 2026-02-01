@@ -140,6 +140,7 @@
 
 // Action.
 #let action(x) = math.bold(x)
+#let exitWith = action("exitWith")
 #let main = action("main")
 #let getContents = action("getContents")
 #let getLine = action("getLine")
