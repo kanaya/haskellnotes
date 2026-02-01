@@ -94,6 +94,7 @@
 #let Integer = typename("Integer")
 #let IO = typename("IO")
 #let List = typename("[]")
+#let ListNew = typename("List")
 #let Rect = typename("Rect")
 #let Ordering = typename("Ordering")
 #let ST = typename("ST")
