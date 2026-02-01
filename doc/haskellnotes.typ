@@ -2366,7 +2366,7 @@ $ stack run < input.txt
 
 #pb
 
-まずIO型 $(haskell.IO)$ を導入する．IO型はモナド型クラスのインスタンスである．HaskellではIO型がモナド型クラスのインスタンスであることを次のように宣言する．#footnote[Haskellでは ```haskell instance Monad IO``` と表現される．]
+まずIO型 $(haskell.IO)$ を導入する．IO型はモナド型クラスのインスタンスである．HaskellではIO型がモナド型クラスのインスタンスであることを次のように宣言している．#footnote[Haskellでは ```haskell instance Monad IO``` と表現される．]
 
 $ haskell.kwinstance haskell.Monad supset haskell.IO $
 
