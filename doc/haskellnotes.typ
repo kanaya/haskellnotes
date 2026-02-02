@@ -355,7 +355,7 @@ Hello, World!
 
 === 変数と関数
 
-変数 $x$ に値 $1$ を代入するには次のようにする．#footnote[Haskellでは `x = 1` と書く．]
+変数 $x$ に値 $1$ を代入するには次のようにする．#footnote[Haskellでは ```haskell x = 1``` と書く．]
 
 $ x = 1 $<binding>
 
