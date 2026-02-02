@@ -2057,7 +2057,7 @@ $ z_* = psi haskell.bind (phi haskell.bind x_*) $<bind-composition>
 
 $ z = x haskell.bindRight phi haskell.bindRight psi $
 
-実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．これはUnixシェルで次のようにすることと似ているからかもしれない．
+実際，多くのHaskellプログラマが左バインド演算子よりも右バインド演算子を好む．これはUNIXシェルで次のようにすることと似ているからかもしれない．
 
 #sourcecode[```shell-unix-generic
 $ cat x | phi | psi > z
