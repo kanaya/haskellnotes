@@ -452,8 +452,8 @@ $ z = (backslash x' |-> f x') (x + 1) $<let-in-alternative>
 === パタンマッチとガード
 
 関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $100$ であり，その他の場合は $x + 1$ を返す関数 $f$ を考える．このとき $f$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは ```haskell f 0 = 100; f x = x + 1``` と書く．]
-$ f' 0 &= 100 \
-  f' x &= x + 1 $
+$ f 0 &= 100 \
+  f x &= x + 1 $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
 $ f x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 100,
@@ -485,7 +485,7 @@ def f(x):
 ```]
 
 一方，我々は値を持つ#keyword[条件式]を考える．我々の条件式とは 
-#par-equation($ f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac(sin x, x, style: "skewed") $)
+#par-equation($ f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac(sin x, x) $)
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0.0 then 1.0 else (sin x) / x``` と書く．]
 
 === この章のまとめ #tk
