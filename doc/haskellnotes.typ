@@ -2883,3 +2883,10 @@ $ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
   image("fig/monad-haskell.svg"),
   caption: [Haskellのバインド演算子とモナド型クラスのインスタンス]
 )
+
+=== memo
+
+#figure(
+  image("fig/first-rest.svg"),
+  caption: [memo]
+)
