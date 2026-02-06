@@ -2203,7 +2203,9 @@ m = (\v -> v `modifySTRef` f >> readSTRef v) =<< newSTRef 1
 main = print $ runST m
 ```]
 
-我々の演算子 $penta.filled$ はHaskellの ```haskell newSTRef``` であり，我々の演算子 $star.stroked$ はHaskellの ```haskell readSTRef``` である．また我々の二項演算子 $star.filled$ はHaskellの ```haskell modifySTRef``` である．
+我々の演算子 $penta.filled$ はHaskellの ```haskell newSTRef``` であり，我々の演算子 $star.stroked$ はHaskellの ```haskell readSTRef``` である．また我々の二項演算子 $star.filled$ はHaskellの ```haskell modifySTRef``` である．我々の演算子 $note.eighth.alt$ はHaskellの ```haskell runST``` である．
+
+なお上記のプログラムには登場していないが，我々の破壊的代入演算子 $eq.star$ はHaskellの ```haskell writeSTRef``` である．
 
 #pb
 
