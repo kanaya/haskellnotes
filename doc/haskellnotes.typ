@@ -2198,10 +2198,12 @@ import Data.STRef
 f :: Num a => a -> a
 f x = x + 1
 
-m = (\v -> modifySTRef v f >> readSTRef v) =<< newSTRef 1
+m = (\v -> v `modifySTRef` f >> readSTRef v) =<< newSTRef 1
 
 main = print $ runST m
 ```]
+
+我々の演算子 $penta.filled$ はHaskellの ```haskell newSTRef``` であり，我々の演算子 $star.stroked$ はHaskellの ```haskell readSTRef``` である．また我々の二項演算子 $star.filled$ はHaskellの ```haskell modifySTRef``` である．
 
 #pb
 
