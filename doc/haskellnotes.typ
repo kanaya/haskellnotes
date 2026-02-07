@@ -1620,6 +1620,8 @@ Either型はCの共有型 (```c union```) やC++のバリアント型 (```cpp st
 
 #tk 関手
 
+#keyword[関手]（functor）は数学の#keyword[圏論]（category theory）における概念で，圏から圏への写像を表す．一方Haskellの関手 $(haskell.Functor)$ は#keyword[型クラス] （type class）のひとつであり，圏論における関手と対応する概念である．本書では，数学の関手のほうを「#keyword[圏論的関手]」と呼び，Haskellの関手のほうを「#keyword[関手型クラス]」と呼ぶことにする．
+
 === リストの世界・Maybeの世界
 
 $haskell.a$ 型の変数 $x, y colon.double haskell.a$ について，関数 $f colon.double haskell.a -> haskell.a$ があり
