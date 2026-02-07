@@ -1618,9 +1618,7 @@ Either型はCの共有型 (```c union```) やC++のバリアント型 (```cpp st
 == 関手
 <functor>
 
-#tk 関手
-
-#keyword[関手]（functor）は数学の#keyword[圏論]（category theory）における概念で，圏から圏への写像を表す．一方Haskellの関手 $(haskell.Functor)$ は#keyword[型クラス] （type class）のひとつであり，圏論における関手と対応する概念である．本書では，数学の関手のほうを「#keyword[圏論的関手]」と呼び，Haskellの関手のほうを「#keyword[関手型クラス]」と呼ぶことにする．
+#keyword[関手型クラス]は，これまで見てきたリスト型やMaybe型のような#keyword[コンテナ型]を一般化した，一段抽象度の高い概念である．この章では「型（type）の型」である「#keyword[型クラス]（type class）」という概念と，リスト型やMaybe型に共通する性質を抽出した関手型クラスを導入する．#keyword[関手]（functor）は数学の#keyword[圏論]（category theory）における概念で，圏から圏への写像を表す．一方Haskellの関手 $(haskell.Functor)$ は型クラスのひとつであり，圏論における関手と対応する概念である．本書では，数学の関手のほうを「#keyword[圏論的関手]」と呼び，Haskellの関手のほうを「#keyword[関手型クラス]」と呼ぶことにする．
 
 === リストの世界・Maybeの世界
 
