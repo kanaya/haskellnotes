@@ -1176,7 +1176,7 @@ main = print
 - 入出力や関数変換の流れは，右端から順に関数合成 $(compose)$ やファンクターの構成で組み立てるとうまく表現できる．
 - Haskellの入出力とリスト処理をパイプライン的につなぐと，簡潔で強力なデータ処理ができる．
 
-#showybox(title: "コラム")[Haskellでは $haskell.a$ 型のリストを $[haskell.a]$ 型あるいは $haskell.List_haskell.a$ 型と表記するが，これは他の型との整合性においていくぶん不便である場合がある．新しいHaskell標準では $haskell.List_haskell.a$ に加えて $haskell.ListNew_haskell.a$ という書き方が認められている．]
+#showybox(title: "リスト型の表記")[Haskellでは $haskell.a$ 型のリストを $[haskell.a]$ 型あるいは $haskell.List_haskell.a$ 型と表記するが，これは他の型との整合性においていくぶん不便である場合がある．新しいHaskell標準では $haskell.List_haskell.a$ に加えて $haskell.ListNew_haskell.a$ という書き方が認められている．]
 
 == 再帰
 <recursion>
