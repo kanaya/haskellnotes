@@ -74,6 +74,7 @@
 #let sort = longfunction("sort")
 #let sortBy = longfunction("sortBy")
 #let sqrt = longfunction("sqrt")
+#let stalinSort = longfunction("stalinSort")
 #let succ = longfunction("succ")
 #let take = longfunction("take")
 #let tail = longfunction("tail")

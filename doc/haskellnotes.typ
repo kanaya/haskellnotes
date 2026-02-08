@@ -1367,7 +1367,13 @@ p500 = take 500 ps
 - 無限リストやリスト内包表記を使い，宣言的に複雑なデータ列や操作も表記できる．
 - まとめとして，Haskellの評価戦略・再帰・リスト操作・効率化手法（遅延評価制御や末尾再帰）が重要な設計思想となっている．
 
-#showybox(title: "コラム")[#tk]
+#showybox(title: "スターリンソート")[
+$ haskell.stalinSort &colon.double haskell.Ord supset haskell.a arrow.r.stroked [haskell.a] -> [haskell.a] \
+  haskell.stalinSort haskell.emptylist &= haskell.emptylist \
+  haskell.stalinSort [x] &= [x] \
+  haskell.stalinSort (x : y : z_"s") &|_(x <= y) = x : haskell.stalinSort (y : z_"s") \
+  &|_haskell.otherwise = haskell.stalinSort (x : z_"s") $
+]
 
 == Maybe
 <maybe>
