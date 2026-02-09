@@ -2914,6 +2914,8 @@ $ mu class("binary", ast.triple) id >>> mu &= alpha >>> id class("binary", ast.t
   id class("binary", ast.triple) eta >>> mu &= rho $
 
 
+// https://qiita.com/norkron/items/aff3ce925edc6be74923
+
 #figure(
   image("fig/category-math.svg"),
   caption: [数学における圏（Category）と関手（Functor）]
