@@ -2907,6 +2907,12 @@ Haskellでは、型コンストラクタ $m$ が $cal(C)$ 上の関手 $frak(T)$
 **まとめ:**  
 Haskellのモナドは、圏論におけるモナド（自己関手＋2つの自然変換＋モナド則）のプログラム上での具体化に他ならない。
 
+// https://qiita.com/norkron/items/237735106ee6e5333678
+
+$ mu class("binary", ast.triple) id >>> mu &= alpha >>> id class("binary", ast.triple) mu >>> mu \
+  eta class("binary", ast.triple) id >>> mu &= lambda \
+  id class("binary", ast.triple) eta >>> mu &= rho $
+
 
 #figure(
   image("fig/category-math.svg"),
