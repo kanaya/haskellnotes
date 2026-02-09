@@ -2915,6 +2915,9 @@ $ mu class("binary", ast.triple) id >>> mu &= alpha >>> id class("binary", ast.t
 
 
 // https://qiita.com/norkron/items/aff3ce925edc6be74923
+// https://zenn.dev/funnycat/articles/1bb43250d5355f
+
+
 
 #figure(
   image("fig/category-math.svg"),
