@@ -2666,13 +2666,19 @@ $ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
 
 $ z = f compose haskell.fact n $
 
-$ haskell.fact' n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
-  square.stroked.dotted arrow.r.dotted n times haskell.fact' (n - 1) (backslash a |-> c (n times a))) $
+$ haskell.fact^"cps" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
+  square.stroked.dotted arrow.r.dotted n times haskell.fact^"cps" (n - 1) (backslash a |-> c (n times a))) $
 
-$ z' = haskell.fact' n f $
+$ z = haskell.fact^"cps" n f $
 
-$ haskell.fact'' n c &= "call-with-continuation-procedure" c (backslash f |-> f (haskell.fact n)) \
-  &haskell.kwwhere "call-with-continuation-procedure" c f eq.def f c $
+$ haskell.fact^"cps" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
+  &haskell.kwwhere haskell.callWithContinuationProcedure c f eq.def f c $
+
+関数 $c$ が「解りきっている」場合．
+
+$ z = f compose hexa.filled (backslash haskell.cc |-> haskell.cc (haskell.fact n)) $
+
+式 $(backslash haskell.cc |-> haskell.cc (haskell.fact n))$ 中の $haskell.cc$ は「これから呼ばれる」関数である．この関数 $haskell.cc$ を呼ぶかどうかはプログラマの判断に委ねられる．条件によっては関数 $haskell.cc$ を呼ばないことも出来る．
 
 #tk
 
@@ -2686,11 +2692,11 @@ $ product' x_"s" = haskell.kwcase x_"s" haskell.kwof
       haskell.kwcase y haskell.kwof {0 arrow.r.dotted 0; space
         square.stroked.dotted arrow.r.dotted y times product' y_"s"}) $
 
-$ product'' c x_"s" = haskell.kwcase x_"s" haskell.kwof
+$ product^"cps" x_"s" c = haskell.kwcase x_"s" haskell.kwof
   cases(haskell.emptylist arrow.r.dotted 1,
     (y:y_"s") arrow.r.dotted 
       haskell.kwcase y haskell.kwof {0 arrow.r.dotted c space 0; space
-        square.stroked.dotted arrow.r.dotted y times product'' c y_"s"}) $
+        square.stroked.dotted arrow.r.dotted y times product^"cps" y_"s" c}) $
 
 
 $ product''' x_"s" = note.sixteenth.beamed haskell.apply hexa.filled (backslash c |-> product'' c x_"s") $

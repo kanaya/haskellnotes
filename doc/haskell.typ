@@ -41,6 +41,8 @@
 // Function.
 #let longfunction(x) = math.serif(x)
 #let addXY = longfunction("addXY")
+#let callWithContinuationProcedure = longfunction("callWithContinuationProcedure")
+#let cc = longfunction("cc")
 #let compare = longfunction("compare")
 #let compFst = longfunction("compFst")
 #let const = longfunction("const")
