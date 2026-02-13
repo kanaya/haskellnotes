@@ -2655,6 +2655,31 @@ Haskellプログラムでdo記法を採用するかどうかは
 #par-equation($ haskell.main = haskell.kwdo { s <- haskell.getLine; haskell.kwlet t eq.delta f s haskell.kwin haskell.putStrLn t} $)
 と書くかの違いでしかない．プログラマは好きな方を採用すればよいのである．
 
+---
+
+#tk
+
+$ product x_"s" = haskell.kwcase x_"s" haskell.kwof
+  cases(haskell.emptylist arrow.r.dotted 1,
+    (y:y_"s") arrow.r.dotted y times product y_"s") $
+
+$ product' x_"s" = haskell.kwcase x_"s" haskell.kwof
+  cases(haskell.emptylist arrow.r.dotted 1,
+    (y:y_"s") arrow.r.dotted 
+      haskell.kwcase y haskell.kwof {0 arrow.r.dotted 0; space
+        square.stroked.dotted arrow.r.dotted y times product' y_"s"}) $
+
+$ product'' c x_"s" = haskell.kwcase x_"s" haskell.kwof
+  cases(haskell.emptylist arrow.r.dotted 1,
+    (y:y_"s") arrow.r.dotted 
+      haskell.kwcase y haskell.kwof {0 arrow.r.dotted c space 0; space
+        square.stroked.dotted arrow.r.dotted y times product'' c y_"s"}) $
+
+
+$ product''' x_"s" = note.sixteenth.beamed haskell.apply hexa.filled (backslash c |-> product'' c x_"s") $
+
+---
+
 === この章のまとめ #tk
 
 - Haskellでは標準入力の内容を`getLine`や`getContents`で取得し，`putStrLn`や`print`で出力できる．
