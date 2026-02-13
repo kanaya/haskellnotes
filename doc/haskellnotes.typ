@@ -2659,6 +2659,20 @@ Haskellプログラムでdo記法を採用するかどうかは
 
 #tk
 
+// https://practical-scheme.net/wiliki/wiliki.cgi?Scheme%3A使いたい人のための継続入門
+
+$ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
+  square.stroked.dotted arrow.r.dotted n times haskell.fact(n - 1)) $
+
+$ z = f compose haskell.fact n $
+
+$ haskell.fact' n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
+  square.stroked.dotted arrow.r.dotted n times haskell.fact' (n - 1) (backslash a |-> c (n times a))) $
+
+$ z' = haskell.fact' n f $
+
+#tk
+
 $ product x_"s" = haskell.kwcase x_"s" haskell.kwof
   cases(haskell.emptylist arrow.r.dotted 1,
     (y:y_"s") arrow.r.dotted y times product y_"s") $
