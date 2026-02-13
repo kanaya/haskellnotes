@@ -2671,6 +2671,9 @@ $ haskell.fact' n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c spa
 
 $ z' = haskell.fact' n f $
 
+$ haskell.fact'' n c &= "call-with-continuation-procedure" c (backslash f |-> f (haskell.fact n)) \
+  &haskell.kwwhere "call-with-continuation-procedure" c f eq.def f c $
+
 #tk
 
 $ product x_"s" = haskell.kwcase x_"s" haskell.kwof
