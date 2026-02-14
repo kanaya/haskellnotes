@@ -2199,11 +2199,11 @@ $ mu = star.stroked haskell.bind penta.filled_x $<new-and-read>
 
 $ mu colon.double forall haskell.s |=> haskell.ST_(haskell.s haskell.a) $
 
-STアクション $mu$ を評価する演算子を導入しよう．我々はこの演算子を $note.eighth.alt$ で表す．次のプログラムは演算子 $penta.filled$ を使って破壊的代入を許す変数を生成し，その値を取り出す例である．#footnote[Haskellでは ```haskell x = 1; mu = readSTRef =<< newSTRef x; main = print $ runST mu``` と書く．]
+STアクション $mu$ を評価する演算子を導入しよう．我々はこの演算子を $penta.stroked$ で表す．次のプログラムは演算子 $penta.filled$ を使って破壊的代入を許す変数を生成し，その値を取り出す例である．#footnote[Haskellでは ```haskell x = 1; mu = readSTRef =<< newSTRef x; main = print $ runST mu``` と書く．]
 
 $ x &= 1 \
   mu &= star.stroked haskell.bind penta.filled_x \
-  haskell.main &= haskell.print haskell.apply note.eighth.alt mu $
+  haskell.main &= haskell.print haskell.apply penta.stroked mu $
 
 もちろんこれはつまらないプログラムである．ここで $star.stroked = backslash v |-> star.stroked v$ であるから，@new-and-read は次のように書き換えられる．
 #par-equation($ mu = (backslash v |-> star.stroked v) haskell.bind penta.filled_x $)
@@ -2235,7 +2235,7 @@ m = (\v -> v `modifySTRef` f >> readSTRef v) =<< newSTRef 1
 main = print $ runST m
 ```]
 
-我々の演算子 $penta.filled$ はHaskellの ```haskell newSTRef``` であり，我々の演算子 $star.stroked$ はHaskellの ```haskell readSTRef``` である．また我々の二項演算子 $star.filled$ はHaskellの ```haskell modifySTRef``` である．我々の演算子 $note.eighth.alt$ はHaskellの ```haskell runST``` である．
+我々の演算子 $penta.filled$ はHaskellの ```haskell newSTRef``` であり，我々の演算子 $star.stroked$ はHaskellの ```haskell readSTRef``` である．また我々の二項演算子 $star.filled$ はHaskellの ```haskell modifySTRef``` である．我々の演算子 $penta.stroked$ はHaskellの ```haskell runST``` である．
 
 なお上記のプログラムには登場していないが，我々の破壊的代入演算子 $eq.star$ はHaskellの ```haskell writeSTRef``` である．
 
@@ -2245,11 +2245,11 @@ main = print $ runST m
 
 破壊的代入を利用して，リストの和を取る関数 $sum'$ を書いてみると次のようになる．
 
-$ sum' x_"s" = note.eighth.alt haskell.apply
+$ sum' x_"s" = penta.stroked haskell.apply
   (backslash a |-> ((backslash i |-> underline((+i) star.filled a)) *_"M" x_"s") >> haskell.readSTRefOp a) 
   haskell.bind penta.filled_0 $<sum-by-st-monad>
 
-@sum-by-st-monad では，初期値 $0$ を持つ破壊的代入が可能な変数 $penta.filled_0$ を作り，変数 $a$ で受け，それに変数 $i$ で取り出したリスト $x_"s"$ の各要素を足して $(+i)$ いき，その結果 $(star.stroked a)$ を評価 $(note.eighth.alt)$ している．
+@sum-by-st-monad では，初期値 $0$ を持つ破壊的代入が可能な変数 $penta.filled_0$ を作り，変数 $a$ で受け，それに変数 $i$ で取り出したリスト $x_"s"$ の各要素を足して $(+i)$ いき，その結果 $(star.stroked a)$ を評価 $(penta.stroked)$ している．
 
 @sum-by-st-monad を含むHaskellプログラムは次のようになる．
 
@@ -2697,7 +2697,7 @@ $ haskell.pyth_"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Do
   haskell.pyth_"&" x y c&= haskell.sqr_"&" x 
     (backslash x' |-> haskell.sqr_"&" y
       (backslash y' |-> haskell.add_"&" x' y'
-        (backslash z' |-> haskell.sqrt_"&" z' c))) $
+        (backslash z' |-> haskell.sqrt_"&" z' c))) $<cps>
 
 この計算の結果を印字するには次のようにする．
 #par-equation($ haskell.main &= haskell.print (haskell.pyth_"&" 3.0 space 4.0 space id) $)
@@ -2707,24 +2707,24 @@ $ haskell.pyth_"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Do
 
 継続モナド版の $haskell.sqr, haskell.add, haskell.sqrt$ は次のようになる．
 
-$ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.sqr_"M" x &= chevron.l x times x chevron.r \
-  haskell.add_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.add_"M" x y &= chevron.l x + y chevron.r \
-  haskell.sqrt_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.sqrt_"M" x &= chevron.l haskell.sqrt x chevron.r $
+$ haskell.sqr_"m" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.sqr_"m" x &= chevron.l x times x chevron.r \
+  haskell.add_"m" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.add_"m" x y &= chevron.l x + y chevron.r \
+  haskell.sqrt_"m" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.sqrt_"m" x &= chevron.l haskell.sqrt x chevron.r $
 
 継続を意味する引数 $c$ が隠されたので，簡潔になった．これらの継続モナド版を使って三平方の定理を計算する関数も作っておこう．ここでdo記法の出番である．
 
-$ haskell.pyth_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pyth_"M" x y &= haskell.kwdo 
-    {x' <- haskell.sqr_"M" x;
-    y' <- haskell.sqr_"M" y;
-    z' <- haskell.add_"M" x' y';
-    z'' <- haskell.sqrt_M z';
+$ haskell.pyth_"m" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pyth_"m" x y &= haskell.kwdo 
+    {x' <- haskell.sqr_"m" x;
+    y' <- haskell.sqr_"m" y;
+    z' <- haskell.add_"m" x' y';
+    z'' <- haskell.sqrt_"m" z';
     chevron.l z'' chevron.r} $
 
-関数 $haskell.pyth_"M"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
+関数 $haskell.pyth_"m"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
 #par-equation($ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"M" 3.0 space 4.0) $)
 または，逆方向の演算子 $arrow.r.loop$ を用いて次のようにする．#footnote[Haskellでは $arrow.r.loop$ を ```haskell runCont``` 関数を用いて書く．例えば $haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print$ は ```haskell main = (pythM 3.0 4.0) `runCont` print``` と書く．]
 
@@ -2732,8 +2732,18 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 
 わざわざ継続渡しスタイルを用いるのは#keyword[カレント継続]（current continuation）を使うためである．#footnote[Current continuationの日本語訳はまだ決まっていないようである．日本のプログラマはcurrent continuationをしばしばCCと略すほか「現在の継続」と呼ぶこともある．本書ではcurrent continuationを「カレント継続」と訳すことにした．]
 
-カレント継続は，ある関数から見て，次に実行されるべき継続を表す．継続渡しスタイルであれば，渡された継続が次に実行されるべき継続であるが，一般の関数からは次に実行されるべき継続が見えない．そこで，次に実行されるべき継続を引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
-#par-equation($ backslash.not q |-> f $)
+カレント継続は，ある関数から見て，次に実行されるべき継続を表す．@cps のような継続渡しスタイルであれば，渡された継続が次に実行されるべき継続であるが，一般の関数からは次に実行されるべき継続が見えない．次に実行すべき継続を $note.eighth.alt$ で表すことにすると $haskell.sqr_"&", haskell.add_"&", haskell.sqrt_"&"$ は次のようになる．
+#par-equation($ haskell.sqr_"&" x note.eighth.alt &= note.eighth.alt (x times x) \
+  haskell.add_"&" x y note.eighth.alt &= note.eighth.alt (x + y) \
+  haskell.sqrt_"&" x note.eighth.alt &= note.eighth.alt (haskell.sqrt x) $)
+次に $note.eighth.alt$ を自動的に生成する演算子 $note.sixteenth.beamed$ を考える．この演算子 $note.sixteenth.beamed$ は関数 $f$ を受け取り，次のように $f note.eighth.alt$ を返す．
+#par-equation($ note.sixteenth.beamed f = f note.eighth.alt $)
+ここで注意しないといけないことがある．記号 $note.eighth.alt$ はカレント継続を表す記号であるが，これはプログラマから見ることは出来ず，またプログラム中に動的に変化する．一方で，カレント継続を与える演算子 $note.sixteenth.beamed$ は実在する演算子で，プログラマが書くことが出来る．#footnote[Haskellでは $note.sixteenth.beamed$ を ```haskell callCC``` と書く．]
+
+カレント継続は $note.sixteenth.beamed$ 演算子に続く関数に引数として渡されるので，次のようにラムダ式で受け取ることが出来る．
+#par-equation($ note.sixteenth.beamed (backslash q |-> ...) $)
+この式では変数 $q$ にはカレント継続が拘束される．本書ではシンタックスシュガーとして次の記法も導入しておこう．カレント継続を引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
+#par-equation($ backslash.not q |-> ... $)
 として使う．ただし引数 $q$ には実行環境がカレント継続を代入する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
 
 引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「早期リターン」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"M" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
