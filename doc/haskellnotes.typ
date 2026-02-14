@@ -3121,3 +3121,25 @@ $ mu class("binary", ast.triple) id >>> mu &= alpha >>> id class("binary", ast.t
   image("fig/first-rest.svg"),
   caption: [memo]
 )
+
+=== memo of continuation
+
+a.
+
+#sourcecode[```scm
+(define f (lambda (x) (+ 1 x)))
+(define g (lambda (x) (* 2 x)))
+(define (main args) (print (f-cps 3 g)) 0)
+```]
+
+#sourcecode[```scm
+(define f-cps (lambda (x cont) (cont (+ 1 x))))
+(define g (lambda (x) (* 2 x)))
+(define (main args) (print (f-cps 3 g)) 0)
+```]
+
+#sourcecode[```scm
+(define f (lambda (x) (+ 1 x)))
+(define g (lambda (x) (* 2 x)))
+(define (main args) (print (g (call/cc (lambda (cc) (cc (f 3)))))) 0)
+```]
