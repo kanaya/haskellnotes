@@ -86,6 +86,7 @@
 #let tail = longfunction("tail")
 #let toLower = longfunction("toLower")
 #let uncurry = longfunction("uncurry")
+#let when = longfunction("when")
 #let words = longfunction("words")
 
 // Type parameter.

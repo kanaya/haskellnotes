@@ -2673,24 +2673,50 @@ $ haskell.sqr^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) 
   haskell.add^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
   haskell.add^"&" x y c&= c (x + y) \
   haskell.sqrt^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.sqrt^"&" x &= backslash c |-> c(haskell.sqrt x) \
+  haskell.sqrt^"&" x c &= c (haskell.sqrt x) \
   haskell.pythagoras^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
   haskell.pythagoras^"&" x y c&= haskell.sqr^"&" x 
     (backslash x' |-> haskell.sqr^"&" y
       (backslash y' |-> haskell.add^"&" x' y'
         (backslash z' |-> haskell.sqrt^"&" z' c))) \
-  haskell.main &= note.sixteenth.beamed (haskell.pythagoras^"&" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+  haskell.main &= haskell.print (haskell.pythagoras^"&" 3.0 space 4.0) $
 
-$note.sixteenth.beamed$ は ```haskell runCont```.
+
+$  haskell.sqrt^"&" x c = c (haskell.sqrt x) \
+  arrow.t.b.double \
+  haskell.sqrt^"&" x = backslash c |-> c(haskell.sqrt x) $
+
+...
 
 $ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.sqr_"M" x &= chevron.l x times x chevron.r \
+  haskell.add_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.add_"M" x y &= chevron.l x + y chevron.r \
+  haskell.sqrt_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.sqrt_"M" x &= chevron.l haskell.sqrt x chevron.r \
   haskell.pythagoras_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pythagoras_"M" x y &= haskell.kwdo {x' <- haskell.sqr_"M" x;
-    y' <- haskell.sqr_"M" y; z' <- haskell.cont (haskell.add^"&" x' y'); \
-    &space.quad space.quad
-    z'' <- haskell.cont (haskell.sqrt^"&" z');
-    chevron.l z'' chevron.r} $
+  haskell.pythagoras_"M" x y &= haskell.kwdo 
+    {x' <- haskell.sqr_"M" x; space
+    y' <- haskell.sqr_"M" y; space
+    z' <- haskell.add_"M" x' y'; space
+    z'' <- haskell.sqrt_M z'; space
+    chevron.l z'' chevron.r} \
+  haskell.main &= note.sixteenth.beamed (haskell.pythagoras_"M" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+
+$note.sixteenth.beamed$ は ```haskell runCont```.
+
+
+$ haskell.pythagoras^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pythagoras^"cc" x y &= hexa.filled haskell.apply backslash q |->
+    haskell.kwdo { \
+      &haskell.when (x < 0 or y < 0) (q space 0.0); \
+      &x' <- haskell.sqr_"M" x; space
+      y' <- haskell.sqr_"M" y; space
+      z' <- haskell.add_"M" x' y'; space
+      z'' <- haskell.sqrt_M z'; space
+      chevron.l z'' chevron.r} \
+  haskell.main &= note.sixteenth.beamed (haskell.pythagoras_"M" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+
 ---
 
 #tk
