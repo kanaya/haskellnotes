@@ -2749,6 +2749,7 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       chevron.l z'' chevron.r} $
 
 // whenとは...
+// Haskellで書くと...
 
 /*
 ---
