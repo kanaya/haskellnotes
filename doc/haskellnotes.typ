@@ -3122,6 +3122,7 @@ $ mu class("binary", ast.triple) id >>> mu &= alpha >>> id class("binary", ast.t
   caption: [memo]
 )
 
+/*
 === memo of continuation
 
 a.
@@ -3143,3 +3144,5 @@ a.
 (define g (lambda (x) (* 2 x)))
 (define (main args) (print (g (call/cc (lambda (cc) (cc (f 3)))))) 0)
 ```]
+
+*/
