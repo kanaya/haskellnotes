@@ -2748,8 +2748,31 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       z'' <- haskell.sqrt_M z';
       chevron.l z'' chevron.r} $
 
-// whenとは...
-// Haskellで書くと...
+ここに関数 $haskell.when$ は第1引数が真であれば第2引数を実行する関数である．関数 $haskell.when$ の第2引数と戻り値はモナド型クラスのインスタンスである必要がある必要があるため，モナドの中でしか利用できない．
+
+関数 $haskell.pyth^"cc"$ を使ったプログラムをHaskellで書くと次のようになる．
+
+#sourcecode[```haskell
+import Control.Monad.Cont
+sqr_m :: Float -> Cont a Float
+sqr_m x = pure (x * x)
+
+add_m :: Float -> Float -> Cont a Float
+add_m x y = pure (x + y)
+
+sqrt_m :: Float -> Cont a Float
+sqrt_m x = pure (sqrt x)
+
+pyth_m :: Float -> Float -> Cont a Float
+pyth_m x y = callCC $ \q -> do
+  x' <- sqr_m x
+  y' <- sqr_m y
+  z' <- add_m x' y'
+  z'' <- sqrt_m z'
+  pure z''
+
+main = (pyth_m 5 12) `runCont` print
+```]
 
 /*
 ---
