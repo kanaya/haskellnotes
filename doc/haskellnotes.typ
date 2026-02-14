@@ -2661,7 +2661,7 @@ Haskellプログラムでdo記法を採用するかどうかは
 
 do記法の利点のひとつに「継続渡しスタイル（continuation passing style）」を簡潔に書けることがある．継続渡しスタイルとは，関数に戻り値の返し先すなわち#keyword[継続]を引数として渡すスタイルである．
 
-次の例は，継続渡しではない通常の関数である．関数 $haskell.sqr$ は引数の自乗を，関数 $haskell.add$ はふたつの引数の和を計算する．
+次の例は，継続渡しではない通常の関数である．継続渡しでない書き方を「直接スタイル（direct style）」と呼ぶ．関数 $haskell.sqr$ は引数の自乗を，関数 $haskell.add$ はふたつの引数の和を計算する．
 
 $ haskell.sqr &colon.double haskell.Double -> haskell.Double \
   haskell.sqr x &= x times x \
