@@ -2655,67 +2655,106 @@ Haskellプログラムでdo記法を採用するかどうかは
 #par-equation($ haskell.main = haskell.kwdo { s <- haskell.getLine; haskell.kwlet t eq.delta f s haskell.kwin haskell.putStrLn t} $)
 と書くかの違いでしかない．プログラマは好きな方を採用すればよいのである．
 
----
+#pb
+
 // https://en.wikipedia.org/wiki/Continuation-passing_style
 
-#tk
+do記法の利点のひとつに「継続渡しスタイル（continuation passing style）」を簡潔に書けることがある．継続渡しスタイルとは，関数に戻り値の返し先すなわち#keyword[継続]を引数として渡すスタイルである．
+
+次の例は，継続渡しではない通常の関数である．関数 $haskell.sqr$ は引数の自乗を，関数 $haskell.add$ はふたつの引数の和を計算する．
 
 $ haskell.sqr &colon.double haskell.Double -> haskell.Double \
   haskell.sqr x &= x times x \
   haskell.add &colon.double haskell.Double -> haskell.Double -> haskell.Double \
-  haskell.add x y &= x + y \
-  haskell.pythagoras &colon.double haskell.Double -> haskell.Double -> haskell.Double \
-  haskell.pythagoras x y &= haskell.sqrt (haskell.add (haskell.sqr x) (haskell.sqr y)) $
+  haskell.add x y &= x + y $
 
+これらの関数と標準関数 $haskell.sqrt$ を使って，三平方の定理を計算する関数 $haskell.pyth$ を次のように定義する．
+
+$ haskell.pyth &colon.double haskell.Double -> haskell.Double -> haskell.Double \
+  haskell.pyth x y &= haskell.sqrt (haskell.add (haskell.sqr x) (haskell.sqr y)) $
+
+継続渡しとは，関数の戻り値の返し先を引数として受け取るものである．この戻り値の返し先，すなわち継続を関数 $c$ で表すことにしよう．そうすると $haskell.sqr$ と $haskell.add$ は次のようになる．関数の肩に置いた $"&"$ は継続渡しスタイルを表す．
 
 $ haskell.sqr^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
   haskell.sqr^"&" x c&= c (x times x) \
   haskell.add^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.add^"&" x y c&= c (x + y) \
-  haskell.sqrt^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.sqrt^"&" x c &= c (haskell.sqrt x) \
-  haskell.pythagoras^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.pythagoras^"&" x y c&= haskell.sqr^"&" x 
+  haskell.add^"&" x y c&= c (x + y) $
+
+標準関数 $haskell.sqrt$ は次のようになる．
+
+$ haskell.sqrt^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.sqrt^"&" x c &= c (haskell.sqrt x) $
+
+なお
+#par-equation($ haskell.sqrt^"&" x c = c (haskell.sqrt x) \
+  arrow.t.b.double \
+  haskell.sqrt^"&" x = backslash c |-> c(haskell.sqrt x) $)
+なので，どちらの書き方をしても良い．
+
+継続渡しスタイルで三平方の定理の計算を行うには次のようになる．
+
+$ haskell.pyth^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.pyth^"&" x y c&= haskell.sqr^"&" x 
     (backslash x' |-> haskell.sqr^"&" y
       (backslash y' |-> haskell.add^"&" x' y'
-        (backslash z' |-> haskell.sqrt^"&" z' c))) \
-  haskell.main &= haskell.print (haskell.pythagoras^"&" 3.0 space 4.0) $
+        (backslash z' |-> haskell.sqrt^"&" z' c))) $
 
+この計算の結果を印字するには次のようにする．
+#par-equation($ haskell.main &= haskell.print (haskell.pyth^"&" 3.0 space 4.0 space id) $)
+結果は $5.0$ である．
 
-$  haskell.sqrt^"&" x c = c (haskell.sqrt x) \
-  arrow.t.b.double \
-  haskell.sqrt^"&" x = backslash c |-> c(haskell.sqrt x) $
+さて，話をややこしくしただけに見える継続渡しスタイルであるが，利点がある．その前に，継続渡しスタイルをより簡潔に表現する方法を見ておこう．それには#keyword[継続モナド]を使う．
 
-...
+継続モナド版の $haskell.sqr, haskell.add, haskell.sqrt$ は次のようになる．
 
 $ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.sqr_"M" x &= chevron.l x times x chevron.r \
   haskell.add_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.add_"M" x y &= chevron.l x + y chevron.r \
   haskell.sqrt_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.sqrt_"M" x &= chevron.l haskell.sqrt x chevron.r \
-  haskell.pythagoras_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pythagoras_"M" x y &= haskell.kwdo 
+  haskell.sqrt_"M" x &= chevron.l haskell.sqrt x chevron.r $
+
+継続を意味する引数 $c$ が隠されたので，簡潔になった．これらの継続モナド版を使って三平方の定理を計算する関数も作っておこう．ここでdo記法の出番である．
+
+$ haskell.pyth_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pyth_"M" x y &= haskell.kwdo 
     {x' <- haskell.sqr_"M" x; space
     y' <- haskell.sqr_"M" y; space
     z' <- haskell.add_"M" x' y'; space
     z'' <- haskell.sqrt_M z'; space
-    chevron.l z'' chevron.r} \
-  haskell.main &= note.sixteenth.beamed (haskell.pythagoras_"M" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+    chevron.l z'' chevron.r} $
 
-$note.sixteenth.beamed$ は ```haskell runCont```.
+関数 $haskell.pyth_"M"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子を用いて次のようにする．
 
+$ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"M" 3.0 space 4.0) $
+または
+$ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 
-$ haskell.pythagoras^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pythagoras^"cc" x y &= hexa.filled haskell.apply backslash q |->
+$arrow.r.loop$ は ```haskell runCont```.
+
+Current continuationを使う．
+
+$ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pyth^"cc" x y &= hexa.filled haskell.apply backslash q |->
     haskell.kwdo { \
       &haskell.when (x < 0 or y < 0) (q space 0.0); \
       &x' <- haskell.sqr_"M" x; space
       y' <- haskell.sqr_"M" y; space
       z' <- haskell.add_"M" x' y'; space
       z'' <- haskell.sqrt_M z'; space
-      chevron.l z'' chevron.r} \
-  haskell.main &= note.sixteenth.beamed (haskell.pythagoras_"M" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+      chevron.l z'' chevron.r} $
+---
+
+$ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pyth^"cc" x y &= backslash.not q |->
+    haskell.kwdo {
+      haskell.when (x < 0 or y < 0) (q space 0.0); \
+      &space.quad x' <- haskell.sqr_"M" x; space
+      y' <- haskell.sqr_"M" y; space
+      z' <- haskell.add_"M" x' y'; space
+      z'' <- haskell.sqrt_M z'; space
+      chevron.l z'' chevron.r} $
+$backslash.not q |-> ...$ はcurrent continuationを $q$ に代入して $...$ を実行する．
 
 ---
 
