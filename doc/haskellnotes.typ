@@ -2656,27 +2656,59 @@ Haskellプログラムでdo記法を採用するかどうかは
 と書くかの違いでしかない．プログラマは好きな方を採用すればよいのである．
 
 ---
+// https://en.wikipedia.org/wiki/Continuation-passing_style
+
+#tk
+
+$ haskell.sqr &colon.double haskell.Double -> haskell.Double \
+  haskell.sqr x &= x times x \
+  haskell.add &colon.double haskell.Double -> haskell.Double -> haskell.Double \
+  haskell.add x y &= x + y \
+  haskell.pythagoras &colon.double haskell.Double -> haskell.Double -> haskell.Double \
+  haskell.pythagoras x y &= haskell.sqrt (haskell.add (haskell.sqr x) (haskell.sqr y)) $
+
+
+$ haskell.sqr^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.sqr^"&" x c&= c (x times x) \
+  haskell.add^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.add^"&" x y c&= c (x + y) \
+  haskell.sqrt^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.sqrt^"&" x &= backslash c |-> c(haskell.sqrt x) \
+  haskell.pythagoras^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.pythagoras^"&" x y c&= haskell.sqr^"&" x 
+    (backslash x' |-> haskell.sqr^"&" y
+      (backslash y' |-> haskell.add^"&" x' y'
+        (backslash z' |-> haskell.sqrt^"&" z' c))) $
+
+$ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.sqr_"M" x &= chevron.l x times x chevron.r \
+  haskell.pythagoras_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pythagoras_"M" x y &= haskell.kwdo {x' <- haskell.sqr_"M" x;
+    y' <- haskell.sqr_"M" y; z' <- haskell.cont (haskell.add^"&" x' y'); \
+    &space.quad space.quad
+    z'' <- haskell.cont (haskell.sqrt^"&" z');
+    chevron.l z'' chevron.r} $
+---
 
 #tk
 
 // https://practical-scheme.net/wiliki/wiliki.cgi?Scheme%3A使いたい人のための継続入門
-
 $ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
   square.stroked.dotted arrow.r.dotted n times haskell.fact(n - 1)) $
 
-$ z = f compose haskell.fact n $
+$ z = f (haskell.fact n) $
 
-$ haskell.fact^"cps" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
-  square.stroked.dotted arrow.r.dotted n times haskell.fact^"cps" (n - 1) (backslash a |-> c (n times a))) $
+$ haskell.fact^"&" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
+  square.stroked.dotted arrow.r.dotted n times haskell.fact^"&" (n - 1) (backslash a |-> c (n times a))) $
 
-$ z = haskell.fact^"cps" n f $
+$ z = haskell.fact^"&" n f $
 
-$ haskell.fact^"cps" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
+$ haskell.fact^"&" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
   &haskell.kwwhere haskell.callWithContinuationProcedure c f eq.def f c $
 
 関数 $c$ が「解りきっている」場合．
 
-$ z = f compose hexa.filled (backslash haskell.cc |-> haskell.cc (haskell.fact n)) $
+$ z = f (hexa.filled (backslash haskell.cc |-> haskell.cc (haskell.fact n))) $
 
 式 $(backslash haskell.cc |-> haskell.cc (haskell.fact n))$ 中の $haskell.cc$ は「これから呼ばれる」関数である．この関数 $haskell.cc$ を呼ぶかどうかはプログラマの判断に委ねられる．条件によっては関数 $haskell.cc$ を呼ばないことも出来る．
 
