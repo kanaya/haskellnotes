@@ -2763,8 +2763,8 @@ add_m x y = pure (x + y)
 sqrt_m :: Float -> Cont a Float
 sqrt_m x = pure (sqrt x)
 
-pyth_m :: Float -> Float -> Cont a Float
-pyth_m x y = callCC $ \q -> do
+pythCC :: Float -> Float -> Cont a Float
+pythCC x y = callCC $ \q -> do
   when (x <= 0 || y <= 0) (q 0.0)
   x' <- sqr_m x
   y' <- sqr_m y
@@ -2772,7 +2772,7 @@ pyth_m x y = callCC $ \q -> do
   z'' <- sqrt_m z'
   pure z''
 
-main = (pyth_m 5 12) `runCont` print
+main = (pythCC 5 12) `runCont` print
 ```]
 
 /*
