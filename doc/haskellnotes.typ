@@ -2748,6 +2748,8 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       z'' <- haskell.sqrt_M z';
       chevron.l z'' chevron.r} $
 
+// whenとは...
+
 /*
 ---
 
