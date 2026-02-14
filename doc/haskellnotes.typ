@@ -2678,7 +2678,10 @@ $ haskell.sqr^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) 
   haskell.pythagoras^"&" x y c&= haskell.sqr^"&" x 
     (backslash x' |-> haskell.sqr^"&" y
       (backslash y' |-> haskell.add^"&" x' y'
-        (backslash z' |-> haskell.sqrt^"&" z' c))) $
+        (backslash z' |-> haskell.sqrt^"&" z' c))) \
+  haskell.main &= note.sixteenth.beamed (haskell.pythagoras^"&" 3.0 space 4.0) (backslash z |-> haskell.print z) $
+
+$note.sixteenth.beamed$ は ```haskell runCont```.
 
 $ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.sqr_"M" x &= chevron.l x times x chevron.r \
