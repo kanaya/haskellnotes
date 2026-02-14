@@ -2718,10 +2718,10 @@ $ haskell.sqr_"M" &colon.double haskell.Double -> haskell.Cont_(haskell.a space.
 
 $ haskell.pyth_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.pyth_"M" x y &= haskell.kwdo 
-    {x' <- haskell.sqr_"M" x; space
-    y' <- haskell.sqr_"M" y; space
-    z' <- haskell.add_"M" x' y'; space
-    z'' <- haskell.sqrt_M z'; space
+    {x' <- haskell.sqr_"M" x;
+    y' <- haskell.sqr_"M" y;
+    z' <- haskell.add_"M" x' y';
+    z'' <- haskell.sqrt_M z';
     chevron.l z'' chevron.r} $
 
 関数 $haskell.pyth_"M"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
@@ -2742,10 +2742,10 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
   haskell.pyth^"cc" x y &= backslash.not q |->
     haskell.kwdo {
       haskell.when (x < 0 or y < 0) (q space 0.0); \
-      &space.quad x' <- haskell.sqr_"M" x; space
-      y' <- haskell.sqr_"M" y; space
-      z' <- haskell.add_"M" x' y'; space
-      z'' <- haskell.sqrt_M z'; space
+      &space.quad x' <- haskell.sqr_"M" x;
+      y' <- haskell.sqr_"M" y;
+      z' <- haskell.add_"M" x' y';
+      z'' <- haskell.sqrt_M z';
       chevron.l z'' chevron.r} $
 
 /*
