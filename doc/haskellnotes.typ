@@ -2673,34 +2673,34 @@ $ haskell.sqr &colon.double haskell.Double -> haskell.Double \
 $ haskell.pyth &colon.double haskell.Double -> haskell.Double -> haskell.Double \
   haskell.pyth x y &= haskell.sqrt (haskell.add (haskell.sqr x) (haskell.sqr y)) $
 
-継続渡しとは，関数の戻り値の返し先を引数として受け取るものである．この戻り値の返し先，すなわち継続を関数 $c$ で表すことにしよう．そうすると $haskell.sqr$ と $haskell.add$ は次のようになる．関数の肩に置いた $"&"$ は継続渡しスタイルを表す．
+継続渡しとは，関数の戻り値の返し先を引数として受け取るものである．この戻り値の返し先，すなわち継続を関数 $c$ で表すことにしよう．そうすると $haskell.sqr$ と $haskell.add$ は次のようになる．関数の $"&"$ は継続渡しスタイルを表す．
 
-$ haskell.sqr^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.sqr^"&" x c&= c (x times x) \
-  haskell.add^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.add^"&" x y c&= c (x + y) $
+$ haskell.sqr_"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.sqr_"&" x c&= c (x times x) \
+  haskell.add_"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.add_"&" x y c&= c (x + y) $
 
 標準関数 $haskell.sqrt$ は次のようになる．
 
-$ haskell.sqrt^"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.sqrt^"&" x c &= c (haskell.sqrt x) $
+$ haskell.sqrt_"&" &colon.double haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.sqrt_"&" x c &= c (haskell.sqrt x) $
 
 なお
-#par-equation($ haskell.sqrt^"&" x c = c (haskell.sqrt x) \
+#par-equation($ haskell.sqrt_"&" x c = c (haskell.sqrt x) \
   arrow.t.b.double \
-  haskell.sqrt^"&" x = backslash c |-> c(haskell.sqrt x) $)
+  haskell.sqrt_"&" x = backslash c |-> c(haskell.sqrt x) $)
 なので，どちらの書き方をしても良い．
 
 継続渡しスタイルで三平方の定理の計算を行うには次のようになる．
 
-$ haskell.pyth^"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
-  haskell.pyth^"&" x y c&= haskell.sqr^"&" x 
-    (backslash x' |-> haskell.sqr^"&" y
-      (backslash y' |-> haskell.add^"&" x' y'
-        (backslash z' |-> haskell.sqrt^"&" z' c))) $
+$ haskell.pyth_"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Double -> haskell.a) -> haskell.a \
+  haskell.pyth_"&" x y c&= haskell.sqr_"&" x 
+    (backslash x' |-> haskell.sqr_"&" y
+      (backslash y' |-> haskell.add_"&" x' y'
+        (backslash z' |-> haskell.sqrt_"&" z' c))) $
 
 この計算の結果を印字するには次のようにする．
-#par-equation($ haskell.main &= haskell.print (haskell.pyth^"&" 3.0 space 4.0 space id) $)
+#par-equation($ haskell.main &= haskell.print (haskell.pyth_"&" 3.0 space 4.0 space id) $)
 結果は $5.0$ である．
 
 さて，話をややこしくしただけに見える継続渡しスタイルであるが，利点がある．その前に，継続渡しスタイルをより簡潔に表現する方法を見ておこう．それには#keyword[継続モナド]を使う．
@@ -2738,8 +2738,8 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 
 引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「早期リターン」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"M" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
 
-$ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pyth^"cc" x y &= backslash.not q |->
+$ haskell.pyth_"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+  haskell.pyth_"cc" x y &= backslash.not q |->
     haskell.kwdo {
       haskell.when (x <= 0 or y <= 0) (q space 0.0); \
       &space.quad x' <- haskell.sqr_"M" x;
@@ -2750,7 +2750,7 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
 
 ここに関数 $haskell.when$ は第1引数が真であれば第2引数を実行する関数である．関数 $haskell.when$ の第2引数と戻り値はモナド型クラスのインスタンスである必要がある必要があるため，モナドの中でしか利用できない．
 
-関数 $haskell.pyth^"cc"$ を使ったプログラムをHaskellで書くと次のようになる．
+関数 $haskell.pyth_"cc"$ を使ったプログラムをHaskellで書くと次のようになる．
 
 #sourcecode[```haskell
 import Control.Monad.Cont
@@ -2786,12 +2786,12 @@ $ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
 
 $ z = f (haskell.fact n) $
 
-$ haskell.fact^"&" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
-  square.stroked.dotted arrow.r.dotted n times haskell.fact^"&" (n - 1) (backslash a |-> c (n times a))) $
+$ haskell.fact_"&" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
+  square.stroked.dotted arrow.r.dotted n times haskell.fact_"&" (n - 1) (backslash a |-> c (n times a))) $
 
-$ z = haskell.fact^"&" n f $
+$ z = haskell.fact_"&" n f $
 
-$ haskell.fact^"&" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
+$ haskell.fact_"&" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
   &haskell.kwwhere haskell.callWithContinuationProcedure c f eq.def f c $
 
 関数 $c$ が「解りきっている」場合．
