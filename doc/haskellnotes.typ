@@ -2741,7 +2741,7 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.pyth^"cc" x y &= backslash.not q |->
     haskell.kwdo {
-      haskell.when (x < 0 or y < 0) (q space 0.0); \
+      haskell.when (x <= 0 or y <= 0) (q space 0.0); \
       &space.quad x' <- haskell.sqr_"M" x;
       y' <- haskell.sqr_"M" y;
       z' <- haskell.add_"M" x' y';
@@ -2765,6 +2765,7 @@ sqrt_m x = pure (sqrt x)
 
 pyth_m :: Float -> Float -> Cont a Float
 pyth_m x y = callCC $ \q -> do
+  when (x <= 0 || y <= 0) (q 0.0)
   x' <- sqr_m x
   y' <- sqr_m y
   z' <- add_m x' y'
