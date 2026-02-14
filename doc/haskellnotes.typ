@@ -2748,7 +2748,7 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       z'' <- haskell.sqrt_M z'; space
       chevron.l z'' chevron.r} $
 
-
+/*
 ---
 
 #tk
@@ -2795,6 +2795,7 @@ $ product^"cps" x_"s" c = haskell.kwcase x_"s" haskell.kwof
 $ product''' x_"s" = note.sixteenth.beamed haskell.apply hexa.filled (backslash c |-> product'' c x_"s") $
 
 ---
+*/
 
 === この章のまとめ #tk
 
