@@ -2732,7 +2732,7 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 
 わざわざ継続渡しスタイルを用いるのは#keyword[カレント継続]（current continuation）を使うためである．#footnote[Current continuationの日本語訳はまだ決まっていないようである．日本のプログラマはcurrent continuationをしばしばCCと略すほか「現在の継続」と呼ぶこともある．本書ではcurrent continuationを「カレント継続」と訳すことにした．]
 
-カレント継続は，ある関数から見て，次に実行されるべき継続を表す．継続渡しスタイルであれば，渡された継続が次に実行されるべき継続であるが，一般の関数からは次に実行されるべき継続が見えない．そこで，次に実行されるべき継続をカレント継続として，関数に引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
+カレント継続は，ある関数から見て，次に実行されるべき継続を表す．継続渡しスタイルであれば，渡された継続が次に実行されるべき継続であるが，一般の関数からは次に実行されるべき継続が見えない．そこで，次に実行されるべき継続を引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
 #par-equation($ backslash.not q |-> f $)
 として使う．ただし引数 $q$ には実行環境がカレント継続を代入する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
 
