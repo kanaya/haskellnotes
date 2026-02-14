@@ -2724,26 +2724,19 @@ $ haskell.pyth_"M" &colon.double haskell.Double -> haskell.Double -> haskell.Con
     z'' <- haskell.sqrt_M z'; space
     chevron.l z'' chevron.r} $
 
-関数 $haskell.pyth_"M"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子を用いて次のようにする．
+関数 $haskell.pyth_"M"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
+#par-equation($ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"M" 3.0 space 4.0) $)
+または，逆方向の演算子 $arrow.r.loop$ を用いて次のようにする．#footnote[Haskellでは $arrow.r.loop$ を ```haskell runCont``` 関数を用いて書く．例えば $haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print$ は ```haskell main = (pythM 3.0 4.0) `runCont` print``` と書く．]
 
-$ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"M" 3.0 space 4.0) $
-または
 $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 
-$arrow.r.loop$ は ```haskell runCont```.
+わざわざ継続渡しスタイルを用いるのは#keyword[カレント継続]（current continuation）を使うためである．#footnote[Current continuationの日本語訳はまだ決まっていないようである．日本のプログラマはcurrent continuationをしばしばCCと略すほか「現在の継続」と呼ぶこともある．本書ではcurrent continuationを「カレント継続」と訳すことにした．]
 
-Current continuationを使う．
+カレント継続は，ある関数から見て，次に実行されるべき継続を表す．継続渡しスタイルであれば，渡された継続が次に実行されるべき継続であるが，一般の関数からは次に実行されるべき継続が見えない．そこで，次に実行されるべき継続をカレント継続として，関数に引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
+#par-equation($ backslash.not q |-> f $)
+として使う．ただし引数 $q$ には実行環境がカレント継続を代入する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
 
-$ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
-  haskell.pyth^"cc" x y &= hexa.filled haskell.apply backslash q |->
-    haskell.kwdo { \
-      &haskell.when (x < 0 or y < 0) (q space 0.0); \
-      &x' <- haskell.sqr_"M" x; space
-      y' <- haskell.sqr_"M" y; space
-      z' <- haskell.add_"M" x' y'; space
-      z'' <- haskell.sqrt_M z'; space
-      chevron.l z'' chevron.r} $
----
+引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「早期リターン」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"M" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
 
 $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.pyth^"cc" x y &= backslash.not q |->
@@ -2754,7 +2747,7 @@ $ haskell.pyth^"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       z' <- haskell.add_"M" x' y'; space
       z'' <- haskell.sqrt_M z'; space
       chevron.l z'' chevron.r} $
-$backslash.not q |-> ...$ はcurrent continuationを $q$ に代入して $...$ を実行する．
+
 
 ---
 
