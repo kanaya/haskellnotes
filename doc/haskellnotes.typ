@@ -2226,7 +2226,7 @@ $ mu = (backslash v |-> underline(f star.filled v) >> star.stroked v) haskell.bi
 
 演算子 $star.filled$ はC++における引数の「参照渡し」を実現するものと思えば良い．式 $underline(f star.filled v)$ は値 $f v$ を使って変数 $v$ が指し示す破壊的代入が可能な変数を書き換える．C++との違いは，破壊的代入がこの $v$ に関するラムダ式の中，あるいは同じことであるがSTモナド型の変数 $mu$ の中でしか行えないことである．変数 $v$ で示されている変数をSTモナド $mu$ の外側からアクセスすることはできない．
 
-@st-monad を含むプログラムをHaskellで核と次のようになる．
+@st-monad を含むプログラムをHaskellで書くと次のようになる．
 
 #sourcecode[```haskell
 -- Haskell
@@ -2464,7 +2464,7 @@ $ stack run < input.txt
 
 今後，モナド型クラスに属する型の変数のことを単に「モナド」と呼ぶ．またモナド型クラスではない型の変数を受け取ってモナドを返す関数を「文脈に入れる関数」と呼ぶ．モナド型クラスに属する型はバインド演算子 $(haskell.bind)$ を持つので，モナドに対してバインド演算子を用いて文脈に入れる関数を適用することができる．
 
-ここで改めて概念を整理しておこう．@functor-applicative-monad に示すように，関手型クラス $(haskell.Functor)$ に属する型はマップ演算子 $(ast.op.o)$ を持つ．アプリカティブ関手型クラス $(haskell.Applicative)$ に属する型はマップ演算子に加えてアプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $chevron.l square.filled chevron.r$ を持つ．モナド型クラス $(haskell.Monad)$ に属する型は，マップ演算子，アプリカティブマップ演算子，ピュア演算子に加えて，バインド演算子 $(haskell.bind)$ を持つ．
+ここで改めて概念を整理しておこう．@functor-applicative-monad に示すように，関手型クラス $(haskell.Functor)$ に属する型はマップ演算子 $(ast.op.o)$ を持つ．アプリカティブ関手型クラス $(haskell.Applicative)$ に属する型はマップ演算子に加えてアプリカティブマップ演算子 $(ast.square)$ とピュア演算子 $(chevron.l square.filled chevron.r)$ を持つ．モナド型クラス $(haskell.Monad)$ に属する型は，マップ演算子，アプリカティブマップ演算子，ピュア演算子に加えて，バインド演算子 $(haskell.bind)$ を持つ．
 
 #figure(
   caption: "関手・アプリカティブ関手・モナド",
@@ -2743,19 +2743,18 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
 #par-equation($ haskell.sqr_"&" x note.eighth.alt &= note.eighth.alt (x times x) \
   haskell.add_"&" x y note.eighth.alt &= note.eighth.alt (x + y) \
   haskell.sqrt_"&" x note.eighth.alt &= note.eighth.alt (haskell.sqrt x) $)
-次に $note.eighth.alt$ を自動的に生成する演算子 $note.sixteenth.beamed$ を考える．この演算子 $note.sixteenth.beamed$ は関数 $f$ を受け取り，次のように $f note.eighth.alt$ を返す．
+カレント継続 $note.eighth.alt$ を自動的に生成する演算子 $note.sixteenth.beamed$ を考える．この演算子 $note.sixteenth.beamed$ は関数 $f$ を受け取り，次のように $f note.eighth.alt$ を返す．
 #par-equation($ note.sixteenth.beamed f = f note.eighth.alt $)
-ここで注意しないといけないことがある．記号 $note.eighth.alt$ はカレント継続を表す記号であるが，これはプログラマから見ることは出来ず，またプログラム中に動的に変化する．一方で，カレント継続を与える演算子 $note.sixteenth.beamed$ は実在する演算子で，プログラマが書くことが出来る．#footnote[Haskellでは $note.sixteenth.beamed$ を ```haskell callCC``` と書く．]
+ここで注意しないといけないことがある．記号 $note.eighth.alt$ はカレント継続を表す記号であるが，これはプログラマから見ることは出来ず，またプログラム中で動的に変化する．一方で，カレント継続を与える演算子 $note.sixteenth.beamed$ は実在する演算子で，プログラマが書くことが出来る．#footnote[Haskellでは $note.sixteenth.beamed$ を ```haskell callCC``` と書く．]
 
 カレント継続は $note.sixteenth.beamed$ 演算子に続く関数に引数として渡されるので，次のようにラムダ式で受け取ることが出来る．
 #par-equation($ note.sixteenth.beamed (backslash q |-> ...) $)
 この式では変数 $q$ にはカレント継続が拘束される．本書ではシンタックスシュガーとして次の記法も導入しておこう．カレント継続を引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
 #par-equation($ backslash.not q |-> ... $)
-として使う．ただし引数 $q$ には実行環境がカレント継続を代入する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
+として使う．ただし引数 $q$ には実行環境がカレント継続を拘束する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
 
-引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「早期リターン」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"M" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
-
-$ haskell.pyth_"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「早期リターン」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"m" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
+#par-equation($ haskell.pyth_"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.pyth_"cc" x y &= backslash.not q |->
     haskell.kwdo {
       haskell.when (x <= 0 or y <= 0) (q space 0.0); \
@@ -2763,8 +2762,7 @@ $ haskell.pyth_"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Co
       y' <- haskell.sqr_"M" y;
       z' <- haskell.add_"M" x' y';
       z'' <- haskell.sqrt_M z';
-      chevron.l z'' chevron.r} $
-
+      chevron.l z'' chevron.r} $)
 ここに関数 $haskell.when$ は第1引数が真であれば第2引数を実行する関数である．関数 $haskell.when$ の第2引数と戻り値はモナド型クラスのインスタンスである必要がある必要があるため，モナドの中でしか利用できない．
 
 関数 $haskell.pyth_"cc"$ を使ったプログラムをHaskellで書くと次のようになる．
@@ -2780,8 +2778,8 @@ add_m x y = pure (x + y)
 sqrt_m :: Float -> Cont a Float
 sqrt_m x = pure (sqrt x)
 
-pythCC :: Float -> Float -> Cont a Float
-pythCC x y = callCC $ \q -> do
+pyth_cc :: Float -> Float -> Cont a Float
+pyth_cc x y = callCC $ \q -> do
   when (x <= 0 || y <= 0) (q 0.0)
   x' <- sqr_m x
   y' <- sqr_m y
@@ -2789,7 +2787,7 @@ pythCC x y = callCC $ \q -> do
   z'' <- sqrt_m z'
   pure z''
 
-main = (pythCC 5 12) `runCont` print
+main = (pyth_cc 5 12) `runCont` print
 ```]
 
 /*
@@ -3163,3 +3161,5 @@ a.
 ```]
 
 */
+
+=== 関数型クラス
