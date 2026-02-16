@@ -2862,26 +2862,39 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 
 = Haskellプログラミング
+<haskell-programming>
 
 プログラムとは，動けば正義である．プログラミング言語は機械語の糖衣構文であるし，計算機はチューリング機械のバリエーションである．そのためプログラムの記述方法はプログラムの本質ではない．ただし，人間がプログラムを読むことを想定すると，プログラムをどれやけ優しく読めるようにするかは大きな議題である．｀
 
-== main
-=== コマンドライン引数と環境変数
-=== 戻り値
-=== 異常終了
+== Hello, again.
+== データ型
+== 文字列・ベクトル
+== 末尾再帰
+== Yコンビネータ
+== mainの引数と戻り値
+== 継続
+== 状態
+== テンプレート
+== 他の言語との比較
 
 // https://qiita.com/minarai/items/b2f036008bc68b23871c
 
 = プログラミングと代数構造
 <programming-and-algebraic-structures>
 
-== 整数
-
-== 条件式
-
-== Yコンビネータ
-
 == モノイド
+== 圏論
+== 関数型
+== 関手・アプリカティブ関手
+== モナド
+== 非決定生
+== カテゴリ
+== アロー
+== クライスリカテゴリ
+== 圏論とプログラミングをつなぐ
+
+
+
 
 $(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
 
