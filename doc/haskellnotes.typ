@@ -2859,3 +2859,11 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 // https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
 ]
+
+= 参考文献
+
+#tk
+
+= 索引
+
+#tk
