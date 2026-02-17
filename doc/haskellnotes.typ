@@ -2855,15 +2855,11 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 引数 $x$ に注目すると $z = f x$ の関係性は保たれており，一方で $w$ で表現される内部状態は関数 $f$ の実行後に $w'$ に変化するものと理解することが出来る．
 
-そのため，副作用を隠すためにはモナド型クラスはなくても良い．モナド型クラスを導入する理由は関数合成と，逐次実行を担保するためである．
-
-// https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
+そのため，副作用を隠すためにはモナド型クラスはなくても良い．モナド型クラスを導入する理由は関数合成と，逐次実行を担保するためである．@saru1
 ]
 
-= 参考文献
+#bibliography("references.yaml")
 
-#tk
 
-= 索引
+#tk 索引
 
-#tk
