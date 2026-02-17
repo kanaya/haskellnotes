@@ -1866,23 +1866,19 @@ $  u_* &= phi x \
   v_* &= psi y \
   w_* &= omega ast.op.o u_* ast.square v_* $
 
-コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．#footnote[Haskellでは ```haskell w = omega <$> (phi x) <*> (psi y)``` と書く．これは ```haskell w = do { u <- phi x; v <- psi y; return (omega u v) }``` と書くのと同じである．]
+コンテナ変数 $u_*, v_*$ のいずれかが $nothing.rev$ であればコンテナ変数 $w_*$ の値も $nothing.rev$ になる．これは2個の計算を並列に行って，その結果をそれぞれ $u_*, v_*$ に入れておくことを意味する．このような書き方を#keyword[アプリカティブスタイル]と呼ぶ．@legokichi #footnote[Haskellでは ```haskell w = omega <$> (phi x) <*> (psi y)``` と書く．これは ```haskell w = do { u <- phi x; v <- psi y; return (omega u v) }``` と書くのと同じである．]
 
 アプリカティブスタイルは，関数 $omega$ を変数 $u_*, v_*$ にあたかも適用したかのように見える．実際，アプリカティブスタイルはかつて次のように書くことが提案されたが，採用はされなかった．#footnote[現在のHaskellでは ```haskell w = liftA2 omega u v``` と書くことで代用されている．元の提案は `w = [|omega u v|]` であった．]
 
 $ w = [| omega u v |] ... "採用されなかった文法" $
 
-// https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
-
 === 余談：型をつくる
-
-// https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
 
 我々はすでにある型に別名を与える方法を見てきた．型シノニムである．例えば $haskell.String$ 型は $haskell.Char$ 型のリストとして定義されていて，次のように書かれている．
 
 $ haskell.kwtype haskell.String eq.def [haskell.Char] $
 
-キーワード $haskell.kwtype$ は型シノニム（#underline[type] synonym）を定義するキーワードである．型シノニムは既存の型に別名を与えるだけなので，真に新しい型を作り出しているわけではない．
+キーワード $haskell.kwtype$ は型シノニム（#underline[type] synonym）を定義するキーワードである．型シノニムは既存の型に別名を与えるだけなので，真に新しい型を作り出しているわけではない．@mizunashi-mana
 
 新しい型を作り出すにはキーワード $haskell.kwdata$ を使う．我々が今まで型（type）と呼んできたものは，実はデータ型（#underline[data] type）と呼ぶのが正式である．そこで，新しい型を作り出すキーワードも $haskell.kwdata$ なのである．型シノニムの定義には新しい型名（例えば $haskell.String$）と，元になる型名（例えば $[haskell.Char]$）をイコール $(eq.def)$ の両辺に書いた．新しい型を作り出す場合は，次式のようにイコールの左辺に新しい型名を書き，右辺に新しい値コンストラクタの名前を書く．
 
