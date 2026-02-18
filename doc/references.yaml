@@ -1,9 +1,3 @@
-saru1:
-  type: Web
-  author: Kei Sugimoto
-  title: サルでもわかるIOモナド①－副作用の除去
-  url: https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
-
 legokichi:
   type: Web
   author: legokichi
@@ -16,14 +10,21 @@ mizunashi-mana:
   title: data/newtype/type の使い方
   url: https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
 
+random-numbers-in-haskell:
+  type: Web
+  author: School of Haskell
+  title: Random numbers in Haskell
+  url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+saru1:
+  type: Web
+  author: Kei Sugimoto
+  title: サルでもわかるIOモナド①－副作用の除去
+  url: https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
+
 tiobe-index:
   type: Web
   author: TIOBE
   title: TIOBE Index
   url: https://www.tiobe.com/tiobe-index/
 
-random-numbers-in-haskell:
-  type: Web
-  author: School of Haskell
-  title: Random numbers in Haskell
-  url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
