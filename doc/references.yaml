@@ -18,6 +18,7 @@ mizunashi-mana:
 
 tiobe-index:
   type: Web
+  author: TIOBE
   title: TIOBE Index
   url: https://www.tiobe.com/tiobe-index/
 
