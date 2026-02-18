@@ -4,11 +4,17 @@ legokichi:
   title: Applicative スタイル f <$> m1 <*> m2 を読み解く
   url: https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
-mizunashi-mana:
+mizunashi-mana-data:
   type: Web
   author: Mizunashi Mana
   title: data/newtype/type の使い方
   url: https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
+
+mizunashi-mana-io:
+  type: Web
+  author: Mizunashi Mana
+  title: IOモナドと副作用
+  url: https://haskell.jp/blog/posts/2020/io-monad-and-sideeffect.html
 
 random-numbers-in-haskell:
   type: Web
