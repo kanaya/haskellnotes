@@ -34,3 +34,10 @@ tiobe-index:
   title: TIOBE Index
   url: https://www.tiobe.com/tiobe-index/
 
+wikipedia-continuation-passing-style:
+  type: Web
+  author: Wikipedia
+  title: Continuation-passing style
+  url: https://en.wikipedia.org/wiki/Continuation-passing_style
+
+
