@@ -15,3 +15,14 @@ mizunashi-mana:
   author: Mizunashi Mana
   title: data/newtype/type の使い方
   url: https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
+
+tiobe-index:
+  type: Web
+  title: TIOBE Index
+  url: https://www.tiobe.com/tiobe-index/
+
+random-numbers-in-haskell:
+  type: Web
+  author: School of Haskell
+  title: Random numbers in Haskell
+  url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
