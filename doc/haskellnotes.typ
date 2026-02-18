@@ -1995,7 +1995,7 @@ $ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
 
 // プログラミング言語によっては，型に対する演算を行う機能がある．これを#keyword[型レベルプログラミング]と呼ぶ．Haskellでは型コンストラクタを使ってコンテナ型から新しい型を作ることができるほか，コンテナ型を作ることも出来る．
 
-// https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/preface
+@damepo
 
 === この章のまとめ #tk
 
@@ -2182,10 +2182,9 @@ Maybe型もまたモナド型クラスに属する．関数 $psi$ が
 // 上式は次のように縮約できる．
 // $ haskell.kwdo {x <- x_*; y <- phi x; psi y} $
 
-// https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+@kazu-yamamoto-functor
+@ryusei-yamaguchi
 
-
-// https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
 
 === 破壊的代入を隠すモナド

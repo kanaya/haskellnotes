@@ -1,8 +1,20 @@
+damepo:
+  type: Web
+  author: Damepo
+  title: Haskellでの型レベルプログラミング
+  url: https://zenn.dev/mod_poppo/books/haskell-type-level-programming
+
 legokichi:
   type: Web
   author: legokichi
   title: Applicative スタイル f <$> m1 <*> m2 を読み解く
   url: https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
+
+kazu-yamamoto-functor:
+  type: Web
+  author: Kazu Yamamoto
+  title: 関手、Applicative、Monadの法則
+  url: https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
 
 mizunashi-mana-data:
   type: Web
@@ -21,6 +33,12 @@ random-numbers-in-haskell:
   author: School of Haskell
   title: Random numbers in Haskell
   url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+ryusei-yamaguchi:
+  type: Web
+  author: Ryusei Yamaguchi
+  title: 圏論のモナドの法則からHaskellでよくみる形のモナド則を導き出す
+  url: https://qiita.com/mandel59/items/87aebbd964ca82f74904
 
 saru1:
   type: Web
