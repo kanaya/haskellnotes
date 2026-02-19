@@ -8,10 +8,8 @@ graham-hutton:
   type: Book
   author: Graham Hutton
   title: Programming in Haskell (2nd edition)
-  url: https://www.cs.nott.ac.uk/~pszgmh/pih.html
   year: 2016
   publisher: Cambridge University Press
-  edition: 2
   isbn: 978-0521692694
 
 legokichi:
@@ -57,7 +55,7 @@ random-numbers-in-haskell:
 richard-bird:
   type: Book
   author: Richard Bird, Nobuo Yamashita (山下伸夫)
-  titile: Haskellによる関数プログラミングの思考法
+  title: Haskellによる関数プログラミングの思考法
 
 ryusei-yamaguchi:
   type: Web

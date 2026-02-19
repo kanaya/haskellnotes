@@ -120,7 +120,7 @@
 == Haskellについて
 <about-haskell>
 
-これからのプログラマにとってHaskellを無視することはできない．Haskellの「欠点をあげつらうことも，攻撃することもできるが，無視することだけはできない」のだ．それはHaskellがプログラミングの本質に深く関わっているからである．@graham-hutton
+これからのプログラマにとってHaskellを無視することはできない．Haskellの「欠点をあげつらうことも，攻撃することもできるが，無視することだけはできない」のだ．それはHaskellがプログラミングの本質に深く関わっているからである．@graham-hutton @richard-bird @will-kurt
 
 === Haskellという森
 
