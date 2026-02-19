@@ -4,6 +4,16 @@ damepo:
   title: Haskellでの型レベルプログラミング
   url: https://zenn.dev/mod_poppo/books/haskell-type-level-programming
 
+graham-hutton:
+  type: Book
+  author: Graham Hutton
+  title: Programming in Haskell (2nd edition)
+  url: https://www.cs.nott.ac.uk/~pszgmh/pih.html
+  year: 2016
+  publisher: Cambridge University Press
+  edition: 2
+  isbn: 978-0521692694
+
 legokichi:
   type: Web
   author: legokichi
@@ -15,6 +25,16 @@ kazu-yamamoto-functor:
   author: Kazu Yamamoto
   title: 関手、Applicative、Monadの法則
   url: https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+
+miran-lipovaca:
+  type: Book
+  author: Miran Lipovaca
+  title: Learn You a Haskell for Great Good!
+  url: https://learnyouahaskell.com/
+  year: 2011
+  publisher: O'Reilly Media, Inc.
+  edition: 1
+  isbn: 978-0596514983
 
 mizunashi-mana-data:
   type: Web
@@ -33,6 +53,11 @@ random-numbers-in-haskell:
   author: School of Haskell
   title: Random numbers in Haskell
   url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+richard-bird:
+  type: Book
+  author: Richard Bird, Nobuo Yamashita (山下伸夫)
+  titile: Haskellによる関数プログラミングの思考法
 
 ryusei-yamaguchi:
   type: Web
@@ -58,4 +83,7 @@ wikipedia-continuation-passing-style:
   title: Continuation-passing style
   url: https://en.wikipedia.org/wiki/Continuation-passing_style
 
-
+will-kurt:
+  type: Book
+  author: Will Kurt, QUIP (クイープ)
+  title: 入門Haskellプログラミング
