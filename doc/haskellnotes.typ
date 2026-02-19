@@ -2245,9 +2245,7 @@ main = print $ runST m
 
 #pb
 
-// https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
-
-破壊的代入を利用して，リストの和を取る関数 $sum'$ を書いてみると次のようになる．
+破壊的代入を利用して，リストの和を取る関数 $sum'$ を書いてみると次のようになる．@_7shi-st-monad
 
 $ sum' x_"s" = penta.stroked haskell.apply
   (backslash a |-> ((backslash i |-> underline((+i) star.filled a)) *_"M" x_"s") >> haskell.readSTRefOp a) 
