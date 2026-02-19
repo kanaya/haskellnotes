@@ -30,6 +30,12 @@ kazu-yamamoto-functor:
   title: 関手、Applicative、Monadの法則
   url: https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
 
+minegishirei-file-io:
+  type: Web
+  author: Minegishi Rei
+  title: Haskellでファイルを読み書きする方法【Haskell入門】
+  url: https://minegishirei.hatenablog.com/entry/2023/12/15/093109
+
 miran-lipovaca:
   type: Book
   author: Miran Lipovaca

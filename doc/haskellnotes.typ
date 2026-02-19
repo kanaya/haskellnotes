@@ -2510,11 +2510,9 @@ $ f &colon.double haskell.String -> haskell.String \
 
 #pb
 
-// https://minegishirei.hatenablog.com/entry/2023/12/15/093109
-
 出力とは，破壊的代入である．そこで出力もIOモナドで表現する必要がある．出力によく使われるアクションは文字列を印字する $haskell.putStrLn$ である．アクション $haskell.putStrLn$ の型は
 #par-equation($ haskell.putStrLn colon.double haskell.String -> haskell.IOunit $)
-である．これはアクション $haskell.putStrLn$ が文字列 $(haskell.String)$ を受け取って，何らかの破壊的操作を行って，空っぽのIOアクション $(haskell.IOunit)$ を返すことを意味する．
+である．これはアクション $haskell.putStrLn$ が文字列 $(haskell.String)$ を受け取って，何らかの破壊的操作を行って，空っぽのIOアクション $(haskell.IOunit)$ を返すことを意味する．@minegishirei-file-io
 
 アクション $haskell.putStrLn$ に文字列を渡すと，その文字列を標準出力へ印字する．例を挙げる．
 #par-equation($ haskell.main = haskell.putStrLn haskell.constantstring("Hello, world!") $)
