@@ -2848,6 +2848,5 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 #bibliography("references.yaml")
 
-
-#tk 索引
+// #tk 索引
 
