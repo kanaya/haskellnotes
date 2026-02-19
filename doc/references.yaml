@@ -54,7 +54,7 @@ random-numbers-in-haskell:
 
 richard-bird:
   type: Book
-  author: Richard Bird, Nobuo Yamashita (山下伸夫)
+  author: Richard Bird著，山下伸夫訳
   title: Haskellによる関数プログラミングの思考法
 
 ryusei-yamaguchi:
@@ -83,5 +83,5 @@ wikipedia-continuation-passing-style:
 
 will-kurt:
   type: Book
-  author: Will Kurt, QUIP (株式会社クイープ)
+  author: Will Kurt著，株式会社クイープ訳
   title: 入門Haskellプログラミング
