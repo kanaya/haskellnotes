@@ -75,6 +75,7 @@
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
 #let rest = longfunction("rest")
+#let sequence = longfunction("sequence")
 #let showfunc = longfunction("show")
 #let sort = longfunction("sort")
 #let sortBy = longfunction("sortBy")
