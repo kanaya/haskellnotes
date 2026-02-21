@@ -82,7 +82,6 @@
 #let sqrt = longfunction("sqrt")
 #let stalinSort = longfunction("stalinSort")
 #let succ = longfunction("succ")
-#let take = longfunction("take")
 #let tail = longfunction("tail")
 #let toLower = longfunction("toLower")
 #let uncurry = longfunction("uncurry")
@@ -175,7 +174,7 @@
 
 // Binary operator.
 #let anyop = math.class("binary", math.circle.dotted)
-#let apply = math.class("binary", math.dollar)
+#let apply = math.class("binary", math.section)
 #let at = math.class("binary", math.at)
 #let bangbang = math.class("binary", math.excl.double)
 #let bind = math.class("binary", math.suit.heart.stroked)
@@ -184,6 +183,7 @@
 #let makeComplex = math.class("binary", ":+")
 #let mapM = math.class("binary", math.ast.triple)
 #let replicate = math.class("binary", math.arrow.ccw)
+#let take = math.class("binary", math.arrow.zigzag)
 
 // Big operator
 #let fold = math.union.big

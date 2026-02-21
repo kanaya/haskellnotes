@@ -4,6 +4,18 @@ _7shi-st-monad:
   title: Haskell状態系モナド超入門
   url: https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
 
+apple-think-different:
+  type: Web
+  author: Apple
+  title: Think Different
+  url: https://designmanifestos.org/apple-think-different/
+
+cppreference-member-access-operators:
+  type: Web
+  author: C++ Reference
+  title: Member access operators
+  url: https://en.cppreference.com/w/cpp/language/operator_member_access.html
+
 damepo:
   type: Web
   author: Damepo
