@@ -212,7 +212,7 @@ category-mathematical:
 category-theory:
   short: 圏論
 
-category-theoretic-functor:
+functor-mathematical:
   short: 圏論的関手
 
 type:
@@ -232,6 +232,9 @@ type-parameter:
 
 type-level-programming:
   short: 型レベルプログラミング
+
+type-conversion:
+  short: 型変換
 
 type-conversion-operator:
   short: 型変換演算子
@@ -262,9 +265,6 @@ morphism:
 
 local-variable:
   short: 局所変数
-
-arrow-mathematical:
-  short: 射
 
 local-variable:
   short: 局所変数
@@ -389,7 +389,7 @@ sequential-processing:
 sequential-execution:
   short: 逐次実行
 
-delayed-evaluation:
+lazy-evaluation:
   short: 遅延評価
 
 application:
@@ -425,9 +425,6 @@ functional-programming-language:
 function-application-operator:
   short: 関数適用演算子
 
-closure:
-  short: 関数閉包
-
 factorial:
   short: 階乗
 
@@ -439,3 +436,12 @@ static-typing:
 
 higher-order-function:
   short: 高階関数
+
+single-precision-floating-point-number-type:
+  short: 単精度浮動小数点数型
+
+double-precision-floating-point-number-type:
+  short: 倍精度浮動小数点数型
+
+boolean:
+  short: ブール型
