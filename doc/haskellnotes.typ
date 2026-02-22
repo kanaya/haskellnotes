@@ -2350,7 +2350,7 @@ $ z = haskell.form y $
 #par-equation($ haskell.main = haskell.putStrLn z $)
 これで，入力がプログラムに固定されていることをのぞいて，プログラムが完成したことになる．せっかくなので，これまで定義した関数を $haskell.doIt$ という名前の関数にまとめておこう．
 #par-equation($ haskell.doIt &colon.double haskell.String -> haskell.String \
-  haskell.doIt x &= (haskell.form compose (haskell.sortBy haskell.compFst) compose haskell.count compose haskell.group compose haskell.sort compose haskell.words compose haskell.clean) x $)
+  haskell.doIt &= haskell.form compose (haskell.sortBy haskell.compFst) compose haskell.count compose haskell.group compose haskell.sort compose haskell.words compose haskell.clean $)
 この「全部入り」関数 $haskell.doIt$ を文字列 $s$ に適用して文字列 $z$ を得ておき，印字することにしよう．これまでの経過をまとめると次のように出来る．
 
 $ 
@@ -2366,7 +2366,7 @@ haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.
   haskell.form haskell.emptylist &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\\n") smash haskell.form x_"s" \
 haskell.doIt &colon.double haskell.String -> haskell.String \
-  haskell.doIt x &= (haskell.form compose (haskell.sortBy haskell.compFst) compose haskell.count compose haskell.group compose haskell.sort compose haskell.words compose haskell.clean) x \
+  haskell.doIt &= haskell.form compose (haskell.sortBy haskell.compFst) compose haskell.count compose haskell.group compose haskell.sort compose haskell.words compose haskell.clean \
 s &= haskell.constantstring("Hello, world! Hello, once again, to you and you and you.") \
 z &= haskell.doIt s \
   haskell.main &= haskell.putStrLn z $
