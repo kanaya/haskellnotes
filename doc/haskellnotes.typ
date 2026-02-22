@@ -2771,7 +2771,7 @@ $ haskell.main = (haskell.pyth_"m" 3.0 space 4.0) arrow.r.loop haskell.print $
 #par-equation($ note.sixteenth.beamed (backslash q |-> ...) $)
 この式では変数 $q$ にはカレント継続が拘束される．本書ではシンタックスシュガーとして次の記法も導入しておこう．カレント継続を引数として渡してやる演算子 $backslash.not$ を導入する．演算子 $backslash.not$ はラムダ式と同じように
 #par-equation($ backslash.not q |-> ... $)
-として使う．ただし引数 $q$ には実行環境がカレント継続を拘束する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \ q -> f``` と書ける．]
+として使う．ただし引数 $q$ には実行環境がカレント継続を拘束する．一般のラムダ式のように，プログラマが引数の値を与える必要はない．#footnote[Haskellでは $backslash.not$ に直接対応する演算子は無い．しかし $backslash.not q |-> f$ は ```haskell callCC $ \q -> f``` と書ける．]
 
 引数 $q$ はカレント継続なので，関数 $f$ の中で呼び出すということは，関数 $f$ からの「脱出」を意味する．これを利用して，関数からの「#keyword[@early-return]」のようなテクニックを実現することも可能である．例えば $haskell.pyth_"m" x y$ を変形して，もし $x<0$ または $y<0$ であれば戻り値 $0.0$ で早期リターンするようには次のようにする．
 #par-equation($ haskell.pyth_"cc" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
