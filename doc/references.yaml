@@ -10,6 +10,12 @@ apple-think-different:
   title: Think Different
   url: https://designmanifestos.org/apple-think-different/
 
+bryan-osullivan:
+  type: Book
+  author: Bryan O'Sullivan
+  title: "Real World Haskell: Code You Can Believe In"
+  publisher: O'Reilly Media
+
 cppreference-member-access-operators:
   type: Web
   author: C++ Reference
@@ -32,9 +38,7 @@ graham-hutton:
   type: Book
   author: Graham Hutton
   title: Programming in Haskell (2nd edition)
-  year: 2016
   publisher: Cambridge University Press
-  isbn: 978-0521692694
 
 kazu-yamamoto-functor:
   type: Web
@@ -58,9 +62,7 @@ miran-lipovaca:
   type: Book
   author: Miran Lipovaca
   title: Learn You a Haskell for Great Good!
-  year: 2011
   publisher: O'Reilly Media, Inc.
-  isbn: 978-0596514983
 
 mizunashi-mana-data:
   type: Web
