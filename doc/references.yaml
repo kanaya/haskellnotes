@@ -52,7 +52,6 @@ miran-lipovaca:
   type: Book
   author: Miran Lipovaca
   title: Learn You a Haskell for Great Good!
-  url: https://learnyouahaskell.com/
   year: 2011
   publisher: O'Reilly Media, Inc.
   isbn: 978-0596514983
