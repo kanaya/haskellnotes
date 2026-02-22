@@ -3,6 +3,10 @@
 #import "@preview/codelst:2.0.2": sourcecode
 #import "@preview/showybox:2.0.4": showybox
 
+#import "@preview/glossy:0.9.0": *
+#show: init-glossary.with(yaml("glossary.yaml"))
+
+
 #import "@preview/theorion:0.4.1": *
 #import cosmos.fancy: *
 #show: show-theorion
@@ -115,7 +119,7 @@
 = Haskell入門
 <introduction-to-haskell>
 
-本書はプログラミング言語Haskellの入門書である．それと同時に，本書はプログラミング言語を用いた代数構造の入門書でもある．プログラミングと代数構造の間には密接な関係があるが，とくに#keyword[関数型プログラミング]を実践する時にはその関係を意識する必要が出てくる．本書はその両者を同時に解説することを試みる．
+本書はプログラミング言語Haskellの入門書である．それと同時に，本書はプログラミング言語を用いた代数構造の入門書でもある．プログラミングと代数構造の間には密接な関係があるが，特に#keyword[@functional-programming]を実践する時にはその関係を意識する必要が出てくる．本書はその両者を同時に解説することを試みる．
 
 == Haskellについて
 <about-haskell>
@@ -2833,5 +2837,4 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 #bibliography("references.yaml")
 
-// #tk 索引
-
+#glossary(title: "索引", groups: (""))

@@ -1,0 +1,3 @@
+functional-programming:
+  short: 関数型プログラミング
+  description: 参照透過性を重視するプログラミングスタイル．
