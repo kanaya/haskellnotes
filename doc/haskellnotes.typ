@@ -408,7 +408,15 @@ $ z = f x $
 
 部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を ```haskell max x y``` と書く．なお関数 $(max x)$ のことを $max_x$ と書く教科書も多い．関数引数を添え字で表す記法は，本書でも後に採用する．]
 
-#tk Python
+もし関数 $max x$ と同じものをPythonで作りたければ，次のようなテクニックを用いることになる．
+
+#sourcecode[```python
+# Python
+def create_max(x):
+  return lambda y: max(x, y)
+```]
+
+このPython関数 ```python create_max(x)``` は我々の $max x$ と同じ用に，1引数を取る関数として振る舞う．そのため ```python create_max(10)(20)``` は ```python 20``` を返す．このような仕組みは#keyword[クロージャ]または#keyword[関数閉包]と呼ばれる．
 
 === ラムダ式
 
