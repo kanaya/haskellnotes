@@ -2002,54 +2002,7 @@ $ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
 
 $ haskell.kwdata haskell.typename("Shape") eq.def haskell.Circle_haskell.Double xor haskell.Rect_(haskell.Double haskell.Double) $
 
-/*
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_(haskell.Double haskell.Double) $
-
-$ x = "Rect"_(10.0 space 20.0) $
-
-$ haskell.kwdata haskell.typename("Rect") eq.def "Rect"_({ "width" colon.double haskell.Double, "height" colon.double haskell.Double }) $
-
-$ x = "Rect"_({ "width" = 10.0, "height" = 20.0 }) $
-
-$ haskell.kwdata haskell.typename("Ratio") eq.def haskell.Int ":/" haskell.Int $
-
-$ "ratioToDouble" &colon.double haskell.typename("Ratio") -> haskell.Double \
-  "ratioToDouble" (x ":/" y) &= (haskell.fromIntegral x) / (haskell.fromIntegral y) $
-
-$ z = "ratioToDouble" (3 ":/" 2) $
-
-直和．
-
-$ haskell.kwdata haskell.typename("Shape") eq.def "Circle"_haskell.Double 
-  xor "Triangle"_(haskell.Double haskell.Double) $
-
-
-#tk インスタンス
-
-$ haskell.kwclass haskell.Eq supset haskell.a &haskell.kwwhere \
-  &(equiv), (equiv.not) colon.double haskell.a -> haskell.a -> haskell.Bool \
-  &x equiv y = not (x equiv.not y) \
-  &x equiv.not y = not (x equiv y) $
-
-型クラスは型を一段抽象化したものであった．型を抽象化したものとして，Haskellには#keyword[種]という概念もある．$haskell.Int$ や $haskell.Double$ のような具体的な型はすべて $haskell.Type$ という種に属する．一方 @list で述べるように，Haskellには型から型を作る機能がある．このように型から作られる型は $haskell.Type ~> haskell.Type$ という種に属する．これらの関係を @types-and-kinds に掲げる．
-
-#figure(
-  caption: "型・型クラス・種",
-  table(
-    columns: (auto, auto, auto, auto),
-    inset: 10pt,
-    table.header([抽象度], [名称], [具体例], [要素の宣言]),
-    [低], [変数，関数], $x, f$, [---],
-    [中], [型], $haskell.Int, haskell.Bool$, $x colon.double haskell.Int$,
-    [高], [型クラス], $haskell.Eq, haskell.Num$, $haskell.Eq supset haskell.a arrow.r.stroked x colon.double haskell.a$,
-    [高], [種], $haskell.Type, haskell.Type ~> haskell.Type$, [---]
-  )
-)
-<types-and-kinds>
-
-*/
-
-// プログラミング言語によっては，型に対する演算を行う機能がある．これを#keyword[型レベルプログラミング]と呼ぶ．Haskellでは型コンストラクタを使ってコンテナ型から新しい型を作ることができるほか，コンテナ型を作ることも出来る．
+// プログラミング言語によっては，型に対する演算を行う機能がある．これを#keyword[型レベルプログラミング]と呼ぶ．Haskellでは型コンストラクタを使ってコンテナ型から新しい型を作ることができるほか，コンテナ型を作ることも出来る． #tk
 
 === この章のまとめ
 
@@ -2840,55 +2793,6 @@ pyth_cc x y = callCC $ \q -> do
 
 main = (pyth_cc 5 12) `runCont` print
 ```]
-
-/*
----
-
-#tk
-
-// https://practical-scheme.net/wiliki/wiliki.cgi?Scheme%3A使いたい人のための継続入門
-$ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
-  square.stroked.dotted arrow.r.dotted n times haskell.fact(n - 1)) $
-
-$ z = f (haskell.fact n) $
-
-$ haskell.fact_"&" n c = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted c space 1,
-  square.stroked.dotted arrow.r.dotted n times haskell.fact_"&" (n - 1) (backslash a |-> c (n times a))) $
-
-$ z = haskell.fact_"&" n f $
-
-$ haskell.fact_"&" n c &= haskell.callWithContinuationProcedure c (backslash f |-> f (haskell.fact n)) \
-  &haskell.kwwhere haskell.callWithContinuationProcedure c f eq.def f c $
-
-関数 $c$ が「解りきっている」場合．
-
-$ z = f (hexa.filled (backslash haskell.cc |-> haskell.cc (haskell.fact n))) $
-
-式 $(backslash haskell.cc |-> haskell.cc (haskell.fact n))$ 中の $haskell.cc$ は「これから呼ばれる」関数である．この関数 $haskell.cc$ を呼ぶかどうかはプログラマの判断に委ねられる．条件によっては関数 $haskell.cc$ を呼ばないことも出来る．
-
-#tk
-
-$ product x_"s" = haskell.kwcase x_"s" haskell.kwof
-  cases(haskell.emptylist arrow.r.dotted 1,
-    (y:y_"s") arrow.r.dotted y times product y_"s") $
-
-$ product' x_"s" = haskell.kwcase x_"s" haskell.kwof
-  cases(haskell.emptylist arrow.r.dotted 1,
-    (y:y_"s") arrow.r.dotted 
-      haskell.kwcase y haskell.kwof {0 arrow.r.dotted 0; space
-        square.stroked.dotted arrow.r.dotted y times product' y_"s"}) $
-
-$ product^"cps" x_"s" c = haskell.kwcase x_"s" haskell.kwof
-  cases(haskell.emptylist arrow.r.dotted 1,
-    (y:y_"s") arrow.r.dotted 
-      haskell.kwcase y haskell.kwof {0 arrow.r.dotted c space 0; space
-        square.stroked.dotted arrow.r.dotted y times product^"cps" y_"s" c}) $
-
-
-$ product''' x_"s" = note.sixteenth.beamed haskell.apply hexa.filled (backslash c |-> product'' c x_"s") $
-
----
-*/
 
 === この章のまとめ
 
