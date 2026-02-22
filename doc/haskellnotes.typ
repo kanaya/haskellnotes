@@ -520,7 +520,7 @@ def f(x):
     return sin(x) / x
 ```]
 
-一方，我々は値を持つ#keyword[conditional-expression]を考える．我々の条件式とは 
+一方，我々は値を持つ#keyword[@conditional-expression]を考える．我々の条件式とは 
 #par-equation($ f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac(sin x, x) $)
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[@short-circuit-evaluation]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0.0 then 1.0 else (sin x) / x``` と書く．]
 
