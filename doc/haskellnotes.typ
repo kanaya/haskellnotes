@@ -623,7 +623,7 @@ $ id compose f = f $<composition-with-identity-function>
 関数合成演算子は演算子の中で優先順位がもっとも高く，関数適用の次に優先される．一方，関数合成演算子とは逆に，結合の優先順位の低い#keyword[関数適用演算子]も考えておくと便利なこともある．関数適用演算子 $haskell.apply$ を次のように定義しておく．
 $ f haskell.apply x = f x $
 
-演算子 $haskell.apply$ の優先順位はあらゆる演算子よりも低いものとする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
+演算子 $haskell.apply$ の優先順位はあらゆる演算子よりも低いものとし，また右結合とする．関数適用演算子を用いて $z = g(f x)$ を書き直すと $z = g haskell.apply f x$ となる．演算子 $haskell.apply$ の優先順位は足し算よりも低いので $f(x + 1)$ は $f haskell.apply x + 1$ と書くこともできる．演算子 $haskell.apply$ を閉じ括弧のいらない開き括弧と考えてもよい．#footnote[Haskellでは $g haskell.apply f x$ を ```haskell g $ f x``` と書く．]
 
 関数適用演算子のもう一つの興味深い使い方は，関数適用演算子の部分適用である．セクション $(haskell.apply x)$ を用いると
 #par-equation($ (haskell.apply x)f = (lozenge.stroked.medium haskell.apply x)f = f haskell.apply x $)
@@ -637,8 +637,8 @@ $ f haskell.apply x = f x $
 $ g n = n+lozenge.stroked.medium $
 
 このとき，
-$ f &= g space 100 \
-  x &= f space 1 $
+$ f &= g 100 \
+  x &= f 1 $
 とすれば $x = 101$ を得る．#footnote[Haskell では $g n = n+lozenge.stroked.medium$ を $g n = backslash x |-> n+x$ と展開しておいて ```hsakell g n = \ x -> n + x``` と書く．]
 
 高階関数は今後度々顔をだすことになる．後で登場する#keyword[マップ演算子]や#keyword[畳込み演算子]は高階関数の一種である．
@@ -727,14 +727,16 @@ $ stack run < input.txt
 
 いまはまだ「ベイビー・プログラム」であるが，今後はより実用度を増していく．
 
-=== この章のまとめ #tk
+=== この章のまとめ
 
-- 標準入力から値を読み込むには $haskell.getLine$ を使う．
-- 文字列を数値に変換するには $haskell.read$ を使う．
-- 関数を合成したい場合は $compose$（ドット）を用いる．
-- 出力には $haskell.print$ を使うとよい．
-- 一連の処理は関数合成によって１行で簡潔に記述できる．
-- 標準入力・出力を用いることで，Haskellプログラムをシェルと組み合わせて活用できる．
+- 二項演算子は2引数関数の特別な記法である．任意の二項演算 $x haskell.anyop y$ と $(haskell.anyop) x y$ は等しい．
+- 任意の二項演算子 $haskell.anyop$ から $(haskell.anyop x)$ や $(x haskell.anyop)$ といった単項演算子を作ることができる．これらの単項演算子を「セクション」と呼ぶ．ただし $(-x)$ は例外的に単項マイナスである．
+- 任意の2引数関数 $f$ は $haskell.infix(f)$ と書くことで中置演算子となる．例えば $f x y$ と $x haskell.infix(f) y$ は等しい．
+- 適切なふたつの関数は関数合成演算子 $(compose)$ を用いて合成できる．
+- 関数合成では結合則 $(h compose g) compose f = h compose (g compose f)$ が成り立つ．
+- 恒等関数 $id$ が存在する．恒等関数と任意の関数との合成関数は元の関数である．
+- 関数適用演算子 $haskell.apply$ を導入する．$f haskell.apply x$ と $f x$ は等しい．演算子 $haskell.apply$ はあらゆる演算子よりも優先順位が低く，右結合である．
+- Haskellでは関数を返す関数を定義できる．このような関数を「高階関数」と呼ぶ．
 
 #showybox(title: "式の評価順序")[Haskellは参照透過性を持つ言語なので，式がいつ評価されるかを考える必要はない．一方で参照透過性を持たない言語では，式の評価順序をいつも気にしておく必要がある．例えばC言語は関数引数の評価順序を定めていないので，次のコードは画面に `1 2` を出力する場合もあるし `2 1` を出力する場合もある．
 #sourcecode[```c
