@@ -34,7 +34,7 @@
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
   pagebreak()
-  v(1fr)
+  // v(1fr)
   it
 }
 
