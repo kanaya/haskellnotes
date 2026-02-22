@@ -2834,6 +2834,7 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 本書には今後第2部，第3部を追記する予定である．第2部は具体的なHaskellプログラミングを，第3部はより高度な数学概念を扱う．また第1部も随時更新する予定である．@this-book
 
-#glossary(title: "索引", groups: (""), theme: theme-twocol, sort: false)
-
 #bibliography("references.yaml")
+
+#set heading(numbering: none)
+#glossary(title: "索引", groups: (""), theme: theme-twocol, sort: false)
