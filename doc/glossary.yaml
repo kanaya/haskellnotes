@@ -10,6 +10,9 @@ st-action:
 st-monad:
   short: STモナド
 
+unix-command:
+  short: UNIXコマンド
+
 as-pattern:
   short: asパタン
 
@@ -218,6 +221,9 @@ sequence-operator:
 conditional-expression:
   short: 条件式
 
+conditional:
+  short: 条件分岐
+
 special-version:
   short: スペシャルバージョン
 
@@ -305,6 +311,9 @@ default-argument:
 data-type:
   short: データ型
 
+constant:
+  short: 定数
+
 arithmetic-sequence:
   short: 等差数列
 
@@ -316,6 +325,9 @@ dynamic-typing:
 
 binary-operator:
   short: 二項演算子
+
+io:
+  short: 入出力
 
 destructive-assignment:
   short: 破壊的代入
@@ -407,6 +419,9 @@ char:
 string:
   short: 文字列
 
+return-value:
+  short: 戻り値
+
 monad:
   short: モナド
 
@@ -439,6 +454,9 @@ list-variable:
 
 literal:
   short: リテラル
+
+loop:
+  short: ループ
 
 lexical-closure:
   short: レキシカルクロージャ
