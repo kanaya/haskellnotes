@@ -7,22 +7,11 @@
 #import cosmos.fancy: *
 #show: show-theorion
 
-#set text(lang:"ja")
-#set math.equation(numbering: "(1)")
-
-#set page(
-  paper: "a4",
-  header: align(right, context document.title),
-  numbering: "1",
-)
-
+#set text(lang:"ja", font: ("Times", "Toppan Bunkyu Mincho"))
 #set par(justify: true, first-line-indent: (all: true, amount: 1em))
-
+#set page(paper: "a4", header: align(right, context document.title), numbering: "1")
 #set heading(numbering: "1.1")
-
-#set document(title: [Haskell Notes by Ichi Kanaya])
-
-#set text(font: ("Times", "Toppan Bunkyu Mincho"))
+#set math.equation(numbering: "(1)")
 
 #let heading_font(body) = {
     set text(font: ("Helvetica", "Toppan Bunkyu Midashi Gothic"), navy)
@@ -35,6 +24,20 @@
   body
 }
 #show strong: strong_font
+
+#set document(title: [Haskell Notes by Ichi Kanaya])
+
+// From: https://zenn.dev/mkpoli/articles/1d271b8503578c
+#show heading.where(level: 1): it => {
+  pagebreak()
+  v(1fr)
+  it
+}
+
+#show heading.where(level: 2): it => {
+  pagebreak()
+  it
+}
 
 #let highlight_font(body) = {
   set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), weight: "bold")
@@ -54,15 +57,13 @@
 #let tk = [ #emoji.pin.round *TK* ]
 #let keyword(x) = [#highlight[#x]]
 
-#let uparrow = $class("binary", arrow.t)$
-#let uparrow2 = $class("binary", arrow.t arrow.t)$
+// #let uparrow = $class("binary", arrow.t)$
+// #let uparrow2 = $class("binary", arrow.t arrow.t)$
 
 #import "haskell.typ"
 
 #title()
-
 #outline()
-#pagebreak()
 
 #figure(
   caption: "凡例1",
@@ -110,7 +111,6 @@
     [圏（数学）], [カリグラフィ（1文字）], $cal(C)$
   )
 )
-
 
 = Haskell入門
 <introduction-to-haskell>
