@@ -142,6 +142,7 @@
 #let Applicative = typeclass("Applicative")
 #let Enum = typeclass("Enum")
 #let Eq = typeclass("Eq")
+#let Floating = typeclass("Floating")
 #let Functor = typeclass("Functor")
 #let Integral = typeclass("Integral")
 #let Monad = typeclass("Monad")
@@ -182,7 +183,8 @@
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
 #let compose = math.bullet.op
 #let makeComplex = math.class("binary", ":+")
-#let mapM = math.class("binary", math.ast.triple)
+// #let mapM = math.class("binary", math.ast.triple)
+#let power = math.class("binary", math.ast.double)
 #let replicate = math.class("binary", math.arrow.ccw)
 #let take = math.class("binary", math.arrow.zigzag)
 

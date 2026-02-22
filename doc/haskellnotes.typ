@@ -924,7 +924,11 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 - 型はパラメタとして現れることもある．引数と戻り値の型が同じ関数は $haskell.a -> haskell.a$ という型を持つ．これは $forall haskell.a |=> haskell.a -> haskell.a$ のシンタックスシュガーである．
 - 型クラスを用いて，型パラメタに制約を与えることが出来る．例えば型 $haskell.a$ に等値 $(equiv)$ が定義されていることを要請する場合は $haskell.Eq supset haskell.a arrow.r.stroked haskell.a$ と書く．
 
-#showybox(title: "コラム")[#tk]
+#showybox(title: "べき乗")[
+Haskellには2種類のべき乗演算子がある．ひとつは任意の数の整数乗で $x arrow.t n$ である．ここに $x$ は $haskell.Num$ 型クラスの変数で $n$ は $haskell.Integral$ 型クラスの変数である．式 $x arrow.t n$ をHaskellでは ```haskell x ^ n``` と書く．なお演算子 $arrow.t$ は「クヌースの矢印」とも呼ばれる．
+
+もうひとつは実数の実数乗で $x^y$ である．ここに $x, y$ は $haskell.Floating$ 型クラスの変数である．式 $x^y$ をHaskellでは ```haskell x ** y``` と書く．
+]
 
 == リスト
 <list>
