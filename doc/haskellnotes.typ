@@ -2671,7 +2671,7 @@ main = do { s <- getLine; let t = f s in putStrLn t }
 main = do       -- In Python
   s <- getLine  -- s = readline()
   let t = f s   -- t = f(s)
-  putStrLn t       -- print(t)
+  putStrLn t    -- print(t)
 ```]
 
 Haskellプログラムでdo記法を採用するかどうかは
