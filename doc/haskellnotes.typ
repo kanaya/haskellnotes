@@ -2768,10 +2768,10 @@ $ haskell.pyth_"m" &colon.double haskell.Double -> haskell.Double -> haskell.Con
     chevron.l z'' chevron.r} $
 
 関数 $haskell.pyth_"m"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
-#par-equation($ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"M" 3.0 space 4.0) $)
-または，逆方向の演算子 $arrow.r.loop$ を用いて次のようにする．#footnote[Haskellでは $arrow.r.loop$ を ```haskell runCont``` 関数を用いて書く．例えば $haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print$ は ```haskell main = (pythM 3.0 4.0) `runCont` print``` と書く．]
+#par-equation($ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"m" 3.0 space 4.0) $)
+または，逆方向の演算子 $arrow.r.loop$ を用いて次のようにする．#footnote[Haskellでは $arrow.r.loop$ を ```haskell runCont``` 関数を用いて書く．例えば $haskell.main = (haskell.pyth_"m" 3.0 space 4.0) arrow.r.loop haskell.print$ は ```haskell main = (pyth_m 3.0 4.0) `runCont` print``` と書く．]
 
-$ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
+$ haskell.main = (haskell.pyth_"m" 3.0 space 4.0) arrow.r.loop haskell.print $
 
 わざわざ継続渡しスタイルを用いるのは#keyword[カレント継続]（current continuation）を使うためである．#footnote[Current continuationの日本語訳はまだ決まっていないようである．日本のプログラマはcurrent continuationをしばしばCCと略すほか「現在の継続」と呼ぶこともある．本書ではcurrent continuationを「カレント継続」と訳すことにした．]
 
@@ -2794,10 +2794,10 @@ $ haskell.main = (haskell.pyth_"M" 3.0 space 4.0) arrow.r.loop haskell.print $
   haskell.pyth_"cc" x y &= backslash.not q |->
     haskell.kwdo {
       haskell.when (x <= 0 or y <= 0) (q space 0.0); \
-      &space.quad x' <- haskell.sqr_"M" x;
-      y' <- haskell.sqr_"M" y;
-      z' <- haskell.add_"M" x' y';
-      z'' <- haskell.sqrt_M z';
+      &space.quad x' <- haskell.sqr_"m" x;
+      y' <- haskell.sqr_"m" y;
+      z' <- haskell.add_"m" x' y';
+      z'' <- haskell.sqrt_"m" z';
       chevron.l z'' chevron.r} $)
 ここに関数 $haskell.when$ は第1引数が真であれば第2引数を実行する関数である．関数 $haskell.when$ の第2引数と戻り値はモナド型クラスのインスタンスである必要がある必要があるため，モナドの中でしか利用できない．
 
