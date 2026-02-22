@@ -254,6 +254,9 @@ prefix-operator:
 binding:
   short: 束縛
 
+long-jump:
+  short: 大域ジャンプ
+
 object:
   short: 対象
 
@@ -274,6 +277,9 @@ tuple:
 
 unary-operator:
   short: 単項演算子
+
+unary-minus:
+  short: 単項マイナス
 
 single-precision-floating-point-number-type:
   short: 単精度浮動小数点数型
@@ -322,6 +328,9 @@ triple:
 
 dynamic-typing:
   short: 動的型付け
+
+inner-status:
+  short: 内部状態
 
 binary-operator:
   short: 二項演算子
@@ -413,6 +422,9 @@ infinite-list:
 infinite-list:
   short: 無限リスト
 
+anonymous-function:
+  short: 無名関数
+
 char:
   short: 文字型
 
@@ -424,6 +436,9 @@ return-value:
 
 monad:
   short: モナド
+
+user-input:
+  short: ユーザ入力
 
 unit:
   short: ユニット
@@ -457,6 +472,9 @@ literal:
 
 loop:
   short: ループ
+
+exception:
+  short: 例外
 
 lexical-closure:
   short: レキシカルクロージャ
