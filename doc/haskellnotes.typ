@@ -901,16 +901,20 @@ $ (equiv) colon.double haskell.a -> haskell.a -> haskell.Bool $<equiv>
 #par-equation($ f colon.double forall haskell.a |=> haskell.Num supset haskell.a arrow.r.stroked haskell.a -> haskell.a $)
 と書くべきところである．#footnote[Haskellでは ```haskell f :: forall a . Num a => a -> a``` と書く．]
 
-=== この章のまとめ #tk
+=== この章のまとめ
 
-- 型パラメタを用いて型を一般化したものを多相型と呼ぶ．
-- 多相型の関数や演算子を記述するためには型パラメタ（$haskell.a$ など）を使う．
-- 型パラメタに制約を課すために型クラス（$haskell.Eq$, $haskell.Ord$, $haskell.Num$ など）を利用する．
-- 型クラスは「この型はこの演算ができる」ことを表す仕組みであり，型パラメタに対してインスタンス制約を加える．
-- 関数や演算子の型注釈には型クラスの制約や全称量化子（$forall$）を明示できるが，Haskellでは省略する場合が多い．
-- 型クラスの階層として $haskell.Eq$ ⊃ $haskell.Ord$ ⊃ $haskell.Num$ ⊃ $haskell.Real$ ⊃ $haskell.Enum$ ⊃ $haskell.Integral$ などがある．
-- 型変換演算子 $haskell.fromIntegral$ などを使うことで，型をまたいだ計算ができる．
-- Haskellでは多相型・型クラスを駆使して柔軟かつ安全な型付けを実現している．
+- Haskellは静的型付け言語である．Haskellの基本的な型を総称して「データ型」と呼ぶ．
+- Haskellには2種類の整数型 $(haskell.Int, haskell.Integer)$ と2種類の浮動小数点型 $(haskell.Float, haskell.Double)$ がある．
+- Haskellには文字型 $(haskell.Char)$ がある．文字エンコードはUTF-8である．
+- Haskellには論理型 $(haskell.Bool)$ がある．論理型の値は $haskell.True$ と $haskell.False$ のみである．
+- 変数，関数の型を指示することを「型注釈」と呼ぶ．型注釈は $x colon.double haskell.Int$ のように書く．
+- Haskellは型推論を行うため，型注釈を省略できる．
+- 関数の型は $f colon.double haskell.Int -> haskell.Int$ のように矢印 $(->)$ を使って書く．
+- 複数引数を取る関数を1引数関数に分解することを「カリー化」と呼ぶ．
+- 複数変数をひとまとめにする「タプル型」がある．タプルは $paren.l.stroked x, y paren.r.stroked$ のように書く．
+- 中身のないタプルのことを「ユニット型」と呼ぶ．ユニット型が持てる唯一の値はユニット $(emptyset)$ である．
+- 型はパラメタとして現れることもある．引数と戻り値の型が同じ関数は $haskell.a -> haskell.a$ という型を持つ．これは $forall haskell.a |=> haskell.a -> haskell.a$ のシンタックスシュガーである．
+- 型クラスを用いて，型パラメタに制約を与えることが出来る．例えば型 $haskell.a$ に等値 $(equiv)$ が定義されていることを要請する場合は $haskell.Eq supset haskell.a arrow.r.stroked haskell.a$ と書く．
 
 #showybox(title: "コラム")[#tk]
 
