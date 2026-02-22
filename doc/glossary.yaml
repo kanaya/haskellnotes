@@ -1,3 +1,6 @@
+io-type:
+  short: IO型
+
 io-string:
   short: IO文字列
 
@@ -30,6 +33,9 @@ action:
 
 applicative-functor:
   short: アプリカティブ関手
+
+applicative-functor-class:
+  short: アプリカティブ関手型クラス
 
 applicative-style:
   short: アプリカティブスタイル
@@ -122,6 +128,9 @@ function-composition-law:
 guard:
   short: ガード
 
+union-type:
+  short: 共有型
+
 local-variable:
   short: 局所変数
 
@@ -137,14 +146,23 @@ pseudorandom-sequence:
 quick-sort:
   short: クイックソート
 
+empty:
+  short: 空
+
 empty-list:
   short: 空リスト
 
 repetition-operator:
   short: 繰り返し演算子
 
+class-template:
+  short: クラステンプレート
+
 closure:
   short: クロージャ
+
+knuth-arrow:
+  short: クヌースの矢印
 
 computation-structure:
   short: 計算構造
@@ -154,6 +172,9 @@ continuation:
 
 continuation-monad:
   short: 継続モナド
+
+cps:
+  short: 継続渡しスタイル
 
 concatenation:
   short: 結合
@@ -176,6 +197,9 @@ higher-order-function:
 commutative-law:
   short: 交換則
 
+binding:
+  short: 束縛
+
 identity-function:
   short: 恒等関数
 
@@ -184,6 +208,9 @@ identity-morphism:
 
 fixed-length-integer-type:
   short: 固定長整数型
+
+concept:
+  short: コンセプト
 
 container-type:
   short: コンテナ型
@@ -200,11 +227,20 @@ recursion:
 recursive-application:
   short: 再帰適用
 
+greatest-common-divisor:
+  short: 最大公約数
+
 operator-mathematical:
   short: 作用素
 
 referential-transparency:
   short: 参照透過性
+
+pass-by-reference:
+  short: 参照渡し
+
+sequence-operator:
+  short: シーケンス演算子
 
 morphism:
   short: 射
@@ -215,8 +251,8 @@ mapping:
 set:
   short: 集合
 
-sequence-operator:
-  short: シーケンス演算子
+homomorphic-law:
+  short: 準同型性
 
 conditional-expression:
   short: 条件式
@@ -251,8 +287,11 @@ prefix:
 prefix-operator:
   short: 前置演算子
 
-binding:
-  short: 束縛
+early-return:
+  short: 早期リターン
+
+sum-operator:
+  short: 総和演算子
 
 long-jump:
   short: 大域ジャンプ
@@ -299,6 +338,9 @@ sequential-processing:
 sequential-execution:
   short: 逐次実行
 
+direct-style:
+  short: 直接スタイル
+
 annotation:
   short: 注釈
 
@@ -338,11 +380,17 @@ binary-operator:
 io:
   short: 入出力
 
+norm:
+  short: ノルム
+
 destructive-assignment:
   short: 破壊的代入
 
 haskell-curry:
   short: ハスケル・カリー
+
+variant-type:
+  short: バリアント型
 
 case:
   short: 場合分け
@@ -383,7 +431,7 @@ partial-application:
 context:
   short: 文脈
 
-boolean:
+boolean-type:
   short: ブール型
 
 flatten-operator:
@@ -425,7 +473,7 @@ infinite-list:
 anonymous-function:
   short: 無名関数
 
-char:
+char-type:
   short: 文字型
 
 string:
@@ -436,6 +484,9 @@ return-value:
 
 monad:
   short: モナド
+
+monad-class:
+  short: モナド型クラス
 
 user-input:
   short: ユーザ入力
