@@ -30,17 +30,17 @@ graham-hutton:
   publisher: Cambridge University Press
   isbn: 978-0521692694
 
-legokichi:
-  type: Web
-  author: legokichi
-  title: Applicative スタイル f <$> m1 <*> m2 を読み解く
-  url: https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
-
 kazu-yamamoto-functor:
   type: Web
   author: Kazu Yamamoto
   title: 関手、Applicative、Monadの法則
   url: https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+
+legokichi:
+  type: Web
+  author: legokichi
+  title: Applicative スタイル f <$> m1 <*> m2 を読み解く
+  url: https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
 
 minegishirei-file-io:
   type: Web
