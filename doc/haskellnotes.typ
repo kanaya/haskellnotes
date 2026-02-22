@@ -462,16 +462,28 @@ $ z = (backslash x' |-> f x') (1+x) $<let-in-alternative>
 === パタンマッチとガード
 
 関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $-1$ であり，その他の場合は $1+x$ を返す関数 $f$ を考える．このとき $f$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは ```haskell f 0 = -1; f x = 1 + x``` と書く．]
+
 $ f 0 &= -1 \
   f x &= 1+x $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
+
 $ f x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted -1,
-square.stroked.dotted arrow.r.dotted 1+x) $
+square.stroked.dotted arrow.r.dotted 1+x) $<pattern-matching>
 
 ここに $square.stroked.dotted$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Haskellでは ```haskell f x = case x of { 0 -> 100; _ -> 1 + x }``` と書く．]
 
-#tk Python
+@pattern-matching は次のような Python コードと等しい．#footnote[この構文「構造的パタンマッチング」と呼ばれ Python 3.10 で導入された．]
+
+#sourcecode[```python
+# Python
+def f(x):
+  match x:
+    case 0:
+      return -1
+    case _:
+      return 1 + x
+```]
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
@@ -482,8 +494,6 @@ $ f' x&|_(x < 0) = 0 \
   &|_haskell.otherwise = 1+x $
 
 ガードは上から順にマッチされる．
-
-#tk Python
 
 === 余談：条件式
 
