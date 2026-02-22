@@ -2427,7 +2427,7 @@ main = putStrLn z
   z' &= haskell.doIt' haskell.bind haskell.getContents $)
 IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
 #par-equation($ haskell.main = haskell.putStrLn haskell.bind z' $)
-以上でプログラムが完成した．関数 ```haskell doIt``` が定義されているとして，残りをHaskellで書くと次のようになる．
+以上でプログラムが完成した．関数 ```haskell doIt``` が定義されているとして，残りをHaskellで書くと次のようになる．#footnote[別解として ```haskell z' = doIt `liftM` getContents``` と書くこともできる．]
 
 #sourcecode[```haskell 
 doIt' :: String -> IO String
