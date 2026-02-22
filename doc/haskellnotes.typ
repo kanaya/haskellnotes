@@ -461,12 +461,12 @@ $ z = (backslash x' |-> f x') (1+x) $<let-in-alternative>
 
 === パタンマッチとガード
 
-関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $100$ であり，その他の場合は $1+x$ を返す関数 $f$ を考える．このとき $f$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは ```haskell f 0 = 100; f x = 1 + x``` と書く．]
-$ f 0 &= 100 \
+関数に#keyword[スペシャルバージョン]がある場合はそれらを列挙する．例えば引数が $0$ の場合は特別に戻り値が $-1$ であり，その他の場合は $1+x$ を返す関数 $f$ を考える．このとき $f$ は以下のように定義できる．これを関数の#keyword[パタンマッチ]と呼ぶ．#footnote[Haskellでは ```haskell f 0 = -1; f x = 1 + x``` と書く．]
+$ f 0 &= -1 \
   f x &= 1+x $
 
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
-$ f x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 100,
+$ f x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted -1,
 square.stroked.dotted arrow.r.dotted 1+x) $
 
 ここに $square.stroked.dotted$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Haskellでは ```haskell f x = case x of { 0 -> 100; _ -> 1 + x }``` と書く．]
@@ -475,10 +475,10 @@ square.stroked.dotted arrow.r.dotted 1+x) $
 
 一部のプログラミング言語では#keyword[デフォルト引数]という，引数を省略できるメカニズムがあるが，我々は引数をいつも省略しないことにする．#footnote[Haskellにもデフォルト引数はない．]
 
-関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $100$ を，それ以外の場合は $1+x$ を返す関数 $f'$ は以下のように定義する．#footnote[Haskellでは ```haskell f' x | x < 0 = 0  | x == 0 = 100  | otherwise = x + 1 ``` と書く．もっとも，この記法を使う場合は改行を適度に入れたほうが読みやすい．]
+関数定義にパタンマッチではなく#keyword[場合分け]が必要な場合は#keyword[ガード]を用いる．例えば引数の値が負の場合は $0$ を，$0$ の場合は $-1$ を，それ以外の場合は $1+x$ を返す関数 $f'$ は以下のように定義する．#footnote[Haskellでは ```haskell f' x | x < 0 = 0  | x == 0 = 100  | otherwise = x + 1 ``` と書く．もっとも，この記法を使う場合は改行を適度に入れたほうが読みやすい．]
 
 $ f' x&|_(x < 0) = 0 \
-  &|_(x equiv 0) = 100 \
+  &|_(x equiv 0) = -1 \
   &|_haskell.otherwise = 1+x $
 
 ガードは上から順にマッチされる．
@@ -502,16 +502,19 @@ def f(x):
 #par-equation($ f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac(sin x, x) $)
 のように $haskell.kwif$ 節，$haskell.kwthen$ 節，及び $haskell.kwelse$ 節からなるものであって，$haskell.kwthen$ 節も $haskell.kwelse$ 節も省略できないものとする．$haskell.kwif$ 節の式の値が真 $(haskell.True)$ であれば $haskell.kwthen$ 節の式が評価され，偽 $(haskell.False)$ であれば $haskell.kwelse$ 節の式が評価される．我々の条件式はCにおける条件演算子（三項演算子）と等しく見えるが，Haskellの場合は遅延評価が行われるため，結果として条件式の#keyword[短絡評価]が行われる点が異なる．#footnote[Haskellでは $f x = haskell.kwif x equiv 0.0 haskell.kwthen 1.0 haskell.kwelse frac((sin x), x, style: "skewed")$ を ```haskell f x = if x == 0.0 then 1.0 else (sin x) / x``` と書く．]
 
-=== この章のまとめ #tk
+=== この章のまとめ
 
-- 関数定義は基本的にラムダ式の変数への代入で書くことができる．
-- 引数ごとの特別な処理（パタンマッチ）は，関数定義で簡潔に書き表すことができる．
-- 関数内部でもパタンマッチ（case式）を使うことができる．
-- 引数の特別な場合に応じて関数の動作を変えたいときはガードを使うことができる．
-- ガードは条件ごとに場合分けして，上から順に評価される．
-- Haskellの条件式は必ずthen節・else節の両方が必要であり，どちらの節も省略できない（値を持つ条件式である）．
-- Haskellの場合，条件式は遅延評価され，短絡評価が行われる．
-- 関数定義，パタンマッチ，ガード，条件式を使い分けることで，複雑な場合分けも安全かつ分かりやすく記述できる．
+- 変数への値の代入は $x = 1$ のように書く．一度代入された変数は値を変えない．代入は正しくは「束縛」と呼ぶ．
+- 関数定義は $f x = 1+x$ のように書く．関数の引数に括弧はつけない．
+- 関数適用は $z = f x$ のように書く．この場合も関数の引数に括弧は付けない．
+- 2引数関数 $f'$ に引数 $x, y$ を与えるときは $z' = f' x y$ のように書く．関数適用は左結合するので $f' x y = (f' x)y$ である．引数に「飢えた」関数 $f' x$ を「部分適用された関数」と呼ぶ．
+- 関数の正体はラムダ式である．関数 $f x = 1+x$ はラムダ式を使った記法 $f = backslash x |-> 1+x$ の略記である．
+- 本書では無名パラメタ $(lozenge.stroked.medium)$ を用いたラムダ式も用いる．無名パラメタを使う場合は $f = 1+lozenge.stroked.medium$ のように書く．
+- 式には局所変数を導入できる．例えば $z = f(1+x)$ は $z = haskell.kwlet x' eq.delta 1+x haskell.kwin f x'$ のように書いても良く，また $z = f x' haskell.kwwhere x' eq.delta 1+x$ のように書いても良い．
+- 関数定義にはスペシャルバージョンを含めることが出来る．例えば引数が $0$ の場合は特別な値を返すときは $f 0 = -1$ のように書く．
+- 関数定義にはガードを含めることが出来る．例えば引数が負の場合は特別な値を返すときは $f|_(x < 0) = 0$ のように書く．
+- 式にはパタンマッチを導入できる．
+- 条件式は $haskell.kwif p haskell.kwthen x haskell.kwelse y$ のように書く．もし $p$ が $haskell.True$ であれば $x$ が式の値になり，そうでなければ $y$ が式の値になる．
 
 #showybox(title: "ラムダの理由")[我々のラムダ式 $backslash x |-> x + 1$ は，かつては $hat(x) . x + 1$ のように書かれていた．その後 $Lambda x . x + 1$ に変化し $lambda x . x + 1$ のように変化したらしい．多くの教科書はこの $lambda$ を使う記法を採用している．$hat(x)$ が $Lambda x$ に変化したのは形が似ているからである．Haskellが $backslash$ を使うのは，その形が $lambda$ と似ているからである．
 
