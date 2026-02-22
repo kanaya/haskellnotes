@@ -10,11 +10,24 @@ apple-think-different:
   title: Think Different
   url: https://designmanifestos.org/apple-think-different/
 
+bartosz-milewski:
+  type: Web
+  author: Bartosz Milewski
+  title: "Category Theory for Programmers"
+  url: https://bartoszmilewski.com
+
 bryan-osullivan:
   type: Book
   author: Bryan O'Sullivan
   title: "Real World Haskell: Code You Can Believe In"
   publisher: O'Reilly Media
+
+bungen-kato:
+  type: Book
+  author: Bungo Kato（加藤文元）
+  title: "はじめての圏論"
+  year: 2025
+  publisher: 講談社
 
 cppreference-member-access-operators:
   type: Web
