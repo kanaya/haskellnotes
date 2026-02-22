@@ -1,12 +1,8 @@
-functional-programming:
-  short: 関数型プログラミング
-  description: 参照透過性を重視するプログラミングスタイル．
+io-string:
+  short: IO文字列
 
 io-monad:
   short: IOモナド
-
-io-string:
-  short: IO文字列
 
 st-action:
   short: STアクション
@@ -29,14 +25,14 @@ accumulator:
 action:
   short: アクション
 
+applicative-functor:
+  short: アプリカティブ関手
+
 applicative-style:
   short: アプリカティブスタイル
 
 applicative-map-operator:
   short: アプリカティブマップ演算子
-
-applicative-functor:
-  short: アプリカティブ関手
 
 uncurrying:
   short: アンカリー化
@@ -44,176 +40,14 @@ uncurrying:
 instance:
   short: インスタンス
 
-currying:
-  short: カリー化
-
-current-continuation:
-  short: カレント継続
-
-guard:
-  short: ガード
-
-quick-sort:
-  short: クイックソート
-
-closure:
-  short: クロージャ
-
-container-type:
-  short: コンテナ型
-
-container-variable:
-  short: コンテナ変数
-
-special-version:
-  short: スペシャルバージョン
-
-section:
-  short: セクション
-
-zero-division-exception:
-  short: ゼロ除算例外
-
-tuple:
-  short: タプル
-
-default-argument:
-  short: デフォルト引数
-
-data-type:
-  short: データ型
-
-triple:
-  short: トリプル
-
-haskell-curry:
-  short: ハスケル・カリー
-
-bind-operator:
-  short: バインド演算子
-
-pattern-matching:
-  short: パタンマッチ
-
-pure-operator:
-  short: ピュア演算子
-
-heterogeneous-array:
-  short: ヘテロジニアスな配列
-
-pair:
-  short: ペア
-
-homogenous-array:
-  short: ホモジニアスな配列
-
-map-operator:
-  short: マップ演算子
-
-monad:
-  short: モナド
-
-unit:
-  short: ユニット
-
-unit-type:
-  short: ユニット型
-
-lambda-expression:
-  short: ラムダ式
-
-list:
-  short: リスト
-
-list-value-constructor:
-  short: リスト値コンストラクタ
-
-list-comprehension:
-  short: リスト内包表記
-
-list-type-constructor:
-  short: リスト型コンストラクタ
-
-list-variable:
-  short: リスト変数
-
-literal:
-  short: リテラル
-
-lexical-closure:
-  short: レキシカルクロージャ
-
-infix-operator:
-  short: 中置
-
-binary-operator:
-  short: 二項演算子
-
-commutative-law:
-  short: 交換則
+operator:
+  short: 演算子
 
 operator:
   short: 演算子
 
-prefix-operator:
-  short: 前置演算子
-
-operator-mathematical:
-  short: 作用素
-
-double-precision-floating-point-type:
-  short: 倍精度浮動小数点型
-
-universal-quantifier:
-  short: 全称量化子
-
-recursion:
-  short: 再帰
-
-recursive-application:
-  short: 再帰適用
-
-mapping:
-  short: 写像
-
-control-structure:
-  short: 制御構造
-
-prefix:
-  short: 前置
-
-dynamic-typing:
-  short: 動的型付け
-
-unary-operator:
-  short: 単項演算子
-
-referential-transparency:
-  short: 参照透過性
-
-right-bind-operator:
-  short: 右バインド演算子
-
-right-folding:
-  short: 右畳み込み
-
-right-associative:
-  short: 右結合
-
-composition:
-  short: 合成
-
-fixed-length-integer-type:
-  short: 固定長整数型
-
-category-mathematical:
-  short: 圏
-
-category-theory:
-  short: 圏論
-
-functor-mathematical:
-  short: 圏論的関手
+factorial:
+  short: 階乗
 
 type:
   short: 型
@@ -227,11 +61,14 @@ type-constructor:
 type-synonym:
   short: 型シノニム
 
+type-inference:
+  short: 型推論
+
+type-annotation:
+  short: 型注釈
+
 type-parameter:
   short: 型パラメタ
-
-type-level-programming:
-  short: 型レベルプログラミング
 
 type-conversion:
   short: 型変換
@@ -239,182 +76,30 @@ type-conversion:
 type-conversion-operator:
   short: 型変換演算子
 
-type-inference:
-  short: 型推論
+type-level-programming:
+  short: 型レベルプログラミング
 
-type-annotation:
-  short: 型注釈
+currying:
+  short: カリー化
 
-case:
-  short: 場合分け
-
-long-integer-type:
-  short: 多倍長整数型
-
-polymorphic-type:
-  short: 多相型
-
-polymorphic:
-  short: 多相的
-
-object:
-  short: 対象
-
-morphism:
-  short: 射
-
-local-variable:
-  short: 局所変数
-
-local-variable:
-  short: 局所変数
-
-left-bind-operator:
-  short: 左バインド演算子
-
-left-operator:
-  short: 左作用素
-
-left-associative:
-  short: 左結合
-
-flatten-operator:
-  short: 平坦化演算子
-
-argument:
-  short: 引数
-
-identity-function:
-  short: 恒等関数
-
-identity-morphism:
-  short: 恒等射
-
-infinite-list:
-  short: 無限リスト
-
-pseudorandom-sequence:
-  short: 擬似乱数列
-
-integer-type:
-  short: 整数型
-
-string:
-  short: 文字列
-
-char:
-  short: 文字型
-
-context:
-  short: 文脈
-
-tail-recursion:
-  short: 末尾再帰
-
-tail-recursion-optimization:
-  short: 末尾再帰最適化
-
-binding:
-  short: 束縛
-
-conditional-expression:
-  short: 条件式
-
-annotation:
-  short: 注釈
-
-floating-point-number-type:
-  short: 浮動小数点数型
-
-operator:
-  short: 演算子
-
-infinite-list:
-  short: 無限リスト
-
-fold-operator:
-  short: 畳み込み演算子
-
-pseudorandom-number:
-  short: 疑似乱数
-
-direct-sum:
-  short: 直和
-
-short-circuit-evaluation:
-  short: 短絡評価
-
-destructive-assignment:
-  short: 破壊的代入
-
-empty-list:
-  short: 空リスト
-
-arithmetic-sequence:
-  short: 等差数列
-
-concatenation:
-  short: 結合
-
-concatenation-law:
-  short: 結合則
-
-continuation:
-  short: 継続
-
-continuation-monad:
-  short: 継続モナド
-
-repetition-operator:
-  short: 繰り返し演算子
-
-sequence-operator:
-  short: シーケンス演算子
-
-sequential-processing:
-  short: 逐次処理
-
-element:
-  short: 要素
-
-computation-structure:
-  short: 計算構造
-
-logical-type:
-  short: 論理型
-
-sequential-processing:
-  short: 逐次処理
-
-sequential-execution:
-  short: 逐次実行
-
-lazy-evaluation:
-  short: 遅延評価
-
-application:
-  short: 適用
-
-partial-application:
-  short: 部分適用
+current-continuation:
+  short: カレント継続
 
 functor:
   short: 関手
 
-functor-law:
-  short: 関手則
-
 functor-class:
   short: 関手型クラス
+
+functor-law:
+  short: 関手則
 
 function:
   short: 関数
 
-function-composition-law:
-  short: 関数の合成則
-
-function-composition-operator:
-  short: 関数合成演算子
+functional-programming:
+  short: 関数型プログラミング
+  description: 参照透過性を重視するプログラミングスタイル．
 
 functional-programming:
   short: 関数型プログラミング
@@ -422,26 +107,341 @@ functional-programming:
 functional-programming-language:
   short: 関数型プログラミング言語
 
+function-composition-operator:
+  short: 関数合成演算子
+
 function-application-operator:
   short: 関数適用演算子
 
-factorial:
-  short: 階乗
+function-composition-law:
+  short: 関数の合成則
 
-set:
-  short: 集合
+guard:
+  short: ガード
 
-static-typing:
-  short: 静的型付け
+local-variable:
+  short: 局所変数
+
+local-variable:
+  short: 局所変数
+
+pseudorandom-number:
+  short: 疑似乱数
+
+pseudorandom-sequence:
+  short: 擬似乱数列
+
+quick-sort:
+  short: クイックソート
+
+empty-list:
+  short: 空リスト
+
+repetition-operator:
+  short: 繰り返し演算子
+
+closure:
+  short: クロージャ
+
+computation-structure:
+  short: 計算構造
+
+continuation:
+  short: 継続
+
+continuation-monad:
+  short: 継続モナド
+
+concatenation:
+  short: 結合
+
+concatenation-law:
+  short: 結合則
+
+category-mathematical:
+  short: 圏
+
+category-theory:
+  short: 圏論
+
+functor-mathematical:
+  short: 圏論的関手
 
 higher-order-function:
   short: 高階関数
 
+commutative-law:
+  short: 交換則
+
+identity-function:
+  short: 恒等関数
+
+identity-morphism:
+  short: 恒等射
+
+fixed-length-integer-type:
+  short: 固定長整数型
+
+container-type:
+  short: コンテナ型
+
+container-variable:
+  short: コンテナ変数
+
+composition:
+  short: 合成
+
+recursion:
+  short: 再帰
+
+recursive-application:
+  short: 再帰適用
+
+operator-mathematical:
+  short: 作用素
+
+referential-transparency:
+  short: 参照透過性
+
+morphism:
+  short: 射
+
+mapping:
+  short: 写像
+
+set:
+  short: 集合
+
+sequence-operator:
+  short: シーケンス演算子
+
+conditional-expression:
+  short: 条件式
+
+special-version:
+  short: スペシャルバージョン
+
+control-structure:
+  short: 制御構造
+
+integer-type:
+  short: 整数型
+
+static-typing:
+  short: 静的型付け
+
+section:
+  short: セクション
+
+zero-division-exception:
+  short: ゼロ除算例外
+
+universal-quantifier:
+  short: 全称量化子
+
+prefix:
+  short: 前置
+
+prefix-operator:
+  short: 前置演算子
+
+binding:
+  short: 束縛
+
+object:
+  short: 対象
+
+polymorphic-type:
+  short: 多相型
+
+polymorphic:
+  short: 多相的
+
+fold-operator:
+  short: 畳み込み演算子
+
+long-integer-type:
+  short: 多倍長整数型
+
+tuple:
+  short: タプル
+
+unary-operator:
+  short: 単項演算子
+
 single-precision-floating-point-number-type:
   short: 単精度浮動小数点数型
+
+short-circuit-evaluation:
+  short: 短絡評価
+
+lazy-evaluation:
+  short: 遅延評価
+
+sequential-processing:
+  short: 逐次処理
+
+sequential-processing:
+  short: 逐次処理
+
+sequential-execution:
+  short: 逐次実行
+
+annotation:
+  short: 注釈
+
+infix-operator:
+  short: 中置
+
+direct-sum:
+  short: 直和
+
+application:
+  short: 適用
+
+default-argument:
+  short: デフォルト引数
+
+data-type:
+  short: データ型
+
+arithmetic-sequence:
+  short: 等差数列
+
+triple:
+  short: トリプル
+
+dynamic-typing:
+  short: 動的型付け
+
+binary-operator:
+  short: 二項演算子
+
+destructive-assignment:
+  short: 破壊的代入
+
+haskell-curry:
+  short: ハスケル・カリー
+
+case:
+  short: 場合分け
+
+double-precision-floating-point-type:
+  short: 倍精度浮動小数点型
 
 double-precision-floating-point-number-type:
   short: 倍精度浮動小数点数型
 
+bind-operator:
+  short: バインド演算子
+
+pattern-matching:
+  short: パタンマッチ
+
+argument:
+  short: 引数
+
+left-associative:
+  short: 左結合
+
+left-operator:
+  short: 左作用素
+
+left-bind-operator:
+  short: 左バインド演算子
+
+pure-operator:
+  short: ピュア演算子
+
+floating-point-number-type:
+  short: 浮動小数点数型
+
+partial-application:
+  short: 部分適用
+
+context:
+  short: 文脈
+
 boolean:
   short: ブール型
+
+flatten-operator:
+  short: 平坦化演算子
+
+heterogeneous-array:
+  short: ヘテロジニアスな配列
+
+pair:
+  short: ペア
+
+homogenous-array:
+  short: ホモジニアスな配列
+
+map-operator:
+  short: マップ演算子
+
+tail-recursion:
+  short: 末尾再帰
+
+tail-recursion-optimization:
+  short: 末尾再帰最適化
+
+right-associative:
+  short: 右結合
+
+right-folding:
+  short: 右畳み込み
+
+right-bind-operator:
+  short: 右バインド演算子
+
+infinite-list:
+  short: 無限リスト
+
+infinite-list:
+  short: 無限リスト
+
+char:
+  short: 文字型
+
+string:
+  short: 文字列
+
+monad:
+  short: モナド
+
+unit:
+  short: ユニット
+
+unit-type:
+  short: ユニット型
+
+element:
+  short: 要素
+
+lambda-expression:
+  short: ラムダ式
+
+list:
+  short: リスト
+
+list-value-constructor:
+  short: リスト値コンストラクタ
+
+list-type-constructor:
+  short: リスト型コンストラクタ
+
+list-comprehension:
+  short: リスト内包表記
+
+list-variable:
+  short: リスト変数
+
+literal:
+  short: リテラル
+
+lexical-closure:
+  short: レキシカルクロージャ
+
+logical-type:
+  short: 論理型
