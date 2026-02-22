@@ -2640,7 +2640,7 @@ main = do { s <- getLine; putStrLn s }
 -- Haskell
 main = do       -- In Python
   s <- getLine  -- s = readline()
-  putStrLn s       -- print(s)
+  putStrLn s    -- print(s)
 ```]
 
 標準入力から受け取った文字列を関数 $f$ で処理する場合，Pythonならば次のようなプログラムになるであろう．
