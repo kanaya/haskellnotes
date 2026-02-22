@@ -68,6 +68,18 @@ mizunashi-mana-io:
   title: IOモナドと副作用
   url: https://haskell.jp/blog/posts/2020/io-monad-and-sideeffect.html
 
+mrsekut-p-monad-type-classes:
+  type: Web
+  author: mrsekut-p
+  title: HaskellのいろいろなMonad型クラス
+  url: https://scrapbox.io/mrsekut-p/HaskellのいろいろなMonad型クラス
+
+monado-to-watashi-to-comand-six-monads:
+  type: Web
+  author: モナドとわたしとコモナド
+  title: モナドの六つの系統
+  url: https://fumieval.hatenablog.com/entry/2013/06/05/182316
+
 random-numbers-in-haskell:
   type: Web
   author: School of Haskell
