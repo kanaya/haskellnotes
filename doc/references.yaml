@@ -22,6 +22,12 @@ damepo:
   title: Haskellでの型レベルプログラミング
   url: https://zenn.dev/mod_poppo/books/haskell-type-level-programming
 
+funnycat-monad:
+  type: Web
+  author: funnycat
+  title: ナド則を噛み砕く：基本から学ぶその本質と重要性
+  url: https://zenn.dev/funnycat/articles/d92e16dfc59a49
+
 graham-hutton:
   type: Book
   author: Graham Hutton
