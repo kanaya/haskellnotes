@@ -2738,15 +2738,15 @@ $ haskell.pyth_"&" &colon.double haskell.Double -> haskell.Double -> (haskell.Do
   haskell.sqrt_"m" x &= chevron.l haskell.sqrt x chevron.r $)
 ここに $haskell.Cont$ は継続モナド型コンストラクタである．
 
-継続を意味する引数 $c$ が隠されたので，簡潔になった．これらの継続モナド版を使って三平方の定理を計算する関数も作っておこう．ここでdo記法の出番である．
-
-$ haskell.pyth_"m" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
+継続を意味する引数 $c$ が隠されたので，簡潔になった．これらの継続モナド版を使って三平方の定理を計算する関数も作っておこう．ここでdo記法の出番である．do記法を使うと，次のようになる．
+#par-equation($ haskell.pyth_"m" &colon.double haskell.Double -> haskell.Double -> haskell.Cont_(haskell.a space.hair haskell.Double) \
   haskell.pyth_"m" x y &= haskell.kwdo 
     {x' <- haskell.sqr_"m" x;
     y' <- haskell.sqr_"m" y;
     z' <- haskell.add_"m" x' y';
     z'' <- haskell.sqrt_"m" z';
-    chevron.l z'' chevron.r} $
+    chevron.l z'' chevron.r} $)
+もうほとんど逐次処理に見えないだろうか．どうしても逐次処理をしたいのであればPythonのような他の言語を使う方が簡単ではあるが，Haskellでも出来るのである．
 
 関数 $haskell.pyth_"m"$ の戻り値は継続モナドであるから，それを印字するには専用の演算子 $arrow.l.loop$ を用いて次のようにする．
 #par-equation($ haskell.main = haskell.print arrow.l.loop (haskell.pyth_"m" 3.0 space 4.0) $)
