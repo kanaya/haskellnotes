@@ -29,7 +29,7 @@
 }
 #show strong: strong_font
 
-#set document(title: [Ichi Kanaya: Haskellと代数構造 1.0-Prerelease])
+#set document(title: [Ichi Kanaya: Haskellのノート 1.0-Prerelease])
 
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
@@ -42,6 +42,8 @@
   pagebreak()
   it
 }
+
+#show title: set align(center)
 
 #let highlight_font(body) = {
   set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), weight: "bold")
