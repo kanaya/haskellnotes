@@ -383,6 +383,9 @@ io:
 norm:
   short: ノルム
 
+highlight:
+  short: ハイライト
+
 destructive-assignment:
   short: 破壊的代入
 
