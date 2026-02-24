@@ -1,0 +1,537 @@
+io-type:
+  short: IO型
+
+io-string:
+  short: IO文字列
+
+io-monad:
+  short: IOモナド
+
+st-action:
+  short: STアクション
+
+st-monad:
+  short: STモナド
+
+unix-command:
+  short: UNIXコマンド
+
+as-pattern:
+  short: asパタン
+
+cons-operator:
+  short: cons演算子
+
+do-notation:
+  short: do記法
+
+accumulator:
+  short: アキュムレータ
+
+action:
+  short: アクション
+
+applicative-functor:
+  short: アプリカティブ関手
+
+applicative-functor-class:
+  short: アプリカティブ関手型クラス
+
+applicative-style:
+  short: アプリカティブスタイル
+
+applicative-map-operator:
+  short: アプリカティブマップ演算子
+
+uncurrying:
+  short: アンカリー化
+
+instance:
+  short: インスタンス
+
+operator:
+  short: 演算子
+
+operator:
+  short: 演算子
+
+factorial:
+  short: 階乗
+
+type:
+  short: 型
+
+type-class:
+  short: 型クラス
+
+type-constructor:
+  short: 型コンストラクタ
+
+type-synonym:
+  short: 型シノニム
+
+type-inference:
+  short: 型推論
+
+type-annotation:
+  short: 型注釈
+
+type-parameter:
+  short: 型パラメタ
+
+type-conversion:
+  short: 型変換
+
+type-conversion-operator:
+  short: 型変換演算子
+
+type-level-programming:
+  short: 型レベルプログラミング
+
+currying:
+  short: カリー化
+
+current-continuation:
+  short: カレント継続
+
+functor:
+  short: 関手
+
+functor-class:
+  short: 関手型クラス
+
+functor-law:
+  short: 関手則
+
+function:
+  short: 関数
+
+functional-programming:
+  short: 関数型プログラミング
+  description: 参照透過性を重視するプログラミングスタイル．
+
+functional-programming:
+  short: 関数型プログラミング
+
+functional-programming-language:
+  short: 関数型プログラミング言語
+
+function-composition-operator:
+  short: 関数合成演算子
+
+function-application-operator:
+  short: 関数適用演算子
+
+function-composition-law:
+  short: 関数の合成則
+
+guard:
+  short: ガード
+
+union-type:
+  short: 共有型
+
+local-variable:
+  short: 局所変数
+
+local-variable:
+  short: 局所変数
+
+pseudorandom-number:
+  short: 疑似乱数
+
+pseudorandom-sequence:
+  short: 擬似乱数列
+
+quick-sort:
+  short: クイックソート
+
+empty:
+  short: 空
+
+empty-list:
+  short: 空リスト
+
+repetition-operator:
+  short: 繰り返し演算子
+
+class-template:
+  short: クラステンプレート
+
+closure:
+  short: クロージャ
+
+knuth-arrow:
+  short: クヌースの矢印
+
+computation-structure:
+  short: 計算構造
+
+continuation:
+  short: 継続
+
+continuation-monad:
+  short: 継続モナド
+
+cps:
+  short: 継続渡しスタイル
+
+concatenation:
+  short: 結合
+
+concatenation-law:
+  short: 結合則
+
+category-mathematical:
+  short: 圏
+
+category-theory:
+  short: 圏論
+
+functor-mathematical:
+  short: 圏論的関手
+
+higher-order-function:
+  short: 高階関数
+
+commutative-law:
+  short: 交換則
+
+binding:
+  short: 束縛
+
+identity-function:
+  short: 恒等関数
+
+identity-morphism:
+  short: 恒等射
+
+fixed-length-integer-type:
+  short: 固定長整数型
+
+concept:
+  short: コンセプト
+
+container-type:
+  short: コンテナ型
+
+container-variable:
+  short: コンテナ変数
+
+composition:
+  short: 合成
+
+recursion:
+  short: 再帰
+
+recursive-application:
+  short: 再帰適用
+
+greatest-common-divisor:
+  short: 最大公約数
+
+operator-mathematical:
+  short: 作用素
+
+referential-transparency:
+  short: 参照透過性
+
+pass-by-reference:
+  short: 参照渡し
+
+sequence-operator:
+  short: シーケンス演算子
+
+morphism:
+  short: 射
+
+mapping:
+  short: 写像
+
+set:
+  short: 集合
+
+homomorphic-law:
+  short: 準同型性
+
+conditional-expression:
+  short: 条件式
+
+conditional:
+  short: 条件分岐
+
+special-version:
+  short: スペシャルバージョン
+
+control-structure:
+  short: 制御構造
+
+integer-type:
+  short: 整数型
+
+static-typing:
+  short: 静的型付け
+
+section:
+  short: セクション
+
+zero-division-exception:
+  short: ゼロ除算例外
+
+universal-quantifier:
+  short: 全称量化子
+
+prefix:
+  short: 前置
+
+prefix-operator:
+  short: 前置演算子
+
+early-return:
+  short: 早期リターン
+
+sum-operator:
+  short: 総和演算子
+
+long-jump:
+  short: 大域ジャンプ
+
+object:
+  short: 対象
+
+polymorphic-type:
+  short: 多相型
+
+polymorphic:
+  short: 多相的
+
+fold-operator:
+  short: 畳み込み演算子
+
+long-integer-type:
+  short: 多倍長整数型
+
+tuple:
+  short: タプル
+
+unary-operator:
+  short: 単項演算子
+
+unary-minus:
+  short: 単項マイナス
+
+single-precision-floating-point-number-type:
+  short: 単精度浮動小数点数型
+
+short-circuit-evaluation:
+  short: 短絡評価
+
+lazy-evaluation:
+  short: 遅延評価
+
+sequential-processing:
+  short: 逐次処理
+
+sequential-processing:
+  short: 逐次処理
+
+sequential-execution:
+  short: 逐次実行
+
+direct-style:
+  short: 直接スタイル
+
+annotation:
+  short: 注釈
+
+infix-operator:
+  short: 中置
+
+direct-sum:
+  short: 直和
+
+application:
+  short: 適用
+
+default-argument:
+  short: デフォルト引数
+
+data-type:
+  short: データ型
+
+constant:
+  short: 定数
+
+arithmetic-sequence:
+  short: 等差数列
+
+triple:
+  short: トリプル
+
+dynamic-typing:
+  short: 動的型付け
+
+inner-status:
+  short: 内部状態
+
+binary-operator:
+  short: 二項演算子
+
+io:
+  short: 入出力
+
+norm:
+  short: ノルム
+
+highlight:
+  short: ハイライト
+
+destructive-assignment:
+  short: 破壊的代入
+
+haskell-curry:
+  short: ハスケル・カリー
+
+variant-type:
+  short: バリアント型
+
+case:
+  short: 場合分け
+
+double-precision-floating-point-type:
+  short: 倍精度浮動小数点型
+
+double-precision-floating-point-number-type:
+  short: 倍精度浮動小数点数型
+
+bind-operator:
+  short: バインド演算子
+
+pattern-matching:
+  short: パタンマッチ
+
+argument:
+  short: 引数
+
+left-associative:
+  short: 左結合
+
+left-operator:
+  short: 左作用素
+
+left-bind-operator:
+  short: 左バインド演算子
+
+pure-operator:
+  short: ピュア演算子
+
+floating-point-number-type:
+  short: 浮動小数点数型
+
+partial-application:
+  short: 部分適用
+
+context:
+  short: 文脈
+
+boolean-type:
+  short: ブール型
+
+flatten-operator:
+  short: 平坦化演算子
+
+heterogeneous-array:
+  short: ヘテロジニアスな配列
+
+pair:
+  short: ペア
+
+homogenous-array:
+  short: ホモジニアスな配列
+
+map-operator:
+  short: マップ演算子
+
+tail-recursion:
+  short: 末尾再帰
+
+tail-recursion-optimization:
+  short: 末尾再帰最適化
+
+right-associative:
+  short: 右結合
+
+right-folding:
+  short: 右畳み込み
+
+right-bind-operator:
+  short: 右バインド演算子
+
+infinite-list:
+  short: 無限リスト
+
+infinite-list:
+  short: 無限リスト
+
+anonymous-function:
+  short: 無名関数
+
+char-type:
+  short: 文字型
+
+string:
+  short: 文字列
+
+return-value:
+  short: 戻り値
+
+monad:
+  short: モナド
+
+monad-class:
+  short: モナド型クラス
+
+user-input:
+  short: ユーザ入力
+
+unit:
+  short: ユニット
+
+unit-type:
+  short: ユニット型
+
+element:
+  short: 要素
+
+lambda-expression:
+  short: ラムダ式
+
+list:
+  short: リスト
+
+list-value-constructor:
+  short: リスト値コンストラクタ
+
+list-type-constructor:
+  short: リスト型コンストラクタ
+
+list-comprehension:
+  short: リスト内包表記
+
+list-variable:
+  short: リスト変数
+
+literal:
+  short: リテラル
+
+loop:
+  short: ループ
+
+exception:
+  short: 例外
+
+lexical-closure:
+  short: レキシカルクロージャ
+
+logical-type:
+  short: 論理型

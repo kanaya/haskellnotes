@@ -75,6 +75,7 @@
 #let read = longfunction("read")
 #let readDouble = longfunction("readDouble")
 #let rest = longfunction("rest")
+#let sequence = longfunction("sequence")
 #let showfunc = longfunction("show")
 #let sort = longfunction("sort")
 #let sortBy = longfunction("sortBy")
@@ -82,7 +83,6 @@
 #let sqrt = longfunction("sqrt")
 #let stalinSort = longfunction("stalinSort")
 #let succ = longfunction("succ")
-#let take = longfunction("take")
 #let tail = longfunction("tail")
 #let toLower = longfunction("toLower")
 #let uncurry = longfunction("uncurry")
@@ -142,6 +142,7 @@
 #let Applicative = typeclass("Applicative")
 #let Enum = typeclass("Enum")
 #let Eq = typeclass("Eq")
+#let Floating = typeclass("Floating")
 #let Functor = typeclass("Functor")
 #let Integral = typeclass("Integral")
 #let Monad = typeclass("Monad")
@@ -175,15 +176,17 @@
 
 // Binary operator.
 #let anyop = math.class("binary", math.circle.dotted)
-#let apply = math.class("binary", math.dollar)
+#let apply = math.class("binary", math.section)
 #let at = math.class("binary", math.at)
 #let bangbang = math.class("binary", math.excl.double)
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
 #let compose = math.bullet.op
 #let makeComplex = math.class("binary", ":+")
-#let mapM = math.class("binary", math.ast.triple)
+// #let mapM = math.class("binary", math.ast.triple)
+#let power = math.class("binary", math.ast.double)
 #let replicate = math.class("binary", math.arrow.ccw)
+#let take = math.class("binary", math.arrow.zigzag)
 
 // Big operator
 #let fold = math.union.big

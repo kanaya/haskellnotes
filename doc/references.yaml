@@ -1,0 +1,148 @@
+_7shi-st-monad:
+  type: Web
+  author: 7shi
+  title: Haskell状態系モナド超入門
+  url: https://qiita.com/7shi/items/2e9bff5d88302de1a9e9
+
+apple-think-different:
+  type: Web
+  author: Apple
+  title: Think Different
+  url: https://designmanifestos.org/apple-think-different/
+
+bartosz-milewski:
+  type: Web
+  author: Bartosz Milewski
+  title: "Category Theory for Programmers"
+  url: https://bartoszmilewski.com
+
+bryan-osullivan:
+  type: Book
+  author: Bryan O'Sullivan
+  title: "Real World Haskell: Code You Can Believe In"
+  publisher: O'Reilly Media
+
+bungen-kato:
+  type: Book
+  author: Bungen Kato（加藤文元）
+  title: "はじめての圏論"
+  year: 2025
+  publisher: 講談社
+
+cppreference-member-access-operators:
+  type: Web
+  author: C++ Reference
+  title: Member access operators
+  url: https://en.cppreference.com/w/cpp/language/operator_member_access.html
+
+damepo:
+  type: Web
+  author: Damepo
+  title: Haskellでの型レベルプログラミング
+  url: https://zenn.dev/mod_poppo/books/haskell-type-level-programming
+
+funnycat-monad:
+  type: Web
+  author: funnycat
+  title: モナド則を噛み砕く：基本から学ぶその本質と重要性
+  url: https://zenn.dev/funnycat/articles/d92e16dfc59a49
+
+graham-hutton:
+  type: Book
+  author: Graham Hutton
+  title: Programming in Haskell (2nd edition)
+  publisher: Cambridge University Press
+
+kazu-yamamoto-functor:
+  type: Web
+  author: Kazu Yamamoto
+  title: 関手、Applicative、Monadの法則
+  url: https://kazu-yamamoto.hatenablog.jp/entry/2019/04/11/111238
+
+legokichi:
+  type: Web
+  author: legokichi
+  title: Applicative スタイル f <$> m1 <*> m2 を読み解く
+  url: https://qiita.com/legokichi/items/2f2bb996ba4b5a2e4f07
+
+minegishirei-file-io:
+  type: Web
+  author: Minegishi Rei
+  title: Haskellでファイルを読み書きする方法【Haskell入門】
+  url: https://minegishirei.hatenablog.com/entry/2023/12/15/093109
+
+miran-lipovaca:
+  type: Book
+  author: Miran Lipovaca
+  title: Learn You a Haskell for Great Good!
+  publisher: O'Reilly Media, Inc.
+
+mizunashi-mana-data:
+  type: Web
+  author: Mizunashi Mana
+  title: data/newtype/type の使い方
+  url: https://haskell.jp/blog/posts/2020/how-to-use-type-newtype-data.html
+
+mizunashi-mana-io:
+  type: Web
+  author: Mizunashi Mana
+  title: IOモナドと副作用
+  url: https://haskell.jp/blog/posts/2020/io-monad-and-sideeffect.html
+
+mrsekut-p-monad-type-classes:
+  type: Web
+  author: mrsekut-p
+  title: HaskellのいろいろなMonad型クラス
+  url: https://scrapbox.io/mrsekut-p/HaskellのいろいろなMonad型クラス
+
+monado-to-watashi-to-comand-six-monads:
+  type: Web
+  author: モナドとわたしとコモナド
+  title: モナドの六つの系統
+  url: https://fumieval.hatenablog.com/entry/2013/06/05/182316
+
+random-numbers-in-haskell:
+  type: Web
+  author: School of Haskell
+  title: Random numbers in Haskell
+  url: https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+
+richard-bird:
+  type: Book
+  author: Richard Bird著，山下伸夫訳
+  title: Haskellによる関数プログラミングの思考法
+
+ryusei-yamaguchi:
+  type: Web
+  author: Ryusei Yamaguchi
+  title: 圏論のモナドの法則からHaskellでよくみる形のモナド則を導き出す
+  url: https://qiita.com/mandel59/items/87aebbd964ca82f74904
+
+saru1:
+  type: Web
+  author: Kei Sugimoto
+  title: サルでもわかるIOモナド①－副作用の除去
+  url: https://hot-heart-cool-mind.hatenablog.com/entry/393131366.html
+
+tiobe-index:
+  type: Web
+  author: TIOBE
+  title: TIOBE Index
+  url: https://www.tiobe.com/tiobe-index/
+
+wikipedia-continuation-passing-style:
+  type: Web
+  author: Wikipedia
+  title: Continuation-passing style
+  url: https://en.wikipedia.org/wiki/Continuation-passing_style
+
+will-kurt:
+  type: Book
+  author: Will Kurt著，株式会社クイープ訳
+  title: 入門Haskellプログラミング
+
+this-book:
+  type: Web
+  author: Ichi Kanaya（金谷一朗）
+  title: Haskell Notes
+  url: https://github.com/kanaya/haskellnotes
