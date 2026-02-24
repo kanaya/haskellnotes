@@ -2874,11 +2874,9 @@ $ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked
 
 = 執筆メモ
 
+== モノイド
+
 $(MM, haskell.bind, chevron.l lozenge.stroked.medium chevron.r)$ はモノイドである．
-
----
-
-=== モノイド
 
 #tk
 
@@ -2931,11 +2929,9 @@ $(ZZ, +, 0)$ はモノイドである．
 
 
 
-= Haskellの深い部分
-
 == 関数・関手・アプリカティブ関手・モナド
 
-=== 関数と関手
+== 関数と関手
 
 #tk 関数と関手
 
@@ -3035,9 +3031,7 @@ See https://zenn.dev/mod_poppo/books/haskell-type-level-programming/viewer/types
 #tk マクロ
 
 
-= 執筆ノート
-
-- オブジェクト指向プログラミングとの関係
+== オブジェクト指向プログラミングとの関係
 
 #figure(
   caption: "メモ",
@@ -3074,7 +3068,7 @@ $ haskell.kwinstance & haskell.Eq supset "TrafficLight" haskell.kwwhere\
 
   // UFO演算子の定義
 
-=== 数学における圏と関手
+== 数学における圏と関手
 
 Haskellにおける#keyword[モナド]（Monad）は、数学の圏論において定義される圏論的モナドとほぼ同じ概念である．数学的には，モナドはある圏 $cal(C)$ 上の関手 $frak(T): cal(C)~~>cal(C)$ と，ふたつの自然変換（単位 $eta$ と乗法 $mu$）から構成される三つ組 $(frak(T), eta, mu)$ であり，以下の条件（モナド則）を満たす．
 
@@ -3153,10 +3147,10 @@ a.
 
 */
 
-=== 関数型クラス
+== 関数型クラス
 
 
-=== class and instance
+== class and instance
 
 $ forall haskell.m haskell.kwclass &haskell.Monoid supset haskell.m haskell.kwwhere \
   &exists nothing_haskell.m colon.double haskell.m \
