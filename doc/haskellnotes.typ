@@ -3156,7 +3156,21 @@ a.
 === 関数型クラス
 
 
+=== class and instance
+
+$ forall haskell.m haskell.kwclass &haskell.Monoid supset haskell.m haskell.kwwhere \
+  &exists nothing_haskell.m colon.double haskell.m \
+  &exists (+_haskell.m) colon.double haskell.m -> haskell.m -> haskell.m $
+
+$ haskell.kwinstance &haskell.Monoid supset haskell.String haskell.kwwhere \
+  &nothing_haskell.m = "\"\"" \
+  &(+_haskell.m) = smash $
+
+$ forall haskell.f haskell.kwclass &haskell.Functor supset haskell.f_lozenge.filled.medium haskell.kwwhere \
+  &exists (ast.op.o) colon.double haskell.a -> haskell.b -> haskell.f_haskell.a -> haskell.f_haskell.b $
+
 #bibliography("references.yaml")
 
 #set heading(numbering: none)
 #glossary(title: "索引", groups: (""), theme: theme-twocol, sort: false)
+
