@@ -2831,10 +2831,10 @@ main = (pyth_cc 5 12) `runCont` print
 であるとする．関数 $f$ と関数 $g$ は数学的な関数合成演算子 $(compose)$ では合成できないが，
 #par-equation($ (g haskell.kleisliCompose f) x
   = paren.l.stroked z, c'' paren.r.stroked
-  haskell.kwwhere
-  c'' eq.delta c' tiny c; space
-  paren.l.stroked z, c' paren.r.stroked eq.delta g y; space
-  paren.l.stroked y, c paren.r.stroked eq.delta f x $)
+    haskell.kwwhere {
+      c'' eq.delta c' tiny c; space
+      paren.l.stroked z, c' paren.r.stroked eq.delta g y; space
+      paren.l.stroked y, c paren.r.stroked eq.delta f x } $)
 のような新たな関数合成演算子 $haskell.kleisliCompose$ を導入することで合成できる．ここに $tiny$ は文脈と文脈を繋ぐ演算子である．
 
 また関数 $id_maltese$ を
