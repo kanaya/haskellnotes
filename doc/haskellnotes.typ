@@ -483,9 +483,9 @@ $ f 0 &= -1 \
 関数のパタンマッチは，関数の内部に書いても良い．関数内部にパタンマッチを書きたい場合は次のように書く．
 
 $ f x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted -1,
-dash.wave arrow.r.dotted 1+x) $<eq-pattern-matching>
+rect.filled.h arrow.r.dotted 1+x) $<eq-pattern-matching>
 
-ここに $dash.wave$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Haskellでは ```haskell f x = case x of { 0 -> 100; _ -> 1 + x }``` と書く．]
+ここに $rect.filled.h$ は任意の値の意味である．パタンマッチは上から順番にマッチングしていくため，この場合は $0$ 以外を意味する．#footnote[Haskellでは ```haskell f x = case x of { 0 -> 100; _ -> 1 + x }``` と書く．]
 
 @eq-pattern-matching は次のような Python コードと等しい．#footnote[この構文「構造的パタンマッチング」と呼ばれ Python 3.10 で導入された．]
 
@@ -1267,7 +1267,7 @@ def fact(n):
 
 Haskellでは後置演算子を定義できないので，Pythonプログラムに倣って関数 $haskell.fact$ として定義しよう．関数は内部で自分自身を適用しても良いので，階乗関数 $haskell.fact$ の定義は次のようになる．
 #par-equation($ haskell.fact n = haskell.kwcase n haskell.kwof cases(0 arrow.r.dotted 1,
-  dash.wave arrow.r.dotted n times haskell.fact (n - 1)) $)
+  rect.filled.h arrow.r.dotted n times haskell.fact (n - 1)) $)
 と定義できる．関数が自分自身を適用することを関数の#keyword[@recursive-application]と呼ぶ．#footnote[Haskellでは ```haskell fact n = case n of { 0 -> 1; _ -> n * fact (n - 1) }``` と書く．]
 
 これで我々は関数の適用，変数の代入，ラムダ式，条件式，再帰の方法を学んだわけである．これだけあれば，原理的にはどのようなアルゴリズムも書くことができる．今日からはカリー風な数学であらゆるアルゴリズムを表現できるのである！
@@ -1357,13 +1357,13 @@ $ haskell.quicksort haskell.emptylist &= haskell.emptylist\
 === 末尾再帰
 
 計算機科学者は，同じ再帰でも#keyword[@tail-recursion]という再帰のスタイルを好む．末尾再帰とは，関数の再帰適用を関数定義の末尾にすることである．この章に出てきた階乗関数 $haskell.fact$ を例にとろう．階乗関数 $haskell.fact$ は
-#par-equation($ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 1, dash.wave arrow.r.dotted x times haskell.fact(x - 1)) $)
+#par-equation($ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 1, rect.filled.h arrow.r.dotted x times haskell.fact(x - 1)) $)
 のような形をしていた．末尾の関数をよりはっきりさせるために演算子 $(times)$ を前置にして
-#par-equation($ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 1, dash.wave arrow.r.dotted (times) x space haskell.fact(x - 1)) $)
+#par-equation($ haskell.fact x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted 1, rect.filled.h arrow.r.dotted (times) x space haskell.fact(x - 1)) $)
 と書いてみよう．この定義の末尾の式は $(times)x space haskell.fact(x - 1)$ である．これだと末尾の関数は $haskell.fact$ ではなく演算子 $(times)$ なので，末尾に再帰適用を行ったことにはならない．
 
 そこで，次のように形を変えた階乗関数 $haskell.fact'$ を考えてみる．
-#par-equation($ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted a, dash.wave arrow.r.dotted haskell.fact' (a times x) space (x - 1)) $)
+#par-equation($ haskell.fact' a x = haskell.kwcase x haskell.kwof cases(0 arrow.r.dotted a, rect.filled.h arrow.r.dotted haskell.fact' (a times x) space (x - 1)) $)
 こうすれば末尾の関数がもとの $haskell.fact'$ と一致する．#footnote[Haskellでは ```haskell fact' a x = case x of { 0 -> 1; _ -> fact' (a * x) (x - 1) }``` と書く．]
 
 関数 $haskell.fact$ が，例えば
@@ -1809,7 +1809,7 @@ $ id * x_"s" &= [id x | x in x_"s"] \
 同じことをMaybeについてもやってみると，次のようになる．
 
 $ id ast.op.o_? x_? 
-  &= haskell.kwcase x_? haskell.kwof cases(haskell.Just(x) arrow.r.dotted id haskell.Just(x), dash.wave arrow.r.dotted id haskell.Nothing) \
+  &= haskell.kwcase x_? haskell.kwof cases(haskell.Just(x) arrow.r.dotted id haskell.Just(x), rect.filled.h arrow.r.dotted id haskell.Nothing) \
   &= id x_? $
 
 ここで $x_? equiv haskell.Nothing$ でれば $id ast.op.o_? x_?$ も $haskell.Nothing$ となるので，常に $id ast.op.o_? x_? = id x_?$ が成立する．
@@ -1842,16 +1842,16 @@ $ g * (f * x_"s")
 #par-equation($ (g compose f) ast.op.o x_?
   &= haskell.kwcase x_?
   haskell.kwof cases(haskell.Just(x) arrow.r.dotted haskell.Just((g compose f) x),
-  dash.wave arrow.r.dotted haskell.Nothing) \
+  rect.filled.h arrow.r.dotted haskell.Nothing) \
   &= haskell.kwcase x_?
   haskell.kwof cases(haskell.Just(x) arrow.r.dotted haskell.Just(g (f x)),
-  dash.wave arrow.r.dotted haskell.Nothing) \
+  rect.filled.h arrow.r.dotted haskell.Nothing) \
   &= haskell.kwcase x_?
   haskell.kwof cases(haskell.Just(x) arrow.r.dotted g ast.op.o haskell.Just(f x),
-  dash.wave arrow.r.dotted haskell.Nothing) \
+  rect.filled.h arrow.r.dotted haskell.Nothing) \
   &= haskell.kwcase x_?
   haskell.kwof cases(haskell.Just(x) arrow.r.dotted g ast.op.o (f ast.op.o x),
-  dash.wave arrow.r.dotted haskell.Nothing) \
+  rect.filled.h arrow.r.dotted haskell.Nothing) \
   &= g ast.op.o (f ast.op.o x)
 $)
 であるから，結合則も成り立っている．
@@ -2061,12 +2061,12 @@ $ w_* = omega ast.op.o (psi y) ast.square (phi x) $<eq-applicative-style-psi-phi
 があるとする．変数 $x$ に関数 $phi', psi', omega'$ を連続して適用しようとすると，次のようになる．
 
 $ u_* &= phi' x \
-  v_* &= haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, dash.wave arrow.r.dotted haskell.Nothing) \
+  v_* &= haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, rect.filled.h arrow.r.dotted haskell.Nothing) \
   w_* &= haskell.kwcase v_* haskell.kwof cases(haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) $
 
 ひとつの式にまとめても，あまり冴えない．
 #par-equation($ w_* &= haskell.kwcase v_* haskell.kwof cases(haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, dash.wave arrow.r.dotted haskell.Nothing) \
+  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, rect.filled.h arrow.r.dotted haskell.Nothing) \
   &haskell.kwwhere u_* eq.delta phi' x $)
 やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書くところだ．
 
@@ -2331,7 +2331,7 @@ $ t = haskell.clean s $
 
 今度は，リスト $x$ を出現頻度順にソートする必要がある．関数 $haskell.sort$ は順序が定義された型のリストだけをソート対象とするので，任意の型のリストをソート出来る $haskell.sortBy$ 関数を使う．この $haskell.sortBy$ 関数は，二つの要素を比較する関数を受け取り，その比較結果に従ってリストをソートする．この比較関数を $haskell.compFst$ としよう．関数 $haskell.compFst$ を次のように定義する．
 #par-equation($ haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compFst paren.l.stroked a, dash.wave paren.r.stroked paren.l.stroked b, dash.wave paren.r.stroked &= haskell.compare b a $)
+  haskell.compFst paren.l.stroked a, rect.filled.h paren.r.stroked paren.l.stroked b, rect.filled.h paren.r.stroked &= haskell.compare b a $)
 関数 $haskell.compare$ は二つの要素を比較して，結果を $haskell.Ordering$ 型で返す．引数の順序を入れ替えているのは，出現頻度順にソートするためである．
 
 ソートされた結果を次のようにリスト $y$ とする．
@@ -2363,7 +2363,7 @@ haskell.clean &colon.double haskell.String -> haskell.String \
   haskell.count haskell.emptylist &= haskell.emptylist \
   haskell.count (x_"s" : x_"ss") &= paren.l.stroked haskell.length x_"s", haskell.head x_"s" paren.r.stroked : haskell.count x_"ss" \
 haskell.compFst &colon.double paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> paren.l.stroked haskell.Int, haskell.String paren.r.stroked -> haskell.Ordering\
-  haskell.compFst paren.l.stroked a, dash.wave paren.r.stroked paren.l.stroked b, dash.wave paren.r.stroked &= haskell.compare b a \
+  haskell.compFst paren.l.stroked a, rect.filled.h paren.r.stroked paren.l.stroked b, rect.filled.h paren.r.stroked &= haskell.compare b a \
   haskell.form &colon.double [paren.l.stroked haskell.Int, haskell.String paren.r.stroked] -> haskell.String \
   haskell.form haskell.emptylist &= haskell.constantstring("") \
   haskell.form (x : x_"s") &= (haskell.kwlet paren.l.stroked a, b paren.r.stroked eq.delta x haskell.kwin haskell.showfunc a smash haskell.constantstring(" ") smash b) smash haskell.constantstring("\\n") smash haskell.form x_"s" \
