@@ -29,7 +29,7 @@
 }
 #show strong: strong_font
 
-#set document(title: [Ichi Kanaya: Haskellのノート 1.0-Prerelease])
+#set document(title: [Ichi Kanaya: Haskellのノート 1.0.0-PR])
 
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
@@ -1666,7 +1666,7 @@ X<b> map_over(fn f, X<a> x, b dummy);
 
 残念なことに，いずれのコードにしてもリストとMaybeの本質的な抽象化にはなってない．型 ```cpp X``` がマップ可能なコンテナであることをテンプレート機構を使って保証することができないためである．この問題はC++26で導入予定の#keyword[@concept]機能によって解決する見込みである．
 
-一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのは Eugenio Moggi を始めとする計算機科学者たちである．この人類の英知は@ch-functor から見ていくことにしよう．
+一方で，数学者たちが見つけた圏という代数的構造が，リストもMaybeも統一的に扱うことを可能にしている．これを発見したのはエウジニオ・モッジ（Eugenio Moggi）を始めとする計算機科学者たちである．この人類の英知は@ch-functor から見ていくことにしよう．
 
 === 余談: Either
 
@@ -2829,24 +2829,23 @@ main = (pyth_cc 5 12) `runCont` print
 と書ける．もう一つの関数 $g$ があり，関数 $g$ が同様に
 #par-equation($ paren.l.stroked z, c' paren.r.stroked = g y $)
 であるとする．関数 $f$ と関数 $g$ は数学的な関数合成演算子 $(compose)$ では合成できないが，
-#par-equation($ (g haskell.malteseCompose f) x
+#par-equation($ (g haskell.kleisliCompose f) x
   = paren.l.stroked z, c'' paren.r.stroked
   haskell.kwwhere
   c'' eq.delta c' tiny c; space
   paren.l.stroked z, c' paren.r.stroked eq.delta g y; space
   paren.l.stroked y, c paren.r.stroked eq.delta f x $)
-のような新たな関数合成演算子 $haskell.malteseCompose$ を導入することで合成できる．ここに $tiny$ は文脈と文脈を繋ぐ演算子である．
+のような新たな関数合成演算子 $haskell.kleisliCompose$ を導入することで合成できる．ここに $tiny$ は文脈と文脈を繋ぐ演算子である．
 
 また関数 $id_maltese$ を
 #par-equation($ id_maltese x = paren.l.stroked x, nothing.rev paren.r.stroked $)
 と定義すると，
-#par-equation($ id_maltese haskell.malteseCompose f = f $)
+#par-equation($ id_maltese haskell.kleisliCompose f = f $)
 となる．ここに $nothing.rev$ は空の文脈を表す定数である．
 
-我々は関数の合成 $(haskell.malteseCompose)$ と恒等関数 $id_maltese$ を手に入れた．これは関数が参照透過性を持ったまま文脈を持つことが出来，かつその関数が圏をなすことを意味する．
+数学の圏論においては，関数を射（morphism）と呼ぶ．我々が記号 $haskell.kleisliCompose$ で表す合成を「クライスリ（Kleisli）合成」と呼び，クライスリ合成に対応する恒等射 $(id_maltese)$ のある圏を「クライスリ圏」と呼ぶ．
 
-// そのため，副作用を隠すためにはモナド型クラスはなくても良い．モナド型クラスを導入する理由は関数合成と，逐次実行を担保するためである．@saru1
-]
+我々はクライスリ合成 $(haskell.kleisliCompose)$ と恒等射 $id_maltese$ を手に入れた．これは関数が参照透過性を持ったまま文脈を持つことができ，かつその関数が圏をなすことを意味する．エウジニオ・モッジは，コンピュータプログラムとはこのような圏における射であると発見した．]
 
 = 今後の追記予定
 

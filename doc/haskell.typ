@@ -183,9 +183,9 @@
 #let bind = math.class("binary", math.suit.heart.stroked)
 #let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
 #let compose = math.bullet.op
+#let kleisliCompose = math.class("binary", math.maltese)
 #let makeComplex = math.class("binary", ":+")
 // #let mapM = math.class("binary", math.ast.triple)
-#let malteseCompose = math.class("binary", math.maltese)
 #let power = math.class("binary", math.ast.double)
 #let replicate = math.class("binary", math.arrow.ccw)
 #let take = math.class("binary", math.arrow.zigzag)
