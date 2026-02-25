@@ -2823,13 +2823,28 @@ main = (pyth_cc 5 12) `runCont` print
 - do記法を使うと，バインド演算子を用いた式を手続き型プログラミング風に書くことが出来る．
 - do記法とカレント継続を組み合わせると，プログラムはより手続き型風になる．
 
-#showybox(title: "作用と副作用")[
-関数 $z = f x $ の参照透過性を保ったまま，関数 $f$ に副作用を持たせるには次のように定義すると良い．
-$ paren.l.stroked z, w' paren.r.stroked = f paren.l.stroked x, w paren.r.stroked $
+#showybox(title: "関数が文脈を持つことの数学的意味")[
+関数の参照透過性と，関数が文脈を持つことは次のように両立させることが出来る．いま関数 $f$ が引数 $x$ を取り，戻り値 $y$ とともに文脈 $c$ を返すとすると
+#par-equation($ paren.l.stroked y, c paren.r.stroked = f x $)
+と書ける．もう一つの関数 $g$ があり，関数 $g$ が同様に
+#par-equation($ paren.l.stroked z, c' paren.r.stroked = g y $)
+であるとする．関数 $f$ と関数 $g$ は数学的な関数合成演算子 $(compose)$ では合成できないが，
+#par-equation($ (g haskell.malteseCompose f) x
+  = paren.l.stroked z, c' tiny c paren.r.stroked
+  haskell.kwwhere
+  paren.l.stroked z, c' paren.r.stroked eq.delta g y; space
+  paren.l.stroked y, c paren.r.stroked eq.delta f x $)
+のような新たな関数合成演算子 $haskell.malteseCompose$ を導入することで合成できる．ここに $tiny$ は文脈と文脈を繋ぐ演算子である．
 
-引数 $x$ に注目すると $z = f x$ の関係性は保たれており，一方で $w$ で表現される内部状態は関数 $f$ の実行後に $w'$ に変化するものと理解することが出来る．
+また関数 $id_maltese$ を
+#par-equation($ id_maltese x = paren.l.stroked x, nothing.rev paren.r.stroked $)
+と定義すると，
+#par-equation($ id_maltese haskell.malteseCompose f = f $)
+となる．ここに $nothing.rev$ は空の文脈を表す定数である．
 
-そのため，副作用を隠すためにはモナド型クラスはなくても良い．モナド型クラスを導入する理由は関数合成と，逐次実行を担保するためである．@saru1
+我々は関数の合成 $(haskell.malteseCompose)$ と恒等関数 $id_maltese$ を手に入れた．これは関数が参照透過性を持ったまま文脈を持つことが出来，かつその関数が圏をなすことを意味する．
+
+// そのため，副作用を隠すためにはモナド型クラスはなくても良い．モナド型クラスを導入する理由は関数合成と，逐次実行を担保するためである．@saru1
 ]
 
 = 今後の追記予定
