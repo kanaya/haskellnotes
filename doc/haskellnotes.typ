@@ -2843,7 +2843,7 @@ main = (pyth_cc 5 12) `runCont` print
 #par-equation($ id_maltese haskell.kleisliCompose f = f $)
 となる．ここに $nothing.rev$ は空の文脈を表す定数である．
 
-数学の圏論においては，関数を射（morphism）と呼ぶ．我々が記号 $haskell.kleisliCompose$ で表す合成を「クライスリ（Kleisli）合成」と呼び，クライスリ合成に対応する恒等射 $(id_maltese)$ のある圏を「クライスリ圏」と呼ぶ．
+数学の圏論においては，関数を射（morphism）と呼ぶ．我々が記号 $haskell.kleisliCompose$ で表す合成を「クライスリ（Kleisli）合成」と呼び，クライスリ合成に対応する恒等射 $(id_maltese)$ のある圏を「クライスリ圏」と呼ぶ．（プログラミング言語Haskellではクライスリ合成演算子を「左魚演算子」と呼ぶ．）
 
 我々はクライスリ合成 $(haskell.kleisliCompose)$ と恒等射 $id_maltese$ を手に入れた．これは関数が参照透過性を持ったまま文脈を持つことができ，かつその関数が圏をなすことを意味する．エウジニオ・モッジは，コンピュータプログラムとはこのような圏における射であると発見した．]
 
