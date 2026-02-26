@@ -1,0 +1,11 @@
+version: '3'
+
+env:
+  TYPST: typst
+
+tasks:
+  build:
+    desc: Bulid PDF from Typst source.
+    cmds:
+      - $TYPST compile haskellnotes.typ
+

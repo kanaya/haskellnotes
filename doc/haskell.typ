@@ -1,68 +1,281 @@
 #let block(x) = { 
-  set text(gray)
+  // set text(gray)
   set text(font: ("Helvetica", "Toppan Bunkyu Gothic"), size: 10pt)
   $penta.filled$
   h(1em)
   x}
 
-#let constant(x) = x
-#let parameter(x) = x
-
+// Keyword.
 #let keyword(x) = math.mono(x)
+#let kwcase = keyword("case")
+#let kwclass = keyword("class")
+#let kwdata = keyword("data")
+#let kwderiving = keyword("deriving")
+#let kwdo = keyword("do")
+#let kwelse = keyword("else")
+#let kwif = keyword("if")
+#let kwin = keyword("in")
+#let kwinstance = keyword("instance")
+#let kwlet = keyword("let")
+#let kwof = keyword("of")
+#let kwthen = keyword("then")
+#let kwtype = keyword("type")
+#let kwwhere = keyword("where")
 
+// Special constant.
+
+#let emptylist = math.class("normal", math.cancel(math.square.stroked.medium))
+// #let unit = math.class("normal", math.cancel(math.ellipse.stroked.h))
+
+// Constant.
+
+#let constantstring(x) = { "\"" + math.mono(x) + "\"" }
+#let constantchar(x) = { "'" + math.mono(x) + "'" }
+
+// Parameter.
+#let parameter(x) = x
+#let longparameter(x) = math.serif(x)
+#let first = longparameter("first")
+#let otherwise = longparameter("otherwise")
+
+// Function.
+#let longfunction(x) = math.serif(x)
+#let add = longfunction("add")
+#let addXY = longfunction("addXY")
+#let callWithContinuationProcedure = longfunction("callWithContinuationProcedure")
+#let cc = longfunction("cc")
+#let compare = longfunction("compare")
+#let compFst = longfunction("compFst")
+#let const = longfunction("const")
+#let cont = longfunction("cont")
+#let count = longfunction("count")
+#let clean = longfunction("clean")
+#let curry = longfunction("curry")
+#let doIt = longfunction("doIt")
+#let even = longfunction("even")
+#let fact = longfunction("fact")
+#let factors = longfunction("factors")
+#let filter = longfunction("filter")
+#let first = longfunction("first")
+#let fib = longfunction("fib")
+#let form = longfunction("form")
+#let greatestCommonDivisor = longfunction("greatestCommonDivisor")
+#let group = longfunction("group")
+#let head = longfunction("head")
+#let isAlpha = longfunction("isAlpha")
+#let isPrime = longfunction("isPrime")
+#let fromIntegral = longfunction("fromIntegral")
+#let lines = longfunction("lines")
+#let length = longfunction("length")
+#let norm = longfunction("norm")
+#let null = longfunction("null")
+#let pred = longfunction("pred")
+#let pyth = longfunction("pyth")
+#let quicksort = longfunction("quicksort")
+#let read = longfunction("read")
+#let readDouble = longfunction("readDouble")
+#let rest = longfunction("rest")
+#let sequence = longfunction("sequence")
+#let showfunc = longfunction("show")
+#let sort = longfunction("sort")
+#let sortBy = longfunction("sortBy")
+#let sqr = longfunction("sqr")
+#let sqrt = longfunction("sqrt")
+#let stalinSort = longfunction("stalinSort")
+#let succ = longfunction("succ")
+#let tail = longfunction("tail")
+#let toLower = longfunction("toLower")
+#let uncurry = longfunction("uncurry")
+#let when = longfunction("when")
+#let words = longfunction("words")
+
+// Type parameter.
 #let typeparameter(x) = math.bold(x)
 
-#let longfunction(x) = x
-#let read = longfunction("read")
+// Type name.
+#let typename(x) = math.bold(x)
+#let Bool = typename("Bool")
+#let Char = typename("Char")
+#let Circle = typename("Circle")
+#let Cont = typename("Cont")
+#let Cool = typename("Cool")
+#let Double = typename("Double")
+#let Float = typename("Float")
+#let Int = typename("Int")
+#let Integer = typename("Integer")
+#let IO = typename("IO")
+#let List = typename("[]")
+#let ListNew = typename("List")
+#let Rect = typename("Rect")
+#let Ordering = typename("Ordering")
+#let ST = typename("ST")
+#let String = typename("String")
+#let Unit = typename(math.paren.l.stroked+math.paren.r.stroked)
+#let XY = typename("XY")
+#let Zero = typename("Zero")
 
-#let action(x) = math.sans(x)
+// Type constructor.
+#let typeconstructor(x) = math.bold(x)
+
+#let Either = typeconstructor("Either")
+#let Maybe = typeconstructor("Maybe")
+
+#let typeconstructor1(x, y) = {
+  let xx = typename(x)
+  let yy = typename(y)
+  $xx_yy$
+}
+
+#let typeconstructor2(x, y, z) = {
+  let xx = x
+  let yy = y
+  let zz = z
+  $xx_(yy zz)$
+}
+
+#let EitherType(x, y) = typeconstructor2(Either, x, y)
+#let MaybeType(x) = typeconstructor1(Maybe, x)
+#let ListType(x) = typeconstructor1($[space.thin]$, x)
+
+// Type class.
+#let typeclass(x) = math.sans(x)
+#let Applicative = typeclass("Applicative")
+#let Enum = typeclass("Enum")
+#let Eq = typeclass("Eq")
+#let Floating = typeclass("Floating")
+#let Functor = typeclass("Functor")
+#let Integral = typeclass("Integral")
+#let Monad = typeclass("Monad")
+#let Monoid = typeclass("Monoid")
+#let Num = typeclass("Num")
+#let Ord = typeclass("Ord")
+#let Real = typeclass("Real")
+#let Show = typeclass("Show")
+
+// Action.
+#let action(x) = math.bold(x)
+#let exitWith = action("exitWith")
 #let main = action("main")
-#let print = action("print")
+#let getContents = action("getContents")
 #let getLine = action("getLine")
+#let putStrLn = action("putStrLn")
+#let print = action("print")
+#let printEach = action("printEach")
+#let randomIO = action("randomIO")
+#let randomRIO = action("randomRIO")
+#let readFile = action("readFile")
+#let readSTRefOp = math.class("unary", math.star.stroked)
 
-#let lambda = math.backslash
-#let lambdaarrow = math.arrow.r.bar
-#let anonymousparameter = math.lozenge
+// #let runST = action("runST")
+// #let modifySTRef = action("modifySTRef")
+// #let readSTRef = action("readSTRef")
+// #let writeSTRef = action("writeSTRef")
 
-#let list(x) = {
-  let xx = x
-  $xx_"s"$
-}
-#let maybe(x) = {
-  let xx = x
-  $xx_?$
-}
+// Unary operator
+
+#let flat = math.class("unary", math.flat)
+
+// Binary operator.
+#let anyop = math.class("binary", math.circle.dotted)
+#let apply = math.class("binary", math.section)
+#let at = math.class("binary", math.at)
+#let bangbang = math.class("binary", math.excl.double)
+#let bind = math.class("binary", math.suit.heart.stroked)
+#let bindRight = math.class("binary", math.accent(math.suit.heart.stroked, math.harpoon))
+#let compose = math.bullet.op
+#let kleisliCompose = math.class("binary", math.maltese)
+#let makeComplex = math.class("binary", ":+")
+// #let mapM = math.class("binary", math.ast.triple)
+#let power = math.class("binary", math.ast.double)
+#let replicate = math.class("binary", math.arrow.ccw)
+#let take = math.class("binary", math.arrow.zigzag)
+
+// Big operator
+#let fold = math.union.big
+#let foldright = math.union.sq.big
+
+// Container.
 #let ctxt(x) = {
   let xx = x
   $xx_*$
 }
-#let monadic(x) = {
+#let monadic(x) = x
+
+// Value constructor.
+#let constructor(x) = math.serif(x)
+#let Dunno = constructor("Dunno")
+#let False = constructor("False")
+#let No = constructor("No")
+#let Nothing = constructor("Nothing")
+#let True = constructor("True")
+#let Yes = constructor("Yes")
+
+// Value constructor with one argument.
+#let constructor1(x, y) = {
   let xx = x
-  $xx^dagger$
+  let yy = y
+  $xx_yy$
 }
 
-#let typename(x) = math.bold(x)
-#let Int = typename("Int")
-#let Double = typename("Double")
-#let Bool = typename("Bool")
+#let Left(x) = constructor1("Left", x)
+#let Just(x) = constructor1("Just", x)
+#let Right(x) = constructor1("Right", x)
 
-#let typeclass(x) = math.frak(x)
-#let Num = typeclass("Num")
+#let newSTRef(x) = constructor1("newSTRef", x)
 
-#let constructor(x) = math.serif(x)
-#let True = constructor("True")
-#let False = constructor("False")
+// Type constructor with one argument.
 
-#let compose = math.bullet.op
-#let apply = math.class("binary", math.section)
+// Infix.
+#let infix(x) = {
+  let xx = x
+  $class("binary", grave(xx))$
+}
 
-#let map = math.star.op
-#let fmap = math.ast.op
-#let amap = math.ast.op.o
-#let bind = math.class("binary", math.suit.heart.stroked)
+// Kind
+#let kind(x) = math.frak(x)
+#let Type = kind("Type")
+#let kk = kind("K")
 
-#let leteq = math.equiv
+// Shortcut.
 
-#let kwlet = keyword("let")
-#let kwin = keyword("in")
-#let kwwhere = keyword("where")
+#let a = $typename(a)$
+#let b = $typename(b)$
+#let c = $typename(c)$
+#let d = $typename(d)$
+#let e = $typename(e)$
+#let f = $typename(f)$
+#let g = $typename(g)$
+#let h = $typename(h)$
+#let i = $typename(i)$
+#let j = $typename(j)$
+#let k = $typename(k)$
+#let l = $typename(l)$
+#let m = $typename(m)$
+#let n = $typename(n)$
+#let o = $typename(o)$
+#let p = $typename(p)$
+#let q = $typename(q)$
+#let r = $typename(r)$
+#let s = $typename(s)$
+#let t = $typename(t)$
+#let u = $typename(u)$
+#let v = $typename(v)$
+#let w = $typename(w)$
+#let x = $typename(x)$
+#let y = $typename(y)$
+#let z = $typename(z)$
+
+#let fa = $typeconstructor1(f, a)$
+#let fb = $typeconstructor1(f, b)$
+#let fc = $typeconstructor1(f, c)$
+
+#let ma = $typeconstructor1(m, a)$
+#let mb = $typeconstructor1(m, b)$
+#let mc = $typeconstructor1(m, c)$
+
+#let MaybeA = MaybeType(a)
+#let MaybeB = MaybeType(b)
+
+#let IOString = $typeconstructor1(IO, String)$
+#let IOFloat = $typeconstructor1(IO, Float)$
+#let IOunit = $typeconstructor1(IO, Unit)$
