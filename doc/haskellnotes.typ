@@ -159,7 +159,9 @@
     [クライスリ合成], $haskell.kleisliCompose$, [```haskell <=<```],
     [直和], $plus.o$, [```haskell |```],
     [任意の二項演算子], $circle.dotted$, [なし],
-    [継続モナドのバインド], $arrow.l.loop$, [```haskell runCont```]
+    [継続モナドのバインド], $arrow.l.loop$, [```haskell runCont```],
+    [インスタンスであること], $supset$, [なし],
+    [型クラス制約], $arrow.r.stroked$, [```haskell =>```],
   )
 )
 /*
