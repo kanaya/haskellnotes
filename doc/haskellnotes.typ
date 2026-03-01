@@ -72,7 +72,7 @@
 #outline()
 
 #figure(
-  caption: "凡例1",
+  caption: "凡例",
   table(
     columns: (auto, auto, auto),
     inset: 10pt,
@@ -106,6 +106,64 @@
 )
 
 #figure(
+  caption: "記号一覧（二項演算子以外）",
+  table(
+    columns: (auto, auto, auto),
+    inset: 10pt,
+    align: center,
+    table.header([*意味*], [*記号*], [*Haskell表記法*]),
+    [型アノテーション], $colon.double$, [```haskell ::```],
+    [全称量化], $forall, |=>$, [```haskell forall```],
+    [ラムダ], [$backslash$ および $|->$], [```haskell \``` および ```haskell ->```],
+    [全てのパタン], $rect.filled.h$, [```haskell _``` または ```haskell otherwise```],
+    [左畳み込み], $union$, [```haskell foldl```],
+    [右畳み込み], $union.sq$, [```haskell foldr```],
+    [空リスト], $haskell.emptylist$, [```haskell []```],
+    [ユニット], $emptyset$, [```haskell ()```],
+    [空], $nothing.rev$, [なし],
+    [パタンマッチ], $arrow.r.dotted$, [```haskell ->```],
+    [asパタン], $@$, [```haskell @```],
+    [破壊的代入可能な変数を作る], $penta.filled$, [```haskell newSTRef```],
+    [破壊的代入可能な変数から値を取り出す], $star.stroked$, [```haskell readSTRef```],
+    [破壊的代入を実行する], $penta.stroked$, [```haskell runST```],
+    [無名パラメタ], $lozenge.stroked.medium$, [なし],
+    [任意の変数], $square.dotted$, [なし],
+    [ピュア演算子], $chevron.l square.stroked.dotted chevron.r$, [```haskell pure```],
+    [カレント継続], $note.eighth.alt$, [なし],
+    [カレント継続の生成], $note.sixteenth.beamed$, [```haskell callCC```],
+    [存在], $exists$, [なし],
+  )
+)
+
+#figure(
+  caption: "記号一覧（二項演算子）",
+  table(
+    columns: (auto, auto, auto),
+    inset: 10pt,
+    align: center,
+    table.header([*意味*], [*記号*], [*Haskell表記法*]),
+    [関数合成], $compose$, [```haskell .```],
+    [リスト結合], $smash$, [```haskell ++```],
+    [リストからの取り出し], $arrow.zigzag$, [```haskell take```],
+    [リストからの取り出し], $excl.double$, [```haskell !!```],
+    [リストの繰り返し], $arrow.ccw$, [```haskell repeat```],
+    [写像], $->$, [```haskell ->```],
+    [ジェネレータ], $in$, [```haskell <-```],
+    [関数適用], $haskell.apply$, [```haskell $```],
+    [関数によって破壊的代入を行う], $star.filled$, [```haskell modifySTRef```],
+    [リストのマップ], $*$, [```haskell map```],
+    [Maybeのマップ], $ast.op.o_?$, [```haskell <$>```, ```haskell fmap```],
+    [一般のマップ], $ast.op.o$, [```haskell <$>```, ```haskell fmap```],
+    [アプリカティブマップ], $ast.square$, [```haskell <*>```, ```haskell ap```],
+    [バインド], $haskell.bind$, [```haskell =<<```],
+    [クライスリ合成], $haskell.kleisliCompose$, [```haskell <=<```],
+    [直和], $plus.o$, [```haskell |```],
+    [任意の二項演算子], $circle.dotted$, [なし],
+    [継続モナドのバインド], $arrow.l.loop$, [```haskell runCont```]
+  )
+)
+/*
+#figure(
   caption: "凡例2",
   table(
     columns: (auto, auto, auto),
@@ -117,6 +175,7 @@
     [圏（数学）], [カリグラフィ（1文字）], $cal(C)$
   )
 )
+*/
 
 = Haskell入門
 <part-introduction-to-haskell>
