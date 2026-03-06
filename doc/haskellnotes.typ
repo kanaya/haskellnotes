@@ -2573,7 +2573,7 @@ C言語よりも新しいプログラミング言語であるRustでは，変数
 
 まず#keyword[@io-type] $(haskell.IO)$ を導入する．IO型はモナド型クラスのインスタンスである．HaskellではIO型がモナド型クラスのインスタンスであることを次のように宣言している．#footnote[Haskellでは ```haskell instance Monad IO``` と表現される．]
 
-$ haskell.kwinstance haskell.Monad supset haskell.IO $
+$ haskell.kwinstance haskell.Monad supset haskell.IO_lozenge.filled.medium $
 
 IO型はモナド型クラスのインスタンスであるので，ピュア演算子とバインド演算子を引き継いでいる．またIO型はリスト型と同じく型パラメタを必要とし $haskell.IO_haskell.a$ のような形で使われる．
 
@@ -2587,12 +2587,12 @@ IO型はモナド型クラスのインスタンスであるので，ピュア演
 
 $ f &colon.double haskell.String -> haskell.String \
   f x &= haskell.constantstring("My mother said: ") smash x \
-  f' &colon.double haskell.String -> haskell.IOString \
-  f'x &= chevron.l f x chevron.r \
-  s &colon.double haskell.IOString \
-  s &= f' haskell.bind haskell.getContents $<eq-my-mother-said>
+  phi &colon.double haskell.String -> haskell.IOString \
+  phi x &= chevron.l f x chevron.r \
+  s_* &colon.double haskell.IOString \
+  s_* &= phi haskell.bind haskell.getContents $<eq-my-mother-said>
 
-@eq-my-mother-said はファイル内容の先頭に一言付け加えて変数 $s$ に代入するプログラムである．関数 $f$ は文字列を受け取って文字列を返す参照透過性のある関数である．このような関数は「ピュアすぎて」アクションとバインド $(haskell.bind)$ することが出来ない．そこで，関数 $f$ をピュア演算子でラップして，戻り値をIO文字列にする関数 $f'$ を定義している．
+@eq-my-mother-said はファイル内容の先頭に一言付け加えて変数 $s$ に代入するプログラムである．関数 $f$ は文字列を受け取って文字列を返す参照透過性のある関数である．このような関数は「ピュアすぎて」アクションとバインド $(haskell.bind)$ することが出来ない．そこで，関数 $f$ をピュア演算子でラップして，戻り値をIO文字列にする関数 $phi$ を定義している．
 
 アクション $haskell.getContents$ は標準入力から内容を受け取るが，任意のファイルから内容を読むにはアクション $haskell.readFile$ を用いる．アクション $haskell.readFile$ は
 #par-equation($ s' &colon.double haskell.IOString \
@@ -2607,10 +2607,10 @@ $ f &colon.double haskell.String -> haskell.String \
 
 アクション $haskell.putStrLn$ に文字列を渡すと，その文字列を標準出力へ印字する．例を挙げる．
 #par-equation($ haskell.main = haskell.putStrLn haskell.constantstring("Hello, world!") $)
-ここで文字列型 $(haskell.String)$ をIOモナドに包んで返す関数 $phi$ があるとしよう．例えば，$phi$ が次のような関数であるとする．
-#par-equation($ phi s = chevron.l haskell.constantstring("I said: ") smash s chevron.r $)
+ここで文字列型 $(haskell.String)$ をIOモナドに包んで返す関数 $psi$ があるとしよう．例えば，$psi$ が次のような関数であるとする．
+#par-equation($ psi s = chevron.l haskell.constantstring("I said: ") smash s chevron.r $)
 ここに $chevron.l square.stroked.dotted chevron.r$ はピュア演算子である．このような関数でも，バインド演算子 $(haskell.bind)$ を用いて，文字列を印字することができる．例を挙げる．
-#par-equation($ haskell.main = haskell.putStrLn haskell.bind (phi haskell.constantstring("Hello, world!")) $)
+#par-equation($ haskell.main = haskell.putStrLn haskell.bind (psi haskell.constantstring("Hello, world!")) $)
 このように，IOモナドに包まれた関数をバインド $(haskell.bind)$ すると，文字列を印字することができる．
 
 型クラス $haskell.Show$ に属する型は，値を文字列に変換する関数 $haskell.showfunc$ を提供する．アクション $haskell.print$ は，型クラス $haskell.Show$ に属する型の値を受け取って，その値を文字列に変換して，標準出力へ印字する．例を挙げる．
@@ -2633,21 +2633,21 @@ $ f &colon.double haskell.String -> haskell.String \
 
 === 疑似乱数
 
-入力と似た概念に#keyword[@pseudorandom-number]がある．疑似乱数は計算機が擬似的に発生させる乱数で，事前に値がわからない点がユーザからの入力と共通する．疑似乱数は計算機の状態に依存するので，参照透過性を持たない．次の例は変数 $r$ に疑似乱数を代入するものである．@random-numbers-in-haskell
+入力と似た概念に#keyword[@pseudorandom-number]がある．疑似乱数は計算機が擬似的に発生させる乱数で，事前に値がわからない点がユーザからの入力と共通する．疑似乱数は計算機の状態に依存するので，参照透過性を持たない．次の例は変数 $r_*$ に疑似乱数を代入するものである．@random-numbers-in-haskell
 
-$ r = haskell.randomIO colon.double haskell.IOFloat $
+$ r_* = haskell.randomIO colon.double haskell.IOFloat $
 
-この変数 $r$ の値はプログラム実行時にランダムに定まる「汚染された」値である．そのため，プログラム中の他の参照透過性を持つ変数と混ぜて扱うことが出来ない．変数 $r$ はIOモナドに包まれているので，バインド演算子 $(haskell.bind)$ を使って，文脈に入れる関数の中で使うことが出来る．一例は $haskell.print$ アクションで，次の式は疑似乱数を印字するものである．
+この変数 $r_*$ の値はプログラム実行時にランダムに定まる「汚染された」値である．そのため，プログラム中の他の参照透過性を持つ変数と混ぜて扱うことが出来ない．変数 $r_*$ はIOモナドに包まれているので，バインド演算子 $(haskell.bind)$ を使って，文脈に入れる関数の中で使うことが出来る．一例は $haskell.print$ アクションで，次の式は疑似乱数を印字するものである．
 
-$ haskell.main = haskell.print haskell.bind r $
+$ haskell.main = haskell.print haskell.bind r_* $
 
 繰り返し演算子の文脈ありバージョン $(haskell.replicate_M)$ を用いると次のように#keyword[@pseudorandom-sequence]を生成できる．#footnote[Haskellでは ```haskell rs = n `replicateM` (randomIO :: IO Float)``` と書く．]
 
 $ r_"s" = 5 haskell.replicate_M (haskell.randomIO colon.double haskell.IOFloat) $
 
 Haskellは指定された範囲の疑似乱数を生成するアクション $haskell.randomRIO$ も提供している．次の例は6面体のサイコロを振るものである．
-#par-equation($ r' = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
-このとき，変数 $r'$ の値は $1$ から $6$ までの整数のいずれかである．
+#par-equation($ r'_* = haskell.randomRIO paren.l.stroked 1, 6 colon.double haskell.Int paren.r.stroked $)
+このとき，変数 $r'_*$ の値は $1$ から $6$ までの整数のいずれかである．
 
 === mainアクション
 
