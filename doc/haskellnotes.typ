@@ -97,7 +97,7 @@
     [有名な型（引数なし）], [ボールド・大文字], $haskell.Int$,
     [有名な型（引数あり）], [特別な括弧で包む], $[haskell.a], [haskell.Int]$,
     [型クラス], [サンセリフ], $haskell.Num$,
-    [カインド], [星，フラクチュール], $star.stroked, haskell.Type, haskell.kk$,
+    [カインド], [フラクチュール], $haskell.Type, haskell.kk$,
     [キーワード], [固定幅], $haskell.kwlet$,
 //    [無名パラメタ], [ひし形（白）], $lozenge.stroked.medium$,
 //    [無名型パラメタ], [ひし形（黒）], $lozenge.filled.filled.medium$,
@@ -132,7 +132,7 @@
     [カレント継続の生成], $note.sixteenth.beamed$, [```haskell callCC```],
     [文脈の結合], $tiny$, [なし],
     [任意の変数], $square.dotted$, [なし],
-    [ピュア演算子], $chevron.l square.stroked.dotted chevron.r$, [```haskell pure```],
+    [ピュア演算子], $chevron.l square.stroked.dotted chevron.r$, [```haskell pure``` または ```haskell return```],
     [存在], $exists$, [なし],
   )
 )
