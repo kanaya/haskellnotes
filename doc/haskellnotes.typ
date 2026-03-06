@@ -480,7 +480,7 @@ $ z = f x $
 
 部分適用の例を見てみよう．例えばふたつの引数のうち大きい方を返す関数 $max$ は $max x y$ として使われるが，関数適用は左結合であるから $(max x) y$ としても同じである．そこで $(max x)$ だけ取り出すと，これは「引数が $x$ よりも小さければ $x$ を，そうでなければ引数を返す関数」とみなすことができる．#footnote[Haskellでは $max x y$ を ```haskell max x y``` と書く．]
 
-部分適用された関数は実は身近にある．高校数学に出てくる関数 $log_x y$ は2引数の対数関数 $log x y$ または $log(x,y)$ のことで，自然対数関数 $ln$ とは $ln = log_e = log e$ と部分適用された関数である．複数引数を取る関数の第1引数を関数の添字にすることはよく行われており，関数 $(max x)$ のことを $max_x$ と書く教科書も多い．関数引数を添え字で表す記法は，本書でも後に採用する．
+部分適用された関数は実は身近にある．高校数学に出てくる関数 $log_x y$ は2引数の対数関数 $log x y$ または $log(x,y)$ のことで，自然対数関数 $ln$ とは $ln = log_e = (log e)$ と部分適用された関数である．複数引数を取る関数の第1引数を関数の添字にすることはよく行われており，関数 $(max x)$ のことを $max_x$ と書く教科書も多い．関数引数を添え字で表す記法は，本書でも後に採用する．
 
 もし関数 $max x$ と同じものをPythonで作りたければ，次のようなテクニックを用いることになる．
 
@@ -2001,7 +2001,7 @@ $  u_* &= phi x \
 
 アプリカティブスタイルは，関数 $omega$ を変数 $u_*, v_*$ にあたかも適用したかのように見える．実際，アプリカティブスタイルはかつて次のように書くことが提案されたが，採用はされなかった．#footnote[現在のHaskellでは ```haskell w = liftA2 omega u v``` と書くことで代用されている．元の提案は `w = [|omega u v|]` であった．]
 
-$ w = [| omega u v |] ... "採用されなかった文法" $
+$ w_* = [| omega u_* v_* |] ... "採用されなかった文法" $
 
 === 余談：型をつくる
 
@@ -2058,7 +2058,7 @@ $ haskell.kwdata haskell.Cool eq.def haskell.Yes xor haskell.No xor haskell.Dunn
 
 比較演算子 $(equiv)$ の定義はキーワード $haskell.kwinstance$ を使って次のように書く．
 
-$ haskell.kwinstance haskell.Eq supset haskell.Cool &haskell.kwwhere \
+$ haskell.kwinstance &haskell.Eq supset haskell.Cool haskell.kwwhere \
   &haskell.Yes equiv haskell.Yes = haskell.True \
   &haskell.Yes equiv haskell.Dunno = haskell.True \
   &haskell.No equiv haskell.No = haskell.True \
@@ -2122,7 +2122,7 @@ $ w_* = omega ast.op.o (psi y) ast.square (phi x) $<eq-applicative-style-psi-phi
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，関数 $f, g, h colon.double haskell.a -> haskell.a$ があるとき，式
 #par-equation($ z = (h compose g compose f) x $)
-は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する新たな演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．
+は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．#footnote[正確を期すると「文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子」は「クライスリ関数合成演算子」と呼び，本文中のバインド演算子とは少し異なる．クライスリ関数合成演算子を $haskell.kleisliCompose$ で表すと $(haskell.kleisliCompose) colon.double (haskell.a -> haskell.mb) -> (haskell.b -> haskell.mc) -> (haskell.a -> haskell.mc)$ であるのに対し，バインド演算子は $(haskell.bind) colon.double (haskell.a -> haskell.mb) -> haskell.ma -> haskell.mb$ かつ右結合であるため，モナド変数に適用することが出来る．]
 
 関数 $phi', psi', omega'$ ただし
 #par-equation($ phi', psi', omega' colon.double haskell.a -> haskell.MaybeA $)
