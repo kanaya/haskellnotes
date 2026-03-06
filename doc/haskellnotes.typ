@@ -2122,7 +2122,7 @@ $ w_* = omega ast.op.o (psi y) ast.square (phi x) $<eq-applicative-style-psi-phi
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，関数 $f, g, h colon.double haskell.a -> haskell.a$ があるとき，式
 #par-equation($ z = (h compose g compose f) x $)
-は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．#footnote[正確を期すると「文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子」は「クライスリ関数合成演算子」と呼び，本文中のバインド演算子とは少し異なる．クライスリ関数合成演算子を $haskell.kleisliCompose$ で表すと $(haskell.kleisliCompose) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> (haskell.b -> haskell.mc) -> (haskell.a -> haskell.mc)$ であるのに対し，バインド演算子は $(haskell.bind) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> haskell.ma -> haskell.mb$ かつ右結合であるため，モナド変数に適用することが出来る．]
+は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．#footnote[正確を期すると「文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子」は「クライスリ合成演算子」と呼び，本文中のバインド演算子とは少し異なる．クライスリ合成演算子を $haskell.kleisliCompose$ で表すと $(haskell.kleisliCompose) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> (haskell.b -> haskell.mc) -> (haskell.a -> haskell.mc)$ であるのに対し，バインド演算子は $(haskell.bind) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> haskell.ma -> haskell.mb$ かつ右結合であるため，モナド変数に適用することが出来る．]
 
 関数 $phi', psi', omega'$ ただし
 #par-equation($ phi', psi', omega' colon.double haskell.a -> haskell.MaybeA $)
@@ -2898,20 +2898,23 @@ main = (pyth_cc 5 12) `runCont` print
 #par-equation($ paren.l.stroked z, c' paren.r.stroked = g y $)
 であるとする．関数 $f$ と関数 $g$ は数学的な関数合成演算子 $(compose)$ では合成できないが，
 #par-equation($ (g haskell.kleisliCompose f) x
-  = paren.l.stroked z, c'' paren.r.stroked
+  = paren.l.stroked z, c' tiny c paren.r.stroked
     haskell.kwwhere {
-      c'' eq.delta c' tiny c; space
-      paren.l.stroked z, c' paren.r.stroked eq.delta g y; space
+      paren.l.stroked z, c' paren.r.stroked eq.delta g y;
       paren.l.stroked y, c paren.r.stroked eq.delta f x } $)
 のような新たな関数合成演算子 $haskell.kleisliCompose$ を導入することで合成できる．ここに $tiny$ は文脈と文脈を繋ぐ演算子である．
 
 また関数 $id_maltese$ を
-#par-equation($ id_maltese x = paren.l.stroked x, nothing.rev paren.r.stroked $)
+#par-equation($ id_maltese x = paren.l.stroked x, nothing.rev paren.r.stroked  = chevron.l x chevron.r $)
 と定義すると，
 #par-equation($ id_maltese haskell.kleisliCompose f = f $)
-となる．ここに $nothing.rev$ は空の文脈を表す定数である．
+となる．ここに $nothing.rev$ は空の文脈を表す定数である．この関係はモナド則に対応する．
 
 数学の圏論においては，関数を射（morphism）と呼ぶ．我々が記号 $haskell.kleisliCompose$ で表す合成を「クライスリ（Kleisli）合成」と呼び，クライスリ合成に対応する恒等射 $(id_maltese)$ のある圏を「クライスリ圏」と呼ぶ．（プログラミング言語Haskellではクライスリ合成演算子を「左魚演算子」と呼び ```haskell <=<``` と書く．）
+
+我々のバインド演算子 $(haskell.bind)$ とクライスリ合成演算子の関係は以下の通りである．
+
+$ f haskell.bind chevron.l x chevron.r = f haskell.kleisliCompose x $
 
 我々はクライスリ合成 $(haskell.kleisliCompose)$ と恒等射 $id_maltese$ を手に入れた．これは関数が参照透過性を持ったまま文脈を持つことができ，かつその関数が圏をなすことを意味する．エウジニオ・モッジは，コンピュータプログラムとはこのようなクライスリ圏における射であると発見した．@funnycat-kleisli @tune-programmer @bitterharvest-haskell]
 
