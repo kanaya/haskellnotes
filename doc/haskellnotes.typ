@@ -2122,7 +2122,7 @@ $ w_* = omega ast.op.o (psi y) ast.square (phi x) $<eq-applicative-style-psi-phi
 
 一方で，我々は直列に計算を行いたい場合もある．文脈が無い場合，その方法は単純な関数合成 $(compose)$ である．例えば，関数 $f, g, h colon.double haskell.a -> haskell.a$ があるとき，式
 #par-equation($ z = (h compose g compose f) x $)
-は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．#footnote[正確を期すると「文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子」は「クライスリ関数合成演算子」と呼び，本文中のバインド演算子とは少し異なる．クライスリ関数合成演算子を $haskell.kleisliCompose$ で表すと $(haskell.kleisliCompose) colon.double (haskell.a -> haskell.mb) -> (haskell.b -> haskell.mc) -> (haskell.a -> haskell.mc)$ であるのに対し，バインド演算子は $(haskell.bind) colon.double (haskell.a -> haskell.mb) -> haskell.ma -> haskell.mb$ かつ右結合であるため，モナド変数に適用することが出来る．]
+は，変数 $x$ に対してまず関数 $f$ を適用し，その結果に関数 $g$ を適用し，さらにその結果に関数 $h$ を適用するという計算を行う．では文脈がある場合はどうだろうか．我々が欲しいのは，文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子である．そのような演算子は#keyword[@bind-operator]または#keyword[@left-bind-operator]と呼ばれる．本書ではバインド演算子を $haskell.bind$ と書く．#footnote[正確を期すると「文脈なしの変数 $x$ を受け取って，文脈ありの戻り値を返すような関数を合成する演算子」は「クライスリ関数合成演算子」と呼び，本文中のバインド演算子とは少し異なる．クライスリ関数合成演算子を $haskell.kleisliCompose$ で表すと $(haskell.kleisliCompose) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> (haskell.b -> haskell.mc) -> (haskell.a -> haskell.mc)$ であるのに対し，バインド演算子は $(haskell.bind) colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.mb) -> haskell.ma -> haskell.mb$ かつ右結合であるため，モナド変数に適用することが出来る．]
 
 関数 $phi', psi', omega'$ ただし
 #par-equation($ phi', psi', omega' colon.double haskell.a -> haskell.MaybeA $)
@@ -2497,7 +2497,7 @@ main = putStrLn z
   z' &= haskell.doIt' haskell.bind haskell.getContents $)
 IO文字列 $z'$ は文字列ではないので，アクション $haskell.putStrLn$ に直接渡すことは出来ないが，バインドすることで中身を引き渡すことが出来る．次のように $haskell.main$ アクションを定義すると，IO文字列 $z'$ の中身を印字することができる．
 #par-equation($ haskell.main = haskell.putStrLn haskell.bind z' $)
-以上でプログラムが完成した．関数 ```haskell doIt``` が定義されているとして，残りをHaskellで書くと次のようになる．#footnote[別解として ```haskell z' = doIt `liftM` getContents``` と書くこともできる．]
+以上でプログラムが完成した．関数 ```haskell doIt``` が定義されているとして，残りをHaskellで書くと次のようになる．#footnote[別解として ```haskell z' = doIt `liftM` getContents``` と書くこともできる．この ```haskell liftM``` はモナド版 ```haskell fmap``` として導入された．我々は ```haskell fmap``` を $ast.op.o$ で表しているので ```hsakell liftM``` にも記号を割り当てるとすると $ast.op.o_"M"$ になるだろう．演算子 $ast.op.o_"M"$ の型は $(ast.op.o_"M") colon.double haskell.Monad supset haskell.m arrow.r.stroked (haskell.a -> haskell.a) -> haskell.ma -> haskell.ma$ となる． @richard-bird]
 
 #sourcecode[```haskell 
 doIt' :: String -> IO String
