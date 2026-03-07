@@ -143,6 +143,7 @@
     inset: 10pt,
     align: center,
     table.header([*意味*], [*記号*], [*Haskell表記法*]),
+    [等値], $equiv$, [```haskell ==```],
     [関数合成], $compose$, [```haskell .```],
     [関数適用], $haskell.apply$, [```haskell $```],
     [モジュロ演算], $slash.triple$, [```haskell mod```],
@@ -1098,7 +1099,7 @@ xs = [x + y for x in range(0, 10) for y in range(0, 6) if x + y > 3]
 とすると，リスト $x_"s"$ は $x_"s" = [1, 2, ..., 5]$ という値を持つ．#footnote[Haskellでは ```haskell xs = 5 `take` ns``` と書く．]
 
 演算子 $haskell.take$ の型は
-#par-equation($ haskell.take colon.double haskell.Int -> [haskell.a] -> [haskell.a] $)
+#par-equation($ (haskell.take) colon.double haskell.Int -> [haskell.a] -> [haskell.a] $)
 である．
 
 リスト $x_"s"$ の $n$ 番目の要素には $x_"s" haskell.bangbang n$ とすることでアクセスできる．#footnote[Haskellでは ```haskell xs !! n``` と書く．]
