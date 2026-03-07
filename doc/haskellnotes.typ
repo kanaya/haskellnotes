@@ -89,7 +89,7 @@
     [一般のコンテナ変数], [変数名に $*$ をつける], $x_*$,
     [値コンストラクタ（引数なし）], [ローマン（大文字）], $haskell.True, haskell.Nothing$,
     [値コンストラクタ（引数あり）], [ローマン（大文字）], $haskell.Just(x)$,
-    [有名な値コンストラクタ1], [数学記号], $haskell.emptylist, nothing.rev$,
+    [有名な値コンストラクタ1], [数学記号], $haskell.emptylist, nothing.rev, emptyset$,
     [有名な値コンストラクタ2], [特別な括弧で包む], $[x], chevron.l y chevron.r, paren.l.stroked u, v paren.r.stroked$,
     [有名な値コンストラクタ3], [コロン $(:)$ を含む記号], $x : x_"s"$,
     [型（引数なし）], [ボールドイタリック（1文字）], $haskell.a$,
@@ -1348,10 +1348,10 @@ $ haskell.fib 0 &= 0 \
   haskell.fib 1 &= 1 \
   haskell.fib n &= haskell.fib (n-1) + haskell.fib (n-2) $
 
-二つの自然数の#keyword[@greatest-common-divisor]（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．次の例では関数の型定義も一緒に行うことにした．また中置演算子 $percent$ は剰余を表す．
+二つの自然数の#keyword[@greatest-common-divisor]（GCD）を計算する関数 $haskell.greatestCommonDivisor$ も再帰的に定義できる．次の例では関数の型定義も一緒に行うことにした．また中置演算子 $slash.triple$ は剰余を表す．
 #par-equation($ haskell.greatestCommonDivisor &colon.double haskell.Int -> haskell.Int -> haskell.Int \
   haskell.greatestCommonDivisor 0 space y &= y \
-  haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x class("binary", percent) y) x $)
+  haskell.greatestCommonDivisor x y &= haskell.greatestCommonDivisor (x slash.triple y) x $)
 このように関数 $haskell.greatestCommonDivisor$ が定義されていると
 #par-equation($ n = haskell.greatestCommonDivisor 10 space 15 $)
 とすれば $n = 5$ を得る．
