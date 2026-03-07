@@ -2135,8 +2135,8 @@ $ u_* &= phi' x \
 
 ひとつの式にまとめても，あまり冴えない．
 #par-equation($ w_* &= haskell.kwcase v_* haskell.kwof cases(haskell.Just(v) arrow.r.dotted omega' v, square.dotted arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, rect.filled.h arrow.r.dotted haskell.Nothing) \
-  &haskell.kwwhere u_* eq.delta phi' x $)
+  &space.nobreak haskell.kwwhere v_* eq.delta haskell.kwcase u_* haskell.kwof cases(haskell.Just(u) arrow.r.dotted psi' u, rect.filled.h arrow.r.dotted haskell.Nothing) \
+  &space.nobreak haskell.kwwhere u_* eq.delta phi' x $)
 やりたいことは変数 $x$ に関数 $phi', psi', omega'$ を連続的に適用することだけである．もしPythonを使っていたら，次のように簡潔に書くところだ．
 
 #sourcecode[```python
