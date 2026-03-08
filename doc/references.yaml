@@ -28,13 +28,6 @@ bryan-osullivan:
   title: "Real World Haskell: Code You Can Believe In"
   publisher: O'Reilly Media
 
-bungen-kato:
-  type: Book
-  author: Bungen Kato（加藤文元）
-  title: "はじめての圏論"
-  year: 2025
-  publisher: 講談社
-
 cppreference-member-access-operators:
   type: Web
   author: C++ Reference
@@ -46,6 +39,13 @@ damepo:
   author: Damepo
   title: Haskellでの型レベルプログラミング
   url: https://zenn.dev/mod_poppo/books/haskell-type-level-programming
+
+fuminaga-kato:
+  type: Book
+  author: Fuminaga Kato（加藤文元）
+  title: "はじめての圏論"
+  year: 2025
+  publisher: 講談社
 
 funnycat-monad:
   type: Web
