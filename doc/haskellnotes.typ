@@ -29,7 +29,7 @@
 }
 #show strong: strong_font
 
-#set document(title: [Ichi Kanaya: Haskellのノート 1.0.2-PR])
+#set document(title: [Ichi Kanaya: Haskellのノート 1.0.3-PR])
 
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
