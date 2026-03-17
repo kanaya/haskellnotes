@@ -161,6 +161,9 @@ class-template:
 closure:
   short: クロージャ
 
+closure-japanese:
+  short: 関数閉包
+
 knuth-arrow:
   short: クヌースの矢印
 
@@ -535,3 +538,6 @@ lexical-closure:
 
 logical-type:
   short: 論理型
+
+syntax-sugar:
+  short: シンタックスシュガー
