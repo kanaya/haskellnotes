@@ -65,11 +65,23 @@ graham-hutton:
   title: Programming in Haskell (2nd edition)
   publisher: Cambridge University Press
 
+haskell-stack:
+  type: Web
+  author: Haskell Stack
+  title: Welcome to Stack
+  url: https://docs.haskellstack.org/en/stable/
+
 hiyama-engineer:
   type: Web
   author: Masayuki Hiyama（檜山正幸）
   title: 技術者／プログラマのためのモナドと圏論 第1回
   url: https://www.chimaira.org/archive/slide20090423-6s.pdf
+
+homebrew:
+  type: Web
+  author: Homebrew
+  title: Homebrew --- macOS（またはLinux）用パッケージマネージャー
+  url: https://brew.sh/ja/
 
 kazu-yamamoto-functor:
   type: Web
