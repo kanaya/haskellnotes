@@ -29,7 +29,7 @@
 }
 #show strong: strong_font
 
-#set document(title: [Ichi Kanaya: Haskellのノート 1.0.3-PR])
+#set document(title: [Ichi Kanaya: Haskellのノート 1.0.4-PR])
 
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
@@ -263,7 +263,7 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]'
 次にするのは「それからアルファベットと空白以外を全部捨ててしまおう」だ．これもUNIXコマンド `tr` を使って次のように実現できる．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]'
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]'
 ```]
 
 これで単語だけのテキストファイルが出来る．次に空白をすべて改行に置き換えてしまおう．もう一度 `tr` を使う．
