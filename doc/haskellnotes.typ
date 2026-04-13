@@ -29,7 +29,7 @@
 }
 #show strong: strong_font
 
-#set document(title: [Ichi Kanaya: Haskellのノート 1.0.4-PR])
+#set document(title: [Ichi Kanaya: Haskellのノート 1.0.5-PR])
 
 // From: https://zenn.dev/mkpoli/articles/1d271b8503578c
 #show heading.where(level: 1): it => {
@@ -269,25 +269,25 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]'
 これで単語だけのテキストファイルが出来る．次に空白をすべて改行に置き換えてしまおう．もう一度 `tr` を使う．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n'
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]' | tr ' ' '\n'
 ```]
 
 これで1行に1単語ずつ並べられたテキストファイルがこれで手に入ることになる．空行もあるが，それは問題ない．このファイルの中身をアルファベット順にソートする．それには `sort` コマンドを使う．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n' | sort
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]' | tr ' ' '\n' | sort
 ```]
 
 ソートできれば，同一の連続する行を数え上げて，一つの行にすればいい．それには `uniq` コマンドを `-c` オプション付きで使う．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n' | sort | uniq -c
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]' | tr ' ' '\n' | sort | uniq -c
 ```]
 
 最後に，出現頻度順に逆順ソートをかけると出現頻度順になる．それには `sort` コマンドに `-n` と `-r` オプションを付けて以下のようにする．
 
 #sourcecode[```shell-unix-generic
-$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '\n' | sort | uniq -c | sort -n -r
+$ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z\n ]' | tr ' ' '\n' | sort | uniq -c | sort -n -r
 ```]
 
 この出力の先頭10行は，そのまま出現頻度上位10傑の単語となる．
@@ -301,7 +301,7 @@ $ cat the-great-gatsby.txt | tr '[A-Z]' '[a-z]' | tr -C -d ‘[a-z ]' | tr ' ' '
 となるようなプログラム $f$ だった．プログラム $f$ は簡単には手に入らないので，我々はUNIXコマンドの `tr` とか `sort` とか `uniq` とかをつなぎ合わせて作った．それらを「数学風」に書くと次のようになる．
 
 $ f_1 &= "tr"_([A...Z]->[a...z])\
-  f_2 &= "tr"_(overline([a...z, square])->emptyset)\
+  f_2 &= "tr"_(overline([a...z, arrow.bl.hook, square])->emptyset)\
   f_3 &= "tr"_(square->arrow.bl.hook)\
   f_4 &= "sort"\
   f_5 &= "uniq"_c\
