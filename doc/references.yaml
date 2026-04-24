@@ -16,6 +16,12 @@ bartosz-milewski:
   title: "Category Theory for Programmers"
   url: https://bartoszmilewski.com
 
+bartosz-milewski-japanese:
+  type: Web
+  author: バルトシュ・ミレフスキー（Bartosz Milewski），北川雅裕，松田一孝
+  title: "プログラマーのための圏論"
+  url: https://github.com/ktgw0316/milewski-ctfp-markdown?tab=readme-ov-file
+
 bitterharvest-haskell:
   type: Web
   author: Bitterharvest（天城高原）
